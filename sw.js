@@ -12,10 +12,12 @@ self.addEventListener('fetch', e => {
   if (e.request.method !== 'GET') return;
   const u = new URL(e.request.url);
   if (u.origin !== location.origin) return;
+  const fromCache = () => caches.match(e.request).then(m => m || caches.match('./'));
   e.respondWith(fetch(e.request).then(r => {
-    if (r && r.ok) { const cp = r.clone(); caches.open(CACHE).then(c => c.put(e.request, cp)); }
-    return r;
-  }).catch(() => caches.match(e.request).then(m => m || caches.match('./'))));
+    if (r && r.ok) { const cp = r.clone(); caches.open(CACHE).then(c => c.put(e.request, cp)); return r; }
+    // الموقع محذوف أو الخادم يعطي خطأ (404/5xx): نفتح النسخة المخزّنة بدل صفحة الخطأ
+    return fromCache().then(m => m || r);
+  }).catch(fromCache));
 });
 self.addEventListener('notificationclick', e => {
   e.notification.close();
