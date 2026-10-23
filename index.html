@@ -92,14 +92,6 @@ input[type=color] { width:3rem; height:2.1rem; padding:0; border:1px solid var(-
 .chip .x { opacity:.7; padding:0 .2rem; }
 .color-row { display:flex; align-items:center; justify-content:space-between; margin-bottom:.6rem; font-size:.9rem; }
 
-/* القبلة */
-.compass { position:relative; width:190px; height:190px; margin:.5rem auto 1rem; }
-.compass > div { position:absolute; inset:0; transition:transform .25s ease-out; }
-.compass svg { width:100%; height:100%; }
-.ring { fill:none; stroke:var(--muted); stroke-width:1.5; }
-.ntxt { fill:var(--text); font-size:9px; font-weight:700; }
-.needle { color:var(--accent); }
-.needle.aligned { color:var(--ok); }
 
 /* الأذكار */
 .dhikr {
@@ -468,32 +460,6 @@ html.onehand #tab-adhkar { padding-bottom:3.8rem; }
     </div>
 </section>
 
-<!-- ============ تبويب القبلة ============ -->
-<section class="panel" id="tab-qibla" hidden>
-    <div class="card center">
-        <h3 data-i18n="qiblaTitle"></h3>
-        <div class="compass">
-            <div id="dial">
-                <svg viewBox="0 0 100 100">
-                    <circle class="ring" cx="50" cy="50" r="46"/>
-                    <circle cx="50" cy="50" r="3" fill="var(--muted)"/>
-                    <text class="ntxt" x="50" y="15" text-anchor="middle">N</text>
-                </svg>
-            </div>
-            <div id="needle" class="needle">
-                <svg viewBox="0 0 100 100" fill="currentColor">
-                    <polygon points="50,20 56,50 44,50"/>
-                    <rect x="48.5" y="50" width="3" height="18" rx="1.5" opacity=".5"/>
-                </svg>
-            </div>
-        </div>
-        <div id="qibla-text" style="font-weight:700"></div>
-        <p id="qibla-hint" class="muted small" style="margin:.5rem 0 .8rem"></p>
-        <button id="compass-btn" class="btn-accent"></button>
-        <button id="freeze-btn" style="margin-top:.6rem" hidden></button>
-    </div>
-</section>
-
 <!-- ============ تبويب الأذكار ============ -->
 <section class="panel" id="tab-adhkar" hidden>
     <div class="card">
@@ -633,6 +599,10 @@ html.onehand #tab-adhkar { padding-bottom:3.8rem; }
         <div class="qada"><button id="qada-minus" aria-label="-">−</button><b id="qada-n"></b><button id="qada-plus" aria-label="+">+</button></div>
         <div id="qada-pend" class="center muted small" hidden></div>
         <div class="center" style="margin-top:.5rem"><button id="qada-add" class="linkbtn" hidden data-i18n="qadaAdd"></button></div>
+        <h3 data-i18n="weekPrayTitle" style="margin-top:1.2rem"></h3>
+        <div id="wp-line" class="muted small"></div>
+        <div class="wbar"><i id="wp-bar"></i></div>
+        <div id="wp-worst" class="muted small" style="margin-top:.4rem"></div>
         <h3 data-i18n="badgesTitle" style="margin-top:1.2rem"></h3>
         <div id="badges"></div>
         <h3 data-i18n="yearTitle" style="margin-top:1.2rem"></h3>
@@ -766,6 +736,7 @@ html.onehand #tab-adhkar { padding-bottom:3.8rem; }
             <select id="remafter-delay"><option value="5">5</option><option value="10">10</option><option value="15">15</option><option value="30">30</option></select>
         </div>
         <label class="switch"><span class="il"><i data-ic="check"></i><span data-i18n="afterCardOn"></span></span><input type="checkbox" id="aftercard-toggle"></label>
+        <label class="switch"><span class="il"><i data-ic="moon"></i><span data-i18n="nightAutoOn"></span></span><input type="checkbox" id="nightauto-toggle"></label>
         <h3 class="grp" data-i18n="grpWird"></h3>
         <label class="switch"><span class="il"><i data-ic="book-open"></i><span data-i18n="wirdOn"></span></span><input type="checkbox" id="wird-toggle"></label>
         <div class="field sub" id="sub-wird">
@@ -810,7 +781,6 @@ html.onehand #tab-adhkar { padding-bottom:3.8rem; }
         <label class="switch"><span class="il"><i data-ic="sparkles"></i><span data-i18n="animOn"></span></span><input type="checkbox" id="anim-toggle"></label>
         <h3 class="grp" data-i18n="grpNav"></h3>
         <label class="switch"><span class="il"><i data-ic="clock"></i><span data-i18n="navTimes"></span></span><input type="checkbox" id="navshow-times"></label>
-        <label class="switch"><span class="il"><i data-ic="compass"></i><span data-i18n="navQibla"></span></span><input type="checkbox" id="navshow-qibla"></label>
         <label class="switch"><span class="il"><i data-ic="book-open"></i><span data-i18n="navAdhkar"></span></span><input type="checkbox" id="navshow-adhkar"></label>
         <p class="muted small" style="margin:0 0 1rem" data-i18n="navNote"></p>
         <p class="muted small" style="margin:0"><span data-i18n="fsNote"></span> <span data-i18n="animNote"></span></p>
@@ -822,6 +792,9 @@ html.onehand #tab-adhkar { padding-bottom:3.8rem; }
             <button id="export-btn" class="ibtn"><i data-ic="download"></i><span data-i18n="exportBtn"></span></button>
             <button id="import-btn" class="ibtn"><i data-ic="upload"></i><span data-i18n="importBtn"></span></button>
         </div>
+        <h3 class="grp" data-i18n="bakTitle"></h3>
+        <div id="bak-list"></div>
+        <p class="muted small" style="margin:.5rem 0 .8rem" data-i18n="bakNote"></p>
         <button id="export-share" class="btn-block ibtn" style="margin-top:.6rem"><i data-ic="download"></i><span data-i18n="exportShare"></span></button>
         <label class="switch" style="margin-top:.8rem"><span class="il"><i data-ic="save"></i><span data-i18n="backupOn"></span></span><input type="checkbox" id="backup-toggle"></label>
         <input type="file" id="import-file" accept=".json,.ptb,.gz,application/json,application/gzip" hidden>
@@ -846,9 +819,6 @@ html.onehand #tab-adhkar { padding-bottom:3.8rem; }
 <nav id="bottom-nav"><div class="inner">
     <button class="nav-btn" data-tab="times">
         <i data-ic="clock"></i><span data-i18n="navTimes"></span>
-    </button>
-    <button class="nav-btn" data-tab="qibla">
-        <i data-ic="compass"></i><span data-i18n="navQibla"></span>
     </button>
     <button class="nav-btn" data-tab="adhkar">
         <i data-ic="book-open"></i><span data-i18n="navAdhkar"></span>
@@ -1015,7 +985,6 @@ const METHODS = [
     [10,'قطر'],
     [13,'رئاسة الشؤون الدينية التركية']
 ];
-const KAABA = { lat:21.4225, lng:39.8262 };
 
 /* ===== الأذكار: حصن المسلم (من الملف المرفق، 132 قسم) ===== */
 // كل عنصر: [اسم القسم, [[النص, التكرار], ...]]
@@ -1031,7 +1000,7 @@ const ADHKAR = (() => {
 })();
 
 /* ===== أيقونات Lucide (ISC license) - المستخدم منها فقط ===== */
-const ICONS = {"clock":"<circle cx=\"12\" cy=\"12\" r=\"10\"/><path d=\"M12 6v6l4 2\"/>","compass":"<circle cx=\"12\" cy=\"12\" r=\"10\"/><path d=\"m16.24 7.76-1.804 5.411a2 2 0 0 1-1.265 1.265L7.76 16.24l1.804-5.411a2 2 0 0 1 1.265-1.265z\"/>","book-open":"<path d=\"M12 5v16\"/><path d=\"M20.001 19A2 2 0 0022 17V5a2 2 0 00-1.999-2L16 3.002A5 5 0 0012 5a5 5 0 00-4-2H4a2 2 0 00-2 2v12a2 2 0 001.999 2H8a5 5 0 014 2 5 5 0 014-2z\"/>","sliders-horizontal":"<path d=\"M10 5H3\"/><path d=\"M12 19H3\"/><path d=\"M14 3v4\"/><path d=\"M16 17v4\"/><path d=\"M21 12h-9\"/><path d=\"M21 19h-5\"/><path d=\"M21 5h-7\"/><path d=\"M8 10v4\"/><path d=\"M8 12H3\"/>","sun":"<circle cx=\"12\" cy=\"12\" r=\"4\"/><path d=\"M12 2v2\"/><path d=\"M12 20v2\"/><path d=\"m4.93 4.93 1.41 1.41\"/><path d=\"m17.66 17.66 1.41 1.41\"/><path d=\"M2 12h2\"/><path d=\"M20 12h2\"/><path d=\"m6.34 17.66-1.41 1.41\"/><path d=\"m19.07 4.93-1.41 1.41\"/>","moon":"<path d=\"M20.985 12.486a9 9 0 1 1-9.473-9.472c.405-.022.617.46.402.803a6 6 0 0 0 8.268 8.268c.344-.215.825-.004.803.401\"/>","circle-dot":"<circle cx=\"12\" cy=\"12\" r=\"1\"/><circle cx=\"12\" cy=\"12\" r=\"10\"/>","library":"<path d=\"m16 6 4 14\"/><path d=\"M12 6v14\"/><path d=\"M8 8v12\"/><path d=\"M4 4v16\"/>","search":"<path d=\"m21 21-4.34-4.34\"/><circle cx=\"11\" cy=\"11\" r=\"8\"/>","arrow-right":"<path d=\"M5 12h14\"/><path d=\"m12 5 7 7-7 7\"/>","undo-2":"<path d=\"M9 14 4 9l5-5\"/><path d=\"M4 9h10.5a5.5 5.5 0 0 1 5.5 5.5a5.5 5.5 0 0 1-5.5 5.5H11\"/>","rotate-ccw":"<path d=\"M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8\"/><path d=\"M3 3v5h5\"/>","refresh-cw":"<path d=\"M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8\"/><path d=\"M21 3v5h-5\"/><path d=\"M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16\"/><path d=\"M8 16H3v5\"/>","smartphone":"<rect width=\"14\" height=\"20\" x=\"5\" y=\"2\" rx=\"2\" ry=\"2\"/><path d=\"M12 18h.01\"/>","square":"<rect width=\"18\" height=\"18\" x=\"3\" y=\"3\" rx=\"2\"/>","flame":"<path d=\"M12 3q1 4 4 6.5t3 5.5a1 1 0 0 1-14 0 5 5 0 0 1 1-3 1 1 0 0 0 5 0c0-2-1.5-3-1.5-5q0-2 2.5-4\"/>","map-pin":"<path d=\"M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0\"/><circle cx=\"12\" cy=\"10\" r=\"3\"/>","bell":"<path d=\"M10.268 21a2 2 0 0 0 3.464 0\"/><path d=\"M3.262 15.326A1 1 0 0 0 4 17h16a1 1 0 0 0 .74-1.673C19.41 13.956 18 12.499 18 8A6 6 0 0 0 6 8c0 4.499-1.411 5.956-2.738 7.326\"/>","volume-2":"<path d=\"M11 4.702a.705.705 0 0 0-1.203-.498L6.413 7.587A1.4 1.4 0 0 1 5.416 8H3a1 1 0 0 0-1 1v6a1 1 0 0 0 1 1h2.416a1.4 1.4 0 0 1 .997.413l3.383 3.384A.705.705 0 0 0 11 19.298z\"/><path d=\"M16 9a5 5 0 0 1 0 6\"/><path d=\"M19.364 18.364a9 9 0 0 0 0-12.728\"/>","alarm-clock":"<circle cx=\"12\" cy=\"13\" r=\"8\"/><path d=\"M12 9v4l2 2\"/><path d=\"M5 3 2 6\"/><path d=\"m22 6-3-3\"/><path d=\"M6.38 18.7 4 21\"/><path d=\"M17.64 18.67 20 21\"/>","flask-conical":"<path d=\"M14 2v6a2 2 0 0 0 .245.96l5.51 10.08A2 2 0 0 1 18 22H6a2 2 0 0 1-1.755-2.96l5.51-10.08A2 2 0 0 0 10 8V2\"/><path d=\"M6.453 15h11.094\"/><path d=\"M8.5 2h7\"/>","save":"<path d=\"M15.2 3a2 2 0 0 1 1.4.6l3.8 3.8a2 2 0 0 1 .6 1.4V19a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2z\"/><path d=\"M17 21v-7a1 1 0 0 0-1-1H8a1 1 0 0 0-1 1v7\"/><path d=\"M7 3v4a1 1 0 0 0 1 1h7\"/>","maximize":"<path d=\"M8 3H5a2 2 0 0 0-2 2v3\"/><path d=\"M21 8V5a2 2 0 0 0-2-2h-3\"/><path d=\"M3 16v3a2 2 0 0 0 2 2h3\"/><path d=\"M16 21h3a2 2 0 0 0 2-2v-3\"/>","download":"<path d=\"M12 15V3\"/><path d=\"M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4\"/><path d=\"m7 10 5 5 5-5\"/>","upload":"<path d=\"M12 3v12\"/><path d=\"m17 8-5-5-5 5\"/><path d=\"M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4\"/>","calendar":"<path d=\"M8 2v3\"/><path d=\"M16 2v3\"/><rect x=\"3\" y=\"3\" width=\"18\" height=\"18\" rx=\"2\"/><path d=\"M3 9h18\"/>","check":"<path d=\"M20 6 9 17l-5-5\"/>","x":"<path d=\"M18 6 6 18\"/><path d=\"m6 6 12 12\"/>","sparkles":"<path d=\"M11.017 2.814a1 1 0 0 1 1.966 0l1.051 5.558a2 2 0 0 0 1.594 1.594l5.558 1.051a1 1 0 0 1 0 1.966l-5.558 1.051a2 2 0 0 0-1.594 1.594l-1.051 5.558a1 1 0 0 1-1.966 0l-1.051-5.558a2 2 0 0 0-1.594-1.594l-5.558-1.051a1 1 0 0 1 0-1.966l5.558-1.051a2 2 0 0 0 1.594-1.594z\"/><path d=\"M20 2v4\"/><path d=\"M22 4h-4\"/><circle cx=\"4\" cy=\"20\" r=\"2\"/>","star":"<path d=\"M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z\"/>","grip-vertical":"<circle cx=\"9\" cy=\"12\" r=\"1\"/><circle cx=\"9\" cy=\"5\" r=\"1\"/><circle cx=\"9\" cy=\"19\" r=\"1\"/><circle cx=\"15\" cy=\"12\" r=\"1\"/><circle cx=\"15\" cy=\"5\" r=\"1\"/><circle cx=\"15\" cy=\"19\" r=\"1\"/>","printer":"<path d=\"M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2\"/><path d=\"M6 9V3a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v6\"/><rect x=\"6\" y=\"14\" width=\"12\" height=\"8\" rx=\"1\"/>"};
+const ICONS = {"clock":"<circle cx=\"12\" cy=\"12\" r=\"10\"/><path d=\"M12 6v6l4 2\"/>","book-open":"<path d=\"M12 5v16\"/><path d=\"M20.001 19A2 2 0 0022 17V5a2 2 0 00-1.999-2L16 3.002A5 5 0 0012 5a5 5 0 00-4-2H4a2 2 0 00-2 2v12a2 2 0 001.999 2H8a5 5 0 014 2 5 5 0 014-2z\"/>","sliders-horizontal":"<path d=\"M10 5H3\"/><path d=\"M12 19H3\"/><path d=\"M14 3v4\"/><path d=\"M16 17v4\"/><path d=\"M21 12h-9\"/><path d=\"M21 19h-5\"/><path d=\"M21 5h-7\"/><path d=\"M8 10v4\"/><path d=\"M8 12H3\"/>","sun":"<circle cx=\"12\" cy=\"12\" r=\"4\"/><path d=\"M12 2v2\"/><path d=\"M12 20v2\"/><path d=\"m4.93 4.93 1.41 1.41\"/><path d=\"m17.66 17.66 1.41 1.41\"/><path d=\"M2 12h2\"/><path d=\"M20 12h2\"/><path d=\"m6.34 17.66-1.41 1.41\"/><path d=\"m19.07 4.93-1.41 1.41\"/>","moon":"<path d=\"M20.985 12.486a9 9 0 1 1-9.473-9.472c.405-.022.617.46.402.803a6 6 0 0 0 8.268 8.268c.344-.215.825-.004.803.401\"/>","circle-dot":"<circle cx=\"12\" cy=\"12\" r=\"1\"/><circle cx=\"12\" cy=\"12\" r=\"10\"/>","library":"<path d=\"m16 6 4 14\"/><path d=\"M12 6v14\"/><path d=\"M8 8v12\"/><path d=\"M4 4v16\"/>","search":"<path d=\"m21 21-4.34-4.34\"/><circle cx=\"11\" cy=\"11\" r=\"8\"/>","arrow-right":"<path d=\"M5 12h14\"/><path d=\"m12 5 7 7-7 7\"/>","undo-2":"<path d=\"M9 14 4 9l5-5\"/><path d=\"M4 9h10.5a5.5 5.5 0 0 1 5.5 5.5a5.5 5.5 0 0 1-5.5 5.5H11\"/>","rotate-ccw":"<path d=\"M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8\"/><path d=\"M3 3v5h5\"/>","refresh-cw":"<path d=\"M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8\"/><path d=\"M21 3v5h-5\"/><path d=\"M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16\"/><path d=\"M8 16H3v5\"/>","smartphone":"<rect width=\"14\" height=\"20\" x=\"5\" y=\"2\" rx=\"2\" ry=\"2\"/><path d=\"M12 18h.01\"/>","square":"<rect width=\"18\" height=\"18\" x=\"3\" y=\"3\" rx=\"2\"/>","flame":"<path d=\"M12 3q1 4 4 6.5t3 5.5a1 1 0 0 1-14 0 5 5 0 0 1 1-3 1 1 0 0 0 5 0c0-2-1.5-3-1.5-5q0-2 2.5-4\"/>","map-pin":"<path d=\"M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0\"/><circle cx=\"12\" cy=\"10\" r=\"3\"/>","bell":"<path d=\"M10.268 21a2 2 0 0 0 3.464 0\"/><path d=\"M3.262 15.326A1 1 0 0 0 4 17h16a1 1 0 0 0 .74-1.673C19.41 13.956 18 12.499 18 8A6 6 0 0 0 6 8c0 4.499-1.411 5.956-2.738 7.326\"/>","volume-2":"<path d=\"M11 4.702a.705.705 0 0 0-1.203-.498L6.413 7.587A1.4 1.4 0 0 1 5.416 8H3a1 1 0 0 0-1 1v6a1 1 0 0 0 1 1h2.416a1.4 1.4 0 0 1 .997.413l3.383 3.384A.705.705 0 0 0 11 19.298z\"/><path d=\"M16 9a5 5 0 0 1 0 6\"/><path d=\"M19.364 18.364a9 9 0 0 0 0-12.728\"/>","alarm-clock":"<circle cx=\"12\" cy=\"13\" r=\"8\"/><path d=\"M12 9v4l2 2\"/><path d=\"M5 3 2 6\"/><path d=\"m22 6-3-3\"/><path d=\"M6.38 18.7 4 21\"/><path d=\"M17.64 18.67 20 21\"/>","flask-conical":"<path d=\"M14 2v6a2 2 0 0 0 .245.96l5.51 10.08A2 2 0 0 1 18 22H6a2 2 0 0 1-1.755-2.96l5.51-10.08A2 2 0 0 0 10 8V2\"/><path d=\"M6.453 15h11.094\"/><path d=\"M8.5 2h7\"/>","save":"<path d=\"M15.2 3a2 2 0 0 1 1.4.6l3.8 3.8a2 2 0 0 1 .6 1.4V19a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2z\"/><path d=\"M17 21v-7a1 1 0 0 0-1-1H8a1 1 0 0 0-1 1v7\"/><path d=\"M7 3v4a1 1 0 0 0 1 1h7\"/>","maximize":"<path d=\"M8 3H5a2 2 0 0 0-2 2v3\"/><path d=\"M21 8V5a2 2 0 0 0-2-2h-3\"/><path d=\"M3 16v3a2 2 0 0 0 2 2h3\"/><path d=\"M16 21h3a2 2 0 0 0 2-2v-3\"/>","download":"<path d=\"M12 15V3\"/><path d=\"M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4\"/><path d=\"m7 10 5 5 5-5\"/>","upload":"<path d=\"M12 3v12\"/><path d=\"m17 8-5-5-5 5\"/><path d=\"M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4\"/>","calendar":"<path d=\"M8 2v3\"/><path d=\"M16 2v3\"/><rect x=\"3\" y=\"3\" width=\"18\" height=\"18\" rx=\"2\"/><path d=\"M3 9h18\"/>","check":"<path d=\"M20 6 9 17l-5-5\"/>","x":"<path d=\"M18 6 6 18\"/><path d=\"m6 6 12 12\"/>","sparkles":"<path d=\"M11.017 2.814a1 1 0 0 1 1.966 0l1.051 5.558a2 2 0 0 0 1.594 1.594l5.558 1.051a1 1 0 0 1 0 1.966l-5.558 1.051a2 2 0 0 0-1.594 1.594l-1.051 5.558a1 1 0 0 1-1.966 0l-1.051-5.558a2 2 0 0 0-1.594-1.594l-5.558-1.051a1 1 0 0 1 0-1.966l5.558-1.051a2 2 0 0 0 1.594-1.594z\"/><path d=\"M20 2v4\"/><path d=\"M22 4h-4\"/><circle cx=\"4\" cy=\"20\" r=\"2\"/>","star":"<path d=\"M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z\"/>","grip-vertical":"<circle cx=\"9\" cy=\"12\" r=\"1\"/><circle cx=\"9\" cy=\"5\" r=\"1\"/><circle cx=\"9\" cy=\"19\" r=\"1\"/><circle cx=\"15\" cy=\"12\" r=\"1\"/><circle cx=\"15\" cy=\"5\" r=\"1\"/><circle cx=\"15\" cy=\"19\" r=\"1\"/>","printer":"<path d=\"M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2\"/><path d=\"M6 9V3a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v6\"/><rect x=\"6\" y=\"14\" width=\"12\" height=\"8\" rx=\"1\"/>"};
 
 const DAILY = [
     { k:'آية', t:'أَلَا بِذِكْرِ اللَّهِ تَطْمَئِنُّ الْقُلُوبُ', s:'سورة الرعد: 28' },
@@ -1058,12 +1027,6 @@ ar: {
     errCalc:'تعذّر حساب المواقيت لهذا الموقع (خط العرض مرتفع جدًا). جرّب مدينة أخرى.',
     cityTitle:'مواقيت الصلاة في {0}', myLocation:'موقعي الحالي',
     verseOfDay:'آية اليوم', hadithOfDay:'حديث اليوم',
-    qiblaTitle:'اتجاه القبلة', qiblaText:'القبلة {0}° من الشمال ({1})',
-    dirs:['شمال','شمال شرق','شرق','جنوب شرق','جنوب','جنوب غرب','غرب','شمال غرب'],
-    compassOn:'تشغيل البوصلة', compassOff:'إيقاف البوصلة',
-    hintOff:'أعلى الدائرة يشير إلى الشمال. فعّل البوصلة ليتحرك السهم مع هاتفك.',
-    hintOn:'السهم يشير إلى القبلة. عندما يتحول إلى الأخضر فأنت متجه نحوها. ابتعد عن المعادن والمغناطيس.',
-    permDenied:'تم رفض إذن البوصلة', noCompass:'جهازك لا يدعم البوصلة',
     adhkarTitle:'الأذكار', morning:'الصباح', evening:'المساء', tasbih:'المسبحة', library:'المكتبة',
     progress:'تم {0} من {1}', resetCount:'إعادة العدّ',
     adhkarNote:'اضغط على الذكر لتنقيص العدّاد. النصوص من «حصن المسلم»، وبعض الأذكار فيها صيغتا الصباح والمساء معًا بين أقواس [ ].',
@@ -1082,7 +1045,7 @@ ar: {
     grpDnd:'عدم الإزعاج', dndOn:'تفعيل عدم الإزعاج', dndFrom:'من', dndTo:'إلى', dndPrayer:'استثناء تنبيهات الصلاة', dndNote:'خلال هذه الفترة تُكتم تذكيرات الأذكار والورد. أما تنبيهات الصلاة فتظل تعمل إذا كان الاستثناء مفعّلًا.',
     grpWird:'ورد القرآن', wirdOn:'تذكير ورد اليوم', wirdTime:'وقت التذكير', remQ:'حان وقت ورد اليوم من القرآن',
     grpPrayer:'تنبيهات الصلاة', grpAdhkar:'تذكيرات الأذكار', remDelay:'بعد الفجر والعصر (بالدقائق)', remSleep:'تذكير أذكار النوم', remSleepDelay:'بعد العشاء (بالدقائق)', remWake:'تذكير أذكار الاستيقاظ (عند الفجر)', remAfter:'تذكير أذكار بعد الصلاة', remAfterDelay:'بعد الصلاة (بالدقائق)',
-    afterCardOn:'بطاقة الأذكار بعد الصلاة في الشاشة الرئيسية', afterCardTitle:'أذكار بعد صلاة {0}', ohHint:'جرّب «وضع اليد الواحدة»: أزرار الخط والتراجع تنزل أسفل الشاشة عند الإبهام.', ohTry:'تفعيل', ohLater:'لاحقًا', afterNext:'الصلاة القادمة: {0} · بعد {1}', afterLeft:'تختفي بعد {0} د', wirdEdit:'تعديل', wirdMeta:'الوحدة: {0} · الهدف: {1}', noSignal:'لا تصل قراءات من حساس الاتجاه. افتح الصفحة عبر https وفعّل إذن الحساسات، وحرّك الهاتف على شكل 8.', notifyNone:'متصفحك لا يدعم الإشعارات؛ ستظهر التنبيهات داخل الصفحة فقط.', notifyDeniedSt:'الإشعارات محظورة لهذا الموقع. فعّلها من إعدادات المتصفح، وإلى ذلك ستظهر التنبيهات داخل الصفحة فقط.', notifyDefaultSt:'لم يُمنح إذن الإشعارات بعد. أعد تفعيل الخيار واضغط «سماح».', locMoved:'يبدو أنك على بعد نحو {0} كم من موقعك المحفوظ. تحديث المواقيت لموقعك الحالي؟', locYes:'تحديث', locNo:'إبقاء الحالي', hifz:'وضع الحفظ', hifz0:'متوقف', hifz1:'إخفاء جزئي', hifz2:'إخفاء كامل',
+    afterCardOn:'بطاقة الأذكار بعد الصلاة في الشاشة الرئيسية', afterCardTitle:'أذكار بعد صلاة {0}', ohHint:'جرّب «وضع اليد الواحدة»: أزرار الخط والتراجع تنزل أسفل الشاشة عند الإبهام.', ohTry:'تفعيل', ohLater:'لاحقًا', afterNext:'الصلاة القادمة: {0} · بعد {1}', afterLeft:'تختفي بعد {0} د', wirdEdit:'تعديل', wirdMeta:'الوحدة: {0} · الهدف: {1}', notifyNone:'متصفحك لا يدعم الإشعارات؛ ستظهر التنبيهات داخل الصفحة فقط.', notifyDeniedSt:'الإشعارات محظورة لهذا الموقع. فعّلها من إعدادات المتصفح، وإلى ذلك ستظهر التنبيهات داخل الصفحة فقط.', notifyDefaultSt:'لم يُمنح إذن الإشعارات بعد. أعد تفعيل الخيار واضغط «سماح».', locMoved:'يبدو أنك على بعد نحو {0} كم من موقعك المحفوظ. تحديث المواقيت لموقعك الحالي؟', locYes:'تحديث', locNo:'إبقاء الحالي', hifz:'وضع الحفظ', hifz0:'متوقف', hifz1:'إخفاء جزئي', hifz2:'إخفاء كامل',
     nawTitle:'النوافل والصيام', nawDuha:'صلاة الضحى', nawQiyam:'قيام الليل (الثلث الأخير)', nawImsak:'الإمساك', nawIftar:'الإفطار', nawFastMT:'صيام الاثنين والخميس', nawWhite:'صيام الأيام البيض', nawArafa:'صيام يوم عرفة', nawAshura:'صيام عاشوراء', nawSunnah:'مستحب اليوم', nawNoFast:'يحرم صيام هذا اليوم',
     remDuha:'دخل وقت صلاة الضحى', remQiyam:'بدأ الثلث الأخير من الليل — وقت القيام والدعاء', remImsak:'باقي 15 دقيقة على أذان الفجر — وقت الإمساك', remFast:'اليوم يُستحب صيامه — جدّد نيتك',
     nawOn:'تذكير الضحى والقيام والصيام', nawCardOn:'عرض النوافل والصيام في الرئيسية',
@@ -1091,8 +1054,10 @@ ar: {
     qadaTitle:'قضاء الصلوات', qadaPend:'فاتتك {0} صلاة في أيام سابقة مسجّلة', qadaAdd:'أضفها للقضاء', qadaHint:'عدّاد الصلوات المطلوب قضاؤها',
     yearTitle:'السنة الأخيرة', yearStat:'{0} يومًا نشطًا · أنشط شهر: {1}',
     shareTimes:'مشاركة المواقيت', sharedBy:'مواقيت الصلاة',
-    calib:'حرّك الهاتف على شكل 8 لمعايرة البوصلة', lowAcc:'الدقة منخفضة — ابتعد عن المعادن والأجهزة الكهربائية', freeze:'تثبيت الاتجاه', unfreeze:'إلغاء التثبيت', hintStatic:'بدون حساس: حدّد الشمال من خريطة أو نجمة الشمال ثم انحرف {0}° باتجاه عقارب الساعة.',
     exportShare:'تصدير مضغوط ومشاركة',
+    weekPrayTitle:'صلواتك هذا الأسبوع', weekPrayLine:'سجّلت {0} من {1} صلاة ({2}%)', weekPrayWorst:'أكثر صلاة فاتتك: {0} ({1} مرات)', weekPrayAll:'ما فاتتك أي صلاة مسجّلة هذا الأسبوع', weekPrayNone:'سجّل صلواتك من قائمة المواقيت لتظهر الإحصائية هنا',
+    bakTitle:'النسخ الاحتياطية التلقائية', bakNote:'يحتفظ التطبيق بآخر 3 نسخ داخل الجهاز: واحدة يوميًا، وواحدة قبل كل استيراد أو استعادة.', bakEmpty:'لا توجد نسخ بعد', bakRestore:'استعادة', bakDone:'تمت الاستعادة',
+    nightAutoOn:'تعتيم تلقائي في الأذكار بعد العشاء',
     afterOpen:'فتح الأذكار', afterHide:'إخفاء',
     backupOn:'تذكير أسبوعي بالنسخة الاحتياطية', backupTitle:'مرّ أسبوع على آخر نسخة احتياطية', backupNow:'تصدير الآن', backupLater:'لاحقًا',
     readOpts:'خيارات القراءة', fontFace:'خط الأذكار', ffDefault:'الافتراضي', ffNaskh:'نسخ', ffThuluth:'ثلث / رقعة', fontNote:'يظهر حسب الخطوط المتاحة على جهازك',
@@ -1131,7 +1096,7 @@ ar: {
     dataTitle:'نسخ احتياطي', exportBtn:'تصدير الإعدادات', importBtn:'استيراد إعدادات',
     dataNote:'يحفظ التصدير الإعدادات والثيمات والمفضلة والمواظبة والمسبحة في ملف JSON يمكنك نقله إلى جهاز آخر.',
     exported:'تم تصدير الملف', imported:'تم الاستيراد بنجاح', importBad:'الملف غير صالح',
-    navTimes:'المواقيت', navQibla:'القبلة', navAdhkar:'الأذكار', navSettings:'الإعدادات',
+    navTimes:'المواقيت', navAdhkar:'الأذكار', navSettings:'الإعدادات',
     prayers:{ Fajr:'الفجر', Sunrise:'الشروق', Dhuhr:'الظهر', Asr:'العصر', Maghrib:'المغرب', Isha:'العشاء' },
     am:'ص', pm:'م'
 },
@@ -1143,12 +1108,6 @@ en: {
     errCalc:'Could not calculate times for this location (latitude too high). Try another city.',
     cityTitle:'Prayer times in {0}', myLocation:'My location',
     verseOfDay:'Verse of the day', hadithOfDay:'Hadith of the day',
-    qiblaTitle:'Qibla direction', qiblaText:'Qibla {0}° from North ({1})',
-    dirs:['North','North-East','East','South-East','South','South-West','West','North-West'],
-    compassOn:'Start compass', compassOff:'Stop compass',
-    hintOff:'Top of the circle = North. Start the compass so the arrow follows your phone.',
-    hintOn:'The arrow points to the Qibla. When it turns green you are facing it. Stay away from metal and magnets.',
-    permDenied:'Compass permission denied', noCompass:'Your device does not support the compass',
     adhkarTitle:'Adhkar', morning:'Morning', evening:'Evening', tasbih:'Tasbih', library:'Library',
     progress:'{0} of {1} done', resetCount:'Reset count',
     adhkarNote:'Tap a dhikr to count it down. Texts are from Hisn al-Muslim (Arabic only); some entries include both the morning and evening wording in [ ] brackets.',
@@ -1167,7 +1126,7 @@ en: {
     grpDnd:'Do not disturb', dndOn:'Enable do not disturb', dndFrom:'From', dndTo:'To', dndPrayer:'Keep prayer alerts on', dndNote:'During this period adhkar and wird reminders are muted. Prayer alerts keep ringing when the exception is on.',
     grpWird:'Daily Quran portion', wirdOn:'Daily Quran reminder', wirdTime:'Reminder time', remQ:'Time for your daily Quran portion',
     grpPrayer:'Prayer alerts', grpAdhkar:'Adhkar reminders', remDelay:'Minutes after Fajr and Asr', remSleep:'Sleep adhkar reminder', remSleepDelay:'Minutes after Isha', remWake:'Waking-up adhkar reminder (at Fajr)', remAfter:'After-prayer adhkar reminder', remAfterDelay:'Minutes after prayer',
-    afterCardOn:'After-prayer adhkar card on the home screen', afterCardTitle:'Adhkar after {0} prayer', ohHint:'Try one-hand mode: font and undo buttons move to the bottom, within thumb reach.', ohTry:'Enable', ohLater:'Later', afterNext:'Next: {0} · in {1}', afterLeft:'Hides in {0} min', wirdEdit:'Edit', wirdMeta:'Unit: {0} · Goal: {1}', noSignal:'No compass readings. Open the page over https, allow sensor access and wave the phone in a figure 8.', notifyNone:'Your browser does not support notifications; alerts show inside the page only.', notifyDeniedSt:'Notifications are blocked for this site. Enable them in browser settings; until then alerts show inside the page only.', notifyDefaultSt:'Notification permission not granted yet. Toggle the option again and tap Allow.', locMoved:'You seem to be about {0} km from your saved location. Update prayer times to your current location?', locYes:'Update', locNo:'Keep current', hifz:'Memorize mode', hifz0:'Off', hifz1:'Hide some', hifz2:'Hide all',
+    afterCardOn:'After-prayer adhkar card on the home screen', afterCardTitle:'Adhkar after {0} prayer', ohHint:'Try one-hand mode: font and undo buttons move to the bottom, within thumb reach.', ohTry:'Enable', ohLater:'Later', afterNext:'Next: {0} · in {1}', afterLeft:'Hides in {0} min', wirdEdit:'Edit', wirdMeta:'Unit: {0} · Goal: {1}', notifyNone:'Your browser does not support notifications; alerts show inside the page only.', notifyDeniedSt:'Notifications are blocked for this site. Enable them in browser settings; until then alerts show inside the page only.', notifyDefaultSt:'Notification permission not granted yet. Toggle the option again and tap Allow.', locMoved:'You seem to be about {0} km from your saved location. Update prayer times to your current location?', locYes:'Update', locNo:'Keep current', hifz:'Memorize mode', hifz0:'Off', hifz1:'Hide some', hifz2:'Hide all',
     nawTitle:'Voluntary prayers and fasting', nawDuha:'Duha prayer', nawQiyam:'Night prayer (last third)', nawImsak:'Imsak', nawIftar:'Iftar', nawFastMT:'Monday and Thursday fast', nawWhite:'White days fast', nawArafa:'Fast of Arafah', nawAshura:'Fast of Ashura', nawSunnah:'Recommended today', nawNoFast:'Fasting is not allowed today',
     remDuha:'Duha prayer time has begun', remQiyam:'The last third of the night has begun — time for night prayer and dua', remImsak:'15 minutes to Fajr — time to stop eating', remFast:'Fasting is recommended today — renew your intention',
     nawOn:'Duha, night prayer and fasting reminders', nawCardOn:'Show voluntary prayers and fasting on home',
@@ -1176,8 +1135,10 @@ en: {
     qadaTitle:'Missed prayers (qada)', qadaPend:'{0} prayers missed on logged past days', qadaAdd:'Add to qada', qadaHint:'Prayers still to make up',
     yearTitle:'Last year', yearStat:'{0} active days · most active month: {1}',
     shareTimes:'Share prayer times', sharedBy:'Prayer times',
-    calib:'Wave the phone in a figure 8 to calibrate the compass', lowAcc:'Low accuracy — move away from metal and electronics', freeze:'Freeze direction', unfreeze:'Unfreeze', hintStatic:'No sensor: find north on a map, then turn {0}° clockwise.',
     exportShare:'Compressed export and share',
+    weekPrayTitle:'Your prayers this week', weekPrayLine:'Logged {0} of {1} prayers ({2}%)', weekPrayWorst:'Most missed: {0} ({1} times)', weekPrayAll:'No missed prayers logged this week', weekPrayNone:'Log your prayers from the times list to see stats here',
+    bakTitle:'Automatic backups', bakNote:'The app keeps the last 3 copies on this device: one daily, and one before every import or restore.', bakEmpty:'No copies yet', bakRestore:'Restore', bakDone:'Restored',
+    nightAutoOn:'Auto-dim adhkar after Isha',
     afterOpen:'Open adhkar', afterHide:'Hide',
     backupOn:'Weekly backup reminder', backupTitle:'It has been a week since your last backup', backupNow:'Export now', backupLater:'Later',
     readOpts:'Reading options', fontFace:'Adhkar font', ffDefault:'Default', ffNaskh:'Naskh', ffThuluth:'Thuluth / Ruqaa', fontNote:'Shown using the fonts available on your device',
@@ -1216,7 +1177,7 @@ en: {
     dataTitle:'Backup', exportBtn:'Export settings', importBtn:'Import settings',
     dataNote:'Export saves settings, themes, favorites, consistency and tasbih data to a JSON file you can move to another device.',
     exported:'File exported', imported:'Imported successfully', importBad:'Invalid file',
-    navTimes:'Times', navQibla:'Qibla', navAdhkar:'Adhkar', navSettings:'Settings',
+    navTimes:'Times', navAdhkar:'Adhkar', navSettings:'Settings',
     prayers:{ Fajr:'Fajr', Sunrise:'Sunrise', Dhuhr:'Dhuhr', Asr:'Asr', Maghrib:'Maghrib', Isha:'Isha' },
     am:'AM', pm:'PM'
 }
@@ -1264,12 +1225,12 @@ const store = {
 };
 
 const SOUNDS = ['rise', 'chime', 'soft', 'bell', 'triple', 'off'];
-const HIDEABLE = ['times', 'qibla', 'adhkar'];
+const HIDEABLE = ['times', 'adhkar'];
 const FIRST_RUN = (() => { try { return localStorage.getItem('pt-settings') === null; } catch (e) { return false; } })();
 const DEFAULTS = {
     cityId:'cairo', method:5, asr:1, hijriAdj:0, notify:false, sound:true, h24:false,
     gps:null, theme:'dark', customThemes:[], draft:null, tab:'times', sec:'loc',
-    lang:'ar', preAlert:0, fullscreen:true, anim:true, tasbihPhrase:'ph_sub', tasbihTarget:33, fontScale:1, autoNext:true, hideDone:false, vibTarget:'double', vibTap:true, keepAwake:false, adhkarRemind:false, sndPrayers:{ Fajr:'default', Dhuhr:'default', Asr:'default', Maghrib:'default', Isha:'default' }, weeklyGoal:0, monthGoal:0, wirdUnit:'page', wirdGoal:0, dndFri:false, dndFriFrom:'23:00', dndFriTo:'08:00', sndPrayer:'rise', sndAdhkar:'chime', sndWird:'soft', sndGoal:'triple', hiddenTabs:[], onboarded:false, oneHand:false, wirdRemind:false, wirdTime:'21:00', dnd:false, dndFrom:'23:00', dndTo:'05:00', dndPrayer:true, remindDelay:20, sleepDelay:60, afterDelay:5, afterCard:true, backupRemind:true, backupAt:0, backupSnooze:0, endAlert:0, nawRemind:false, nawCard:true, hifz:0, fontFace:'default', remindSleep:false, remindWake:false, remindAfter:false, readDark:false,
+    lang:'ar', preAlert:0, fullscreen:true, anim:true, tasbihPhrase:'ph_sub', tasbihTarget:33, fontScale:1, autoNext:true, hideDone:false, vibTarget:'double', vibTap:true, keepAwake:false, adhkarRemind:false, sndPrayers:{ Fajr:'default', Dhuhr:'default', Asr:'default', Maghrib:'default', Isha:'default' }, weeklyGoal:0, monthGoal:0, wirdUnit:'page', wirdGoal:0, dndFri:false, dndFriFrom:'23:00', dndFriTo:'08:00', sndPrayer:'rise', sndAdhkar:'chime', sndWird:'soft', sndGoal:'triple', hiddenTabs:[], onboarded:false, oneHand:false, wirdRemind:false, wirdTime:'21:00', dnd:false, dndFrom:'23:00', dndTo:'05:00', dndPrayer:true, remindDelay:20, sleepDelay:60, afterDelay:5, afterCard:true, backupRemind:true, backupAt:0, backupSnooze:0, endAlert:0, nightAuto:true, nawRemind:false, nawCard:true, hifz:0, fontFace:'default', remindSleep:false, remindWake:false, remindAfter:false, readDark:false,
     tune:{ Fajr:0, Sunrise:0, Dhuhr:0, Asr:0, Maghrib:0, Isha:0 }
 };
 let settings = Object.assign({}, DEFAULTS, store.get('pt-settings', {}));
@@ -1288,7 +1249,7 @@ try {
     }
 } catch (e) {}
 
-let state = { tz:'Africa/Cairo', loc:null, dayIso:'', dk:null, vdk:null, view:0, today:null, tomorrow:null, yesterday:null, shown:null, qibla:0, afterMaghrib:false };
+let state = { tz:'Africa/Cairo', loc:null, dayIso:'', dk:null, vdk:null, view:0, today:null, tomorrow:null, yesterday:null, shown:null, afterMaghrib:false };
 let lastNextKey = null;
 const HR_C = 2 * Math.PI * 46;
 let heroPending = true;
@@ -1502,7 +1463,6 @@ function recalc() {
     lastNextKey = null;
     renderHeader();
     renderList();
-    renderQibla();
     initAdhkarSet();
     renderDaily(vdk);
     tick();
@@ -1563,7 +1523,7 @@ function togglePrayed(k) {
     let pp = r.p || ''; pp = pp.includes(L) ? pp.replace(L, '') : pp + L;
     if (pp) r.p = pp; else delete r.p;
     saveTrack(); syncPrayed(); tapVib(12);
-    if (!$('stats-box').hidden) { renderTrack(); renderQada(); renderYear(); }
+    if (!$('stats-box').hidden) { renderTrack(); renderQada(); renderWeekPrayers(); renderYear(); }
 }
 let nawInfo = { k: '' };
 function nawDay() {
@@ -1611,6 +1571,21 @@ function renderQada() {
     const mp = state.dayIso ? missedPending() : { n: 0 };
     $('qada-pend').hidden = !mp.n; $('qada-add').hidden = !mp.n;
     if (mp.n) $('qada-pend').textContent = t('qadaPend', mp.n);
+}
+function renderWeekPrayers() {
+    if (!$('wp-line') || !state.dayIso || !state.today) return;
+    const now = Date.now(), logged = [0, 0, 0, 0, 0], poss = [0, 0, 0, 0, 0]; let any = false;
+    for (let i = 0; i < 7; i++) {
+        const iso = dayOf(state.tz, -i).iso, pp = prayedSet(iso);
+        if (pp) any = true;
+        FIVE.forEach((k, idx) => { if (i > 0 || now >= state.today[k]) { poss[idx]++; if (pp.includes(pLetter(k))) logged[idx]++; } });
+    }
+    const L = logged.reduce((a, b) => a + b, 0), P = poss.reduce((a, b) => a + b, 0);
+    if (!any || !P) { $('wp-line').textContent = t('weekPrayNone'); $('wp-bar').style.transform = 'scaleX(0)'; $('wp-worst').textContent = ''; return; }
+    $('wp-line').textContent = t('weekPrayLine', L, P, Math.round(L / P * 100));
+    $('wp-bar').style.transform = 'scaleX(' + (L / P).toFixed(3) + ')';
+    let wi = -1, wm = 0; FIVE.forEach((k, idx) => { const m = poss[idx] - logged[idx]; if (m > wm) { wm = m; wi = idx; } });
+    $('wp-worst').textContent = wi >= 0 ? t('weekPrayWorst', prayerName(FIVE[wi]), wm) : t('weekPrayAll');
 }
 function renderYear() {
     const cv = $('year-cv'); if (!cv || !cv.getContext || !state.dayIso) return;
@@ -1724,6 +1699,7 @@ function tick() {
     // الهجري يتغيّر عند وقت المغرب
     const am = now >= state.today.Maghrib;
     if (am !== state.afterMaghrib) { state.afterMaghrib = am; renderHeader(); }
+    if (settings.tab === 'adhkar' && lastRN !== readNight()) applyTheme('soft');
 
     let next = null;
     for (const k of FIVE) {
@@ -1883,92 +1859,6 @@ let swReg = null;
         navigator.serviceWorker.addEventListener('message', e => { const d = e.data; if (d && d.type === 'open') { try { window.focus(); } catch (x) {} if (d.target) openTarget(d.target); } });
     } catch (e) {}
 })();
-/* ============ القبلة ============ */
-function qiblaBearing(lat, lng) {
-    const r = Math.PI / 180;
-    const dl = (KAABA.lng - lng) * r;
-    const p1 = lat * r, p2 = KAABA.lat * r;
-    const y = Math.sin(dl) * Math.cos(p2);
-    const x = Math.cos(p1) * Math.sin(p2) - Math.sin(p1) * Math.cos(p2) * Math.cos(dl);
-    return (Math.atan2(y, x) * 180 / Math.PI + 360) % 360;
-}
-let heading = null, compassOn = false, compFrozen = false, compLow = false, compNoSig = false, compSamples = [];
-
-function renderQibla() {
-    state.qibla = qiblaBearing(state.loc.lat, state.loc.lng);
-    $('qibla-text').textContent = t('qiblaText', Math.round(state.qibla), t('dirs')[Math.round(state.qibla / 45) % 8]);
-    setIconText($('compass-btn'), compassOn ? 'square' : 'smartphone', compassOn ? t('compassOff') : t('compassOn'));
-    $('qibla-hint').textContent = compNoSig ? t('hintStatic', Math.round(state.qibla)) : compassOn ? (compLow ? t('lowAcc') : t('hintOn')) : t('hintOff');
-    $('freeze-btn').hidden = !compassOn; $('freeze-btn').textContent = compFrozen ? t('unfreeze') : t('freeze');
-    rotateCompass();
-}
-function rotateCompass() {
-    const h = compassOn && heading !== null ? heading : 0;
-    $('dial').style.transform = `rotate(${-h}deg)`;
-    $('needle').style.transform = `rotate(${state.qibla - h}deg)`;
-    let aligned = false;
-    if (compassOn && heading !== null) {
-        const diff = ((state.qibla - heading + 540) % 360) - 180;
-        aligned = Math.abs(diff) < 5;
-    }
-    $('needle').classList.toggle('aligned', aligned);
-}
-let compRaf = 0, compTimer = 0;
-function tiltHeading(e) {
-    const r = Math.PI / 180;
-    if (typeof e.beta !== 'number' || typeof e.gamma !== 'number') return (360 - e.alpha) % 360;
-    const cZ = Math.cos(e.alpha * r), sZ = Math.sin(e.alpha * r), cX = Math.cos(e.beta * r), sX = Math.sin(e.beta * r), sY = Math.sin(e.gamma * r), cY = Math.cos(e.gamma * r);
-    const vx = -cZ * sY - sZ * sX * cY, vy = -sZ * sY + cZ * sX * cY;
-    let h = Math.atan2(vx, vy) / r; if (h < 0) h += 360;
-    return h;
-}
-function onOrient(e) {
-    if (compFrozen) return;
-    let h = null;
-    if (typeof e.webkitCompassHeading === 'number') h = e.webkitCompassHeading;
-    else if ((e.absolute || e.type === 'deviceorientationabsolute') && typeof e.alpha === 'number') h = tiltHeading(e);
-    if (h === null || isNaN(h)) return;
-    try { const ang = (screen.orientation && screen.orientation.angle) || 0; h = (h + ang) % 360; } catch (err) {}
-    if (e.webkitCompassAccuracy !== undefined) { const lo = e.webkitCompassAccuracy < 0 || e.webkitCompassAccuracy > 30; if (lo !== compLow) { compLow = lo; renderQibla(); } }
-    else {
-        compSamples.push(h); if (compSamples.length > 30) compSamples.shift();
-        if (compSamples.length === 30 && heading !== null) {
-            let sum = 0; for (let i = 1; i < 30; i++) sum += Math.abs(((compSamples[i] - compSamples[i - 1] + 540) % 360) - 180);
-            const lo = sum / 29 > 6; if (lo !== compLow) { compLow = lo; renderQibla(); }
-        }
-    }
-    if (compNoSig) { compNoSig = false; renderQibla(); }
-    if (heading === null) heading = h;
-    else { const d = ((h - heading + 540) % 360) - 180; heading = (heading + d * 0.3 + 360) % 360; }   // تنعيم الاهتزاز
-    if (!compRaf) compRaf = requestAnimationFrame(() => { compRaf = 0; rotateCompass(); });
-}
-
-async function toggleCompass() {
-    if (compassOn) {
-        window.removeEventListener('deviceorientationabsolute', onOrient, true);
-        window.removeEventListener('deviceorientation', onOrient, true);
-        compassOn = false; heading = null; compFrozen = false; compLow = false; compNoSig = false; compSamples = []; clearTimeout(compTimer);
-        renderQibla();
-        return;
-    }
-    try {
-        if (typeof DeviceOrientationEvent !== 'undefined' && typeof DeviceOrientationEvent.requestPermission === 'function') {
-            const r = await DeviceOrientationEvent.requestPermission();
-            if (r !== 'granted') { toast(t('permDenied')); return; }
-        }
-        if (!('ondeviceorientationabsolute' in window) && !('ondeviceorientation' in window)) {
-            toast(t('noCompass')); return;
-        }
-        window.addEventListener('deviceorientationabsolute', onOrient, true);
-        window.addEventListener('deviceorientation', onOrient, true);
-        compassOn = true;
-        renderQibla();
-        clearTimeout(compTimer);
-        toast(t('calib'));
-        compTimer = setTimeout(() => { if (compassOn && heading === null) { toast(t('noSignal')); compNoSig = true; renderQibla(); } }, 3500);
-    } catch (e) { toast(t('noCompass')); }
-}
-
 /* ============ الأذكار + المواظبة ============ */
 let adhkarSet = null;
 let adhState = store.get('pt-adhkar', {});
@@ -2230,7 +2120,7 @@ function renderAdhkar() {
     $('stats-box').hidden = mode !== 'stats';
     if (mode === 'tasbih') { renderTasbih(); return; }
     if (mode === 'library') { renderLibrary(true); return; }
-    if (mode === 'stats') { renderWird(); renderQada(); renderYear(); renderBadges(); buildReportMonths(); renderTrack(); return; }
+    if (mode === 'stats') { renderWird(); renderQada(); renderWeekPrayers(); renderYear(); renderBadges(); buildReportMonths(); renderTrack(); return; }
     const list = ADHKAR[mode];
     const rem = remainingFor(mode);
     const kind = mode === 'morning' ? 'm' : 'e';
@@ -2854,9 +2744,13 @@ function fixContrast(c) {
     o.text = lift(c.text, 7); o.muted = lift(c.muted, 4.6); o.accent = lift(c.accent, 4.5);
     return o;
 }
+let lastRN = false;
+function isNight() { if (!state.today) return false; const n = Date.now(); return n >= state.today.Isha || n < state.today.Fajr; }
+function readNight() { return !!settings.readDark || (settings.nightAuto !== false && isNight()); }
 function applyTheme(mode) {
     let c = fixContrast(themeColors(settings.theme));
-    if (settings.readDark && settings.tab === 'adhkar') c = Object.assign({}, c, { bg:'#000000', bg2:'#000000', text:'#c4c4c4', surface:'#080808', muted:'#777777' });
+    lastRN = readNight() && settings.tab === 'adhkar';
+    if (lastRN) c = Object.assign({}, c, { bg:'#000000', bg2:'#000000', text:'#c4c4c4', surface:'#080808', muted:'#777777' });
     const old = curThemeColors;
     if (mode && old && fxOn()) {
         const root = document.documentElement;
@@ -3134,6 +3028,7 @@ function applyNav() {
     HIDEABLE.forEach(k => { $('navshow-' + k).checked = !(settings.hiddenTabs || []).includes(k); });
 }
 function firstVisibleTab(id) {
+    if (!['times', 'adhkar', 'settings'].includes(id)) id = 'times';
     if (!(settings.hiddenTabs || []).includes(id)) return id;
     return HIDEABLE.find(k => !settings.hiddenTabs.includes(k)) || 'settings';
 }
@@ -3154,7 +3049,7 @@ function syncControls() {
     $('asr-select').value = String(settings.asr);
     $('hijri-adj').value = String(settings.hijriAdj);
     $('pre-select').value = String(settings.preAlert);
-    $('end-select').value = String(settings.endAlert || 0); $('naw-toggle').checked = !!settings.nawRemind; $('nawcard-toggle').checked = settings.nawCard !== false;
+    $('end-select').value = String(settings.endAlert || 0); $('naw-toggle').checked = !!settings.nawRemind; $('nightauto-toggle').checked = settings.nightAuto !== false; $('nawcard-toggle').checked = settings.nawCard !== false;
     $('lang-select').value = settings.lang;
     $('sound-toggle').checked = settings.sound;
     $('notify-toggle').checked = settings.notify;
@@ -3225,7 +3120,7 @@ function sanitizeSettings(s) {
     out.fontFace = ['default', 'naskh', 'thuluth'].includes(s.fontFace) ? s.fontFace : 'default';
     out.remindSleep = !!s.remindSleep; out.remindWake = !!s.remindWake; out.remindAfter = !!s.remindAfter; out.readDark = !!s.readDark;
     out.vibTap = s.vibTap !== false; out.keepAwake = !!s.keepAwake; out.adhkarRemind = !!s.adhkarRemind;
-    out.endAlert = [0, 10, 20, 30].includes(Number(s.endAlert)) ? Number(s.endAlert) : 0; out.nawRemind = !!s.nawRemind; out.nawCard = s.nawCard !== false; out.hifz = [0, 1, 2].includes(Number(s.hifz)) ? Number(s.hifz) : 0;
+    out.endAlert = [0, 10, 20, 30].includes(Number(s.endAlert)) ? Number(s.endAlert) : 0; out.nightAuto = s.nightAuto !== false; out.nawRemind = !!s.nawRemind; out.nawCard = s.nawCard !== false; out.hifz = [0, 1, 2].includes(Number(s.hifz)) ? Number(s.hifz) : 0;
     out.vibTarget = VIB_PATTERNS[s.vibTarget] !== undefined ? s.vibTarget : 'double';
     const g = s.gps;
     out.gps = (g && Number.isFinite(+g.lat) && Number.isFinite(+g.lng) && Math.abs(+g.lat) <= 90 && Math.abs(+g.lng) <= 180)
@@ -3261,6 +3156,23 @@ function sanitizeTrack(tr) {
     });
     return out;
 }
+function bakList() { const l = store.get('pt-autobak', []); return Array.isArray(l) ? l.filter(x => x && typeof x.d === 'string' && x.at > 0).slice(-3) : []; }
+function autoBak() { const l = bakList(); l.push({ at: Date.now(), d: JSON.stringify(backupObj()) }); store.set('pt-autobak', l.slice(-3)); renderBak(); }
+function autoBakDaily() { const l = bakList(); if (Date.now() - (l.length ? l[l.length - 1].at : 0) > 20 * 3600000 && Object.keys(track).length) autoBak(); }
+function renderBak() {
+    const box = $('bak-list'); if (!box) return;
+    box.innerHTML = '';
+    const l = bakList().reverse();
+    if (!l.length) { const e = document.createElement('div'); e.className = 'muted small'; e.textContent = t('bakEmpty'); box.appendChild(e); return; }
+    l.forEach(x => {
+        const r = document.createElement('div'); r.className = 'naw-row';
+        const a = document.createElement('span'); let lbl = new Date(x.at).toISOString();
+        try { lbl = new Intl.DateTimeFormat(isEn() ? 'en-GB' : 'ar-EG-u-nu-latn', { timeZone: state.tz, day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' }).format(new Date(x.at)); } catch (e) {}
+        a.textContent = lbl + ' · \u200e' + Math.max(1, Math.round(x.d.length / 1024)) + ' KB';
+        const b = document.createElement('button'); b.className = 'linkbtn'; b.textContent = t('bakRestore'); b.dataset.at = String(x.at);
+        r.append(a, b); box.appendChild(r);
+    });
+}
 function backupObj() { return { app: APP_ID, v: 2, exportedAt: new Date().toISOString(), settings, track, favs, tasbih: { n: tasbihCount }, qada: qadaGet() }; }
 async function exportShare() {
     if (!window.CompressionStream) { toast(t('importBad')); return; }
@@ -3291,6 +3203,7 @@ function importText(text) {
     try { obj = JSON.parse(text); } catch (e) { toast(t('importBad')); return false; }
     const clean = obj && obj.app === APP_ID ? sanitizeSettings(obj.settings) : null;
     if (!clean) { toast(t('importBad')); return false; }
+    autoBak();
     settings = clean;
     saveSettings();
     track = sanitizeTrack(obj.track);
@@ -3375,11 +3288,10 @@ function showTab(id, noFx) {
     wirdBig = false;
     if (id === 'adhkar') showOhHint();
     saveSettings();
-    if (id !== 'qibla' && compassOn) toggleCompass();
     window.scrollTo(0, 0);
     lastScrollY = 0; setNav(true);
     syncWake();
-    if (settings.readDark) applyTheme('soft');
+    if (lastRN !== (readNight() && id === 'adhkar')) applyTheme('soft');
     if (!noFx) fxIn(document.querySelectorAll('#tab-' + id + ' > .card, #tab-' + id + ' > .seg'), { y: 12, s: 40, d: 280 });
 }
 function showSec(id, noFx) {
@@ -3430,7 +3342,6 @@ function bindUI() {
 
     $('retry-btn').addEventListener('click', recalc);
     $('gps-btn').addEventListener('click', useGPS);
-    $('compass-btn').addEventListener('click', toggleCompass);
 
     $('city-select').addEventListener('change', e => { settings.cityId = e.target.value; saveSettings(); recalc(); });
     $('method-select').addEventListener('change', e => { settings.method = Number(e.target.value); saveSettings(); recalc(); });
@@ -3457,16 +3368,17 @@ function bindUI() {
         }
         syncNotifyStatus();
     });
+    $('nightauto-toggle').addEventListener('change', e => { settings.nightAuto = e.target.checked; saveSettings(); applyTheme('soft'); });
     $('end-select').addEventListener('change', e => { settings.endAlert = Number(e.target.value); saveSettings(); });
     $('naw-toggle').addEventListener('change', e => { settings.nawRemind = e.target.checked; saveSettings(); });
     $('nawcard-toggle').addEventListener('change', e => { settings.nawCard = e.target.checked; saveSettings(); renderNaw(); });
     $('prayers-list').addEventListener('click', e => { const c = e.target.closest && e.target.closest('.pchk'); if (c) togglePrayed(c.dataset.k); });
     $('share-times').addEventListener('click', shareTimes);
     $('export-share').addEventListener('click', exportShare);
+    $('bak-list').addEventListener('click', e => { const b = e.target.closest && e.target.closest('button'); if (!b) return; const x = bakList().find(y => String(y.at) === b.dataset.at); if (x && importText(x.d)) toast(t('bakDone')); });
     $('qada-plus').addEventListener('click', () => qadaSet(qadaGet() + 1));
     $('qada-minus').addEventListener('click', () => qadaSet(qadaGet() - 1));
     $('qada-add').addEventListener('click', () => { const mp = missedPending(); if (!mp.n) return; qadaSet(qadaGet() + mp.n); mp.isos.forEach(iso => { track[iso].c = 1; }); saveTrack(); renderQada(); });
-    $('freeze-btn').addEventListener('click', () => { compFrozen = !compFrozen; renderQibla(); });
     $('pre-select').addEventListener('change', e => { settings.preAlert = Number(e.target.value); saveSettings(); });
     $('test-btn').addEventListener('click', () => { unlockAudio(); notifyPrayer(t('testMsg'), null, 'test'); });
 
@@ -3596,6 +3508,8 @@ timer = setInterval(tick, 1000);   // عدّاد واحد فقط طول عمر �
 renderWird();
 recalc();
 setTimeout(checkLocDrift, 4000);
+setTimeout(() => { autoBakDaily(); renderBak(); }, 6000);
+renderBak();
 if (FIRST_RUN && !settings.onboarded) startOnboarding();
 </script>
 </body>
