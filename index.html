@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<!-- © 2026 Ahmed Nx — see the LICENSE file. Third-party components: THIRD-PARTY-NOTICES.md -->
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
@@ -167,6 +168,7 @@ i[data-ic] svg { width:100%; height:100%; fill:none; stroke:currentColor; stroke
 .searchbox { display:flex; align-items:center; gap:.5rem; background:var(--hover); border:1px solid var(--border); border-radius:.8rem; padding:0 .8rem; color:var(--muted); }
 .searchbox input { border:none; background:none; flex:1; padding:.65rem 0; outline:none; }
 .cat-row { display:flex; align-items:center; justify-content:space-between; gap:.6rem; width:100%; text-align:start; background:var(--hover); border:none; border-radius:.9rem; padding:.8rem .9rem; margin-bottom:.45rem; line-height:1.7; }
+.cat-row.grp { font-weight:700; border-inline-start:3px solid var(--accent); }
 .cat-row .n { flex:none; font-size:.75rem; color:var(--accent); background:var(--accent-soft); border-radius:99px; padding:.1rem .55rem; }
 .back-btn { display:flex; align-items:center; gap:.4rem; }
 
@@ -277,6 +279,14 @@ html.focus #tab-adhkar h3[data-i18n=adhkarTitle] { opacity:0; max-height:0; marg
 .pchk svg { width:1rem; height:1rem; stroke:currentColor; fill:none; stroke-width:3; }
 .pchk.on { background:var(--accent-soft); color:var(--accent); border-color:var(--accent); }
 .naw-row { display:flex; justify-content:space-between; align-items:center; gap:.8rem; padding:.65rem .1rem; border-top:1px solid var(--border); font-size:.9rem; }
+.about { text-align:center; padding:1.2rem .5rem .8rem; }
+.ab-name { font-size:1.3rem; font-weight:700; letter-spacing:.02em; }
+.ab-nick { display:flex; align-items:center; justify-content:center; gap:.6rem; margin:.5rem 0 1.2rem; color:var(--accent); font-size:1.05rem; letter-spacing:.08em; }
+.ab-nick .orn { width:.8rem; height:1.8rem; flex:none; } .ab-nick .orn.flip-x { transform:scaleX(-1); }
+.ab-line { display:flex; align-items:center; justify-content:center; gap:.5rem; margin-top:.7rem; color:var(--muted); font-size:.9rem; }
+.ab-line i[data-ic] { width:1.2rem; height:1.2rem; color:var(--accent); flex:none; }
+.ab-line svg { width:100%; height:100%; fill:none; stroke:currentColor; stroke-width:2; stroke-linecap:round; stroke-linejoin:round; }
+.naw-row .v.ok { color:var(--ok); } .naw-row .v.bad { color:var(--danger); }
 .naw-row:first-child { border-top:none; } .naw-row .v { color:var(--muted); font-family:ui-monospace,Menlo,Consolas,monospace; font-size:.85rem; text-align:end; }
 .w.hid { color:transparent; background:var(--hover); border-radius:.3rem; border-bottom:2px solid var(--border); cursor:pointer; user-select:none; -webkit-user-select:none; }
 .qada { display:flex; align-items:center; justify-content:center; gap:1rem; margin:.4rem 0; }
@@ -290,6 +300,25 @@ html.focus #tab-adhkar h3[data-i18n=adhkarTitle] { opacity:0; max-height:0; marg
 .wring circle.bg { stroke:var(--track); } .pbar { background:var(--track); }
 .wring.sm span svg { width:1.15rem; height:1.15rem; stroke:currentColor; fill:none; stroke-width:3; }
 #after-card:not([hidden]) ~ #backup-card { border-top-color:color-mix(in srgb, var(--border) 40%, transparent); margin-top:.6rem; padding-top:.7rem; }
+
+/* تخطيط التابلت والكمبيوتر: شريط جانبي + أعمدة */
+@media (min-width:820px), (orientation:landscape) and (max-height:520px) and (min-width:560px) {
+  #app { max-width:1120px; padding:1.5rem 2rem 2rem; padding-inline-start:6.6rem; }
+  #bottom-nav { top:0; bottom:0; right:auto; left:auto; inset-inline-start:0; width:5.2rem; border-top:none; border-inline-end:1px solid var(--border); padding-bottom:0; display:flex; }
+  #bottom-nav .inner { flex-direction:column; justify-content:center; gap:.3rem; max-width:none; margin:0; width:100%; }
+  .nav-btn { flex:none; padding:.9rem .2rem; }
+  #bottom-nav.nav-hidden { transform:none; }
+  html.onehand #abar { inset-inline-start:6.6rem; }
+  #toast { bottom:2rem; }
+}
+@media (min-width:820px) {
+  #tab-times { display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); gap:0 1.2rem; align-items:start; }
+  #tab-adhkar, #tab-settings { max-width:820px; margin-inline:auto; }
+  #tab-times > .card.hero { grid-column:1; grid-row:1; }
+  #tab-times > .card:nth-child(2) { grid-column:2; grid-row:1 / span 4; }
+  #tab-times > .card:nth-child(n+3) { grid-column:1; }
+}
+@media (min-width:1200px) { #app { max-width:1240px; } .hero-ring { width:17rem; height:17rem; } }
 @media (max-width:359px) {
   .card { padding:1rem .85rem; }
   .hero-ring { width:13.5rem; height:13.5rem; }
@@ -417,6 +446,13 @@ html.onehand #tab-adhkar { padding-bottom:3.8rem; }
             <div class="grid2" style="margin-top:.7rem">
                 <button id="loc-yes" class="btn-accent" data-i18n="locYes"></button>
                 <button id="loc-no" data-i18n="locNo"></button>
+            </div>
+        </div>
+        <div class="notice" id="mig-card" hidden>
+            <div style="font-weight:700" data-i18n="migCard"></div>
+            <div class="grid2" style="margin-top:.7rem">
+                <button id="mig-go" class="btn-accent" data-i18n="migGo"></button>
+                <button id="mig-no" data-i18n="migNo"></button>
             </div>
         </div>
         <div class="notice" id="backup-card" hidden>
@@ -633,6 +669,7 @@ html.onehand #tab-adhkar { padding-bottom:3.8rem; }
         <button data-sec="theme" data-i18n="sTheme"></button>
         <button data-sec="general" data-i18n="sGeneral"></button>
         <button data-sec="data" data-i18n="sData"></button>
+        <button data-sec="about" data-i18n="sAbout"></button>
     </div>
 
     <!-- الموقع والحساب -->
@@ -691,6 +728,16 @@ html.onehand #tab-adhkar { padding-bottom:3.8rem; }
         </div>
         <label class="switch"><span class="il"><i data-ic="moon"></i><span data-i18n="nawOn"></span></span><input type="checkbox" id="naw-toggle"></label>
         <label class="switch"><span class="il"><i data-ic="sun"></i><span data-i18n="nawCardOn"></span></span><input type="checkbox" id="nawcard-toggle"></label>
+        <details class="opts" id="diag" style="margin-bottom:.8rem">
+            <summary data-i18n="diagTitle"></summary>
+            <div id="diag-list"></div>
+            <p class="muted small" style="margin:.6rem 0" data-i18n="dgTip"></p>
+            <div class="grid2">
+                <button id="dg-perm" data-i18n="dgReqPerm"></button>
+                <button id="dg-sw" data-i18n="dgReSW"></button>
+            </div>
+            <button id="dg-reset" class="btn-block" style="margin-top:.6rem" data-i18n="dgReset"></button>
+        </details>
         <button id="test-btn" class="btn-block ibtn"><i data-ic="flask-conical"></i><span data-i18n="testAlert"></span></button>
 
         <h3 class="grp" data-i18n="grpDnd"></h3>
@@ -786,12 +833,24 @@ html.onehand #tab-adhkar { padding-bottom:3.8rem; }
         <p class="muted small" style="margin:0"><span data-i18n="fsNote"></span> <span data-i18n="animNote"></span></p>
     </div>
 
+    <div class="card sec" id="sec-about" hidden>
+        <div class="about">
+            <div class="ab-name" dir="ltr">Ahmed Yasser Saadallah</div>
+            <div class="ab-nick" dir="ltr"><svg class="orn" viewBox="0 0 14 30" aria-hidden="true"><path d="M11 2C3 9 3 21 11 28" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M2.6 15l1.9-1.9 1.9 1.9-1.9 1.9z" fill="currentColor"/></svg><span>Ahmed Nx</span><svg class="orn flip-x" viewBox="0 0 14 30" aria-hidden="true"><path d="M11 2C3 9 3 21 11 28" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M2.6 15l1.9-1.9 1.9 1.9-1.9 1.9z" fill="currentColor"/></svg></div>
+            <div class="ab-line"><i data-ic="badge-check"></i><span data-i18n="aboutCreated"></span></div>
+            <div class="ab-line"><i data-ic="badge-check"></i><span data-i18n="aboutRights"></span></div>
+        </div>
+    </div>
+
     <div class="card sec" id="sec-data" hidden>
         <h3 data-i18n="dataTitle"></h3>
         <div class="grid2">
             <button id="export-btn" class="ibtn"><i data-ic="download"></i><span data-i18n="exportBtn"></span></button>
             <button id="import-btn" class="ibtn"><i data-ic="upload"></i><span data-i18n="importBtn"></span></button>
         </div>
+        <h3 class="grp" id="mig-title" data-i18n="migTitle"></h3>
+        <p class="muted small" style="margin:0 0 .6rem;white-space:pre-line" data-i18n="migSteps"></p>
+        <button id="mig-pick" class="btn-accent btn-block ibtn"><i data-ic="upload"></i><span data-i18n="migPick"></span></button>
         <h3 class="grp" data-i18n="bakTitle"></h3>
         <div id="bak-list"></div>
         <p class="muted small" style="margin:.5rem 0 .8rem" data-i18n="bakNote"></p>
@@ -1000,7 +1059,7 @@ const ADHKAR = (() => {
 })();
 
 /* ===== أيقونات Lucide (ISC license) - المستخدم منها فقط ===== */
-const ICONS = {"clock":"<circle cx=\"12\" cy=\"12\" r=\"10\"/><path d=\"M12 6v6l4 2\"/>","book-open":"<path d=\"M12 5v16\"/><path d=\"M20.001 19A2 2 0 0022 17V5a2 2 0 00-1.999-2L16 3.002A5 5 0 0012 5a5 5 0 00-4-2H4a2 2 0 00-2 2v12a2 2 0 001.999 2H8a5 5 0 014 2 5 5 0 014-2z\"/>","sliders-horizontal":"<path d=\"M10 5H3\"/><path d=\"M12 19H3\"/><path d=\"M14 3v4\"/><path d=\"M16 17v4\"/><path d=\"M21 12h-9\"/><path d=\"M21 19h-5\"/><path d=\"M21 5h-7\"/><path d=\"M8 10v4\"/><path d=\"M8 12H3\"/>","sun":"<circle cx=\"12\" cy=\"12\" r=\"4\"/><path d=\"M12 2v2\"/><path d=\"M12 20v2\"/><path d=\"m4.93 4.93 1.41 1.41\"/><path d=\"m17.66 17.66 1.41 1.41\"/><path d=\"M2 12h2\"/><path d=\"M20 12h2\"/><path d=\"m6.34 17.66-1.41 1.41\"/><path d=\"m19.07 4.93-1.41 1.41\"/>","moon":"<path d=\"M20.985 12.486a9 9 0 1 1-9.473-9.472c.405-.022.617.46.402.803a6 6 0 0 0 8.268 8.268c.344-.215.825-.004.803.401\"/>","circle-dot":"<circle cx=\"12\" cy=\"12\" r=\"1\"/><circle cx=\"12\" cy=\"12\" r=\"10\"/>","library":"<path d=\"m16 6 4 14\"/><path d=\"M12 6v14\"/><path d=\"M8 8v12\"/><path d=\"M4 4v16\"/>","search":"<path d=\"m21 21-4.34-4.34\"/><circle cx=\"11\" cy=\"11\" r=\"8\"/>","arrow-right":"<path d=\"M5 12h14\"/><path d=\"m12 5 7 7-7 7\"/>","undo-2":"<path d=\"M9 14 4 9l5-5\"/><path d=\"M4 9h10.5a5.5 5.5 0 0 1 5.5 5.5a5.5 5.5 0 0 1-5.5 5.5H11\"/>","rotate-ccw":"<path d=\"M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8\"/><path d=\"M3 3v5h5\"/>","refresh-cw":"<path d=\"M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8\"/><path d=\"M21 3v5h-5\"/><path d=\"M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16\"/><path d=\"M8 16H3v5\"/>","smartphone":"<rect width=\"14\" height=\"20\" x=\"5\" y=\"2\" rx=\"2\" ry=\"2\"/><path d=\"M12 18h.01\"/>","square":"<rect width=\"18\" height=\"18\" x=\"3\" y=\"3\" rx=\"2\"/>","flame":"<path d=\"M12 3q1 4 4 6.5t3 5.5a1 1 0 0 1-14 0 5 5 0 0 1 1-3 1 1 0 0 0 5 0c0-2-1.5-3-1.5-5q0-2 2.5-4\"/>","map-pin":"<path d=\"M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0\"/><circle cx=\"12\" cy=\"10\" r=\"3\"/>","bell":"<path d=\"M10.268 21a2 2 0 0 0 3.464 0\"/><path d=\"M3.262 15.326A1 1 0 0 0 4 17h16a1 1 0 0 0 .74-1.673C19.41 13.956 18 12.499 18 8A6 6 0 0 0 6 8c0 4.499-1.411 5.956-2.738 7.326\"/>","volume-2":"<path d=\"M11 4.702a.705.705 0 0 0-1.203-.498L6.413 7.587A1.4 1.4 0 0 1 5.416 8H3a1 1 0 0 0-1 1v6a1 1 0 0 0 1 1h2.416a1.4 1.4 0 0 1 .997.413l3.383 3.384A.705.705 0 0 0 11 19.298z\"/><path d=\"M16 9a5 5 0 0 1 0 6\"/><path d=\"M19.364 18.364a9 9 0 0 0 0-12.728\"/>","alarm-clock":"<circle cx=\"12\" cy=\"13\" r=\"8\"/><path d=\"M12 9v4l2 2\"/><path d=\"M5 3 2 6\"/><path d=\"m22 6-3-3\"/><path d=\"M6.38 18.7 4 21\"/><path d=\"M17.64 18.67 20 21\"/>","flask-conical":"<path d=\"M14 2v6a2 2 0 0 0 .245.96l5.51 10.08A2 2 0 0 1 18 22H6a2 2 0 0 1-1.755-2.96l5.51-10.08A2 2 0 0 0 10 8V2\"/><path d=\"M6.453 15h11.094\"/><path d=\"M8.5 2h7\"/>","save":"<path d=\"M15.2 3a2 2 0 0 1 1.4.6l3.8 3.8a2 2 0 0 1 .6 1.4V19a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2z\"/><path d=\"M17 21v-7a1 1 0 0 0-1-1H8a1 1 0 0 0-1 1v7\"/><path d=\"M7 3v4a1 1 0 0 0 1 1h7\"/>","maximize":"<path d=\"M8 3H5a2 2 0 0 0-2 2v3\"/><path d=\"M21 8V5a2 2 0 0 0-2-2h-3\"/><path d=\"M3 16v3a2 2 0 0 0 2 2h3\"/><path d=\"M16 21h3a2 2 0 0 0 2-2v-3\"/>","download":"<path d=\"M12 15V3\"/><path d=\"M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4\"/><path d=\"m7 10 5 5 5-5\"/>","upload":"<path d=\"M12 3v12\"/><path d=\"m17 8-5-5-5 5\"/><path d=\"M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4\"/>","calendar":"<path d=\"M8 2v3\"/><path d=\"M16 2v3\"/><rect x=\"3\" y=\"3\" width=\"18\" height=\"18\" rx=\"2\"/><path d=\"M3 9h18\"/>","check":"<path d=\"M20 6 9 17l-5-5\"/>","x":"<path d=\"M18 6 6 18\"/><path d=\"m6 6 12 12\"/>","sparkles":"<path d=\"M11.017 2.814a1 1 0 0 1 1.966 0l1.051 5.558a2 2 0 0 0 1.594 1.594l5.558 1.051a1 1 0 0 1 0 1.966l-5.558 1.051a2 2 0 0 0-1.594 1.594l-1.051 5.558a1 1 0 0 1-1.966 0l-1.051-5.558a2 2 0 0 0-1.594-1.594l-5.558-1.051a1 1 0 0 1 0-1.966l5.558-1.051a2 2 0 0 0 1.594-1.594z\"/><path d=\"M20 2v4\"/><path d=\"M22 4h-4\"/><circle cx=\"4\" cy=\"20\" r=\"2\"/>","star":"<path d=\"M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z\"/>","grip-vertical":"<circle cx=\"9\" cy=\"12\" r=\"1\"/><circle cx=\"9\" cy=\"5\" r=\"1\"/><circle cx=\"9\" cy=\"19\" r=\"1\"/><circle cx=\"15\" cy=\"12\" r=\"1\"/><circle cx=\"15\" cy=\"5\" r=\"1\"/><circle cx=\"15\" cy=\"19\" r=\"1\"/>","printer":"<path d=\"M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2\"/><path d=\"M6 9V3a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v6\"/><rect x=\"6\" y=\"14\" width=\"12\" height=\"8\" rx=\"1\"/>"};
+const ICONS = {"badge-check":"<path d=\"M3.85 8.62a4 4 0 0 1 4.78-4.77 4 4 0 0 1 6.74 0 4 4 0 0 1 4.78 4.78 4 4 0 0 1 0 6.74 4 4 0 0 1-4.77 4.78 4 4 0 0 1-6.75 0 4 4 0 0 1-4.78-4.77 4 4 0 0 1 0-6.76Z\"/><path d=\"m16 9-5.5 5.5L8 12\"/>","clock":"<circle cx=\"12\" cy=\"12\" r=\"10\"/><path d=\"M12 6v6l4 2\"/>","book-open":"<path d=\"M12 5v16\"/><path d=\"M20.001 19A2 2 0 0022 17V5a2 2 0 00-1.999-2L16 3.002A5 5 0 0012 5a5 5 0 00-4-2H4a2 2 0 00-2 2v12a2 2 0 001.999 2H8a5 5 0 014 2 5 5 0 014-2z\"/>","sliders-horizontal":"<path d=\"M10 5H3\"/><path d=\"M12 19H3\"/><path d=\"M14 3v4\"/><path d=\"M16 17v4\"/><path d=\"M21 12h-9\"/><path d=\"M21 19h-5\"/><path d=\"M21 5h-7\"/><path d=\"M8 10v4\"/><path d=\"M8 12H3\"/>","sun":"<circle cx=\"12\" cy=\"12\" r=\"4\"/><path d=\"M12 2v2\"/><path d=\"M12 20v2\"/><path d=\"m4.93 4.93 1.41 1.41\"/><path d=\"m17.66 17.66 1.41 1.41\"/><path d=\"M2 12h2\"/><path d=\"M20 12h2\"/><path d=\"m6.34 17.66-1.41 1.41\"/><path d=\"m19.07 4.93-1.41 1.41\"/>","moon":"<path d=\"M20.985 12.486a9 9 0 1 1-9.473-9.472c.405-.022.617.46.402.803a6 6 0 0 0 8.268 8.268c.344-.215.825-.004.803.401\"/>","circle-dot":"<circle cx=\"12\" cy=\"12\" r=\"1\"/><circle cx=\"12\" cy=\"12\" r=\"10\"/>","library":"<path d=\"m16 6 4 14\"/><path d=\"M12 6v14\"/><path d=\"M8 8v12\"/><path d=\"M4 4v16\"/>","search":"<path d=\"m21 21-4.34-4.34\"/><circle cx=\"11\" cy=\"11\" r=\"8\"/>","arrow-right":"<path d=\"M5 12h14\"/><path d=\"m12 5 7 7-7 7\"/>","undo-2":"<path d=\"M9 14 4 9l5-5\"/><path d=\"M4 9h10.5a5.5 5.5 0 0 1 5.5 5.5a5.5 5.5 0 0 1-5.5 5.5H11\"/>","rotate-ccw":"<path d=\"M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8\"/><path d=\"M3 3v5h5\"/>","refresh-cw":"<path d=\"M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8\"/><path d=\"M21 3v5h-5\"/><path d=\"M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16\"/><path d=\"M8 16H3v5\"/>","smartphone":"<rect width=\"14\" height=\"20\" x=\"5\" y=\"2\" rx=\"2\" ry=\"2\"/><path d=\"M12 18h.01\"/>","square":"<rect width=\"18\" height=\"18\" x=\"3\" y=\"3\" rx=\"2\"/>","flame":"<path d=\"M12 3q1 4 4 6.5t3 5.5a1 1 0 0 1-14 0 5 5 0 0 1 1-3 1 1 0 0 0 5 0c0-2-1.5-3-1.5-5q0-2 2.5-4\"/>","map-pin":"<path d=\"M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0\"/><circle cx=\"12\" cy=\"10\" r=\"3\"/>","bell":"<path d=\"M10.268 21a2 2 0 0 0 3.464 0\"/><path d=\"M3.262 15.326A1 1 0 0 0 4 17h16a1 1 0 0 0 .74-1.673C19.41 13.956 18 12.499 18 8A6 6 0 0 0 6 8c0 4.499-1.411 5.956-2.738 7.326\"/>","volume-2":"<path d=\"M11 4.702a.705.705 0 0 0-1.203-.498L6.413 7.587A1.4 1.4 0 0 1 5.416 8H3a1 1 0 0 0-1 1v6a1 1 0 0 0 1 1h2.416a1.4 1.4 0 0 1 .997.413l3.383 3.384A.705.705 0 0 0 11 19.298z\"/><path d=\"M16 9a5 5 0 0 1 0 6\"/><path d=\"M19.364 18.364a9 9 0 0 0 0-12.728\"/>","alarm-clock":"<circle cx=\"12\" cy=\"13\" r=\"8\"/><path d=\"M12 9v4l2 2\"/><path d=\"M5 3 2 6\"/><path d=\"m22 6-3-3\"/><path d=\"M6.38 18.7 4 21\"/><path d=\"M17.64 18.67 20 21\"/>","flask-conical":"<path d=\"M14 2v6a2 2 0 0 0 .245.96l5.51 10.08A2 2 0 0 1 18 22H6a2 2 0 0 1-1.755-2.96l5.51-10.08A2 2 0 0 0 10 8V2\"/><path d=\"M6.453 15h11.094\"/><path d=\"M8.5 2h7\"/>","save":"<path d=\"M15.2 3a2 2 0 0 1 1.4.6l3.8 3.8a2 2 0 0 1 .6 1.4V19a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2z\"/><path d=\"M17 21v-7a1 1 0 0 0-1-1H8a1 1 0 0 0-1 1v7\"/><path d=\"M7 3v4a1 1 0 0 0 1 1h7\"/>","maximize":"<path d=\"M8 3H5a2 2 0 0 0-2 2v3\"/><path d=\"M21 8V5a2 2 0 0 0-2-2h-3\"/><path d=\"M3 16v3a2 2 0 0 0 2 2h3\"/><path d=\"M16 21h3a2 2 0 0 0 2-2v-3\"/>","download":"<path d=\"M12 15V3\"/><path d=\"M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4\"/><path d=\"m7 10 5 5 5-5\"/>","upload":"<path d=\"M12 3v12\"/><path d=\"m17 8-5-5-5 5\"/><path d=\"M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4\"/>","calendar":"<path d=\"M8 2v3\"/><path d=\"M16 2v3\"/><rect x=\"3\" y=\"3\" width=\"18\" height=\"18\" rx=\"2\"/><path d=\"M3 9h18\"/>","check":"<path d=\"M20 6 9 17l-5-5\"/>","x":"<path d=\"M18 6 6 18\"/><path d=\"m6 6 12 12\"/>","sparkles":"<path d=\"M11.017 2.814a1 1 0 0 1 1.966 0l1.051 5.558a2 2 0 0 0 1.594 1.594l5.558 1.051a1 1 0 0 1 0 1.966l-5.558 1.051a2 2 0 0 0-1.594 1.594l-1.051 5.558a1 1 0 0 1-1.966 0l-1.051-5.558a2 2 0 0 0-1.594-1.594l-5.558-1.051a1 1 0 0 1 0-1.966l5.558-1.051a2 2 0 0 0 1.594-1.594z\"/><path d=\"M20 2v4\"/><path d=\"M22 4h-4\"/><circle cx=\"4\" cy=\"20\" r=\"2\"/>","star":"<path d=\"M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z\"/>","grip-vertical":"<circle cx=\"9\" cy=\"12\" r=\"1\"/><circle cx=\"9\" cy=\"5\" r=\"1\"/><circle cx=\"9\" cy=\"19\" r=\"1\"/><circle cx=\"15\" cy=\"12\" r=\"1\"/><circle cx=\"15\" cy=\"5\" r=\"1\"/><circle cx=\"15\" cy=\"19\" r=\"1\"/>","printer":"<path d=\"M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2\"/><path d=\"M6 9V3a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v6\"/><rect x=\"6\" y=\"14\" width=\"12\" height=\"8\" rx=\"1\"/>"};
 
 const DAILY = [
     { k:'آية', t:'أَلَا بِذِكْرِ اللَّهِ تَطْمَئِنُّ الْقُلُوبُ', s:'سورة الرعد: 28' },
@@ -1058,7 +1117,14 @@ ar: {
     weekPrayTitle:'صلواتك هذا الأسبوع', weekPrayLine:'سجّلت {0} من {1} صلاة ({2}%)', weekPrayWorst:'أكثر صلاة فاتتك: {0} ({1} مرات)', weekPrayAll:'ما فاتتك أي صلاة مسجّلة هذا الأسبوع', weekPrayNone:'سجّل صلواتك من قائمة المواقيت لتظهر الإحصائية هنا',
     bakTitle:'النسخ الاحتياطية التلقائية', bakNote:'يحتفظ التطبيق بآخر 3 نسخ داخل الجهاز: واحدة يوميًا، وواحدة قبل كل استيراد أو استعادة.', bakEmpty:'لا توجد نسخ بعد', bakRestore:'استعادة', bakDone:'تمت الاستعادة',
     nightAutoOn:'تعتيم تلقائي في الأذكار بعد العشاء',
-    afterOpen:'فتح الأذكار', afterHide:'إخفاء',
+    diagTitle:'تشخيص الإشعارات', dgSwitch:'مفتاح الإشعارات', dgPerm:'إذن المتصفح', dgSecure:'اتصال آمن (https)', dgSW:'خدمة الخلفية', dgApp:'مثبّت كتطبيق', dgDnd:'عدم الإزعاج الآن', dgLast:'آخر إشعار',
+    dgNone:'لا يوجد بعد', dgOn:'مفعّل', dgOff:'غير مفعّل', dgGranted:'مسموح', dgDenied:'محظور', dgAsk:'لم يُطلب بعد', dgUnsupported:'غير مدعوم', dgYes:'نعم', dgNo:'لا', dgActive:'يعمل', dgPending:'قيد التسجيل', dgNoSW:'غير مسجّلة',
+    dgViaSW:'عبر خدمة الخلفية', dgViaPage:'عبر الصفحة', dgViaIn:'داخل التطبيق فقط', dgViaDnd:'تخطّاه عدم الإزعاج', dgErr:'فشل: {0}',
+    dgTip:'لضمان وصول التنبيهات: ألغِ تحسين البطارية لمتصفح Chrome، ولا تُنهِ التطبيق من قائمة التطبيقات الأخيرة، وثبّته على الشاشة الرئيسية.',
+    dgReqPerm:'طلب الإذن', dgReSW:'إعادة تسجيل الخدمة', dgReset:'إعادة ضبط إعدادات الإشعارات', dgResetSure:'اضغط مرة أخرى للتأكيد', dgResetDone:'تمت إعادة ضبط إعدادات الإشعارات',
+    migTitle:'نقل بياناتك من النسخة القديمة', migSteps:'1) افتح النسخة القديمة (الملف المحلي) على نفس الهاتف.\n2) من الإعدادات، ثم البيانات، اضغط «تصدير الإعدادات».\n3) ارجع هنا واضغط الزر التالي واختر الملف الذي نزل على هاتفك.', migPick:'اختيار ملف النسخة الاحتياطية',
+    migCard:'هل لديك بيانات في النسخة القديمة؟ يمكنك نقلها بملف واحد.', migGo:'انقل بياناتي', migNo:'لا شكرًا',
+    libSecs:'{0} أقسام', libTopics:'{0} موضوعًا', libInGroup:'{0} أقسام في هذا الموضوع', sAbout:'عنا', aboutCreated:'تاريخ الإنشاء 2026', aboutRights:'جميع الحقوق محفوظة', afterOpen:'فتح الأذكار', afterHide:'إخفاء',
     backupOn:'تذكير أسبوعي بالنسخة الاحتياطية', backupTitle:'مرّ أسبوع على آخر نسخة احتياطية', backupNow:'تصدير الآن', backupLater:'لاحقًا',
     readOpts:'خيارات القراءة', fontFace:'خط الأذكار', ffDefault:'الافتراضي', ffNaskh:'نسخ', ffThuluth:'ثلث / رقعة', fontNote:'يظهر حسب الخطوط المتاحة على جهازك',
     monthStat:'آخر 30 يومًا: الصباح {0} · المساء {1} · أيام نشطة {2}', legLess:'أقل', legMore:'أكثر',
@@ -1139,7 +1205,14 @@ en: {
     weekPrayTitle:'Your prayers this week', weekPrayLine:'Logged {0} of {1} prayers ({2}%)', weekPrayWorst:'Most missed: {0} ({1} times)', weekPrayAll:'No missed prayers logged this week', weekPrayNone:'Log your prayers from the times list to see stats here',
     bakTitle:'Automatic backups', bakNote:'The app keeps the last 3 copies on this device: one daily, and one before every import or restore.', bakEmpty:'No copies yet', bakRestore:'Restore', bakDone:'Restored',
     nightAutoOn:'Auto-dim adhkar after Isha',
-    afterOpen:'Open adhkar', afterHide:'Hide',
+    diagTitle:'Notification diagnostics', dgSwitch:'Notifications switch', dgPerm:'Browser permission', dgSecure:'Secure connection (https)', dgSW:'Background service', dgApp:'Installed as app', dgDnd:'Do not disturb now', dgLast:'Last notification',
+    dgNone:'None yet', dgOn:'On', dgOff:'Off', dgGranted:'Allowed', dgDenied:'Blocked', dgAsk:'Not asked yet', dgUnsupported:'Not supported', dgYes:'Yes', dgNo:'No', dgActive:'Running', dgPending:'Registering', dgNoSW:'Not registered',
+    dgViaSW:'via background service', dgViaPage:'via page', dgViaIn:'in-app only', dgViaDnd:'skipped by do not disturb', dgErr:'failed: {0}',
+    dgTip:'To make alerts reliable: turn off battery optimization for Chrome, do not swipe the app away from recents, and pin it to your home screen.',
+    dgReqPerm:'Request permission', dgReSW:'Re-register service', dgReset:'Reset notification settings', dgResetSure:'Tap again to confirm', dgResetDone:'Notification settings were reset',
+    migTitle:'Move your data from the old version', migSteps:'1) Open the old version (the local file) on the same phone.\n2) In Settings, then Data, tap “Export settings”.\n3) Come back here, tap the button below and choose the downloaded file.', migPick:'Choose backup file',
+    migCard:'Do you have data in the old version? You can move it with one file.', migGo:'Move my data', migNo:'No thanks',
+    libSecs:'{0} sections', libTopics:'{0} topics', libInGroup:'{0} sections in this topic', sAbout:'About', aboutCreated:'Created 2026', aboutRights:'All rights reserved', afterOpen:'Open adhkar', afterHide:'Hide',
     backupOn:'Weekly backup reminder', backupTitle:'It has been a week since your last backup', backupNow:'Export now', backupLater:'Later',
     readOpts:'Reading options', fontFace:'Adhkar font', ffDefault:'Default', ffNaskh:'Naskh', ffThuluth:'Thuluth / Ruqaa', fontNote:'Shown using the fonts available on your device',
     monthStat:'Last 30 days: morning {0} · evening {1} · active days {2}', legLess:'Less', legMore:'More',
@@ -1817,7 +1890,7 @@ function syncSubs() {
 function openTarget(tg) {
     if (!tg) return;
     adhkarSet = tg.set || 'library';
-    if (tg.lib !== undefined) { libMode = 'all'; libOpen = tg.lib; libRem = null; }
+    if (tg.lib !== undefined) { libMode = 'all'; libOpen = tg.lib; libRem = null; libGroup = LIB_OF[tg.lib] !== undefined ? LIB_OF[tg.lib] : null; }
     wirdBig = !!tg.wird;
     showTab('adhkar', true);
     renderAdhkar();
@@ -1836,20 +1909,26 @@ function inDnd(now) {
 function notifyPrayer(msg, target, kind, pk) {
     kind = kind || 'adhkar';
     const bypass = kind === 'goal' || kind === 'test';
-    if (!bypass && inDnd(Date.now()) && !(kind === 'prayer' && settings.dndPrayer !== false)) return;
+    if (!bypass && inDnd(Date.now()) && !(kind === 'prayer' && settings.dndPrayer !== false)) { store.set('pt-lastnotif', { at: Date.now(), msg, kind, via: 'dnd' }); return; }
     toast(msg);
     const pSnd = pk && settings.sndPrayers && settings.sndPrayers[pk] && settings.sndPrayers[pk] !== 'default' ? settings.sndPrayers[pk] : settings.sndPrayer;
     if (settings.sound) playSound(({ prayer: pSnd, test: settings.sndPrayer, adhkar: settings.sndAdhkar, wird: settings.sndWird, goal: settings.sndGoal })[kind] || settings.sndAdhkar);
     try { if (navigator.vibrate) navigator.vibrate([300, 150, 300]); } catch (e) {}
+    const L = { at: Date.now(), msg, kind, via: 'inapp' };
     try {
         if (window.Notification && Notification.permission === 'granted') {
-            if (swReg && swReg.showNotification) swReg.showNotification(t('notifTitle'), { body: msg, tag: 'prayer', icon: 'icon-192.png', data: { target: target || null } });
-            else {
+            if (swReg && swReg.showNotification) {
+                L.via = 'sw';
+                swReg.showNotification(t('notifTitle'), { body: msg, tag: 'prayer', icon: 'icon-192.png', data: { target: target || null } })
+                    .catch(err => { L.err = String((err && err.message) || err); store.set('pt-lastnotif', L); });
+            } else {
+                L.via = 'page';
                 const n = new Notification(t('notifTitle'), { body: msg, tag: 'prayer' });
                 if (target) n.onclick = () => { try { window.focus(); } catch (e) {} openTarget(target); n.close(); };
             }
         }
-    } catch (e) {}
+    } catch (e) { L.err = String((e && e.message) || e); }
+    store.set('pt-lastnotif', L);
 }
 let swReg = null;
 (function regSW() {
@@ -2160,7 +2239,7 @@ function renderContinue() {
     if (b.hidden) return;
     b.children[0].textContent = t('libContinue');
     b.children[1].textContent = HISN[p.c][0];
-    b.onclick = () => { libOpen = p.c; libRem = null; renderLibrary(true); setTimeout(() => window.scrollTo(0, p.y), 60); };
+    b.onclick = () => libGo(p.c, p.y);
 }
 const normAr = s => String(s).replace(/[ً-ٰٟـ]/g, '').replace(/[أإآٱ]/g, 'ا')
     .replace(/ى/g, 'ي').replace(/ة/g, 'ه').replace(/[^؀-ۿa-zA-Z0-9\s]/g, ' ').replace(/\s+/g, ' ').trim();
@@ -2170,6 +2249,40 @@ function libMatches(idx, words) {
 }
 let libCnt = (() => { const o = store.get('pt-libcnt', {}); return o && typeof o === 'object' ? o : {}; })();
 if (!libCnt.r || typeof libCnt.r !== 'object') libCnt.r = {};
+const LIB_GROUPS = [
+  ['النوم والاستيقاظ والرؤى', [1,2,28,29,30]],
+  ['الخلاء والوضوء', [3,4,5,6]],
+  ['المنزل', [7,8]],
+  ['المسجد والأذان', [9,10,11,12]],
+  ['الملابس', [13,14,15,16]],
+  ['أدعية داخل الصلاة', [17,18,19,20,21,22,23,24,25,31,41]],
+  ['الأذكار بعد الصلاة', [26,32]],
+  ['الهم والكرب والحاجة', [33,34,40,42,45]],
+  ['الخوف والأعداء', [35,36,37,38]],
+  ['الوسوسة والشيطان', [39,44,127]],
+  ['الذنب والتوبة', [43,128]],
+  ['المولود والأولاد', [46,47]],
+  ['المريض والرقية', [48,49,50,123,124]],
+  ['الميت والجنائز والمصيبة', [51,52,53,54,55,56,57,58,59]],
+  ['الريح والمطر والهلال', [60,61,62,63,64,65,66]],
+  ['الطعام والصيام', [67,68,69,70,71,72,73,74,75]],
+  ['العطاس', [76,77]],
+  ['الزواج والأسرة', [78,79,80]],
+  ['المجلس', [83,84]],
+  ['الدعاء في المعاملات والعلاقات', [85,86,88,89,90,92]],
+  ['المدح والسب', [111,112,113]],
+  ['الشرك والطيرة', [91,93]],
+  ['السلام', [107,108]],
+  ['الركوب والسفر', [94,95,96,97,98,99,100,101,102,103,104]],
+  ['الحج والعمرة', [114,115,116,117,118,119,120]],
+  ['الأمر السار والمكروه', [105,121,122]],
+  ['الديك والحمار والكلاب', [109,110]],
+  ['التسبيح والتحميد', [129,130]],
+];
+const LIB_OF = {};
+LIB_GROUPS.forEach(([n, ids], g) => ids.forEach(i => { LIB_OF[i] = g; }));
+let libGroup = null;
+function libGo(idx, y) { libOpen = idx; libRem = null; libGroup = LIB_OF[idx] !== undefined ? LIB_OF[idx] : null; renderLibrary(true); if (y === undefined) window.scrollTo(0, 0); else setTimeout(() => window.scrollTo(0, y), 60); }
 let libMode = 'all', favRem = {};
 (() => {
     const f = libCnt.f && typeof libCnt.f === 'object' ? libCnt.f : {};
@@ -2222,30 +2335,40 @@ function renderLibrary(anim) {
     const box = $('lib-list');
     box.innerHTML = '';
     let shown = 0;
-    // الأقسام اللي اسمها يطابق البحث تظهر الأول، ثم اللي النص جواها يطابق
-    const order = HISN.map((c, idx) => idx);
-    if (words.length) {
-        const nameHit = idx => words.every(w => normAr(HISN[idx][0]).includes(w));
-        order.sort((a, b) => (nameHit(a) ? 0 : 1) - (nameHit(b) ? 0 : 1) || a - b);
-    }
-    order.forEach(idx => {
-        const [name, items] = HISN[idx];
-        if (words.length && !libMatches(idx, words)) return;
-        shown++;
+    const catRow = (name, count, onClick, grp) => {
         const b = document.createElement('button');
-        b.className = 'cat-row';
+        b.className = 'cat-row' + (grp ? ' grp' : '');
         const a = document.createElement('span');
-        a.textContent = name;
-        a.setAttribute('lang', 'ar');
-        a.setAttribute('dir', 'rtl');
-        const n = document.createElement('span');
-        n.className = 'n';
-        n.textContent = items.length;
-        b.append(a, n);
-        b.addEventListener('click', () => { libOpen = idx; libRem = null; renderLibrary(true); window.scrollTo(0, 0); });
-        box.appendChild(b);
-    });
-    $('lib-count').textContent = shown ? t('libCount', shown) : t('libEmpty');
+        a.textContent = name; a.setAttribute('lang', 'ar'); a.setAttribute('dir', 'rtl');
+        const n = document.createElement('span'); n.className = 'n'; n.textContent = count;
+        b.append(a, n); b.addEventListener('click', onClick); box.appendChild(b);
+    };
+    const openIdx = idx => () => libGo(idx);
+    if (words.length) {
+        // البحث: قائمة مسطحة، والأقسام اللي اسمها يطابق البحث تظهر الأول
+        const nameHit = idx => words.every(w => normAr(HISN[idx][0]).includes(w));
+        const order = HISN.map((c, idx) => idx).sort((a, b) => (nameHit(a) ? 0 : 1) - (nameHit(b) ? 0 : 1) || a - b);
+        order.forEach(idx => { if (!libMatches(idx, words)) return; shown++; catRow(HISN[idx][0], HISN[idx][1].length, openIdx(idx)); });
+    } else if (libGroup !== null) {
+        const [gname, ids] = LIB_GROUPS[libGroup];
+        const back = document.createElement('button'); back.className = 'back-btn';
+        const ic = iconEl('arrow-right'); ic.classList.add('flip'); back.appendChild(ic);
+        const bt = document.createElement('span'); bt.textContent = t('libBack'); back.appendChild(bt);
+        back.addEventListener('click', () => { libGroup = null; renderLibrary(true); window.scrollTo(0, 0); });
+        const h = document.createElement('h3'); h.textContent = gname; h.setAttribute('lang', 'ar'); h.setAttribute('dir', 'rtl'); h.style.margin = '.8rem 0';
+        box.append(back, h);
+        ids.forEach(idx => { shown++; catRow(HISN[idx][0], HISN[idx][1].length, openIdx(idx)); });
+    } else {
+        const done = {};
+        HISN.forEach((c, idx) => {
+            const g = LIB_OF[idx];
+            if (g === undefined) { shown++; catRow(HISN[idx][0], HISN[idx][1].length, openIdx(idx)); return; }
+            if (done[g]) return;
+            done[g] = 1; shown++;
+            catRow(LIB_GROUPS[g][0], t('libSecs', LIB_GROUPS[g][1].length), () => { libGroup = g; renderLibrary(true); window.scrollTo(0, 0); }, true);
+        });
+    }
+    $('lib-count').textContent = libGroup !== null && !words.length ? t('libInGroup', shown) : shown ? t(words.length ? 'libCount' : 'libTopics', shown) : t('libEmpty');
     if (anim) fxIn(box.children, { y: 8, s: 18, d: 220 });
 }
 
@@ -3032,6 +3155,36 @@ function firstVisibleTab(id) {
     if (!(settings.hiddenTabs || []).includes(id)) return id;
     return HIDEABLE.find(k => !settings.hiddenTabs.includes(k)) || 'settings';
 }
+function renderDiag() {
+    const box = $('diag-list'); if (!box) return;
+    box.innerHTML = '';
+    const row = (a, v, c) => { const r = document.createElement('div'); r.className = 'naw-row'; const x = document.createElement('span'); x.textContent = a; const y = document.createElement('span'); y.className = 'v' + (c ? ' ' + c : ''); y.textContent = v; r.append(x, y); box.appendChild(r); };
+    const sup = !!window.Notification, perm = sup ? Notification.permission : 'unsupported';
+    row(t('dgSwitch'), settings.notify ? t('dgOn') : t('dgOff'), settings.notify ? 'ok' : 'bad');
+    row(t('dgPerm'), perm === 'granted' ? t('dgGranted') : perm === 'denied' ? t('dgDenied') : perm === 'default' ? t('dgAsk') : t('dgUnsupported'), perm === 'granted' ? 'ok' : 'bad');
+    const sec = location.protocol === 'https:' || location.hostname === 'localhost';
+    row(t('dgSecure'), sec ? t('dgYes') : t('dgNo'), sec ? 'ok' : 'bad');
+    let swv = t('dgNoSW'), swc = 'bad';
+    if ('serviceWorker' in navigator) { if (navigator.serviceWorker.controller) { swv = t('dgActive'); swc = 'ok'; } else if (swReg) { swv = t('dgPending'); swc = ''; } } else { swv = t('dgUnsupported'); }
+    row(t('dgSW'), swv, swc);
+    let app = false; try { app = !!(window.matchMedia && matchMedia('(display-mode: standalone)').matches) || !!navigator.standalone; } catch (e) {}
+    row(t('dgApp'), app ? t('dgYes') : t('dgNo'), app ? 'ok' : '');
+    row(t('dgDnd'), inDnd(Date.now()) ? t('dgYes') : t('dgNo'));
+    const L = store.get('pt-lastnotif', null);
+    if (!L || !L.at) row(t('dgLast'), t('dgNone'));
+    else {
+        let when = ''; try { when = new Intl.DateTimeFormat(isEn() ? 'en-GB' : 'ar-EG-u-nu-latn', { timeZone: state.tz, day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' }).format(new Date(L.at)); } catch (e) {}
+        const via = L.err ? t('dgErr', L.err) : L.via === 'sw' ? t('dgViaSW') : L.via === 'page' ? t('dgViaPage') : L.via === 'dnd' ? t('dgViaDnd') : t('dgViaIn');
+        row(t('dgLast'), when + ' · ' + via, L.err ? 'bad' : (L.via === 'sw' || L.via === 'page') ? 'ok' : '');
+    }
+    $('dg-perm').hidden = !(sup && perm === 'default');
+}
+let dgResetT = 0;
+function resetNotifSettings() {
+    ['notify', 'sound', 'preAlert', 'endAlert', 'adhkarRemind', 'remindSleep', 'remindWake', 'remindAfter', 'wirdRemind', 'nawRemind', 'dnd', 'dndFri', 'sndPrayer', 'sndAdhkar', 'sndWird', 'sndGoal'].forEach(k => { settings[k] = DEFAULTS[k]; });
+    settings.sndPrayers = Object.assign({}, DEFAULTS.sndPrayers);
+    saveSettings(); syncControls(); syncSubs(); renderDiag(); toast(t('dgResetDone'));
+}
 function syncNotifyStatus() {
     const el = $('notify-status'); if (!el) return;
     let k = '';
@@ -3216,6 +3369,7 @@ function importText(text) {
     store.set('pt-favs', favs);
     favRem = {}; saveLibCnt(); afterKey = ''; backupShown = null;
     if (!settings.backupAt) settings.backupAt = Date.now();
+    store.set('pt-migdone', 1); $('mig-card').hidden = true;
     refreshAll();
     toast(t('imported'));
     return true;
@@ -3369,12 +3523,27 @@ function bindUI() {
         syncNotifyStatus();
     });
     $('nightauto-toggle').addEventListener('change', e => { settings.nightAuto = e.target.checked; saveSettings(); applyTheme('soft'); });
+    $('diag').addEventListener('toggle', renderDiag);
+    $('dg-perm').addEventListener('click', async () => { try { await Notification.requestPermission(); } catch (e) {} syncNotifyStatus(); renderDiag(); });
+    $('dg-sw').addEventListener('click', () => {
+        if (!('serviceWorker' in navigator)) { renderDiag(); return; }
+        navigator.serviceWorker.getRegistrations().then(rs => Promise.all(rs.map(r => r.unregister()))).then(() => navigator.serviceWorker.register('sw.js')).then(r => { swReg = r; setTimeout(renderDiag, 800); }).catch(() => renderDiag());
+    });
+    $('dg-reset').addEventListener('click', () => {
+        const b = $('dg-reset');
+        if (!dgResetT) { b.textContent = t('dgResetSure'); dgResetT = setTimeout(() => { dgResetT = 0; b.textContent = t('dgReset'); }, 4000); return; }
+        clearTimeout(dgResetT); dgResetT = 0; b.textContent = t('dgReset'); resetNotifSettings();
+    });
+    $('test-btn').addEventListener('click', () => setTimeout(renderDiag, 300));
     $('end-select').addEventListener('change', e => { settings.endAlert = Number(e.target.value); saveSettings(); });
     $('naw-toggle').addEventListener('change', e => { settings.nawRemind = e.target.checked; saveSettings(); });
     $('nawcard-toggle').addEventListener('change', e => { settings.nawCard = e.target.checked; saveSettings(); renderNaw(); });
     $('prayers-list').addEventListener('click', e => { const c = e.target.closest && e.target.closest('.pchk'); if (c) togglePrayed(c.dataset.k); });
     $('share-times').addEventListener('click', shareTimes);
     $('export-share').addEventListener('click', exportShare);
+    $('mig-pick').addEventListener('click', () => $('import-file').click());
+    $('mig-go').addEventListener('click', () => { $('mig-card').hidden = true; store.set('pt-migdone', 1); showTab('settings'); showSec('data', true); setTimeout(() => $('mig-title').scrollIntoView({ block: 'start' }), 60); });
+    $('mig-no').addEventListener('click', () => { store.set('pt-migdone', 1); $('mig-card').hidden = true; });
     $('bak-list').addEventListener('click', e => { const b = e.target.closest && e.target.closest('button'); if (!b) return; const x = bakList().find(y => String(y.at) === b.dataset.at); if (x && importText(x.d)) toast(t('bakDone')); });
     $('qada-plus').addEventListener('click', () => qadaSet(qadaGet() + 1));
     $('qada-minus').addEventListener('click', () => qadaSet(qadaGet() - 1));
@@ -3508,6 +3677,11 @@ timer = setInterval(tick, 1000);   // عدّاد واحد فقط طول عمر �
 renderWird();
 recalc();
 setTimeout(checkLocDrift, 4000);
+function maybeMigCard(force) {
+    let https = false; try { https = location.protocol === 'https:'; } catch (e) {}
+    if ((https || force) && !store.get('pt-migdone', 0) && !Object.keys(track).length) $('mig-card').hidden = false;
+}
+setTimeout(maybeMigCard, 2500);
 setTimeout(() => { autoBakDaily(); renderBak(); }, 6000);
 renderBak();
 if (FIRST_RUN && !settings.onboarded) startOnboarding();
