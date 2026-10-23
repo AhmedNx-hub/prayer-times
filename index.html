@@ -78,6 +78,10 @@ input[type=color] { width:3rem; height:2.1rem; padding:0; border:1px solid var(-
 .switch input { width:1.2rem; height:1.2rem; accent-color:var(--accent); }
 .seg { display:flex; flex-wrap:wrap; background:var(--hover); border-radius:1rem; padding:.25rem; gap:.25rem; margin-bottom:1rem; }
 .seg button { flex:1 1 auto; border:none; background:none; border-radius:.8rem; padding:.55rem .3rem; font-size:.82rem; color:var(--muted); }
+.seg.scroll { flex-wrap:nowrap; overflow-x:auto; overflow-y:hidden; -webkit-overflow-scrolling:touch; scrollbar-width:none; overscroll-behavior-x:contain; padding-inline:14px;
+    -webkit-mask-image:linear-gradient(to right,transparent 0,#000 14px,#000 calc(100% - 14px),transparent 100%); mask-image:linear-gradient(to right,transparent 0,#000 14px,#000 calc(100% - 14px),transparent 100%); }
+.seg.scroll::-webkit-scrollbar { display:none; }
+.seg.scroll button { flex:0 0 auto; white-space:nowrap; padding:.55rem .95rem; }
 .seg button.on { background:var(--accent); color:var(--on-accent); font-weight:700; }
 .grid2 { display:grid; grid-template-columns:1fr 1fr; gap:.6rem; }
 .grid2 label { display:block; font-size:.75rem; color:var(--muted); margin-bottom:.2rem; text-align:center; }
@@ -662,7 +666,7 @@ html.onehand #tab-adhkar { padding-bottom:3.8rem; }
 
 <!-- ============ تبويب الإعدادات ============ -->
 <section class="panel" id="tab-settings" hidden>
-    <div class="seg" id="settings-seg">
+    <div class="seg scroll" id="settings-seg">
         <button data-sec="loc" data-i18n="sLoc"></button>
         <button data-sec="alert" data-i18n="sAlert"></button>
         <button data-sec="adh" data-i18n="sAdh"></button>
@@ -3451,7 +3455,10 @@ function showTab(id, noFx) {
 function showSec(id, noFx) {
     if (!document.getElementById('sec-' + id)) id = 'loc';
     document.querySelectorAll('.sec').forEach(s => { s.hidden = s.id !== 'sec-' + id; });
-    document.querySelectorAll('#settings-seg button').forEach(b => b.classList.toggle('on', b.dataset.sec === id));
+    document.querySelectorAll('#settings-seg button').forEach(b => {
+        const on = b.dataset.sec === id; b.classList.toggle('on', on);
+        if (on && b.scrollIntoView) { try { b.scrollIntoView({ inline: 'center', block: 'nearest', behavior: noFx ? 'auto' : 'smooth' }); } catch (e) {} }
+    });
     settings.sec = id;
     saveSettings();
     if (!noFx) fxIn(document.querySelectorAll('#sec-' + id), { y: 10, s: 0, d: 240 });
