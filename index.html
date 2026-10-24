@@ -300,7 +300,7 @@ html.sheet-open body { overflow:hidden; }
 .q-s span { font-family:'AmiriQ',serif; font-size:1.15rem; line-height:1.3; flex:1; min-width:0; }
 .q-s small { color:var(--muted); font-size:.7rem; flex:none; }
 .q-bar { display:flex; align-items:center; gap:.5rem; margin-bottom:.8rem; flex-wrap:wrap; }
-.q-bar button { min-height:2.6rem; padding:0 .8rem; } .q-bar .sp { flex:1; }
+.q-bar button { min-height:2.4rem; padding:0 .6rem; font-size:.85rem; } .q-bar .sp { flex:1; }
 .q-bar svg, .q-act svg { width:1.1rem; height:1.1rem; fill:none; stroke:currentColor; stroke-width:2; }
 .q-head { text-align:center; font-family:'AmiriQ',serif; font-size:2rem; color:var(--accent); margin:.4rem 0; }
 .q-bsm { text-align:center; font-family:'AmiriQ',serif; font-size:calc(var(--qfs,1.7rem)*1.05); margin:.4rem 0 1rem; }
@@ -308,8 +308,21 @@ html.sheet-open body { overflow:hidden; }
 .q-v { border-radius:.4rem; cursor:pointer; padding:0 .1rem; }
 .q-v.sel { background:var(--accent-soft); }
 .q-n { color:var(--accent); font-size:.8em; margin:0 .15em; white-space:nowrap; }
-.q-act { position:sticky; bottom:0; display:flex; gap:.4rem; flex-wrap:wrap; justify-content:center; padding:.6rem 0 .2rem; background:var(--bg); border-top:1px solid var(--border); margin-top:1rem; }
-.q-act button { min-height:2.5rem; padding:0 .8rem; }
+.q-act { position:sticky; bottom:0; margin:1rem .2rem 0; padding:.6rem .6rem .5rem; background:var(--surface); border:1px solid var(--border); border-radius:1.1rem; box-shadow:0 -6px 24px rgba(0,0,0,.35); animation:qUp .18s ease-out; z-index:5; }
+@keyframes qUp { from { transform:translateY(10px); opacity:0; } to { transform:none; opacity:1; } }
+.q-mh { display:flex; align-items:center; justify-content:space-between; gap:.5rem; margin-bottom:.5rem; }
+.q-mh b { font-size:.9rem; color:var(--accent); } .q-mh small { color:var(--muted); font-size:.72rem; display:block; margin-top:.1rem; }
+.q-mh .q-x { width:2rem; height:2rem; min-height:0; padding:0; border-radius:50%; display:grid; place-items:center; flex:none; }
+.q-mb { display:grid; grid-template-columns:repeat(5,1fr); gap:.35rem; }
+.q-mb button { display:flex; flex-direction:column; align-items:center; justify-content:center; gap:.25rem; min-height:3.6rem; padding:.4rem .15rem; border-radius:.8rem; font-size:.72rem; line-height:1.2; text-align:center; }
+.q-mb button svg { width:1.25rem; height:1.25rem; }
+.q-mb button.on { background:var(--accent-soft); color:var(--accent); border-color:var(--accent); }
+.q-mb button.on.g { background:rgba(46,204,113,.16); color:var(--ok); border-color:var(--ok); }
+.q-pg { display:block; text-align:center; font-family:system-ui,sans-serif; font-size:.72rem; color:var(--muted); margin:.5rem 0; line-height:1.4; border-top:1px dashed var(--border); padding-top:.3rem; }
+.q-v.sj .q-n::after { content:'\00a0\06E9'; color:var(--accent); }
+.q-jz { display:flex; gap:.4rem; overflow-x:auto; padding-bottom:.4rem; margin-bottom:.6rem; scrollbar-width:thin; }
+.q-jz button { flex:none; min-width:2.6rem; min-height:2.4rem; padding:0 .6rem; border-radius:.7rem; }
+.q-go { display:flex; gap:.4rem; margin-bottom:.8rem; } .q-go input { flex:1; min-width:0; }
 .q-res { display:block; width:100%; text-align:start; padding:.7rem .9rem; margin-bottom:.5rem; border-radius:.8rem; }
 .q-res small { color:var(--muted); display:block; margin-bottom:.2rem; }
 .q-res span { font-family:'AmiriQ',serif; font-size:1.25rem; line-height:1.9; direction:rtl; display:block; }
@@ -321,6 +334,16 @@ html.sheet-open body { overflow:hidden; }
 .q-v.bm .q-n::before { content:'\2605\00a0'; }
 .q-v.stop .q-n { background:var(--accent); color:var(--on-accent); border-radius:.4em; padding:0 .25em; }
 .q-sum { text-align:center; margin:.2rem 0 .8rem; }
+.q-w { border-radius:.3rem; }
+.q-text.h1 .q-w:nth-child(3n+3), .q-text.h2 .q-w { color:transparent; -webkit-text-fill-color:transparent; background:var(--hover); text-shadow:none; }
+.q-text .q-v.sel .q-w, .q-text.rev .q-w { color:inherit !important; -webkit-text-fill-color:currentColor !important; background:none !important; }
+.qbox { border:1px solid var(--border); border-radius:.9rem; padding:.8rem; margin-bottom:.8rem; }
+.qbox h3 { margin:0 0 .5rem; }
+.qbar { height:.5rem; border-radius:1rem; background:var(--hover); overflow:hidden; margin:.5rem 0; }
+.qbar i { display:block; height:100%; background:var(--accent); border-radius:1rem; }
+.qbox .row { display:flex; gap:.5rem; flex-wrap:wrap; margin-top:.6rem; } .qbox .row > * { flex:1 1 auto; }
+.qbox p { margin:.3rem 0; }
+.qbox select, .qbox input { width:100%; margin-top:.3rem; }
 .q-bar2 { display:flex; gap:.5rem; flex-direction:column; margin-bottom:.8rem; }
 
 .mt-cv { width:100%; display:block; border-radius:.8rem; margin:.8rem 0; background:#fff; }
@@ -1217,6 +1240,9 @@ ar: {
     zkTotal:'إجمالي المال الزكوي', zkNisab:'قيمة النصاب', zkDue:'الزكاة الواجبة (2.5%)', zkBelow:'المال أقل من النصاب: لا زكاة عليك الآن', zkNeedPrice:'أدخل سعر الجرام لحساب النصاب', zkNote:'للاسترشاد فقط، ويشترط مرور الحول على المال. استفتِ أهل العلم في حالتك.',
     toolQuran:'المصحف', qTitle:'المصحف الشريف', qSearchPh:'ابحث في القرآن أو اكتب اسم سورة', qContinue:'متابعة القراءة: {0} · آية {1}', qAyahs:'{0} آية', qBm:'العلامات', qNoData:'تعذّر تحميل ملف المصحف. تأكد من رفع الملف quran-uthmani.txt بجانب التطبيق.', qHere:'واصل من هنا', qMark:'علامة', qCopy:'نسخ', qCopied:'تم النسخ', qSaved:'تم حفظ الموضع', qLog:'سجّل {0} في ورد اليوم', qLogged:'تمت إضافة {0} إلى ورد اليوم', qNoRes:'لا نتائج. جرّب كلمة أخرى (البحث يتجاهل التشكيل).', qRes:'{0} نتيجة', qResMore:'{0} نتيجة (أول 50)', qPrev:'السورة السابقة', qNext:'السورة التالية', qIndex:'الفهرس', qFontP:'تكبير الخط', qFontM:'تصغير الخط', qCredit:'نص القرآن: مشروع Tanzil (CC BY 3.0) · الخط: Amiri Quran (OFL)', qLoading:'جارٍ التحميل...',
     navQuran:'القرآن', qStop:'وقفت هنا', qMem:'حفظت', qMemOff:'إلغاء الحفظ', qMemTo:'حفظت حتى هنا', qStopFrom:'علامة الوقوف: {0} · آية {1}', qMemSum:'المحفوظ: {0} آية من {1} ({2}٪)', qMemN:'حفظ {0}/{1}', qStopSaved:'تم وضع علامة الوقوف', qMemSaved:'تم تسجيل الحفظ', qMemSurah:'المحفوظ من السورة: {0}/{1}',
+    qPlanT:'خطة الختمة', qPlanNone:'لم تبدأ خطة بعد. اختر مدة الختمة ويحسب لك التطبيق ورد كل يوم.', qPlanStart:'ابدأ الخطة', qPlan30:'30 يومًا', qPlanRam:'شهر رمضان (30 يومًا)', qPlanCust:'مدة أخرى', qPlanDays:'عدد الأيام', qPlanFrom:'البداية من', qPlanFromStart:'أول المصحف', qPlanFromPos:'موضعي الحالي', qPlanDay:'اليوم {0} من {1}', qPlanToday:'ورد اليوم: {0} آية، من {1} آية {2} إلى {3} آية {4}', qPlanLeft:'باقي لإتمام ورد اليوم: {0} آية', qPlanDoneToday:'أتممت ورد اليوم', qPlanAhead:'أنت متقدم بـ {0} آية', qPlanBehind:'أنت متأخر بـ {0} آية', qPlanOn:'أنت على الجدول', qPlanRead:'اقرأ الآن', qPlanSync:'اعتبر قراءتي حتى موضعي الحالي', qPlanResched:'أعد توزيع الباقي', qPlanDelete:'حذف الخطة', qPlanSoon:'تبدأ الخطة بعد {0} يوم', qPlanFin:'ما شاء الله، ختمت القرآن', qPlanOver:'انتهت مدة الخطة وباقي {0} آية', qPlanProg:'{0} من {1} آية ({2}٪)', qPlanCancel:'إلغاء', qPlanNote:'التقدم يُحسب من القراءة داخل التطبيق (تمرير الصفحة). إن قرأت من مصحف ورقي استخدم زر «اعتبر قراءتي حتى موضعي الحالي».',
+    qRevBtn:'مراجعة المحفوظ', qRevInfo:'{0} آية محفوظة', qRevHead:'{0}: آية {1} إلى {2}', qRevLast:'آخر مراجعة: قبل {0} يوم', qRevNever:'لم تُراجع من قبل', qRevToday:'روجعت اليوم', qRevShow:'اكشف', qRevHide:'أخفِ', qRevDone:'راجعتها', qRevSkip:'تخطي', qRevNone:'لا يوجد محفوظ بعد. علّم الآيات بزر «حفظت» أثناء القراءة.', qRevCnt:'راجعت اليوم {0} مقطعًا', qHideL:'الإخفاء: {0}', qHide0:'متوقف', qHide1:'جزئي', qHide2:'كامل',
+    qJuz:'الأجزاء', qJuzN:'الجزء {0}', qHizbN:'الحزب {0}', qPageN:'صفحة {0}', qGoPage:'اذهب لصفحة', qGoPh:'رقم الصفحة (1 - 604)', qAuto:'احسب ورد اليوم تلقائيًا من القراءة', qPlanPages:'تقريبًا من صفحة {0} إلى صفحة {1}', qMemToS:'حتى هنا', qSajda:'سجدة تلاوة', qClose:'إغلاق',
     afterOpen:'فتح الأذكار', afterHide:'إخفاء',
     backupOn:'تذكير أسبوعي بالنسخة الاحتياطية', backupTitle:'مرّ أسبوع على آخر نسخة احتياطية', backupNow:'تصدير الآن', backupLater:'لاحقًا',
     readOpts:'خيارات القراءة', fontFace:'خط الأذكار', ffDefault:'الافتراضي', ffNaskh:'نسخ', ffThuluth:'ثلث / رقعة', fontNote:'يظهر حسب الخطوط المتاحة على جهازك',
@@ -1317,6 +1343,9 @@ en: {
     zkTotal:'Total zakatable wealth', zkNisab:'Nisab value', zkDue:'Zakat due (2.5%)', zkBelow:'Your wealth is below the nisab: no zakat is due now', zkNeedPrice:'Enter the price per gram to compute the nisab', zkNote:'For guidance only; a full lunar year must pass over the wealth. Ask a scholar about your case.',
     toolQuran:'Quran', qTitle:'The Holy Quran', qSearchPh:'Search the Quran or type a surah name', qContinue:'Continue reading: {0} · verse {1}', qAyahs:'{0} verses', qBm:'Bookmarks', qNoData:'Could not load the Quran file. Make sure quran-uthmani.txt is uploaded next to the app.', qHere:'Resume from here', qMark:'Bookmark', qCopy:'Copy', qCopied:'Copied', qSaved:'Position saved', qLog:'Log {0} to today’s portion', qLogged:'{0} added to today’s portion', qNoRes:'No results. Try another word (search ignores diacritics).', qRes:'{0} results', qResMore:'{0} results (first 50)', qPrev:'Previous surah', qNext:'Next surah', qIndex:'Index', qFontP:'Larger text', qFontM:'Smaller text', qCredit:'Quran text: Tanzil Project (CC BY 3.0) · Font: Amiri Quran (OFL)', qLoading:'Loading...',
     navQuran:'Quran', qStop:'I stopped here', qMem:'Memorized', qMemOff:'Unmark memorized', qMemTo:'Memorized up to here', qStopFrom:'Stop mark: {0} · verse {1}', qMemSum:'Memorized: {0} of {1} verses ({2}%)', qMemN:'Memorized {0}/{1}', qStopSaved:'Stop mark set', qMemSaved:'Memorization saved', qMemSurah:'Memorized in this surah: {0}/{1}',
+    qPlanT:'Khatma plan', qPlanNone:'No plan yet. Choose a duration and the app works out each day’s portion.', qPlanStart:'Start plan', qPlan30:'30 days', qPlanRam:'Ramadan (30 days)', qPlanCust:'Other duration', qPlanDays:'Number of days', qPlanFrom:'Start from', qPlanFromStart:'Beginning', qPlanFromPos:'My current position', qPlanDay:'Day {0} of {1}', qPlanToday:'Today’s portion: {0} verses, from {1} verse {2} to {3} verse {4}', qPlanLeft:'Left to finish today’s portion: {0} verses', qPlanDoneToday:'Today’s portion complete', qPlanAhead:'You are {0} verses ahead', qPlanBehind:'You are {0} verses behind', qPlanOn:'You are on schedule', qPlanRead:'Read now', qPlanSync:'Count my reading up to my current position', qPlanResched:'Redistribute the rest', qPlanDelete:'Delete plan', qPlanSoon:'Plan starts in {0} days', qPlanFin:'Well done, you completed the Quran', qPlanOver:'Plan period is over; {0} verses remain', qPlanProg:'{0} of {1} verses ({2}%)', qPlanCancel:'Cancel', qPlanNote:'Progress is counted from reading inside the app (scrolling). If you read from a printed copy, use “Count my reading up to my current position”.',
+    qRevBtn:'Review memorized', qRevInfo:'{0} memorized verses', qRevHead:'{0}: verses {1} to {2}', qRevLast:'Last reviewed {0} days ago', qRevNever:'Never reviewed', qRevToday:'Reviewed today', qRevShow:'Reveal', qRevHide:'Hide', qRevDone:'Reviewed', qRevSkip:'Skip', qRevNone:'Nothing memorized yet. Mark verses with “Memorized” while reading.', qRevCnt:'Reviewed {0} passages today', qHideL:'Hiding: {0}', qHide0:'Off', qHide1:'Partial', qHide2:'Full',
+    qJuz:'Juz', qJuzN:'Juz {0}', qHizbN:'Hizb {0}', qPageN:'Page {0}', qGoPage:'Go to page', qGoPh:'Page number (1 - 604)', qAuto:'Count today’s portion automatically from reading', qPlanPages:'About page {0} to page {1}', qMemToS:'Up to here', qSajda:'Prostration verse', qClose:'Close',
     afterOpen:'Open adhkar', afterHide:'Hide',
     backupOn:'Weekly backup reminder', backupTitle:'It has been a week since your last backup', backupNow:'Export now', backupLater:'Later',
     readOpts:'Reading options', fontFace:'Adhkar font', ffDefault:'Default', ffNaskh:'Naskh', ffThuluth:'Thuluth / Ruqaa', fontNote:'Shown using the fonts available on your device',
@@ -1402,7 +1431,7 @@ const store = {
     set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) {} }
 };
 
-const APP_VER = '2026.10.24-3';
+const APP_VER = '2026.10.24-5';
 function logErr(m) { try { const l = store.get('pt-errs', []); l.push({ at: Date.now(), m: String(m).slice(0, 200) }); store.set('pt-errs', l.slice(-10)); } catch (e) {} }
 window.addEventListener('error', e => logErr((e.message || 'error') + ' @' + String(e.filename || '').split('/').pop() + ':' + (e.lineno || 0)));
 window.addEventListener('unhandledrejection', e => logErr('promise: ' + ((e.reason && e.reason.message) || e.reason)));
@@ -1779,7 +1808,23 @@ function closeSheet() { $('sheet').hidden = true; document.documentElement.class
 const SUR_AR = ["الفاتحة", "البقرة", "آل عمران", "النساء", "المائدة", "الأنعام", "الأعراف", "الأنفال", "التوبة", "يونس", "هود", "يوسف", "الرعد", "إبراهيم", "الحجر", "النحل", "الإسراء", "الكهف", "مريم", "طه", "الأنبياء", "الحج", "المؤمنون", "النور", "الفرقان", "الشعراء", "النمل", "القصص", "العنكبوت", "الروم", "لقمان", "السجدة", "الأحزاب", "سبأ", "فاطر", "يس", "الصافات", "ص", "الزمر", "غافر", "فصلت", "الشورى", "الزخرف", "الدخان", "الجاثية", "الأحقاف", "محمد", "الفتح", "الحجرات", "ق", "الذاريات", "الطور", "النجم", "القمر", "الرحمن", "الواقعة", "الحديد", "المجادلة", "الحشر", "الممتحنة", "الصف", "الجمعة", "المنافقون", "التغابن", "الطلاق", "التحريم", "الملك", "القلم", "الحاقة", "المعارج", "نوح", "الجن", "المزمل", "المدثر", "القيامة", "الإنسان", "المرسلات", "النبأ", "النازعات", "عبس", "التكوير", "الانفطار", "المطففين", "الانشقاق", "البروج", "الطارق", "الأعلى", "الغاشية", "الفجر", "البلد", "الشمس", "الليل", "الضحى", "الشرح", "التين", "العلق", "القدر", "البينة", "الزلزلة", "العاديات", "القارعة", "التكاثر", "العصر", "الهمزة", "الفيل", "قريش", "الماعون", "الكوثر", "الكافرون", "النصر", "المسد", "الإخلاص", "الفلق", "الناس"];
 const SUR_EN = ["Al-Fatihah", "Al-Baqarah", "Aal-Imran", "An-Nisa", "Al-Ma’idah", "Al-An’am", "Al-A’raf", "Al-Anfal", "At-Tawbah", "Yunus", "Hud", "Yusuf", "Ar-Ra’d", "Ibrahim", "Al-Hijr", "An-Nahl", "Al-Isra", "Al-Kahf", "Maryam", "Ta-Ha", "Al-Anbiya", "Al-Hajj", "Al-Mu’minun", "An-Nur", "Al-Furqan", "Ash-Shu’ara", "An-Naml", "Al-Qasas", "Al-Ankabut", "Ar-Rum", "Luqman", "As-Sajdah", "Al-Ahzab", "Saba", "Fatir", "Ya-Sin", "As-Saffat", "Sad", "Az-Zumar", "Ghafir", "Fussilat", "Ash-Shura", "Az-Zukhruf", "Ad-Dukhan", "Al-Jathiyah", "Al-Ahqaf", "Muhammad", "Al-Fath", "Al-Hujurat", "Qaf", "Adh-Dhariyat", "At-Tur", "An-Najm", "Al-Qamar", "Ar-Rahman", "Al-Waqi’ah", "Al-Hadid", "Al-Mujadila", "Al-Hashr", "Al-Mumtahanah", "As-Saff", "Al-Jumu’ah", "Al-Munafiqun", "At-Taghabun", "At-Talaq", "At-Tahrim", "Al-Mulk", "Al-Qalam", "Al-Haqqah", "Al-Ma’arij", "Nuh", "Al-Jinn", "Al-Muzzammil", "Al-Muddaththir", "Al-Qiyamah", "Al-Insan", "Al-Mursalat", "An-Naba", "An-Nazi’at", "Abasa", "At-Takwir", "Al-Infitar", "Al-Mutaffifin", "Al-Inshiqaq", "Al-Buruj", "At-Tariq", "Al-A’la", "Al-Ghashiyah", "Al-Fajr", "Al-Balad", "Ash-Shams", "Al-Layl", "Ad-Duha", "Ash-Sharh", "At-Tin", "Al-Alaq", "Al-Qadr", "Al-Bayyinah", "Az-Zalzalah", "Al-Adiyat", "Al-Qari’ah", "At-Takathur", "Al-Asr", "Al-Humazah", "Al-Fil", "Quraysh", "Al-Ma’un", "Al-Kawthar", "Al-Kafirun", "An-Nasr", "Al-Masad", "Al-Ikhlas", "Al-Falaq", "An-Nas"];
 const surName = n => (isEn() ? SUR_EN : SUR_AR)[n - 1];
-let QD = null, QP = null, QNORM = null, qCur = 0, qSel = null;
+/* بيانات الصفحات والأجزاء والأرباع والسجدات: Tanzil Quran Metadata 1.0 — CC BY 3.0 — tanzil.net (أرقام الآيات تراكمية من 1 إلى 6236) */
+const QMETA = {"pg":[1,8,13,24,32,37,45,56,65,69,77,84,91,96,101,109,113,120,127,134,142,149,153,161,171,177,184,189,194,198,204,210,218,223,227,232,238,241,245,253,256,260,264,267,272,277,282,289,290,294,303,309,316,323,331,339,346,355,364,371,377,385,394,402,409,415,426,434,442,447,451,459,467,474,480,488,494,500,505,508,513,517,520,527,531,538,545,553,559,568,573,580,585,588,595,599,607,615,621,628,634,641,648,656,664,669,672,675,679,683,687,693,701,706,711,715,720,727,734,740,746,752,759,765,773,778,783,790,798,808,817,825,834,842,849,858,863,871,880,884,891,900,908,914,921,927,932,936,941,947,955,966,977,985,992,998,1006,1012,1022,1028,1036,1042,1050,1059,1075,1085,1092,1098,1104,1110,1114,1118,1125,1133,1142,1150,1161,1169,1177,1186,1194,1201,1206,1213,1222,1230,1236,1242,1249,1256,1262,1267,1272,1276,1283,1290,1297,1304,1308,1315,1322,1329,1335,1342,1347,1353,1358,1365,1371,1379,1385,1390,1398,1407,1418,1426,1435,1443,1453,1462,1471,1479,1486,1493,1502,1511,1519,1527,1536,1545,1555,1562,1571,1582,1591,1601,1611,1619,1627,1634,1640,1649,1660,1666,1675,1683,1692,1700,1708,1713,1721,1726,1736,1742,1750,1756,1761,1769,1775,1784,1793,1803,1818,1834,1854,1873,1893,1908,1916,1928,1936,1944,1956,1966,1974,1981,1989,1995,2004,2012,2020,2030,2037,2047,2057,2068,2079,2088,2096,2105,2116,2126,2134,2145,2156,2161,2168,2175,2186,2194,2202,2215,2224,2238,2251,2262,2276,2289,2302,2315,2327,2346,2361,2386,2400,2413,2425,2436,2447,2462,2474,2484,2494,2508,2519,2528,2541,2556,2565,2574,2585,2596,2601,2611,2619,2626,2634,2642,2651,2660,2668,2674,2691,2701,2716,2733,2748,2763,2778,2792,2802,2812,2819,2823,2828,2835,2845,2850,2853,2858,2867,2876,2888,2899,2911,2923,2933,2952,2972,2993,3016,3044,3069,3092,3116,3139,3160,3173,3182,3195,3204,3215,3223,3236,3248,3258,3266,3274,3281,3288,3296,3303,3312,3323,3330,3337,3347,3355,3364,3371,3379,3386,3393,3404,3415,3425,3434,3442,3451,3460,3470,3481,3489,3498,3504,3515,3524,3534,3540,3549,3556,3564,3569,3577,3584,3588,3596,3607,3614,3621,3629,3638,3646,3655,3664,3672,3679,3691,3699,3705,3718,3733,3746,3760,3776,3789,3813,3840,3865,3891,3915,3942,3971,3987,3997,4013,4032,4054,4064,4069,4080,4090,4099,4106,4115,4126,4133,4141,4150,4159,4167,4174,4183,4192,4200,4211,4219,4230,4239,4248,4257,4265,4273,4283,4288,4295,4304,4317,4324,4336,4348,4359,4373,4386,4399,4415,4433,4454,4474,4487,4496,4506,4516,4525,4531,4539,4546,4557,4565,4575,4584,4593,4599,4607,4612,4617,4624,4631,4646,4666,4682,4706,4727,4750,4767,4785,4811,4829,4853,4874,4896,4918,4942,4969,4996,5030,5056,5079,5087,5094,5100,5105,5111,5116,5126,5130,5136,5143,5151,5156,5162,5169,5178,5186,5193,5200,5209,5218,5223,5230,5237,5242,5254,5268,5287,5314,5332,5358,5386,5415,5430,5448,5461,5476,5495,5513,5543,5571,5597,5617,5642,5673,5703,5728,5759,5801,5830,5855,5883,5910,5932,5964,5994,6017,6044,6073,6099,6126,6138,6156,6177,6194,6208,6222],"q":[1,33,51,67,82,99,113,131,149,165,184,196,210,226,240,250,260,270,279,290,308,326,345,368,386,406,426,446,464,479,494,505,517,529,551,567,581,593,607,628,641,656,670,681,696,710,720,736,751,766,778,802,825,848,863,884,900,916,930,940,955,985,1001,1019,1042,1071,1096,1110,1125,1143,1161,1182,1201,1221,1236,1254,1269,1281,1295,1310,1328,1346,1357,1375,1390,1417,1435,1454,1479,1497,1514,1534,1557,1581,1603,1626,1649,1673,1697,1712,1726,1742,1760,1778,1803,1852,1902,1931,1952,1976,1991,2012,2030,2052,2079,2099,2128,2157,2172,2191,2215,2239,2272,2309,2349,2403,2431,2459,2484,2512,2534,2566,2596,2614,2633,2655,2674,2709,2748,2792,2812,2826,2844,2856,2876,2908,2933,2984,3043,3113,3160,3186,3215,3241,3264,3281,3303,3328,3341,3366,3386,3410,3440,3463,3491,3514,3534,3551,3564,3584,3593,3616,3630,3652,3675,3701,3733,3765,3810,3871,3933,3991,4022,4066,4090,4111,4134,4154,4174,4199,4227,4243,4265,4285,4299,4323,4349,4382,4431,4485,4511,4531,4555,4578,4601,4613,4626,4657,4706,4759,4810,4855,4902,4980,5054,5091,5105,5118,5137,5157,5178,5192,5218,5230,5242,5272,5324,5394,5448,5495,5552,5610,5673,5759,5830,5885,5949,6024,6091,6155],"j":[1,149,260,386,517,641,751,900,1042,1201,1328,1479,1649,1803,2030,2215,2484,2674,2876,3215,3386,3564,3733,4090,4265,4511,4706,5105,5242,5673],"sj":[1160,1722,1951,2138,2308,2613,2672,2915,3185,3518,3994,4256,4846,5905,6125]};
+const QSJ = new Set(QMETA.sj), QPGMAP = new Map(QMETA.pg.map((g, i) => [g, i + 1])), QJZMAP = new Map(QMETA.j.map((g, i) => [g, i + 1]));
+function qAt(arr, g) { let lo = 0, hi = arr.length - 1, r = 0; while (lo <= hi) { const m = (lo + hi) >> 1; if (arr[m] <= g) { r = m + 1; lo = m + 1; } else hi = m - 1; } return r || 1; }
+let qLastPg = 0;
+function qAutoPage(g) {
+    try {
+        if (store.get('pt-qauto', true) === false) return;
+        const pg = qAt(QMETA.pg, g), iso = dayOf(state.tz, 0).iso;
+        let o = store.get('pt-qpg', null); if (!o || o.d !== iso) o = { d: iso, p: [] };
+        const add = [pg]; if (qLastPg && pg > qLastPg && pg - qLastPg <= 5) for (let x = qLastPg + 1; x < pg; x++) add.push(x);
+        qLastPg = pg; let ch = false; add.forEach(x => { if (!o.p.includes(x)) { o.p.push(x); ch = true; } });
+        if (!ch) return; store.set('pt-qpg', o);
+        const r = trackDay(iso); if ((r.q || 0) < o.p.length) { r.q = Math.min(604, o.p.length); saveTrack(); renderWird(); checkBadges(); }
+    } catch (e) {}
+}
+let QOFF = null, QD = null, QP = null, QNORM = null, qCur = 0, qSel = null;
 function loadQuran() {
     if (QD) return Promise.resolve(QD);
     if (QP) return QP;
@@ -1791,6 +1836,7 @@ function loadQuran() {
         const bsm = d[0][0];
         for (let i = 1; i < 114; i++) if (i !== 8 && d[i][0].startsWith(bsm + ' ')) d[i][0] = d[i][0].slice(bsm.length + 1).trim();
         if (d.some(a => !a[0])) throw new Error('quran bad');
+        QOFF = [0]; for (let i = 0; i < 114; i++) QOFF.push(QOFF[i] + d[i].length);
         QD = d; return d;
     }).catch(e => { QP = null; throw e; });
     return QP;
@@ -1799,7 +1845,13 @@ const qNum = n => String(n).replace(/\d/g, c => '٠١٢٣٤٥٦٧٨٩'[c]);
 function qNorm(x) { return x.replace(/[\u0640\u064B-\u065F\u0670\u06D6-\u06ED]/g, '').replace(/[\u0671\u0622\u0623\u0625]/g, '\u0627').replace(/\u0649/g, '\u064A').replace(/\u0629/g, '\u0647'); }
 function qPos() { return store.get('pt-qpos', null); }
 function qBms() { return store.get('pt-qbm', []); }
-function qSetPos(s, a) { store.set('pt-qpos', { s, a }); }
+function qSetPos(s, a, count) {
+    store.set('pt-qpos', { s, a });
+    if (!count || !QOFF) return;
+    const p = store.get('pt-qplan', null); if (!p) return;
+    const g = QOFF[s - 1] + a, mx = p.max || p.base || 0;
+    if (g > mx && (count === 2 || g - mx <= 400)) { p.max = g; store.set('pt-qplan', p); }
+}
 let qInTab = true;
 function qTop() { window.scrollTo(0, 0); }
 function qMemAll() { return store.get('pt-qmem', {}); }
@@ -1811,6 +1863,109 @@ function renderQuranTab(goS, goA) {
     b.dataset.r = '1'; b.textContent = t('qLoading'); b.className = 'card qtab muted center';
     loadQuran().then(d => { b.className = 'card qtab'; b.innerHTML = ''; if (goS) qSurah(b, d, goS, goA); else qIndex(b, d); })
         .catch(() => { b.dataset.r = ''; b.className = 'card qtab muted center'; b.textContent = t('qNoData'); });
+}
+function qWords(el, v) {
+    v.split(' ').forEach((w, i) => { if (i) el.appendChild(document.createTextNode(' ')); const x = document.createElement('span'); x.className = 'q-w'; x.textContent = w; el.appendChild(x); });
+    el.appendChild(document.createTextNode(' '));
+}
+const qDay = iso => { const [y, m, d] = iso.split('-').map(Number); return Math.round(Date.UTC(y, m - 1, d) / 864e5); };
+const qLoc = g => { let s = 1; while (s < 114 && QOFF[s] < g) s++; return [s, g - QOFF[s - 1]]; };
+function qPlanBox(b, d) {
+    const box = document.createElement('div'); box.className = 'qbox';
+    const h = document.createElement('h3'); h.textContent = t('qPlanT'); box.appendChild(h);
+    const p = store.get('pt-qplan', null), TOT = 6236, p0 = () => { const e = document.createElement('p'); box.appendChild(e); return e; };
+    const redo = () => qIndex(b, d);
+    if (!p) {
+        p0().className = 'muted small'; box.lastChild.textContent = t('qPlanNone');
+        const sel = document.createElement('select'); sel.setAttribute('aria-label', t('qPlanT'));
+        [['30', t('qPlan30')], ['ram', t('qPlanRam')], ['c', t('qPlanCust')]].forEach(([v, l]) => { const o = document.createElement('option'); o.value = v; o.textContent = l; sel.appendChild(o); });
+        const num = document.createElement('input'); num.type = 'number'; num.min = 1; num.max = 365; num.value = 60; num.hidden = true; num.setAttribute('aria-label', t('qPlanDays'));
+        sel.addEventListener('change', () => { num.hidden = sel.value !== 'c'; });
+        const fr = document.createElement('select'); fr.setAttribute('aria-label', t('qPlanFrom'));
+        [['0', t('qPlanFromStart')], ['1', t('qPlanFromPos')]].forEach(([v, l]) => { const o = document.createElement('option'); o.value = v; o.textContent = t('qPlanFrom') + ': ' + l; fr.appendChild(o); });
+        box.appendChild(sel); box.appendChild(num); box.appendChild(fr);
+        const go = qBtn('btn-accent btn-block ibtn', 'check', t('qPlanStart'), () => {
+            let days = sel.value === '30' ? 30 : sel.value === 'ram' ? 30 : Math.max(1, Math.min(365, Math.round(Number(num.value) || 30)));
+            let start = dayOf(state.tz, 0).iso;
+            if (sel.value === 'ram') { const r = nextRamadan(); if (r) start = r.iso; }
+            const ps = qPos(), base = fr.value === '1' && ps ? Math.max(0, QOFF[ps.s - 1] + ps.a - 1) : 0;
+            store.set('pt-qplan', { start, days, base, max: base }); redo();
+        }); go.style.marginTop = '.6rem'; box.appendChild(go);
+        return box;
+    }
+    const mx = Math.max(p.base || 0, p.max || 0), left = TOT - (p.base || 0), tgt = Math.ceil(left / p.days);
+    const dn = qDay(dayOf(state.tz, 0).iso) - qDay(p.start) + 1;
+    const pct = (mx / TOT * 100);
+    const pr = p0(); pr.textContent = t('qPlanProg', mx, TOT, pct.toFixed(1)); pr.className = 'small';
+    const bar = document.createElement('div'); bar.className = 'qbar'; const bi = document.createElement('i'); bi.style.width = pct + '%'; bar.appendChild(bi); box.appendChild(bar);
+    const read = qBtn('btn-accent ibtn', 'book-open', t('qPlanRead'), () => { const [s2, a2] = qLoc(Math.min(TOT, mx + 1)); qSurah(b, d, s2, a2); });
+    if (mx >= TOT) { p0().textContent = t('qPlanFin'); }
+    else if (dn < 1) { p0().textContent = t('qPlanSoon', 1 - dn); p0().className = 'muted small'; }
+    else if (dn > p.days) { p0().textContent = t('qPlanOver', TOT - mx); box.appendChild(read); }
+    else {
+        const startToday = Math.min(TOT, (p.base || 0) + tgt * (dn - 1)), endToday = Math.min(TOT, (p.base || 0) + tgt * dn);
+        p0().textContent = t('qPlanDay', dn, p.days); box.lastChild.className = 'muted small';
+        const [s1, a1] = qLoc(startToday + 1), [s2, a2] = qLoc(endToday);
+        p0().textContent = t('qPlanToday', endToday - startToday, surName(s1), a1, surName(s2), a2);
+        p0().textContent = t('qPlanPages', qAt(QMETA.pg, startToday + 1), qAt(QMETA.pg, Math.max(1, endToday))); box.lastChild.className = 'muted small';
+        const rem = endToday - mx;
+        p0().textContent = rem > 0 ? t('qPlanLeft', rem) : t('qPlanDoneToday'); box.lastChild.style.color = rem > 0 ? '' : 'var(--ok)';
+        const diff = mx - startToday;
+        p0().textContent = diff > 0 ? t('qPlanAhead', diff) : diff < 0 ? t('qPlanBehind', -diff) : t('qPlanOn'); box.lastChild.className = 'small';
+        box.appendChild(read);
+    }
+    const row = document.createElement('div'); row.className = 'row';
+    row.appendChild(qBtn('ibtn', 'check', t('qPlanSync'), () => { const ps = qPos(); if (!ps) return; p.max = Math.max(mx, QOFF[ps.s - 1] + ps.a); store.set('pt-qplan', p); redo(); }));
+    if (dn >= 1 && mx < TOT) row.appendChild(qBtn('ibtn', 'refresh-cw', t('qPlanResched'), () => {
+        const rd = Math.max(1, p.days - dn + 1); store.set('pt-qplan', { start: dayOf(state.tz, 0).iso, days: rd, base: mx, max: mx }); redo(); }));
+    row.appendChild(qBtn('ibtn', 'x', t('qPlanDelete'), () => { store.set('pt-qplan', null); redo(); }));
+    box.appendChild(row);
+    const nt = p0(); nt.className = 'muted small'; nt.textContent = t('qPlanNote'); nt.style.marginTop = '.6rem';
+    return box;
+}
+// ===== مراجعة المحفوظ =====
+let qSkip = new Set(), qRevN = 0;
+const qRevMap = () => store.get('pt-qrev', {});
+function qRevPick() {
+    const mem = qMemAll(), rev = qRevMap(), cands = [];
+    Object.keys(mem).map(Number).sort((x, y) => x - y).forEach(s => {
+        const arr = mem[s]; let i = 0;
+        while (i < arr.length) {
+            let j = i; while (j + 1 < arr.length && arr[j + 1] === arr[j] + 1 && j - i < 9) j++;
+            let sc = Infinity; for (let k = i; k <= j; k++) sc = Math.min(sc, (rev[s] || {})[arr[k]] || 0);
+            cands.push({ s, a1: arr[i], a2: arr[j], sc, key: s + ':' + arr[i] }); i = j + 1;
+        }
+    });
+    if (!cands.length) return null;
+    let pool = cands.filter(c => !qSkip.has(c.key)); if (!pool.length) { qSkip = new Set(); pool = cands; }
+    return pool.reduce((m, c) => c.sc < m.sc ? c : m, pool[0]);
+}
+function qReview(b, d) {
+    qCur = 0; b.innerHTML = '';
+    b.appendChild(qBtn('ibtn', 'arrow-right', t('qIndex'), () => qIndex(b, d)));
+    const h = document.createElement('h3'); h.textContent = t('qRevBtn'); h.style.marginTop = '.8rem'; b.appendChild(h);
+    const c = qRevPick();
+    if (!c) { const e = document.createElement('p'); e.className = 'muted'; e.textContent = t('qRevNone'); b.appendChild(e); return; }
+    const today = qDay(dayOf(state.tz, 0).iso), last = c.sc;
+    const info = document.createElement('p'); info.className = 'muted small';
+    info.textContent = t('qRevHead', surName(c.s), c.a1, c.a2) + ' · ' + (!last ? t('qRevNever') : today - last <= 0 ? t('qRevToday') : t('qRevLast', today - last));
+    b.appendChild(info);
+    const tx = document.createElement('div'); tx.className = 'q-text h2'; tx.dir = 'rtl';
+    for (let a = c.a1; a <= c.a2; a++) {
+        const sp = document.createElement('span'); sp.className = 'q-v'; qWords(sp, d[c.s - 1][a - 1]);
+        const n = document.createElement('span'); n.className = 'q-n'; n.textContent = '﴿' + qNum(a) + '﴾'; sp.appendChild(n); tx.appendChild(sp); tx.appendChild(document.createTextNode(' '));
+    }
+    b.appendChild(tx);
+    const row = document.createElement('div'); row.className = 'q-bar'; row.style.marginTop = '1rem';
+    const showB = qBtn('ibtn', null, t('qRevShow'), () => { const on = tx.classList.toggle('rev'); showB.lastChild.textContent = t(on ? 'qRevHide' : 'qRevShow'); });
+    row.appendChild(showB);
+    row.appendChild(qBtn('btn-accent ibtn', 'check', t('qRevDone'), () => {
+        const rev = qRevMap(); rev[c.s] = rev[c.s] || {}; for (let a = c.a1; a <= c.a2; a++) rev[c.s][a] = today;
+        store.set('pt-qrev', rev); qRevN++; qReview(b, d); }));
+    row.appendChild(qBtn('ibtn', null, t('qRevSkip'), () => { qSkip.add(c.key); qReview(b, d); }));
+    b.appendChild(row);
+    if (qRevN) { const e = document.createElement('p'); e.className = 'muted small center'; e.textContent = t('qRevCnt', qRevN); b.appendChild(e); }
+    qTop();
 }
 function qBtn(cls, icon, label, fn) {
     const bt = document.createElement('button'); bt.type = 'button'; if (cls) bt.className = cls;
@@ -1825,7 +1980,20 @@ function qIndex(b, d) {
     const pos = qPos(), stp = store.get('pt-qstop', null), mem = qMemAll(), memN = qMemCount(mem);
     if (pos && d[pos.s - 1]) b.appendChild(qBtn('btn-accent q-cont ibtn', 'book-open', t('qContinue', surName(pos.s), pos.a), () => qSurah(b, d, pos.s, pos.a)));
     if (stp && d[stp.s - 1]) b.appendChild(qBtn('q-cont ibtn', 'check', t('qStopFrom', surName(stp.s), stp.a), () => qSurah(b, d, stp.s, stp.a)));
-    if (memN) { const sm = document.createElement('div'); sm.className = 'muted small q-sum'; sm.textContent = t('qMemSum', memN, 6236, (memN / 62.36).toFixed(1)); b.appendChild(sm); }
+    if (memN) { const sm = document.createElement('div'); sm.className = 'muted small q-sum'; sm.textContent = t('qMemSum', memN, 6236, (memN / 62.36).toFixed(1)); b.appendChild(sm);
+        b.appendChild(qBtn('q-cont ibtn', 'sparkles', t('qRevBtn') + ' · ' + t('qRevInfo', memN), () => qReview(b, d))); }
+    b.appendChild(qPlanBox(b, d));
+    { const lb = document.createElement('label'); lb.className = 'switch'; lb.style.marginBottom = '.8rem';
+      lb.innerHTML = '<span class="il"><i data-ic="book-open"></i><span></span></span><input type="checkbox">'; lb.querySelector('span span').textContent = t('qAuto');
+      const cb = lb.querySelector('input'); cb.checked = store.get('pt-qauto', true) !== false; cb.addEventListener('change', () => store.set('pt-qauto', cb.checked));
+      lb.querySelector('i').innerHTML = svgOf('book-open'); b.appendChild(lb); }
+    const jz = document.createElement('div'); jz.className = 'q-jz'; jz.setAttribute('aria-label', t('qJuz'));
+    for (let n = 1; n <= 30; n++) jz.appendChild(qBtn('', null, String(n), () => { const [s2, a2] = qLoc(QMETA.j[n - 1]); qSurah(b, d, s2, a2); }));
+    const jh = document.createElement('h3'); jh.className = 'grp'; jh.textContent = t('qJuz'); b.appendChild(jh); b.appendChild(jz);
+    const go = document.createElement('div'); go.className = 'q-go'; const pgI = document.createElement('input'); pgI.type = 'number'; pgI.min = 1; pgI.max = 604; pgI.placeholder = t('qGoPh'); pgI.setAttribute('aria-label', t('qGoPage'));
+    const goNow = () => { const n = Math.round(Number(pgI.value)); if (!(n >= 1 && n <= 604)) return; const [s2, a2] = qLoc(QMETA.pg[n - 1]); qSurah(b, d, s2, a2); };
+    pgI.addEventListener('keydown', e => { if (e.key === 'Enter') goNow(); });
+    go.appendChild(pgI); go.appendChild(qBtn('ibtn', 'arrow-right', t('qGoPage'), goNow)); b.appendChild(go);
     const inp = document.createElement('input'); inp.type = 'text'; inp.className = 'q-search'; inp.placeholder = t('qSearchPh'); inp.setAttribute('aria-label', t('qSearchPh'));
     b.appendChild(inp);
     const bms = qBms();
@@ -1874,37 +2042,57 @@ function qSurah(b, d, s, a) {
     const setFs = v => { v = Math.max(1.1, Math.min(3.2, v)); store.set('pt-qfs', v); b.style.setProperty('--qfs', v + 'rem'); };
     const mi = qBtn('', null, 'A−', () => setFs(fs() - 0.15)); mi.setAttribute('aria-label', t('qFontM'));
     const pl = qBtn('', null, 'A+', () => setFs(fs() + 0.15)); pl.setAttribute('aria-label', t('qFontP'));
-    bar.appendChild(mi); bar.appendChild(pl); b.appendChild(bar); setFs(fs());
+    const hm = Number(store.get('pt-qhide', 0)) || 0;
+    const hb = qBtn('', null, t('qHideL', t('qHide' + hm)), () => { const n = ((Number(store.get('pt-qhide', 0)) || 0) + 1) % 3; store.set('pt-qhide', n);
+        tx.className = 'q-text' + (n ? ' h' + n : ''); hb.lastChild.textContent = t('qHideL', t('qHide' + n)); });
+    bar.appendChild(hb); bar.appendChild(mi); bar.appendChild(pl); b.appendChild(bar); setFs(fs());
     const hd = document.createElement('div'); hd.className = 'q-head'; hd.textContent = surName(s); b.appendChild(hd);
     if (s !== 1 && s !== 9) { const bs = document.createElement('div'); bs.className = 'q-bsm'; bs.textContent = d[0][0]; b.appendChild(bs); }
-    const tx = document.createElement('div'); tx.className = 'q-text'; tx.dir = 'rtl';
+    const tx = document.createElement('div'); tx.className = 'q-text' + (hm ? ' h' + hm : ''); tx.dir = 'rtl';
     const bms = new Set(qBms()), memAll = qMemAll(), memS = new Set(memAll[s] || []), stp = store.get('pt-qstop', null);
     d[s - 1].forEach((v, i) => {
-        const sp2 = document.createElement('span'); sp2.className = 'q-v' + (bms.has(s + ':' + (i + 1)) ? ' bm' : '') + (memS.has(i + 1) ? ' mem' : '') + (stp && stp.s === s && stp.a === i + 1 ? ' stop' : ''); sp2.dataset.a = i + 1;
-        sp2.appendChild(document.createTextNode(v + ' '));
+        const gI = QOFF[s - 1] + i + 1;
+        if (QPGMAP.has(gI)) { const dv = document.createElement('span'); dv.className = 'q-pg'; dv.textContent = (QJZMAP.has(gI) ? t('qJuzN', QJZMAP.get(gI)) + ' · ' : '') + t('qPageN', QPGMAP.get(gI)); tx.appendChild(dv); }
+        const sp2 = document.createElement('span'); sp2.className = (QSJ.has(gI) ? 'q-v sj' : 'q-v') + (bms.has(s + ':' + (i + 1)) ? ' bm' : '') + (memS.has(i + 1) ? ' mem' : '') + (stp && stp.s === s && stp.a === i + 1 ? ' stop' : ''); sp2.dataset.a = i + 1;
+        qWords(sp2, v);
         const n = document.createElement('span'); n.className = 'q-n'; n.textContent = '\uFD3F' + qNum(i + 1) + '\uFD3E'; sp2.appendChild(n);
         tx.appendChild(sp2); tx.appendChild(document.createTextNode(' '));
     });
     b.appendChild(tx);
     const act = document.createElement('div'); act.className = 'q-act'; act.hidden = true;
-    const unit = t(settings.wirdUnit === 'juz' ? 'juzU' : 'pageU');
+    const mh = document.createElement('div'); mh.className = 'q-mh'; const mt = document.createElement('div'); const mb1 = document.createElement('b'), ms = document.createElement('small'); mt.appendChild(mb1); mt.appendChild(ms); mh.appendChild(mt);
+    const xb = qBtn('q-x', 'x', null, () => { tx.querySelectorAll('.q-v.sel').forEach(x => x.classList.remove('sel')); qSel = null; act.hidden = true; }); xb.setAttribute('aria-label', t('qClose')); mh.appendChild(xb); act.appendChild(mh);
+    const mg = document.createElement('div'); mg.className = 'q-mb'; act.appendChild(mg);
     const memLine = document.createElement('div'); memLine.className = 'muted small q-sum';
     const refMem = () => { const n = (qMemAll()[s] || []).length; memLine.textContent = n ? t('qMemSurah', n, d[s - 1].length) : ''; };
     hd.after(memLine); refMem();
     const saveMem = fn => { const all = qMemAll(), set = new Set(all[s] || []); fn(set);
         if (set.size) all[s] = [...set].sort((x, y) => x - y); else delete all[s]; store.set('pt-qmem', all);
-        tx.querySelectorAll('.q-v').forEach(v => v.classList.toggle('mem', set.has(Number(v.dataset.a)))); refMem(); toast(t('qMemSaved')); };
-    act.appendChild(qBtn('q-act ibtn', 'check', t('qStop'), () => { if (!qSel) return;
-        store.set('pt-qstop', { s, a: qSel }); qSetPos(s, qSel);
-        tx.querySelectorAll('.q-v.stop').forEach(x => x.classList.remove('stop')); tx.querySelector('.q-v[data-a="' + qSel + '"]').classList.add('stop'); toast(t('qStopSaved')); }));
-    act.appendChild(qBtn('q-act ibtn', 'sparkles', t('qMem'), () => { if (!qSel) return; const a2 = qSel; saveMem(set => { if (set.has(a2)) set.delete(a2); else set.add(a2); }); }));
-    act.appendChild(qBtn('q-act ibtn', 'sparkles', t('qMemTo'), () => { if (!qSel) return; const a2 = qSel; saveMem(set => { for (let i = 1; i <= a2; i++) set.add(i); }); }));
-    act.appendChild(qBtn('q-act ibtn', 'star', t('qMark'), () => { if (!qSel) return;
+        tx.querySelectorAll('.q-v').forEach(v => v.classList.toggle('mem', set.has(Number(v.dataset.a)))); refMem(); syncMenu(); };
+    const bStop = qBtn('', 'map-pin', t('qStop'), () => { if (!qSel) return;
+        store.set('pt-qstop', { s, a: qSel }); qSetPos(s, qSel, 2);
+        tx.querySelectorAll('.q-v.stop').forEach(x => x.classList.remove('stop')); tx.querySelector('.q-v[data-a="' + qSel + '"]').classList.add('stop'); syncMenu(); toast(t('qStopSaved')); });
+    const bMem = qBtn('g', 'check', t('qMem'), () => { if (!qSel) return; const a2 = qSel; saveMem(set => { if (set.has(a2)) set.delete(a2); else set.add(a2); }); });
+    const bTo = qBtn('', 'sparkles', t('qMemToS'), () => { if (!qSel) return; const a2 = qSel; saveMem(set => { for (let i = 1; i <= a2; i++) set.add(i); }); toast(t('qMemSaved')); });
+    const bBm = qBtn('', 'star', t('qMark'), () => { if (!qSel) return;
         const k = s + ':' + qSel, L = qBms(), ix = L.indexOf(k); if (ix >= 0) L.splice(ix, 1); else L.push(k); store.set('pt-qbm', L);
-        tx.querySelector('.q-v[data-a="' + qSel + '"]').classList.toggle('bm', ix < 0); }));
-    act.appendChild(qBtn('q-act ibtn', 'copy', t('qCopy'), () => { if (!qSel) return;
-        const txt = d[s - 1][qSel - 1] + ' \uFD3F' + qNum(qSel) + '\uFD3E [' + surName(s) + ']';
-        try { navigator.clipboard.writeText(txt).then(() => toast(t('qCopied'))); } catch (e) {} }));
+        tx.querySelector('.q-v[data-a="' + qSel + '"]').classList.toggle('bm', ix < 0); syncMenu(); });
+    const bCp = qBtn('', 'copy', t('qCopy'), () => { if (!qSel) return;
+        const txt = d[s - 1][qSel - 1] + ' ﴿' + qNum(qSel) + '﴾ [' + surName(s) + ']';
+        try { navigator.clipboard.writeText(txt).then(() => toast(t('qCopied'))); } catch (e) {} });
+    [bStop, bMem, bTo, bBm, bCp].forEach(x => mg.appendChild(x));
+    function syncMenu() {
+        if (!qSel) return;
+        const g = QOFF[s - 1] + qSel;
+        mb1.textContent = surName(s) + ' · ' + qNum(qSel);
+        ms.textContent = [t('qJuzN', qAt(QMETA.j, g)), t('qHizbN', Math.ceil(qAt(QMETA.q, g) / 4)), t('qPageN', qAt(QMETA.pg, g))].join(' · ') + (QSJ.has(g) ? ' · ' + t('qSajda') : '');
+        const st = store.get('pt-qstop', null);
+        bStop.classList.toggle('on', !!st && st.s === s && st.a === qSel);
+        bMem.classList.toggle('on', (qMemAll()[s] || []).includes(qSel));
+        bBm.classList.toggle('on', qBms().includes(s + ':' + qSel));
+    }
+    act._sync = syncMenu;
+    const unit = t(settings.wirdUnit === 'juz' ? 'juzU' : 'pageU');
     b.appendChild(act);
     const nav = document.createElement('div'); nav.className = 'q-bar'; nav.style.marginTop = '1.2rem';
     if (s < 114) nav.appendChild(qBtn('ibtn', 'chevron-right', t('qNext') + ' · ' + surName(s + 1), () => { qSetPos(s + 1, 1); qSurah(b, d, s + 1, 1); }));
@@ -1915,7 +2103,7 @@ function qSurah(b, d, s, a) {
     tx.addEventListener('click', e => { const v = e.target.closest('.q-v'); if (!v) return;
         tx.querySelectorAll('.q-v.sel').forEach(x => x.classList.remove('sel'));
         if (qSel === Number(v.dataset.a)) { qSel = null; act.hidden = true; return; }
-        qSel = Number(v.dataset.a); v.classList.add('sel'); act.hidden = false; });
+        qSel = Number(v.dataset.a); v.classList.add('sel'); act.hidden = false; act._sync(); });
     if (!qPos() || qPos().s !== s || a > 1) qSetPos(s, a || 1);
     requestAnimationFrame(() => { const el = a > 1 ? tx.querySelector('.q-v[data-a="' + a + '"]') : null;
         if (el) { el.scrollIntoView({ block: 'center' }); el.classList.add('sel'); setTimeout(() => el.classList.remove('sel'), 1800); } else qTop(); });
@@ -1926,7 +2114,7 @@ function qSurah(b, d, s, a) {
     window.addEventListener('load', () => {
         window.addEventListener('scroll', () => { if (!qCur || $('tab-quran').hidden) return; clearTimeout(tm); tm = setTimeout(() => {
             const vs = $('quran-body').querySelectorAll('.q-v'); if (!vs.length) return;
-            for (const v of vs) { if (v.getBoundingClientRect().top >= 70) { qSetPos(qCur, Number(v.dataset.a)); break; } }
+            for (const v of vs) { if (v.getBoundingClientRect().top >= 70) { qSetPos(qCur, Number(v.dataset.a), 1); qAutoPage(QOFF[qCur - 1] + Number(v.dataset.a)); break; } }
         }, 500); }, { passive: true });
     });
 })();

@@ -55,3 +55,6 @@ Tanzil Quran Text (Uthmani, Version 1.1), Copyright (C) 2007-2026 Tanzil Project
 
 ## Amiri Quran font (AmiriQuran-Regular.ttf)
 Copyright 2010-2022 The Amiri Quran Project Authors (https://github.com/aliftype/amiri), licensed under the SIL Open Font License 1.1 (see OFL-AmiriQuran.txt).
+
+## Tanzil Quran Metadata (page / juz / hizb / sajda positions, embedded in index.html)
+Quran Metadata (ver 1.0), Copyright (C) 2008-2009 Tanzil.info, licensed under Creative Commons Attribution 3.0. Source: https://tanzil.net/docs/Quran_Metadata
