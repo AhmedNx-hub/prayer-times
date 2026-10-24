@@ -307,7 +307,6 @@ html.sheet-open body { overflow:hidden; }
 .q-text { font-family:'AmiriQ',serif; font-size:var(--qfs,1.7rem); line-height:2.3; text-align:justify; text-align-last:center; direction:rtl; }
 .q-v { border-radius:.4rem; cursor:pointer; padding:0 .1rem; }
 .q-v.sel { background:var(--accent-soft); }
-.q-v.bm .q-n { color:var(--ok); }
 .q-n { color:var(--accent); font-size:.8em; margin:0 .15em; white-space:nowrap; }
 .q-act { position:sticky; bottom:0; display:flex; gap:.4rem; flex-wrap:wrap; justify-content:center; padding:.6rem 0 .2rem; background:var(--bg); border-top:1px solid var(--border); margin-top:1rem; }
 .q-act button { min-height:2.5rem; padding:0 .8rem; }
@@ -315,6 +314,14 @@ html.sheet-open body { overflow:hidden; }
 .q-res small { color:var(--muted); display:block; margin-bottom:.2rem; }
 .q-res span { font-family:'AmiriQ',serif; font-size:1.25rem; line-height:1.9; direction:rtl; display:block; }
 .q-credit { text-align:center; margin-top:1.4rem; }
+.qtab .q-act { bottom:calc(4.6rem + env(safe-area-inset-bottom)); z-index:5; }
+@media (min-width:820px), (orientation:landscape) and (max-height:520px) and (min-width:560px) { .qtab .q-act { bottom:0; } }
+#tab-quran { max-width:820px; margin-inline:auto; }
+.q-v.mem { background:rgba(46,204,113,.13); }
+.q-v.bm .q-n::before { content:'\2605\00a0'; }
+.q-v.stop .q-n { background:var(--accent); color:var(--on-accent); border-radius:.4em; padding:0 .25em; }
+.q-sum { text-align:center; margin:.2rem 0 .8rem; }
+.q-bar2 { display:flex; gap:.5rem; flex-direction:column; margin-bottom:.8rem; }
 
 .mt-cv { width:100%; display:block; border-radius:.8rem; margin:.8rem 0; background:#fff; }
 .cal-nav { display:flex; align-items:center; justify-content:space-between; gap:.6rem; margin-bottom:.6rem; }
@@ -556,6 +563,10 @@ html.onehand #tab-adhkar { padding-bottom:3.8rem; }
 </section>
 
 <!-- ============ تبويب الأذكار ============ -->
+<section class="panel" id="tab-quran" hidden>
+    <div class="card qtab" id="quran-body"></div>
+</section>
+
 <section class="panel" id="tab-adhkar" hidden>
     <div class="card">
         <h3 data-i18n="adhkarTitle"></h3>
@@ -891,6 +902,7 @@ html.onehand #tab-adhkar { padding-bottom:3.8rem; }
         <h3 class="grp" data-i18n="grpNav"></h3>
         <label class="switch"><span class="il"><i data-ic="clock"></i><span data-i18n="navTimes"></span></span><input type="checkbox" id="navshow-times"></label>
         <label class="switch"><span class="il"><i data-ic="book-open"></i><span data-i18n="navAdhkar"></span></span><input type="checkbox" id="navshow-adhkar"></label>
+        <label class="switch"><span class="il"><i data-ic="library"></i><span data-i18n="navQuran"></span></span><input type="checkbox" id="navshow-quran"></label>
         <p class="muted small" style="margin:0 0 1rem" data-i18n="navNote"></p>
         <p class="muted small" style="margin:0"><span data-i18n="fsNote"></span> <span data-i18n="animNote"></span></p>
     </div>
@@ -945,6 +957,9 @@ html.onehand #tab-adhkar { padding-bottom:3.8rem; }
     </button>
     <button class="nav-btn" data-tab="adhkar">
         <i data-ic="book-open"></i><span data-i18n="navAdhkar"></span>
+    </button>
+    <button class="nav-btn" data-tab="quran">
+        <i data-ic="library"></i><span data-i18n="navQuran"></span>
     </button>
     <button class="nav-btn" data-tab="settings">
         <i data-ic="sliders-horizontal"></i><span data-i18n="navSettings"></span>
@@ -1201,6 +1216,7 @@ ar: {
     zkTitle:'حاسبة الزكاة', zkCash:'النقود والمدخرات', zkGoldG:'الذهب الذي تملكه (جرام)', zkGoldP:'سعر جرام الذهب عيار 24', zkSilverG:'الفضة التي تملكها (جرام)', zkSilverP:'سعر جرام الفضة', zkTrade:'عروض التجارة', zkDebt:'الديون المستحقة عليك', zkBasis:'النصاب بحسب', zkGold85:'الذهب (85 جرامًا)', zkSilver595:'الفضة (595 جرامًا)',
     zkTotal:'إجمالي المال الزكوي', zkNisab:'قيمة النصاب', zkDue:'الزكاة الواجبة (2.5%)', zkBelow:'المال أقل من النصاب: لا زكاة عليك الآن', zkNeedPrice:'أدخل سعر الجرام لحساب النصاب', zkNote:'للاسترشاد فقط، ويشترط مرور الحول على المال. استفتِ أهل العلم في حالتك.',
     toolQuran:'المصحف', qTitle:'المصحف الشريف', qSearchPh:'ابحث في القرآن أو اكتب اسم سورة', qContinue:'متابعة القراءة: {0} · آية {1}', qAyahs:'{0} آية', qBm:'العلامات', qNoData:'تعذّر تحميل ملف المصحف. تأكد من رفع الملف quran-uthmani.txt بجانب التطبيق.', qHere:'واصل من هنا', qMark:'علامة', qCopy:'نسخ', qCopied:'تم النسخ', qSaved:'تم حفظ الموضع', qLog:'سجّل {0} في ورد اليوم', qLogged:'تمت إضافة {0} إلى ورد اليوم', qNoRes:'لا نتائج. جرّب كلمة أخرى (البحث يتجاهل التشكيل).', qRes:'{0} نتيجة', qResMore:'{0} نتيجة (أول 50)', qPrev:'السورة السابقة', qNext:'السورة التالية', qIndex:'الفهرس', qFontP:'تكبير الخط', qFontM:'تصغير الخط', qCredit:'نص القرآن: مشروع Tanzil (CC BY 3.0) · الخط: Amiri Quran (OFL)', qLoading:'جارٍ التحميل...',
+    navQuran:'القرآن', qStop:'وقفت هنا', qMem:'حفظت', qMemOff:'إلغاء الحفظ', qMemTo:'حفظت حتى هنا', qStopFrom:'علامة الوقوف: {0} · آية {1}', qMemSum:'المحفوظ: {0} آية من {1} ({2}٪)', qMemN:'حفظ {0}/{1}', qStopSaved:'تم وضع علامة الوقوف', qMemSaved:'تم تسجيل الحفظ', qMemSurah:'المحفوظ من السورة: {0}/{1}',
     afterOpen:'فتح الأذكار', afterHide:'إخفاء',
     backupOn:'تذكير أسبوعي بالنسخة الاحتياطية', backupTitle:'مرّ أسبوع على آخر نسخة احتياطية', backupNow:'تصدير الآن', backupLater:'لاحقًا',
     readOpts:'خيارات القراءة', fontFace:'خط الأذكار', ffDefault:'الافتراضي', ffNaskh:'نسخ', ffThuluth:'ثلث / رقعة', fontNote:'يظهر حسب الخطوط المتاحة على جهازك',
@@ -1300,6 +1316,7 @@ en: {
     zkTitle:'Zakat calculator', zkCash:'Cash and savings', zkGoldG:'Gold you own (grams)', zkGoldP:'24K gold price per gram', zkSilverG:'Silver you own (grams)', zkSilverP:'Silver price per gram', zkTrade:'Trade goods', zkDebt:'Debts you owe', zkBasis:'Nisab based on', zkGold85:'Gold (85 g)', zkSilver595:'Silver (595 g)',
     zkTotal:'Total zakatable wealth', zkNisab:'Nisab value', zkDue:'Zakat due (2.5%)', zkBelow:'Your wealth is below the nisab: no zakat is due now', zkNeedPrice:'Enter the price per gram to compute the nisab', zkNote:'For guidance only; a full lunar year must pass over the wealth. Ask a scholar about your case.',
     toolQuran:'Quran', qTitle:'The Holy Quran', qSearchPh:'Search the Quran or type a surah name', qContinue:'Continue reading: {0} · verse {1}', qAyahs:'{0} verses', qBm:'Bookmarks', qNoData:'Could not load the Quran file. Make sure quran-uthmani.txt is uploaded next to the app.', qHere:'Resume from here', qMark:'Bookmark', qCopy:'Copy', qCopied:'Copied', qSaved:'Position saved', qLog:'Log {0} to today’s portion', qLogged:'{0} added to today’s portion', qNoRes:'No results. Try another word (search ignores diacritics).', qRes:'{0} results', qResMore:'{0} results (first 50)', qPrev:'Previous surah', qNext:'Next surah', qIndex:'Index', qFontP:'Larger text', qFontM:'Smaller text', qCredit:'Quran text: Tanzil Project (CC BY 3.0) · Font: Amiri Quran (OFL)', qLoading:'Loading...',
+    navQuran:'Quran', qStop:'I stopped here', qMem:'Memorized', qMemOff:'Unmark memorized', qMemTo:'Memorized up to here', qStopFrom:'Stop mark: {0} · verse {1}', qMemSum:'Memorized: {0} of {1} verses ({2}%)', qMemN:'Memorized {0}/{1}', qStopSaved:'Stop mark set', qMemSaved:'Memorization saved', qMemSurah:'Memorized in this surah: {0}/{1}',
     afterOpen:'Open adhkar', afterHide:'Hide',
     backupOn:'Weekly backup reminder', backupTitle:'It has been a week since your last backup', backupNow:'Export now', backupLater:'Later',
     readOpts:'Reading options', fontFace:'Adhkar font', ffDefault:'Default', ffNaskh:'Naskh', ffThuluth:'Thuluth / Ruqaa', fontNote:'Shown using the fonts available on your device',
@@ -1385,12 +1402,12 @@ const store = {
     set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) {} }
 };
 
-const APP_VER = '2026.10.24-2';
+const APP_VER = '2026.10.24-3';
 function logErr(m) { try { const l = store.get('pt-errs', []); l.push({ at: Date.now(), m: String(m).slice(0, 200) }); store.set('pt-errs', l.slice(-10)); } catch (e) {} }
 window.addEventListener('error', e => logErr((e.message || 'error') + ' @' + String(e.filename || '').split('/').pop() + ':' + (e.lineno || 0)));
 window.addEventListener('unhandledrejection', e => logErr('promise: ' + ((e.reason && e.reason.message) || e.reason)));
 const SOUNDS = ['rise', 'chime', 'soft', 'bell', 'triple', 'off'];
-const HIDEABLE = ['times', 'adhkar'];
+const HIDEABLE = ['times', 'adhkar', 'quran'];
 const FIRST_RUN = (() => { try { return localStorage.getItem('pt-settings') === null; } catch (e) { return false; } })();
 const DEFAULTS = {
     cityId:'cairo', method:5, asr:1, hijriAdj:0, notify:false, sound:true, h24:false,
@@ -1783,10 +1800,17 @@ function qNorm(x) { return x.replace(/[\u0640\u064B-\u065F\u0670\u06D6-\u06ED]/g
 function qPos() { return store.get('pt-qpos', null); }
 function qBms() { return store.get('pt-qbm', []); }
 function qSetPos(s, a) { store.set('pt-qpos', { s, a }); }
-function openQuran(goS, goA) {
-    openSheet(t('qTitle'), b => { b.textContent = t('qLoading'); b.className = 'muted center';
-        loadQuran().then(d => { b.className = ''; b.innerHTML = ''; if (goS) qSurah(b, d, goS, goA); else qIndex(b, d); })
-            .catch(() => { b.className = 'muted center'; b.textContent = t('qNoData'); }); });
+let qInTab = true;
+function qTop() { window.scrollTo(0, 0); }
+function qMemAll() { return store.get('pt-qmem', {}); }
+function qMemCount(m) { return Object.values(m).reduce((n, a) => n + a.length, 0); }
+function openQuran(goS, goA) { if (typeof closeSheet === 'function') closeSheet(); showTab('quran'); if (goS) renderQuranTab(goS, goA); }
+function renderQuranTab(goS, goA) {
+    const b = $('quran-body');
+    if (!goS && b.dataset.r === '1') return;
+    b.dataset.r = '1'; b.textContent = t('qLoading'); b.className = 'card qtab muted center';
+    loadQuran().then(d => { b.className = 'card qtab'; b.innerHTML = ''; if (goS) qSurah(b, d, goS, goA); else qIndex(b, d); })
+        .catch(() => { b.dataset.r = ''; b.className = 'card qtab muted center'; b.textContent = t('qNoData'); });
 }
 function qBtn(cls, icon, label, fn) {
     const bt = document.createElement('button'); bt.type = 'button'; if (cls) bt.className = cls;
@@ -1796,9 +1820,12 @@ function qBtn(cls, icon, label, fn) {
 }
 function qCredit(b) { const p = document.createElement('p'); p.className = 'muted small q-credit'; p.textContent = t('qCredit'); b.appendChild(p); }
 function qIndex(b, d) {
-    qCur = 0; $('sheet-title').textContent = t('qTitle'); b.innerHTML = '';
-    const pos = qPos();
+    qCur = 0; b.innerHTML = '';
+    const h0 = document.createElement('h3'); h0.textContent = t('qTitle'); b.appendChild(h0);
+    const pos = qPos(), stp = store.get('pt-qstop', null), mem = qMemAll(), memN = qMemCount(mem);
     if (pos && d[pos.s - 1]) b.appendChild(qBtn('btn-accent q-cont ibtn', 'book-open', t('qContinue', surName(pos.s), pos.a), () => qSurah(b, d, pos.s, pos.a)));
+    if (stp && d[stp.s - 1]) b.appendChild(qBtn('q-cont ibtn', 'check', t('qStopFrom', surName(stp.s), stp.a), () => qSurah(b, d, stp.s, stp.a)));
+    if (memN) { const sm = document.createElement('div'); sm.className = 'muted small q-sum'; sm.textContent = t('qMemSum', memN, 6236, (memN / 62.36).toFixed(1)); b.appendChild(sm); }
     const inp = document.createElement('input'); inp.type = 'text'; inp.className = 'q-search'; inp.placeholder = t('qSearchPh'); inp.setAttribute('aria-label', t('qSearchPh'));
     b.appendChild(inp);
     const bms = qBms();
@@ -1816,7 +1843,8 @@ function qIndex(b, d) {
         const bt = qBtn('q-s', null, null, () => qSurah(b, d, n, 1));
         bt.dataset.q = qNorm(SUR_AR[n - 1]) + ' ' + SUR_EN[n - 1].toLowerCase().replace(/[^a-z]/g, '') + ' ' + n;
         bt.innerHTML = '<b></b><span></span><small></small>';
-        bt.children[0].textContent = n; bt.children[1].textContent = surName(n); bt.children[2].textContent = t('qAyahs', d[n - 1].length);
+        bt.children[0].textContent = n; bt.children[1].textContent = surName(n); const mc = (mem[n] || []).length; bt.children[2].textContent = mc ? t('qMemN', mc, d[n - 1].length) : t('qAyahs', d[n - 1].length);
+        if (mc === d[n - 1].length) bt.children[0].style.background = 'rgba(46,204,113,.25)';
         grid.appendChild(bt);
     }
     const resBox = document.createElement('div'); resBox.hidden = true;
@@ -1835,11 +1863,10 @@ function qIndex(b, d) {
         out.forEach(([s, a]) => { const r = qBtn('q-res', null, null, () => qSurah(b, d, s, a));
             r.innerHTML = '<small></small><span></span>'; r.firstChild.textContent = surName(s) + ' · ' + a; r.lastChild.textContent = d[s - 1][a - 1]; resBox.appendChild(r); });
     }, 220); });
-    $('sheet').scrollTop = 0;
+    qTop();
 }
 function qSurah(b, d, s, a) {
     qCur = s; qSel = null; b.innerHTML = '';
-    $('sheet-title').textContent = t('qTitle');
     const bar = document.createElement('div'); bar.className = 'q-bar';
     bar.appendChild(qBtn('ibtn', 'arrow-right', t('qIndex'), () => qIndex(b, d)));
     const sp = document.createElement('span'); sp.className = 'sp'; bar.appendChild(sp);
@@ -1851,9 +1878,9 @@ function qSurah(b, d, s, a) {
     const hd = document.createElement('div'); hd.className = 'q-head'; hd.textContent = surName(s); b.appendChild(hd);
     if (s !== 1 && s !== 9) { const bs = document.createElement('div'); bs.className = 'q-bsm'; bs.textContent = d[0][0]; b.appendChild(bs); }
     const tx = document.createElement('div'); tx.className = 'q-text'; tx.dir = 'rtl';
-    const bms = new Set(qBms());
+    const bms = new Set(qBms()), memAll = qMemAll(), memS = new Set(memAll[s] || []), stp = store.get('pt-qstop', null);
     d[s - 1].forEach((v, i) => {
-        const sp2 = document.createElement('span'); sp2.className = 'q-v' + (bms.has(s + ':' + (i + 1)) ? ' bm' : ''); sp2.dataset.a = i + 1;
+        const sp2 = document.createElement('span'); sp2.className = 'q-v' + (bms.has(s + ':' + (i + 1)) ? ' bm' : '') + (memS.has(i + 1) ? ' mem' : '') + (stp && stp.s === s && stp.a === i + 1 ? ' stop' : ''); sp2.dataset.a = i + 1;
         sp2.appendChild(document.createTextNode(v + ' '));
         const n = document.createElement('span'); n.className = 'q-n'; n.textContent = '\uFD3F' + qNum(i + 1) + '\uFD3E'; sp2.appendChild(n);
         tx.appendChild(sp2); tx.appendChild(document.createTextNode(' '));
@@ -1861,7 +1888,17 @@ function qSurah(b, d, s, a) {
     b.appendChild(tx);
     const act = document.createElement('div'); act.className = 'q-act'; act.hidden = true;
     const unit = t(settings.wirdUnit === 'juz' ? 'juzU' : 'pageU');
-    act.appendChild(qBtn('q-act ibtn', 'check', t('qHere'), () => { if (!qSel) return; qSetPos(s, qSel); toast(t('qSaved')); }));
+    const memLine = document.createElement('div'); memLine.className = 'muted small q-sum';
+    const refMem = () => { const n = (qMemAll()[s] || []).length; memLine.textContent = n ? t('qMemSurah', n, d[s - 1].length) : ''; };
+    hd.after(memLine); refMem();
+    const saveMem = fn => { const all = qMemAll(), set = new Set(all[s] || []); fn(set);
+        if (set.size) all[s] = [...set].sort((x, y) => x - y); else delete all[s]; store.set('pt-qmem', all);
+        tx.querySelectorAll('.q-v').forEach(v => v.classList.toggle('mem', set.has(Number(v.dataset.a)))); refMem(); toast(t('qMemSaved')); };
+    act.appendChild(qBtn('q-act ibtn', 'check', t('qStop'), () => { if (!qSel) return;
+        store.set('pt-qstop', { s, a: qSel }); qSetPos(s, qSel);
+        tx.querySelectorAll('.q-v.stop').forEach(x => x.classList.remove('stop')); tx.querySelector('.q-v[data-a="' + qSel + '"]').classList.add('stop'); toast(t('qStopSaved')); }));
+    act.appendChild(qBtn('q-act ibtn', 'sparkles', t('qMem'), () => { if (!qSel) return; const a2 = qSel; saveMem(set => { if (set.has(a2)) set.delete(a2); else set.add(a2); }); }));
+    act.appendChild(qBtn('q-act ibtn', 'sparkles', t('qMemTo'), () => { if (!qSel) return; const a2 = qSel; saveMem(set => { for (let i = 1; i <= a2; i++) set.add(i); }); }));
     act.appendChild(qBtn('q-act ibtn', 'star', t('qMark'), () => { if (!qSel) return;
         const k = s + ':' + qSel, L = qBms(), ix = L.indexOf(k); if (ix >= 0) L.splice(ix, 1); else L.push(k); store.set('pt-qbm', L);
         tx.querySelector('.q-v[data-a="' + qSel + '"]').classList.toggle('bm', ix < 0); }));
@@ -1881,14 +1918,14 @@ function qSurah(b, d, s, a) {
         qSel = Number(v.dataset.a); v.classList.add('sel'); act.hidden = false; });
     if (!qPos() || qPos().s !== s || a > 1) qSetPos(s, a || 1);
     requestAnimationFrame(() => { const el = a > 1 ? tx.querySelector('.q-v[data-a="' + a + '"]') : null;
-        if (el) { el.scrollIntoView({ block: 'center' }); el.classList.add('sel'); setTimeout(() => el.classList.remove('sel'), 1800); } else $('sheet').scrollTop = 0; });
+        if (el) { el.scrollIntoView({ block: 'center' }); el.classList.add('sel'); setTimeout(() => el.classList.remove('sel'), 1800); } else qTop(); });
 }
 (function () {
     let tm = 0;
     document.addEventListener('DOMContentLoaded', () => {}, { once: true });
     window.addEventListener('load', () => {
-        $('sheet').addEventListener('scroll', () => { if (!qCur || $('sheet').hidden) return; clearTimeout(tm); tm = setTimeout(() => {
-            const vs = $('sheet-body').querySelectorAll('.q-v'); if (!vs.length) return;
+        window.addEventListener('scroll', () => { if (!qCur || $('tab-quran').hidden) return; clearTimeout(tm); tm = setTimeout(() => {
+            const vs = $('quran-body').querySelectorAll('.q-v'); if (!vs.length) return;
             for (const v of vs) { if (v.getBoundingClientRect().top >= 70) { qSetPos(qCur, Number(v.dataset.a)); break; } }
         }, 500); }, { passive: true });
     });
@@ -3531,7 +3568,7 @@ function applyNav() {
     HIDEABLE.forEach(k => { $('navshow-' + k).checked = !(settings.hiddenTabs || []).includes(k); });
 }
 function firstVisibleTab(id) {
-    if (!['times', 'adhkar', 'settings'].includes(id)) id = 'times';
+    if (!['times', 'adhkar', 'quran', 'settings'].includes(id)) id = 'times';
     if (!(settings.hiddenTabs || []).includes(id)) return id;
     return HIDEABLE.find(k => !settings.hiddenTabs.includes(k)) || 'settings';
 }
@@ -3855,6 +3892,7 @@ function showTab(id, noFx) {
     if (!wirdBig) { const sb = $('stats-box'); if (sb) sb.classList.remove('bigwird'); }
     wirdBig = false;
     if (id === 'adhkar') showOhHint();
+    if (id === 'quran') renderQuranTab();
     saveSettings();
     window.scrollTo(0, 0);
     lastScrollY = 0; setNav(true);
