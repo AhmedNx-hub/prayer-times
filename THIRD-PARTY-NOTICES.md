@@ -48,3 +48,10 @@ The supplications are taken from a Hisn al-Muslim compilation supplied by the
 app author. Qur'an verses and hadith texts are not subject to copyright, but
 the specific edition, layout or commentary of a compilation may be. The author
 should confirm the source's terms before redistributing the text.
+
+
+## Tanzil Quran text (quran-uthmani.txt)
+Tanzil Quran Text (Uthmani, Version 1.1), Copyright (C) 2007-2026 Tanzil Project, licensed under Creative Commons Attribution 3.0. Source: https://tanzil.net . The copyright block at the top of the file must be kept and the text must not be modified (the app only separates the repeated Basmala at display time).
+
+## Amiri Quran font (AmiriQuran-Regular.ttf)
+Copyright 2010-2022 The Amiri Quran Project Authors (https://github.com/aliftype/amiri), licensed under the SIL Open Font License 1.1 (see OFL-AmiriQuran.txt).

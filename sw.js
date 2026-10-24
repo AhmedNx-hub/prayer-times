@@ -1,8 +1,8 @@
 /* Service worker — مواقيت الصلاة: يخزّن الصفحة للعمل بدون إنترنت ويعرض الإشعارات */
-const CACHE = 'pt-v1';
+const CACHE = 'pt-v2';
 self.addEventListener('install', e => {
   self.skipWaiting();
-  e.waitUntil(caches.open(CACHE).then(c => c.addAll(['./', 'manifest.json', 'icon-192.png', 'icon-512.png'])).catch(() => {}));
+  e.waitUntil(caches.open(CACHE).then(c => c.addAll(['./', 'manifest.json', 'icon-192.png', 'icon-512.png', 'quran-uthmani.txt', 'AmiriQuran-Regular.ttf'])).catch(() => {}));
 });
 self.addEventListener('activate', e => {
   e.waitUntil(caches.keys().then(ks => Promise.all(ks.filter(k => k !== CACHE).map(k => caches.delete(k)))).then(() => self.clients.claim()));
