@@ -287,6 +287,12 @@ html.focus #tab-adhkar h3[data-i18n=adhkarTitle] { opacity:0; max-height:0; marg
 .naw-row { display:flex; justify-content:space-between; align-items:center; gap:.8rem; padding:.65rem .1rem; border-top:1px solid var(--border); font-size:.9rem; }
 #upd-bar { position:fixed; top:0; inset-inline:0; z-index:70; display:flex; align-items:center; gap:.6rem; padding:.6rem 1rem; background:var(--surface); border-bottom:2px solid var(--accent); box-shadow:0 4px 16px rgba(0,0,0,.35); }
 #upd-bar span { flex:1; font-weight:700; font-size:.9rem; } #upd-bar button { min-height:2.3rem; padding:.4rem .9rem; border-radius:.8rem; font-size:.85rem; }
+.qjz b { cursor:pointer; user-select:none; -webkit-user-select:none; -webkit-touch-callout:none; touch-action:manipulation; } .qjz b.hold { outline:2px solid var(--accent); }
+.q-mem-row { display:block; width:100%; text-align:start; padding:.7rem .8rem; margin-bottom:.5rem; border-radius:.8rem; background:var(--hover); border:0; color:inherit; } .q-mem-row small { display:block; color:var(--muted); margin-top:.2rem; }
+#splash { position:fixed; inset:0; z-index:120; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:.4rem; padding:1.5rem; text-align:center; background:linear-gradient(135deg,var(--bg),var(--bg2)); transition:opacity .25s; } #splash[hidden] { display:none; } #splash.out { opacity:0; }
+#splash .sp-city { color:var(--muted); font-size:1rem; } #splash .sp-lab { color:var(--muted); font-size:1.05rem; margin-top:1rem; } #splash .sp-name { font-size:2.6rem; font-weight:700; color:var(--accent); line-height:1.2; } #splash .sp-time { font-size:3.2rem; font-weight:600; font-variant-numeric:tabular-nums; } #splash .sp-cd { font-size:1.4rem; color:var(--muted); font-variant-numeric:tabular-nums; }
+#splash .sp-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:.5rem; width:100%; max-width:26rem; margin-top:1.6rem; } #splash .sp-grid div { padding:.55rem .3rem; border-radius:.7rem; background:var(--hover); } #splash .sp-grid div.on { background:var(--accent); color:var(--on-accent); } #splash .sp-grid small { display:block; opacity:.8; } #splash .sp-grid b { font-variant-numeric:tabular-nums; }
+#splash .sp-tap { margin-top:1.4rem; color:var(--muted); font-size:.85rem; }
 #sheet { position:fixed; inset:0; z-index:60; background:var(--bg); overflow-y:auto; -webkit-overflow-scrolling:touch; }
 .sheet-in { max-width:780px; margin:0 auto; padding:1rem 1rem 3rem; }
 .sheet-head { display:flex; align-items:center; justify-content:space-between; gap:1rem; margin-bottom:1rem; }
@@ -315,11 +321,13 @@ html.sheet-open body { overflow:hidden; }
 .q-mh { display:flex; align-items:center; justify-content:space-between; gap:.5rem; margin-bottom:.5rem; }
 .q-mh b { font-size:.9rem; color:var(--accent); } .q-mh small { color:var(--muted); font-size:.72rem; display:block; margin-top:.1rem; }
 .q-mh .q-x { width:2rem; height:2rem; min-height:0; padding:0; border-radius:50%; display:grid; place-items:center; flex:none; }
-.q-mb { display:grid; grid-template-columns:repeat(5,1fr); gap:.35rem; }
+.q-mb { display:grid; grid-template-columns:repeat(3,1fr); gap:.35rem; }
 .q-mb button { display:flex; flex-direction:column; align-items:center; justify-content:center; gap:.25rem; min-height:3.6rem; padding:.4rem .15rem; border-radius:.8rem; font-size:.72rem; line-height:1.2; text-align:center; }
 .q-mb button svg { width:1.25rem; height:1.25rem; }
 .q-mb button.on { background:var(--accent-soft); color:var(--accent); border-color:var(--accent); }
 .q-mb button.on.g { background:rgba(46,204,113,.16); color:var(--ok); border-color:var(--ok); }
+.q-text.simple { text-align:start; text-align-last:start; line-height:2.1; } .q-text.simple .q-v { display:block; padding:.55rem .3rem; border-bottom:1px solid var(--border); border-radius:0; }
+.q-taf { margin-top:.6rem; padding:.7rem .8rem; max-height:40vh; overflow:auto; border-radius:.8rem; background:var(--hover); direction:rtl; font-size:1.02rem; line-height:1.9; } .q-taf small { display:block; margin-top:.5rem; color:var(--muted); font-size:.72rem; }
 .q-pg { display:block; text-align:center; font-family:'AmiriQ',serif; font-size:1.7rem; color:var(--accent); opacity:.85; margin:.6rem 0; line-height:1.4; border-top:1px dashed var(--border); padding-top:.3rem; }
 .q-v.sj .q-n::after { content:'\00a0\06E9'; color:var(--accent); }
 .q-jz { display:flex; gap:.4rem; overflow-x:auto; padding-bottom:.4rem; margin-bottom:.6rem; scrollbar-width:thin; }
@@ -328,6 +336,18 @@ html.sheet-open body { overflow:hidden; }
 #fab-back svg { width:1.3rem; height:1.3rem; fill:none; stroke:currentColor; stroke-width:2; }
 [dir=ltr] #fab-back svg { transform:scaleX(-1); }
 @media (min-width:820px), (orientation:landscape) and (max-height:520px) and (min-width:560px) { #fab-back { bottom:1.2rem; } }
+.qjz { display:grid; grid-template-columns:repeat(10,1fr); gap:.3rem; } .qjz b { aspect-ratio:1; display:grid; place-items:center; border-radius:.4rem; font-size:.7rem; font-weight:600; }
+.q-bmi { display:flex; align-items:flex-start; gap:.5rem; padding:.7rem .8rem; margin-bottom:.5rem; border-radius:.8rem; background:var(--hover); }
+.q-bmi .bt { flex:1; text-align:start; background:none; border:0; padding:0; color:inherit; } .q-bmi small { color:var(--muted); display:block; margin-bottom:.2rem; }
+.q-bmi .tx { font-family:'AmiriQ',serif; font-size:1.3rem; line-height:1.9; direction:rtl; display:block; }
+.q-bmi .del { width:2.4rem; height:2.4rem; min-height:0; padding:0; border-radius:50%; flex:none; display:grid; place-items:center; } .q-bmi .del svg { width:1.1rem; height:1.1rem; fill:none; stroke:currentColor; stroke-width:2; }
+#daily-card.tap { cursor:pointer; }
+.qchart { display:flex; gap:.4rem; align-items:flex-end; height:7rem; margin:.6rem 0; }
+.qchart > div { flex:1; display:flex; flex-direction:column; align-items:center; justify-content:flex-end; height:100%; min-width:0; }
+.qchart i { display:block; width:100%; background:var(--accent); border-radius:.4rem .4rem 0 0; min-height:3px; }
+.qchart i.z { background:var(--hover); }
+.qchart span { font-size:.7rem; margin-bottom:.15rem; } .qchart small { font-size:.7rem; color:var(--muted); margin-top:.25rem; }
+.wn-list { margin:0 0 1rem; padding:0; list-style:none; } .wn-list li { padding:.7rem .9rem; margin-bottom:.5rem; border-radius:.8rem; background:var(--hover); line-height:1.7; }
 .q-go { display:flex; gap:.4rem; margin-bottom:.8rem; } .q-go input { flex:1; min-width:0; }
 .q-res { display:block; width:100%; text-align:start; padding:.7rem .9rem; margin-bottom:.5rem; border-radius:.8rem; }
 .q-res small { color:var(--muted); display:block; margin-bottom:.2rem; }
@@ -574,7 +594,7 @@ html.onehand #tab-adhkar { padding-bottom:3.8rem; }
     </div>
 
 
-    <div class="card">
+    <div class="card" id="daily-card">
         <h3 id="daily-title"></h3>
         <div id="daily-text" class="verse" lang="ar" dir="rtl"></div>
         <div id="daily-en" class="muted small" style="margin-top:.4rem"></div>
@@ -847,6 +867,8 @@ html.onehand #tab-adhkar { padding-bottom:3.8rem; }
                 <button id="dg-sw" data-i18n="dgReSW"></button>
             </div>
             <button id="dg-clrerr" class="btn-block" style="margin-top:.6rem" data-i18n="dgClrErr" hidden></button>
+            <button id="dg-persist" class="btn-block" style="margin-top:.6rem" data-i18n="dgPersistBtn" hidden></button>
+            <button id="dg-offline" class="btn-block btn-accent" style="margin-top:.6rem" data-i18n="dgOfBtn" hidden></button>
             <button id="dg-reset" class="btn-block" style="margin-top:.6rem" data-i18n="dgReset"></button>
         </details>
         <button id="test-btn" class="btn-block ibtn"><i data-ic="flask-conical"></i><span data-i18n="testAlert"></span></button>
@@ -939,6 +961,8 @@ html.onehand #tab-adhkar { padding-bottom:3.8rem; }
         <label class="switch"><span class="il"><i data-ic="clock"></i><span data-i18n="h24"></span></span><input type="checkbox" id="h24-toggle"></label>
         <label class="switch"><span class="il"><i data-ic="maximize"></i><span data-i18n="fsOn"></span></span><input type="checkbox" id="fs-toggle"></label>
         <label class="switch"><span class="il"><i data-ic="sparkles"></i><span data-i18n="animOn"></span></span><input type="checkbox" id="anim-toggle"></label>
+        <label class="switch"><span class="il"><i data-ic="clock"></i><span data-i18n="splashOn"></span></span><input type="checkbox" id="splash-toggle"></label>
+        <p class="muted small" data-i18n="splashNote"></p>
         <h3 class="grp" data-i18n="grpNav"></h3>
         <label class="switch"><span class="il"><i data-ic="clock"></i><span data-i18n="navTimes"></span></span><input type="checkbox" id="navshow-times"></label>
         <label class="switch"><span class="il"><i data-ic="book-open"></i><span data-i18n="navAdhkar"></span></span><input type="checkbox" id="navshow-adhkar"></label>
@@ -1010,6 +1034,7 @@ html.onehand #tab-adhkar { padding-bottom:3.8rem; }
 </div></nav>
 <button id="fab-back" type="button" hidden><i data-ic="arrow-right"></i></button>
 <div id="upd-bar" hidden><span id="upd-t"></span><button id="upd-now" class="btn-accent"></button><button id="upd-later"></button></div>
+<div id="splash" hidden role="dialog" aria-modal="true"></div>
 <div id="sheet" hidden><div class="sheet-in"><div class="sheet-head"><h3 id="sheet-title"></h3><button id="sheet-close" aria-label="x"><i data-ic="x"></i></button></div><div id="sheet-body"></div></div></div>
 <div id="toast"></div>
 
@@ -1264,8 +1289,14 @@ ar: {
     qPlanT:'خطة الختمة', qPlanNone:'لم تبدأ خطة بعد. اختر مدة الختمة ويحسب لك التطبيق ورد كل يوم.', qPlanStart:'ابدأ الخطة', qPlan30:'30 يومًا', qPlanRam:'شهر رمضان (30 يومًا)', qPlanCust:'مدة أخرى', qPlanDays:'عدد الأيام', qPlanFrom:'البداية من', qPlanFromStart:'أول المصحف', qPlanFromPos:'موضعي الحالي', qPlanDay:'اليوم {0} من {1}', qPlanToday:'ورد اليوم: {0} آية، من {1} آية {2} إلى {3} آية {4}', qPlanLeft:'باقي لإتمام ورد اليوم: {0} آية', qPlanDoneToday:'أتممت ورد اليوم', qPlanAhead:'أنت متقدم بـ {0} آية', qPlanBehind:'أنت متأخر بـ {0} آية', qPlanOn:'أنت على الجدول', qPlanRead:'اقرأ الآن', qPlanSync:'اعتبر قراءتي حتى موضعي الحالي', qPlanResched:'أعد توزيع الباقي', qPlanDelete:'حذف الخطة', qPlanSoon:'تبدأ الخطة بعد {0} يوم', qPlanFin:'ما شاء الله، ختمت القرآن', qPlanOver:'انتهت مدة الخطة وباقي {0} آية', qPlanProg:'{0} من {1} آية ({2}٪)', qPlanCancel:'إلغاء', qPlanNote:'التقدم يُحسب من القراءة داخل التطبيق (تمرير الصفحة). إن قرأت من مصحف ورقي استخدم زر «اعتبر قراءتي حتى موضعي الحالي».',
     qRevBtn:'مراجعة المحفوظ', qRevInfo:'{0} آية محفوظة', qRevHead:'{0}: آية {1} إلى {2}', qRevLast:'آخر مراجعة: قبل {0} يوم', qRevNever:'لم تُراجع من قبل', qRevToday:'روجعت اليوم', qRevShow:'اكشف', qRevHide:'أخفِ', qRevDone:'راجعتها', qRevSkip:'تخطي', qRevNone:'لا يوجد محفوظ بعد. علّم الآيات بزر «حفظت» أثناء القراءة.', qRevCnt:'راجعت اليوم {0} مقطعًا', qHideL:'الإخفاء: {0}', qHide0:'متوقف', qHide1:'جزئي', qHide2:'كامل',
     qJuz:'الأجزاء', qJuzN:'الجزء {0}', qHizbN:'الحزب {0}', qPageN:'صفحة {0}', qGoPage:'اذهب لصفحة', qGoPh:'رقم الصفحة (1 - 604)', qAuto:'احسب ورد اليوم تلقائيًا من القراءة', qPlanPages:'تقريبًا من صفحة {0} إلى صفحة {1}', qMemToS:'حتى هنا', qSajda:'سجدة تلاوة', qClose:'إغلاق',
-    khRemOn:'تذكير ورد اليوم من خطة الختمة', remKh:'ورد اليوم من الختمة: {0} آية، من {1} آية {2} إلى {3} آية {4}', fabBack:'رجوع', qExport:'تصدير المحفوظ والمراجعات', qImport:'استيراد ملف', qBakTitle:'نسخة المحفوظ والمراجعات', qBakNote:'ملف JSON منفصل. الاستيراد يدمج مع ما عندك ولا يمسح شيئًا.', qImpOk:'تم الاستيراد', qImpBad:'الملف غير صالح',
+    khRemOn:'تذكير ورد اليوم من خطة الختمة', remKh:'ورد اليوم من الختمة: {0} آية، من {1} آية {2} إلى {3} آية {4}', fabBack:'رجوع', exitAgain:'اضغط رجوع مرة أخرى للخروج', qExport:'تصدير المحفوظ والمراجعات', qImport:'استيراد ملف', qBakTitle:'نسخة المحفوظ والمراجعات', qBakNote:'ملف JSON منفصل. الاستيراد يدمج مع ما عندك ولا يمسح شيئًا.', qImpOk:'تم الاستيراد', qImpBad:'الملف غير صالح',
     grpExtra:'تذكيرات إضافية', grpKhatma:'ختمة القرآن', qOpts:'خيارات القراءة', qOptFont:'حجم الخط الافتراضي', qOptDark:'وضع القراءة الليلي', qOptAwake:'إبقاء الشاشة مضيئة أثناء القراءة', dgPerfLoad:'زمن تحميل الصفحة', dgPerfFirst:'أول عرض للمواقيت', dgPerfQ:'تحميل ملف المصحف', dgPerfQNo:'لم يُفتح بعد', dgErrN:'أخطاء مسجّلة', dgStore:'حجم بيانات التطبيق', dgMem:'ذاكرة JavaScript', dgClrErr:'مسح سجل الأخطاء', dgMs:'{0} مللي ثانية', dgKB:'{0} ك.ب', dgMB:'{0} م.ب', dgPerfT:'الأداء على هذا الجهاز',
+    qShareImg:'مشاركة الآية كصورة', qStatT:'إحصائية القراءة', qStatWeek:'صفحات هذا الأسبوع: {0}', qStatStreak:'أيام متتالية: {0}', qStatBest:'أفضل يوم: {0} صفحة', qStatMonth:'آخر 30 يومًا: {0} صفحة', qStatNone:'ابدأ القراءة وستظهر إحصائيتك هنا.', dgPersist:'حماية البيانات من المسح التلقائي', dgPersistBtn:'طلب حماية البيانات', wnTitle:'جديد في هذا الإصدار', wnOk:'حسنًا', wn1:'المصحف الكامل أوفلاين في تبويب مستقل: فهرس السور والأجزاء والصفحات، بحث، علامات، ومشاركة الآية كصورة.', wn2:'خطة ختمة، ومراجعة المحفوظ، ووضع الحفظ بإخفاء الكلمات.', wn3:'تبويب الأدوات: إمساكية الشهر، التقويم الهجري، وحاسبة الزكاة.', wn4:'زر الرجوع في الهاتف يعمل داخل التطبيق، وزر رجوع عائم في القراءة الطويلة.', wn5:'تنبيهات أكثر تنظيمًا، وأداء أخف، وحماية أفضل لبياناتك.',
+    dgOfT:'جاهزية العمل بدون إنترنت', dgOfApp:'التطبيق', dgOfQ:'ملف المصحف', dgOfF:'خط المصحف', dgOfIc:'الأيقونات', dgOfSaved:'محفوظ في الجهاز ({0})', dgOfMiss:'غير محفوظ', dgOfNone:'غير مدعوم هنا (يلزم https أو تثبيت التطبيق)', dgOfBtn:'حمّل الآن', dgOfBusy:'جارٍ التحميل...', dgOfDone:'اكتمل التحميل', qBmT:'العلامات', qBmN:'العلامات · {0}', qBmNone:'لا توجد علامات بعد. اضغط على أي آية ثم «علامة».', qBmDel:'حذف العلامة', qMapT:'خريطة الأجزاء', qMapSum:'{0} من 604 صفحة', dailyAyah:'اضغط لفتح الآية في المصحف',
+    qMapHint:'ضغطة مطولة على مربع الجزء تعلّمه كمقروء أو تلغيه.', qMapMarked:'تم تعليم الجزء {0} كمقروء', qMapCleared:'تم إلغاء تعليم الجزء {0}',
+    qBmSearch:'ابحث في العلامات', qNoRes:'لا توجد نتائج', qMemListBtn:'قائمة المحفوظ', qMemT:'المحفوظ', qMemNone:'لا يوجد محفوظ بعد. علّم الآيات من قائمة الآية داخل المصحف.', qMemSearch:'ابحث باسم السورة', qStatShare:'نسخ الإحصائية كصورة', qStatImgT:'إحصائية القراءة', qJuzWord:'الأجزاء المقروءة',
+    splashOn:'شاشة البداية السريعة', splashNote:'تظهر ثواني عند فتح التطبيق لتعرف الصلاة القادمة بسرعة.', spNext:'الصلاة القادمة', spTap:'اضغط للمتابعة',
+    qTaf:'تفسير', qTafLoad:'جارٍ تحميل التفسير…', qTafFail:'تعذّر تحميل التفسير. يلزم اتصال بالإنترنت مرة واحدة، ثم يعمل بدون إنترنت.', qTafSrc:'التفسير الميسر · مجمع الملك فهد لطباعة المصحف الشريف · Tanzil.net', qModeL:'وضع القراءة: {0}', qModeN:'الوضع العادي', qModeS:'المبسط',
     afterOpen:'فتح الأذكار', afterHide:'إخفاء',
     backupOn:'تذكير أسبوعي بالنسخة الاحتياطية', backupTitle:'مرّ أسبوع على آخر نسخة احتياطية', backupNow:'تصدير الآن', backupLater:'لاحقًا',
     readOpts:'خيارات القراءة', fontFace:'خط الأذكار', ffDefault:'الافتراضي', ffNaskh:'نسخ', ffThuluth:'ثلث / رقعة', fontNote:'يظهر حسب الخطوط المتاحة على جهازك',
@@ -1369,8 +1400,14 @@ en: {
     qPlanT:'Khatma plan', qPlanNone:'No plan yet. Choose a duration and the app works out each day’s portion.', qPlanStart:'Start plan', qPlan30:'30 days', qPlanRam:'Ramadan (30 days)', qPlanCust:'Other duration', qPlanDays:'Number of days', qPlanFrom:'Start from', qPlanFromStart:'Beginning', qPlanFromPos:'My current position', qPlanDay:'Day {0} of {1}', qPlanToday:'Today’s portion: {0} verses, from {1} verse {2} to {3} verse {4}', qPlanLeft:'Left to finish today’s portion: {0} verses', qPlanDoneToday:'Today’s portion complete', qPlanAhead:'You are {0} verses ahead', qPlanBehind:'You are {0} verses behind', qPlanOn:'You are on schedule', qPlanRead:'Read now', qPlanSync:'Count my reading up to my current position', qPlanResched:'Redistribute the rest', qPlanDelete:'Delete plan', qPlanSoon:'Plan starts in {0} days', qPlanFin:'Well done, you completed the Quran', qPlanOver:'Plan period is over; {0} verses remain', qPlanProg:'{0} of {1} verses ({2}%)', qPlanCancel:'Cancel', qPlanNote:'Progress is counted from reading inside the app (scrolling). If you read from a printed copy, use “Count my reading up to my current position”.',
     qRevBtn:'Review memorized', qRevInfo:'{0} memorized verses', qRevHead:'{0}: verses {1} to {2}', qRevLast:'Last reviewed {0} days ago', qRevNever:'Never reviewed', qRevToday:'Reviewed today', qRevShow:'Reveal', qRevHide:'Hide', qRevDone:'Reviewed', qRevSkip:'Skip', qRevNone:'Nothing memorized yet. Mark verses with “Memorized” while reading.', qRevCnt:'Reviewed {0} passages today', qHideL:'Hiding: {0}', qHide0:'Off', qHide1:'Partial', qHide2:'Full',
     qJuz:'Juz', qJuzN:'Juz {0}', qHizbN:'Hizb {0}', qPageN:'Page {0}', qGoPage:'Go to page', qGoPh:'Page number (1 - 604)', qAuto:'Count today’s portion automatically from reading', qPlanPages:'About page {0} to page {1}', qMemToS:'Up to here', qSajda:'Prostration verse', qClose:'Close',
-    khRemOn:'Khatma plan daily reminder', remKh:'Today’s Khatma portion: {0} verses, from {1} verse {2} to {3} verse {4}', fabBack:'Back', qExport:'Export memorized and reviews', qImport:'Import file', qBakTitle:'Memorized and reviews copy', qBakNote:'A separate JSON file. Importing merges with what you have and deletes nothing.', qImpOk:'Imported', qImpBad:'Invalid file',
+    khRemOn:'Khatma plan daily reminder', remKh:'Today’s Khatma portion: {0} verses, from {1} verse {2} to {3} verse {4}', fabBack:'Back', exitAgain:'Press back again to exit', qExport:'Export memorized and reviews', qImport:'Import file', qBakTitle:'Memorized and reviews copy', qBakNote:'A separate JSON file. Importing merges with what you have and deletes nothing.', qImpOk:'Imported', qImpBad:'Invalid file',
     grpExtra:'Extra reminders', grpKhatma:'Quran khatma', qOpts:'Reading options', qOptFont:'Default text size', qOptDark:'Night reading mode', qOptAwake:'Keep screen on while reading', dgPerfLoad:'Page load time', dgPerfFirst:'First prayer-times render', dgPerfQ:'Quran file load', dgPerfQNo:'Not opened yet', dgErrN:'Logged errors', dgStore:'App data size', dgMem:'JavaScript memory', dgClrErr:'Clear error log', dgMs:'{0} ms', dgKB:'{0} KB', dgMB:'{0} MB', dgPerfT:'Performance on this device',
+    qShareImg:'Share verse as image', qStatT:'Reading statistics', qStatWeek:'Pages this week: {0}', qStatStreak:'Day streak: {0}', qStatBest:'Best day: {0} pages', qStatMonth:'Last 30 days: {0} pages', qStatNone:'Start reading and your statistics will appear here.', dgPersist:'Protection from automatic data clearing', dgPersistBtn:'Request data protection', wnTitle:'What’s new', wnOk:'OK', wn1:'The full Quran offline in its own tab: surah, juz and page index, search, bookmarks, and sharing a verse as an image.', wn2:'A khatma plan, review of memorized verses, and memorization mode that hides words.', wn3:'Tools tab: monthly timetable, Hijri calendar, and zakat calculator.', wn4:'The phone’s back button now works inside the app, plus a floating back button for long reading.', wn5:'Better organized alerts, lighter performance, and safer data storage.',
+    dgOfT:'Offline readiness', dgOfApp:'App', dgOfQ:'Quran file', dgOfF:'Quran font', dgOfIc:'Icons', dgOfSaved:'Saved on device ({0})', dgOfMiss:'Not saved', dgOfNone:'Not supported here (needs https or an installed app)', dgOfBtn:'Download now', dgOfBusy:'Downloading...', dgOfDone:'Download complete', qBmT:'Bookmarks', qBmN:'Bookmarks · {0}', qBmNone:'No bookmarks yet. Tap a verse, then “Bookmark”.', qBmDel:'Delete bookmark', qMapT:'Juz map', qMapSum:'{0} of 604 pages', dailyAyah:'Tap to open the verse in the Quran',
+    qMapHint:'Long-press a juz square to mark it read or undo it.', qMapMarked:'Juz {0} marked as read', qMapCleared:'Juz {0} unmarked',
+    qBmSearch:'Search bookmarks', qNoRes:'No results', qMemListBtn:'Memorized list', qMemT:'Memorized', qMemNone:'Nothing memorized yet. Mark verses from the verse menu in the reader.', qMemSearch:'Search by surah name', qStatShare:'Share statistics as image', qStatImgT:'Reading statistics', qJuzWord:'Juz read',
+    splashOn:'Quick start screen', splashNote:'Shows for a few seconds on launch so you can see the next prayer fast.', spNext:'Next prayer', spTap:'Tap to continue',
+    qTaf:'Tafsir', qTafLoad:'Loading tafsir…', qTafFail:'Could not load the tafsir. It needs the internet once, then works offline.', qTafSrc:'Al-Tafsir Al-Muyassar · King Fahd Quran Complex · Tanzil.net', qModeL:'Reading mode: {0}', qModeN:'Normal', qModeS:'Simple',
     afterOpen:'Open adhkar', afterHide:'Hide',
     backupOn:'Weekly backup reminder', backupTitle:'It has been a week since your last backup', backupNow:'Export now', backupLater:'Later',
     readOpts:'Reading options', fontFace:'Adhkar font', ffDefault:'Default', ffNaskh:'Naskh', ffThuluth:'Thuluth / Ruqaa', fontNote:'Shown using the fonts available on your device',
@@ -1456,7 +1493,7 @@ const store = {
     set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) {} }
 };
 
-const APP_VER = '2026.10.24-9';
+const APP_VER = '2026.10.25-2';
 function logErr(m) { try { const l = store.get('pt-errs', []); l.push({ at: Date.now(), m: String(m).slice(0, 200) }); store.set('pt-errs', l.slice(-10)); } catch (e) {} }
 window.addEventListener('error', e => logErr((e.message || 'error') + ' @' + String(e.filename || '').split('/').pop() + ':' + (e.lineno || 0)));
 window.addEventListener('unhandledrejection', e => logErr('promise: ' + ((e.reason && e.reason.message) || e.reason)));
@@ -1466,7 +1503,7 @@ const FIRST_RUN = (() => { try { return localStorage.getItem('pt-settings') === 
 const DEFAULTS = {
     cityId:'cairo', method:5, asr:1, hijriAdj:0, notify:false, sound:true, h24:false,
     gps:null, theme:'dark', customThemes:[], draft:null, tab:'times', sec:'loc',
-    lang:'ar', preAlert:0, fullscreen:true, anim:true, tasbihPhrase:'ph_sub', tasbihTarget:33, fontScale:1, autoNext:true, hideDone:false, vibTarget:'double', vibTap:true, keepAwake:false, adhkarRemind:false, sndPrayers:{ Fajr:'default', Dhuhr:'default', Asr:'default', Maghrib:'default', Isha:'default' }, weeklyGoal:0, monthGoal:0, wirdUnit:'page', wirdGoal:0, dndFri:false, dndFriFrom:'23:00', dndFriTo:'08:00', sndPrayer:'rise', sndAdhkar:'chime', sndWird:'soft', sndGoal:'triple', hiddenTabs:[], onboarded:false, oneHand:false, wirdRemind:false, wirdTime:'21:00', dnd:false, dndFrom:'23:00', dndTo:'05:00', dndPrayer:true, remindDelay:20, sleepDelay:60, afterDelay:5, afterCard:true, backupRemind:true, backupAt:0, backupSnooze:0, endAlert:0, logRemind:false, occRemind:false, qDark:false, qAwake:false, khRemind:false, khTime:'20:00', nightAuto:true, nawRemind:false, nawCard:true, hifz:0, fontFace:'default', remindSleep:false, remindWake:false, remindAfter:false, readDark:false,
+    lang:'ar', preAlert:0, fullscreen:true, anim:true, splash:true, tasbihPhrase:'ph_sub', tasbihTarget:33, fontScale:1, autoNext:true, hideDone:false, vibTarget:'double', vibTap:true, keepAwake:false, adhkarRemind:false, sndPrayers:{ Fajr:'default', Dhuhr:'default', Asr:'default', Maghrib:'default', Isha:'default' }, weeklyGoal:0, monthGoal:0, wirdUnit:'page', wirdGoal:0, dndFri:false, dndFriFrom:'23:00', dndFriTo:'08:00', sndPrayer:'rise', sndAdhkar:'chime', sndWird:'soft', sndGoal:'triple', hiddenTabs:[], onboarded:false, oneHand:false, wirdRemind:false, wirdTime:'21:00', dnd:false, dndFrom:'23:00', dndTo:'05:00', dndPrayer:true, remindDelay:20, sleepDelay:60, afterDelay:5, afterCard:true, backupRemind:true, backupAt:0, backupSnooze:0, endAlert:0, logRemind:false, occRemind:false, qDark:false, qAwake:false, khRemind:false, khTime:'20:00', nightAuto:true, nawRemind:false, nawCard:true, hifz:0, fontFace:'default', remindSleep:false, remindWake:false, remindAfter:false, readDark:false,
     tune:{ Fajr:0, Sunrise:0, Dhuhr:0, Asr:0, Maghrib:0, Isha:0 }
 };
 let settings = Object.assign({}, DEFAULTS, store.get('pt-settings', {}));
@@ -1489,7 +1526,7 @@ let state = { tz:'Africa/Cairo', loc:null, dayIso:'', dk:null, vdk:null, view:0,
 let lastNextKey = null;
 const HR_C = 2 * Math.PI * 46;
 let heroPending = true;
-function setHeroRing(p) { $('hero-ring').style.strokeDashoffset = (HR_C * (1 - Math.max(0, Math.min(1, p)))).toFixed(2); }
+function setHeroRing(p) { const v = (HR_C * (1 - Math.max(0, Math.min(1, p)))).toFixed(1), e = $('hero-ring'); if (e.style.strokeDashoffset !== v) e.style.strokeDashoffset = v; }
 function playHeroIntro() {
     heroPending = false;
     if (!fxOn()) return;
@@ -1838,10 +1875,13 @@ const QMETA = {"pg":[1,8,13,24,32,37,45,56,65,69,77,84,91,96,101,109,113,120,127
 const QSJ = new Set(QMETA.sj), QPGMAP = new Map(QMETA.pg.map((g, i) => [g, i + 1])), QJZMAP = new Map(QMETA.j.map((g, i) => [g, i + 1]));
 function qAt(arr, g) { let lo = 0, hi = arr.length - 1, r = 0; while (lo <= hi) { const m = (lo + hi) >> 1; if (arr[m] <= g) { r = m + 1; lo = m + 1; } else hi = m - 1; } return r || 1; }
 let qLastPg = 0;
+function qPagesGet() { const v = store.get('pt-qpages', ''); return typeof v === 'string' && v.length === 604 ? v : '0'.repeat(604); }
+function qMarkPage(pg) { const v = qPagesGet(); if (v[pg - 1] === '1') return; store.set('pt-qpages', v.slice(0, pg - 1) + '1' + v.slice(pg)); }
 function qAutoPage(g) {
     try {
-        if (store.get('pt-qauto', true) === false) return;
         const pg = qAt(QMETA.pg, g), iso = dayOf(state.tz, 0).iso;
+        qMarkPage(pg);
+        if (store.get('pt-qauto', true) === false) return;
         let o = store.get('pt-qpg', null); if (!o || o.d !== iso) o = { d: iso, p: [] };
         const add = [pg]; if (qLastPg && pg > qLastPg && pg - qLastPg <= 5) for (let x = qLastPg + 1; x < pg; x++) add.push(x);
         qLastPg = pg; let ch = false; add.forEach(x => { if (!o.p.includes(x)) { o.p.push(x); ch = true; } });
@@ -1877,7 +1917,7 @@ const qNum = n => String(n).replace(/\d/g, c => '٠١٢٣٤٥٦٧٨٩'[c]);
 function qNorm(x) { return x.replace(/[\u0640\u064B-\u065F\u0670\u06D6-\u06ED]/g, '').replace(/[\u0671\u0622\u0623\u0625]/g, '\u0627').replace(/\u0649/g, '\u064A').replace(/\u0629/g, '\u0647'); }
 function qPos() { return store.get('pt-qpos', null); }
 function qBms() { return store.get('pt-qbm', []); }
-function qBackup() { return { mem: qMemAll(), rev: qRevMap(), bm: qBms(), stop: store.get('pt-qstop', null), plan: store.get('pt-qplan', null), pos: qPos() }; }
+function qBackup() { return { pages: qPagesGet(), mem: qMemAll(), rev: qRevMap(), bm: qBms(), stop: store.get('pt-qstop', null), plan: store.get('pt-qplan', null), pos: qPos() }; }
 function qRestore(o, merge) {
     if (!o || typeof o !== 'object') return false;
     const int = (v, lo, hi) => { v = Math.round(Number(v)); return Number.isFinite(v) && v >= lo && v <= hi ? v : null; };
@@ -1890,6 +1930,7 @@ function qRestore(o, merge) {
         const sn = int(k, 1, 114); if (!sn || !o.rev[k] || typeof o.rev[k] !== 'object') return; rev[sn] = rev[sn] || {};
         Object.keys(o.rev[k]).forEach(a => { const an = int(a, 1, SUR_LEN[sn - 1]), dv = int(o.rev[k][a], 0, 999999); if (an && dv !== null) rev[sn][an] = Math.max(rev[sn][an] || 0, dv); }); });
     store.set('pt-qmem', mem); store.set('pt-qrev', rev);
+    if (typeof o.pages === 'string' && /^[01]{604}$/.test(o.pages)) { const cur = merge ? qPagesGet() : '0'.repeat(604); let out = ''; for (let i = 0; i < 604; i++) out += (cur[i] === '1' || o.pages[i] === '1') ? '1' : '0'; store.set('pt-qpages', out); }
     if (Array.isArray(o.bm)) { const set = new Set(merge ? qBms() : []); o.bm.forEach(x => { const m = /^(\d+):(\d+)$/.exec(String(x)); if (m && int(m[1], 1, 114) && int(m[2], 1, SUR_LEN[m[1] - 1])) set.add(m[1] + ':' + m[2]); }); store.set('pt-qbm', [...set]); }
     const loc = v => { if (!v || typeof v !== 'object') return null; const sn = int(v.s, 1, 114), an = sn ? int(v.a, 1, SUR_LEN[sn - 1]) : null; return sn && an ? { s: sn, a: an } : null; };
     const st = loc(o.stop); if (st && (!merge || !store.get('pt-qstop', null))) store.set('pt-qstop', st);
@@ -2031,6 +2072,40 @@ function qReview(b, d) {
     if (qRevN) { const e = document.createElement('p'); e.className = 'muted small center'; e.textContent = t('qRevCnt', qRevN); b.appendChild(e); }
     qTop();
 }
+/* زر الرجوع في الهاتف: يتراجع داخل التطبيق خطوة خطوة، وفي الرئيسية يطلب ضغطتين للخروج */
+function backStep() {
+    if (!$('sheet').hidden) { closeSheet(); return true; }
+    if (document.documentElement.classList.contains('focus')) { setFocus(false); return true; }
+    const tab = settings.tab;
+    if (tab === 'quran') {
+        const mn = document.querySelector('#quran-body .q-act');
+        if (mn && !mn.hidden) { mn.querySelector('.q-x').click(); return true; }
+        const bk = $('quran-body').querySelector('.q-back'); if (bk) { bk.click(); window.scrollTo(0, 0); return true; }
+    }
+    if (tab === 'adhkar') { const bk = [...document.querySelectorAll('#tab-adhkar .back-btn')].find(x => x.offsetParent); if (bk) { bk.click(); window.scrollTo(0, 0); return true; } }
+    if (tab !== 'times') { showTab(firstVisibleTab('times')); return true; }
+    return false;
+}
+let exitAt = 0;
+function onPop(e) {
+    if (!(e.state && e.state.g)) return;
+    try {
+        if (backStep()) { history.pushState({ a: 1 }, ''); return; }
+        const now = Date.now();
+        if (now - exitAt < 2500) { history.back(); return; }
+        exitAt = now; toast(t('exitAgain')); history.pushState({ a: 1 }, '');
+    } catch (err) {}
+}
+(function () {
+    let armed = false;
+    // المتصفح يتجاهل سجلًّا يُضاف بلا تفاعل المستخدم، فننتظر أول لمسة
+    const arm = () => {
+        if (armed) return; armed = true;
+        try { history.replaceState({ g: 1 }, ''); history.pushState({ a: 1 }, ''); window.addEventListener('popstate', onPop); } catch (e) {}
+        try { document.removeEventListener('pointerdown', arm, true); document.removeEventListener('keydown', arm, true); } catch (e) {}
+    };
+    try { document.addEventListener('pointerdown', arm, true); document.addEventListener('keydown', arm, true); } catch (e) {}
+})();
 let fabRaf = 0;
 function fabTarget() {
     if (!$('tab-quran').hidden) return $('quran-body').querySelector('.q-back');
@@ -2053,6 +2128,224 @@ function qBtn(cls, icon, label, fn) {
     bt.addEventListener('click', fn); return bt;
 }
 function qCredit(b) { const p = document.createElement('p'); p.className = 'muted small q-credit'; p.textContent = t('qCredit'); b.appendChild(p); }
+/* ===== مشاركة آية كصورة ===== */
+async function shareVerseImage(sn, an, text) {
+    try { await document.fonts.load('60px AmiriQ'); } catch (e) {}
+    const W = 1080, pad = 110, maxW = W - pad * 2, ff = 'AmiriQ, serif';
+    const cv = document.createElement('canvas'), g0 = cv.getContext('2d');
+    const wrap = fs => { g0.font = fs + 'px ' + ff; g0.direction = 'rtl'; const lines = []; let cur = '';
+        text.split(' ').forEach(w => { const tt = cur ? cur + ' ' + w : w; if (g0.measureText(tt).width > maxW && cur) { lines.push(cur); cur = w; } else cur = tt; });
+        if (cur) lines.push(cur); return lines; };
+    let fs = 68, lines = wrap(fs);
+    while (lines.length * fs * 1.95 > 1500 && fs > 34) { fs -= 4; lines = wrap(fs); }
+    const lh = fs * 1.95, H = Math.max(1000, Math.round(lines.length * lh + 460));
+    cv.width = W; cv.height = H;
+    const g = cv.getContext('2d'), cs = getComputedStyle(document.documentElement), c = n => cs.getPropertyValue(n).trim();
+    const bg = c('--bg') || '#1e1e2f', fg = c('--text') || '#fff', acc = c('--accent') || '#f1c40f', mut = c('--muted') || '#9aa0a6';
+    g.fillStyle = bg; g.fillRect(0, 0, W, H);
+    g.strokeStyle = acc; g.globalAlpha = 0.55; g.lineWidth = 3; g.strokeRect(44, 44, W - 88, H - 88); g.lineWidth = 1; g.strokeRect(58, 58, W - 116, H - 116); g.globalAlpha = 1;
+    g.direction = 'rtl'; g.textAlign = 'center'; g.textBaseline = 'alphabetic';
+    g.fillStyle = acc; g.font = '54px ' + ff; g.fillText('﴿ ﴾', W / 2, 150);
+    g.fillStyle = fg; g.font = fs + 'px ' + ff;
+    const y0 = (H - lines.length * lh) / 2 + lh * 0.55 - 20;
+    lines.forEach((ln, i) => g.fillText(ln, W / 2, y0 + i * lh));
+    g.fillStyle = acc; g.font = '44px ' + ff; g.fillText('﴿' + qNum(an) + '﴾  ' + surName(sn), W / 2, H - 150);
+    g.fillStyle = mut; g.font = '28px system-ui, sans-serif'; g.direction = 'ltr'; g.fillText('Ahmed Nx', W / 2, H - 88);
+    shareCanvas(cv, 'quran-' + sn + '-' + an + '.png');
+}
+function qJuzRange(j) { const a = qAt(QMETA.pg, QMETA.j[j - 1]), z = j < 30 ? qAt(QMETA.pg, QMETA.j[j]) - 1 : 604; return [a, z]; }
+function qJuzPcts(pgs) {
+    const r = [];
+    for (let j = 1; j <= 30; j++) { const [a, z] = qJuzRange(j); let c = 0; for (let p = a; p <= z; p++) if (pgs[p - 1] === '1') c++; r.push(Math.round(c / (z - a + 1) * 100)); }
+    return r;
+}
+function qToggleJuz(j) {
+    const [a, z] = qJuzRange(j); let v = qPagesGet(), full = true;
+    for (let p = a; p <= z; p++) if (v[p - 1] !== '1') { full = false; break; }
+    const fill = full ? '0' : '1'; v = v.slice(0, a - 1) + fill.repeat(z - a + 1) + v.slice(z);
+    store.set('pt-qpages', v); return !full;
+}
+function qJuzMap(redo) {
+    const w = document.createElement('div'), pgs = qPagesGet(); let tot = 0;
+    for (let i = 0; i < 604; i++) if (pgs[i] === '1') tot++;
+    const h = document.createElement('div'); h.className = 'small'; h.style.margin = '.8rem 0 .4rem'; h.textContent = t('qMapT') + ' · ' + t('qMapSum', tot); w.appendChild(h);
+    const gr = document.createElement('div'); gr.className = 'qjz'; gr.setAttribute('role', 'group'); gr.setAttribute('aria-label', t('qMapT') + ' ' + t('qMapSum', tot));
+    const pcs = qJuzPcts(pgs);
+    for (let j = 1; j <= 30; j++) {
+        const pc = pcs[j - 1], el = document.createElement('b');
+        el.textContent = qNum(j); el.style.background = 'linear-gradient(to top, var(--accent) ' + pc + '%, var(--hover) ' + pc + '%)'; if (pc >= 60) el.style.color = 'var(--on-accent)';
+        if (redo) {
+            el.tabIndex = 0; el.setAttribute('role', 'button'); el.setAttribute('aria-label', t('qJuz') + ' ' + j + ' ' + pc + '%');
+            let tm = 0, sx = 0, sy = 0, fired = false;
+            const fire = () => { tm = 0; fired = true; const on = qToggleJuz(j); toast(t(on ? 'qMapMarked' : 'qMapCleared', j)); try { if (navigator.vibrate) navigator.vibrate(30); } catch (e) {} redo(); };
+            const stop = () => { if (tm) { clearTimeout(tm); tm = 0; } el.classList.remove('hold'); };
+            el.addEventListener('pointerdown', e => { fired = false; sx = e.clientX; sy = e.clientY; el.classList.add('hold'); tm = setTimeout(fire, 600); });
+            el.addEventListener('pointermove', e => { if (tm && Math.abs(e.clientX - sx) + Math.abs(e.clientY - sy) > 12) stop(); });
+            ['pointerup', 'pointercancel', 'pointerleave'].forEach(n => el.addEventListener(n, stop));
+            el.addEventListener('contextmenu', e => e.preventDefault());
+            el.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); fire(); } });
+        }
+        gr.appendChild(el);
+    }
+    w.appendChild(gr);
+    if (redo) { const hn = document.createElement('p'); hn.className = 'muted small'; hn.textContent = t('qMapHint'); w.appendChild(hn); }
+    return w;
+}
+function qStatsData() {
+    const days = []; for (let i = 6; i >= 0; i--) { const dk = dayOf(state.tz, -i); days.push({ dk, q: (track[dk.iso] || {}).q || 0 }); }
+    const mx = Math.max(1, ...days.map(x => x.q)), wk = days.reduce((n, x) => n + x.q, 0);
+    let month = 0, best = 0, streak = 0, run = true;
+    for (let i = 0; i < 400; i++) { const q = (track[dayOf(state.tz, -i).iso] || {}).q || 0; if (i < 30) month += q; if (q > best) best = q; if (run) { if (q > 0) streak++; else if (i > 0) run = false; } }
+    return { days, mx, wk, month, best, streak };
+}
+async function shareStatsImage() {
+    try { await document.fonts.load('60px AmiriQ'); } catch (e) {}
+    const D = qStatsData(), pgs = qPagesGet(), pcs = qJuzPcts(pgs); let tot = 0; for (let i = 0; i < 604; i++) if (pgs[i] === '1') tot++;
+    const W = 1080, H = 1500, cv = document.createElement('canvas'); cv.width = W; cv.height = H;
+    const g = cv.getContext('2d'), cs = getComputedStyle(document.documentElement), c = n => cs.getPropertyValue(n).trim(), rtl = !isEn(), ff = 'AmiriQ, serif', sf = 'system-ui, "Segoe UI", Tahoma, sans-serif';
+    const bg = c('--bg') || '#1e1e2f', fg = c('--text') || '#fff', acc = c('--accent') || '#f1c40f', mut = c('--muted') || '#9aa0a6', hv = c('--hover') || 'rgba(255,255,255,.1)', onA = c('--on-accent') || '#000';
+    g.fillStyle = bg; g.fillRect(0, 0, W, H);
+    g.strokeStyle = acc; g.globalAlpha = 0.55; g.lineWidth = 3; g.strokeRect(44, 44, W - 88, H - 88); g.lineWidth = 1; g.strokeRect(58, 58, W - 116, H - 116); g.globalAlpha = 1;
+    g.direction = rtl ? 'rtl' : 'ltr'; g.textAlign = 'center'; g.textBaseline = 'alphabetic';
+    g.fillStyle = acc; g.font = '700 70px ' + ff; g.fillText(t('qStatImgT'), W / 2, 170);
+    const bx = 150, bw = 120, gap = (W - 300 - bw * 7) / 6, by = 560, bh = 260;
+    D.days.forEach((x, i) => { const px = bx + (rtl ? 6 - i : i) * (bw + gap), hh = Math.max(6, Math.round(x.q / D.mx * bh));
+        g.fillStyle = x.q ? acc : hv; g.fillRect(px, by - hh, bw, hh);
+        g.fillStyle = fg; g.font = '30px ' + sf; if (x.q) g.fillText(String(x.q), px + bw / 2, by - hh - 14);
+        g.fillStyle = mut; g.font = '26px ' + sf; let lb = ''; try { lb = new Intl.DateTimeFormat(isEn() ? 'en-GB' : 'ar-EG', { timeZone: 'UTC', weekday: 'short' }).format(Date.UTC(x.dk.y, x.dk.m - 1, x.dk.d)); } catch (e) {} g.fillText(lb, px + bw / 2, by + 40); });
+    g.fillStyle = fg; g.font = '38px ' + sf; let y = 680;
+    [t('qStatWeek', D.wk), t('qStatStreak', D.streak), t('qStatBest', D.best), t('qStatMonth', D.month)].forEach(x => { g.fillText(x, W / 2, y); y += 62; });
+    g.fillStyle = acc; g.font = '40px ' + sf; g.fillText(t('qMapT') + ' · ' + t('qMapSum', tot), W / 2, 980);
+    const cw = 78, cg = 14, gx = (W - (cw * 10 + cg * 9)) / 2;
+    for (let j = 0; j < 30; j++) { const r = Math.floor(j / 10), k = j % 10, px = gx + (rtl ? 9 - k : k) * (cw + cg), py = 1020 + r * (cw + cg), pc = pcs[j];
+        g.fillStyle = hv; g.fillRect(px, py, cw, cw); g.fillStyle = acc; const fh = Math.round(cw * pc / 100); g.fillRect(px, py + cw - fh, cw, fh);
+        g.fillStyle = pc >= 60 ? onA : fg; g.font = '30px ' + sf; g.fillText(isEn() ? String(j + 1) : qNum(j + 1), px + cw / 2, py + cw / 2 + 11); }
+    g.fillStyle = mut; g.font = '28px system-ui, sans-serif'; g.direction = 'ltr'; g.fillText('Ahmed Nx', W / 2, H - 96);
+    shareCanvas(cv, 'quran-stats.png');
+}
+function qStatsBox(redo) {
+    const box = document.createElement('div'); box.className = 'qbox';
+    const D = qStatsData(), days = D.days, mx = D.mx, wk = D.wk, month = D.month, best = D.best, streak = D.streak;
+    if (!best) { const p = document.createElement('p'); p.className = 'muted small'; p.textContent = t('qStatNone'); box.appendChild(p); box.appendChild(qJuzMap(redo)); { const sh = qBtn('q-cont ibtn', 'download', t('qStatShare'), shareStatsImage); sh.style.marginTop = '.6rem'; box.appendChild(sh); } return box; }
+    const ch = document.createElement('div'); ch.className = 'qchart'; ch.setAttribute('role', 'img'); ch.setAttribute('aria-label', t('qStatWeek', wk));
+    let fm; try { fm = new Intl.DateTimeFormat(isEn() ? 'en-GB' : 'ar-EG', { timeZone: 'UTC', weekday: 'narrow' }); } catch (e) { fm = null; }
+    days.forEach(x => { const col = document.createElement('div'), n = document.createElement('span'), b = document.createElement('i'), l = document.createElement('small');
+        n.textContent = x.q ? String(x.q) : ''; b.style.height = Math.max(3, Math.round(x.q / mx * 70)) + '%'; if (!x.q) b.className = 'z';
+        l.textContent = fm ? fm.format(Date.UTC(x.dk.y, x.dk.m - 1, x.dk.d)) : ''; col.appendChild(n); col.appendChild(b); col.appendChild(l); ch.appendChild(col); });
+    box.appendChild(ch);
+    [t('qStatWeek', wk), t('qStatStreak', streak), t('qStatBest', best), t('qStatMonth', month)].forEach(x => { const p = document.createElement('p'); p.className = 'small'; p.textContent = x; box.appendChild(p); });
+    box.appendChild(qJuzMap(redo));
+    { const sh = qBtn('q-cont ibtn', 'download', t('qStatShare'), shareStatsImage); sh.style.marginTop = '.6rem'; box.appendChild(sh); }
+    return box;
+}
+let qStatOpen = false;
+/* ===== شاشة البداية السريعة ===== */
+let splashDone = false, splashTm = 0, splashIv = 0;
+function splashNext(now) {
+    const CD = ['Fajr', 'Sunrise', 'Dhuhr', 'Asr', 'Maghrib', 'Isha'];
+    for (const k of CD) if (state.today[k] > now) return { k, ts: state.today[k] };
+    return { k: 'Fajr', ts: state.tomorrow.Fajr };
+}
+function closeSplash() {
+    const el = $('splash'); if (!el || el.hidden) return;
+    clearTimeout(splashTm); clearInterval(splashIv); el.classList.add('out'); setTimeout(() => { el.hidden = true; el.classList.remove('out'); el.innerHTML = ''; }, 260);
+}
+function showSplash() {
+    if (splashDone || !state.today || !state.tomorrow) return; splashDone = true;
+    try {
+        if (settings.splash === false || !settings.onboarded || !$('onb').hidden || /[?&](quran|tab|set|lib|wird)=/.test(location.search)) return;
+        const el = $('splash'); if (!el) return;
+        const mk = (tag, cls, txt) => { const n = document.createElement(tag); if (cls) n.className = cls; if (txt != null) n.textContent = txt; return n; };
+        const nx = splashNext(Date.now());
+        el.innerHTML = '';
+        el.appendChild(mk('div', 'sp-city', $('city-title').textContent));
+        el.appendChild(mk('div', 'sp-lab', t('spNext')));
+        el.appendChild(mk('div', 'sp-name', prayerName(nx.k)));
+        el.appendChild(mk('div', 'sp-time', fmtClock(nx.ts)));
+        const cd = mk('div', 'sp-cd', ''); el.appendChild(cd);
+        const gr = mk('div', 'sp-grid');
+        ['Fajr', 'Sunrise', 'Dhuhr', 'Asr', 'Maghrib', 'Isha'].forEach(k => { const c = mk('div', k === nx.k ? 'on' : ''); c.appendChild(mk('small', '', prayerName(k))); c.appendChild(mk('b', '', fmtClock(state.today[k]))); gr.appendChild(c); });
+        el.appendChild(gr); el.appendChild(mk('div', 'sp-tap', t('spTap')));
+        const upd = () => { const df = Math.max(0, nx.ts - Date.now()); cd.textContent = pad2(Math.floor(df / 3600000)) + ':' + pad2(Math.floor(df % 3600000 / 60000)) + ':' + pad2(Math.floor(df % 60000 / 1000)); };
+        upd(); splashIv = setInterval(upd, 1000);
+        el.hidden = false; el.onclick = closeSplash; splashTm = setTimeout(closeSplash, 4000);
+        if (fxOn()) fxIn([el.querySelector('.sp-name'), el.querySelector('.sp-time')], { y: 10, s: 0.96, d: 350 });
+    } catch (e) {}
+}
+async function askPersist(force) {
+    try {
+        if (!navigator.storage || !navigator.storage.persist) return null;
+        if (await navigator.storage.persisted()) return true;
+        const last = store.get('pt-persist-try', 0);
+        if (!force && Date.now() - last < 7 * 864e5) return false;
+        store.set('pt-persist-try', Date.now());
+        return await navigator.storage.persist();
+    } catch (e) { return null; }
+}
+function maybeWhatsNew() {
+    try {
+        const WN = '2026.10.24', seen = store.get('pt-wnver', '');
+        if (seen === WN) return;
+        if (!$('splash').hidden) { setTimeout(maybeWhatsNew, 2500); return; }
+        store.set('pt-wnver', WN);
+        if (!settings.onboarded || !$('onb').hidden || !$('sheet').hidden) return;
+        openSheet(t('wnTitle'), b => {
+            const ul = document.createElement('ul'); ul.className = 'wn-list';
+            [1, 2, 3, 4, 5].forEach(n => { const li = document.createElement('li'); li.textContent = t('wn' + n); ul.appendChild(li); });
+            b.appendChild(ul);
+            const ok = document.createElement('button'); ok.className = 'btn-accent btn-block'; ok.textContent = t('wnOk'); ok.addEventListener('click', closeSheet); b.appendChild(ok);
+        });
+    } catch (e) {}
+}
+function qBookmarks(b, d) {
+    qCur = 0; b.innerHTML = '';
+    b.appendChild(qBtn('ibtn q-back', 'arrow-right', t('qIndex'), () => qIndex(b, d)));
+    const h = document.createElement('h3'); h.textContent = t('qBmT'); h.style.marginTop = '.8rem'; b.appendChild(h);
+    const list = qBms().map(k => k.split(':').map(Number)).filter(([sn, an]) => d[sn - 1] && d[sn - 1][an - 1]).sort((x, y) => x[0] - y[0] || x[1] - y[1]);
+    if (!list.length) { const p = document.createElement('p'); p.className = 'muted'; p.textContent = t('qBmNone'); b.appendChild(p); return; }
+    const inp = document.createElement('input'); inp.type = 'search'; inp.className = 'q-search'; inp.placeholder = t('qBmSearch'); inp.setAttribute('aria-label', t('qBmSearch')); b.appendChild(inp);
+    const box = document.createElement('div'); b.appendChild(box);
+    const none = document.createElement('p'); none.className = 'muted'; none.textContent = t('qNoRes'); none.hidden = true; b.appendChild(none);
+    const rows = list.map(([sn, an]) => {
+        const row = document.createElement('div'); row.className = 'q-bmi';
+        const bt = document.createElement('button'); bt.type = 'button'; bt.className = 'bt';
+        const sm = document.createElement('small'); sm.textContent = surName(sn) + ' · ' + (isEn() ? an : qNum(an)); const tx = document.createElement('span'); tx.className = 'tx'; tx.textContent = d[sn - 1][an - 1];
+        bt.appendChild(sm); bt.appendChild(tx); bt.addEventListener('click', () => qSurah(b, d, sn, an));
+        const del = qBtn('del', 'x', null, () => { store.set('pt-qbm', qBms().filter(k => k !== sn + ':' + an)); qBookmarks(b, d); }); del.setAttribute('aria-label', t('qBmDel'));
+        row.appendChild(bt); row.appendChild(del); box.appendChild(row);
+        return { row, key: qNorm(d[sn - 1][an - 1]) + ' ' + qNorm(SUR_AR[sn - 1]) + ' ' + SUR_EN[sn - 1].toLowerCase() + ' ' + sn + ':' + an };
+    });
+    let tmr = 0;
+    inp.addEventListener('input', () => { clearTimeout(tmr); tmr = setTimeout(() => {
+        const q = qNorm(inp.value.trim()), q2 = inp.value.trim().toLowerCase(); let n = 0;
+        rows.forEach(r => { const ok = !q || r.key.includes(q) || r.key.includes(q2); r.row.hidden = !ok; if (ok) n++; });
+        none.hidden = n > 0; }, 120); });
+    qTop();
+}
+function qRanges(arr) {
+    const a = [...arr].sort((x, y) => x - y), out = []; let i = 0;
+    while (i < a.length) { let j = i; while (j + 1 < a.length && a[j + 1] === a[j] + 1) j++; out.push(i === j ? qNum(a[i]) : qNum(a[i]) + '-' + qNum(a[j])); i = j + 1; }
+    return out.join('، ');
+}
+function qMemList(b, d) {
+    qCur = 0; b.innerHTML = '';
+    b.appendChild(qBtn('ibtn q-back', 'arrow-right', t('qIndex'), () => qIndex(b, d)));
+    const h = document.createElement('h3'); h.textContent = t('qMemT'); h.style.marginTop = '.8rem'; b.appendChild(h);
+    const mem = qMemAll(), ks = Object.keys(mem).map(Number).filter(n => d[n - 1] && mem[n] && mem[n].length).sort((x, y) => x - y);
+    if (!ks.length) { const p = document.createElement('p'); p.className = 'muted'; p.textContent = t('qMemNone'); b.appendChild(p); return; }
+    const inp = document.createElement('input'); inp.type = 'search'; inp.className = 'q-search'; inp.placeholder = t('qMemSearch'); inp.setAttribute('aria-label', t('qMemSearch')); b.appendChild(inp);
+    const box = document.createElement('div'); b.appendChild(box);
+    const none = document.createElement('p'); none.className = 'muted'; none.textContent = t('qNoRes'); none.hidden = true; b.appendChild(none);
+    const rows = ks.map(n => {
+        const arr = mem[n], bt = document.createElement('button'); bt.type = 'button'; bt.className = 'q-mem-row';
+        const a = document.createElement('b'); a.textContent = surName(n) + ' · ' + t('qMemN', arr.length, d[n - 1].length); const sm = document.createElement('small'); sm.textContent = qRanges(arr);
+        bt.appendChild(a); bt.appendChild(sm); bt.addEventListener('click', () => qSurah(b, d, n, Math.min(...arr))); box.appendChild(bt);
+        return { bt, key: qNorm(SUR_AR[n - 1]) + ' ' + SUR_EN[n - 1].toLowerCase() + ' ' + n };
+    });
+    inp.addEventListener('input', () => { const q = qNorm(inp.value.trim()), q2 = inp.value.trim().toLowerCase(); let n = 0;
+        rows.forEach(r => { const ok = !q || r.key.includes(q) || r.key.includes(q2); r.bt.hidden = !ok; if (ok) n++; }); none.hidden = n > 0; });
+    qTop();
+}
 function qSwitch(icon, label, on, fn) {
     const lb = document.createElement('label'); lb.className = 'switch';
     const il = document.createElement('span'); il.className = 'il'; il.appendChild(iconEl(icon)); const tx = document.createElement('span'); tx.textContent = label; il.appendChild(tx);
@@ -2080,10 +2373,14 @@ function qIndex(b, d) {
     if (pos && d[pos.s - 1]) b.appendChild(qBtn('btn-accent q-cont ibtn', 'book-open', t('qContinue', surName(pos.s), pos.a), () => qSurah(b, d, pos.s, pos.a)));
     if (stp && d[stp.s - 1]) b.appendChild(qBtn('q-cont ibtn', 'check', t('qStopFrom', surName(stp.s), stp.a), () => qSurah(b, d, stp.s, stp.a)));
     if (memN) { const sm = document.createElement('div'); sm.className = 'muted small q-sum'; sm.textContent = t('qMemSum', memN, 6236, (memN / 62.36).toFixed(1)); b.appendChild(sm);
-        b.appendChild(qBtn('q-cont ibtn', 'sparkles', t('qRevBtn') + ' · ' + t('qRevInfo', memN), () => qReview(b, d))); }
+        b.appendChild(qBtn('q-cont ibtn', 'sparkles', t('qRevBtn') + ' · ' + t('qRevInfo', memN), () => qReview(b, d)));
+        b.appendChild(qBtn('q-cont ibtn', 'check', t('qMemListBtn'), () => qMemList(b, d))); }
     { const pb = qPlanBox(b, d); pb.hidden = !qPlanOpen;
       const tg = qBtn('q-cont ibtn', qPlanOpen ? 'chevron-left' : 'chevron-right', t('qPlanT'), () => { qPlanOpen = !qPlanOpen; qIndex(b, d); });
-      tg.style.justifyContent = 'center'; tg.setAttribute('aria-expanded', String(qPlanOpen)); b.appendChild(tg); b.appendChild(pb); }
+      tg.style.justifyContent = 'center'; tg.setAttribute('aria-expanded', String(qPlanOpen)); b.appendChild(tg); b.appendChild(pb);
+      let cur = null; const mkSb = () => { const n = qStatsBox(() => { const m = mkSb(); cur.replaceWith(m); cur = m; }); n.hidden = !qStatOpen; return n; }; cur = mkSb(); const sb = cur;
+      const st = qBtn('q-cont ibtn', qStatOpen ? 'chevron-left' : 'chevron-right', t('qStatT'), () => { qStatOpen = !qStatOpen; qIndex(b, d); });
+      st.style.justifyContent = 'center'; st.setAttribute('aria-expanded', String(qStatOpen)); b.appendChild(st); b.appendChild(sb); }
     b.appendChild(qOptions());
     const jz = document.createElement('div'); jz.className = 'q-jz'; jz.setAttribute('aria-label', t('qJuz'));
     for (let n = 1; n <= 30; n++) jz.appendChild(qBtn('', null, String(n), () => { const [s2, a2] = qLoc(QMETA.j[n - 1]); qSurah(b, d, s2, a2); }));
@@ -2096,14 +2393,7 @@ function qIndex(b, d) {
     b.appendChild(inp);
     const bms = qBms();
     const bmBox = document.createElement('div');
-    if (bms.length) {
-        const h = document.createElement('h3'); h.className = 'grp'; h.textContent = t('qBm'); bmBox.appendChild(h);
-        const g = document.createElement('div'); g.className = 'q-grid';
-        bms.forEach(k => { const [s, a] = k.split(':').map(Number); if (!d[s - 1]) return;
-            const bt = qBtn('q-s', null, null, () => qSurah(b, d, s, a));
-            bt.innerHTML = '<b></b><span></span>'; bt.firstChild.textContent = a; bt.lastChild.textContent = surName(s); g.appendChild(bt); });
-        bmBox.appendChild(g);
-    }
+    if (bms.length) { const bb = qBtn('q-cont ibtn', 'star', t('qBmN', bms.length), () => qBookmarks(b, d)); bb.style.marginTop = '.6rem'; bmBox.appendChild(bb); }
     const grid = document.createElement('div'); grid.className = 'q-grid';
     for (let n = 1; n <= 114; n++) {
         const bt = qBtn('q-s', null, null, () => qSurah(b, d, n, 1));
@@ -2150,6 +2440,16 @@ function qIndex(b, d) {
     }, 220); });
     qTop();
 }
+let TAFP = null, TAF = null;
+function loadTafsir() {
+    if (TAF) return Promise.resolve(TAF);
+    if (!TAFP) TAFP = fetch('tafsir-muyassar.txt').then(r => { if (!r.ok) throw 0; return r.text(); }).then(tx => {
+        const arr = new Array(6236); let n = 0;
+        tx.split('\n').forEach(l => { const p1 = l.indexOf('|'); if (p1 < 1) return; const p2 = l.indexOf('|', p1 + 1); if (p2 < 0) return;
+            const sn = +l.slice(0, p1), an = +l.slice(p1 + 1, p2); if (!(sn >= 1 && sn <= 114 && an >= 1)) return; arr[QOFF[sn - 1] + an - 1] = l.slice(p2 + 1).trim(); n++; });
+        if (n < 6236) throw 0; TAF = arr; return arr; }).catch(e => { TAFP = null; throw e; });
+    return TAFP;
+}
 function qSurah(b, d, s, a) {
     qCur = s; qSel = null; b.innerHTML = '';
     const bar = document.createElement('div'); bar.className = 'q-bar';
@@ -2161,11 +2461,14 @@ function qSurah(b, d, s, a) {
     const pl = qBtn('', null, 'A+', () => setFs(fs() + 0.15)); pl.setAttribute('aria-label', t('qFontP'));
     const hm = Number(store.get('pt-qhide', 0)) || 0;
     const hb = qBtn('', null, t('qHideL', t('qHide' + hm)), () => { const n = ((Number(store.get('pt-qhide', 0)) || 0) + 1) % 3; store.set('pt-qhide', n);
-        tx.className = 'q-text' + (n ? ' h' + n : ''); hb.lastChild.textContent = t('qHideL', t('qHide' + n)); });
-    bar.appendChild(hb); bar.appendChild(mi); bar.appendChild(pl); b.appendChild(bar); setFs(fs());
+        tx.className = 'q-text' + (n ? ' h' + n : '') + (mdOf() === 's' ? ' simple' : ''); hb.lastChild.textContent = t('qHideL', t('qHide' + n)); });
+    const mdOf = () => store.get('pt-qmode', 'n') === 's' ? 's' : 'n';
+    const mb0 = qBtn('', null, t('qModeL', t(mdOf() === 's' ? 'qModeS' : 'qModeN')), () => { const n = mdOf() === 's' ? 'n' : 's'; store.set('pt-qmode', n);
+        tx.classList.toggle('simple', n === 's'); mb0.lastChild.textContent = t('qModeL', t(n === 's' ? 'qModeS' : 'qModeN')); });
+    bar.appendChild(mb0); bar.appendChild(hb); bar.appendChild(mi); bar.appendChild(pl); b.appendChild(bar); setFs(fs());
     const hd = document.createElement('div'); hd.className = 'q-head'; hd.textContent = surName(s); b.appendChild(hd);
     if (s !== 1 && s !== 9) { const bs = document.createElement('div'); bs.className = 'q-bsm'; bs.textContent = d[0][0]; b.appendChild(bs); }
-    const tx = document.createElement('div'); tx.className = 'q-text' + (hm ? ' h' + hm : ''); tx.dir = 'rtl';
+    const tx = document.createElement('div'); tx.className = 'q-text' + (hm ? ' h' + hm : '') + (mdOf() === 's' ? ' simple' : ''); tx.dir = 'rtl';
     const bms = new Set(qBms()), memAll = qMemAll(), memS = new Set(memAll[s] || []), stp = store.get('pt-qstop', null);
     d[s - 1].forEach((v, i) => {
         const gI = QOFF[s - 1] + i + 1;
@@ -2178,7 +2481,8 @@ function qSurah(b, d, s, a) {
     b.appendChild(tx);
     const act = document.createElement('div'); act.className = 'q-act'; act.hidden = true;
     const mh = document.createElement('div'); mh.className = 'q-mh'; const mt = document.createElement('div'); const mb1 = document.createElement('b'), ms = document.createElement('small'); mt.appendChild(mb1); mt.appendChild(ms); mh.appendChild(mt);
-    const xb = qBtn('q-x', 'x', null, () => { tx.querySelectorAll('.q-v.sel').forEach(x => x.classList.remove('sel')); qSel = null; act.hidden = true; }); xb.setAttribute('aria-label', t('qClose')); mh.appendChild(xb); act.appendChild(mh);
+    const shb = qBtn('q-x', 'download', null, () => { if (qSel) shareVerseImage(s, qSel, d[s - 1][qSel - 1]); }); shb.setAttribute('aria-label', t('qShareImg')); shb.style.marginInlineStart = 'auto'; shb.style.marginInlineEnd = '.4rem'; mh.appendChild(shb);
+    const xb = qBtn('q-x', 'x', null, () => { tx.querySelectorAll('.q-v.sel').forEach(x => x.classList.remove('sel')); qSel = null; act.hidden = true; tafOn = false; bTf.classList.remove('on'); taf.hidden = true; }); xb.setAttribute('aria-label', t('qClose')); mh.appendChild(xb); act.appendChild(mh);
     const mg = document.createElement('div'); mg.className = 'q-mb'; act.appendChild(mg);
     const memLine = document.createElement('div'); memLine.className = 'muted small q-sum';
     const refMem = () => { const n = (qMemAll()[s] || []).length; memLine.textContent = n ? t('qMemSurah', n, d[s - 1].length) : ''; };
@@ -2197,7 +2501,13 @@ function qSurah(b, d, s, a) {
     const bCp = qBtn('', 'copy', t('qCopy'), () => { if (!qSel) return;
         const txt = d[s - 1][qSel - 1] + ' ﴿' + qNum(qSel) + '﴾ [' + surName(s) + ']';
         try { navigator.clipboard.writeText(txt).then(() => toast(t('qCopied'))); } catch (e) {} });
-    [bStop, bMem, bTo, bBm, bCp].forEach(x => mg.appendChild(x));
+    const taf = document.createElement('div'); taf.className = 'q-taf'; taf.hidden = true; let tafOn = false;
+    const showTaf = () => { if (!qSel) return; const g = QOFF[s - 1] + qSel - 1, my = qSel; taf.hidden = false; taf.textContent = t('qTafLoad');
+        loadTafsir().then(A => { if (qSel !== my) return; taf.textContent = A[g] || ''; const sm = document.createElement('small'); sm.textContent = t('qTafSrc'); taf.appendChild(sm); })
+        .catch(() => { if (qSel === my) taf.textContent = t('qTafFail'); }); };
+    const bTf = qBtn('', 'library', t('qTaf'), () => { if (!qSel) return; tafOn = !tafOn; bTf.classList.toggle('on', tafOn); if (tafOn) showTaf(); else taf.hidden = true; });
+    [bStop, bMem, bTo, bBm, bCp, bTf].forEach(x => mg.appendChild(x));
+    act.appendChild(taf);
     function syncMenu() {
         if (!qSel) return;
         const g = QOFF[s - 1] + qSel;
@@ -2207,6 +2517,7 @@ function qSurah(b, d, s, a) {
         bStop.classList.toggle('on', !!st && st.s === s && st.a === qSel);
         bMem.classList.toggle('on', (qMemAll()[s] || []).includes(qSel));
         bBm.classList.toggle('on', qBms().includes(s + ':' + qSel));
+        if (tafOn) showTaf();
     }
     act._sync = syncMenu;
     const unit = t(settings.wirdUnit === 'juz' ? 'juzU' : 'pageU');
@@ -2218,7 +2529,7 @@ function qSurah(b, d, s, a) {
     const lg = qBtn('btn-block ibtn', 'book-open', t('qLog', unit), () => { wirdAdd(1); toast(t('qLogged', unit)); }); lg.style.marginTop = '.8rem'; b.appendChild(lg);
     tx.addEventListener('click', e => { const v = e.target.closest('.q-v'); if (!v) return;
         tx.querySelectorAll('.q-v.sel').forEach(x => x.classList.remove('sel'));
-        if (qSel === Number(v.dataset.a)) { qSel = null; act.hidden = true; return; }
+        if (qSel === Number(v.dataset.a)) { qSel = null; act.hidden = true; tafOn = false; bTf.classList.remove('on'); taf.hidden = true; return; }
         qSel = Number(v.dataset.a); v.classList.add('sel'); act.hidden = false; act._sync(); });
     if (!qPos() || qPos().s !== s || a > 1) qSetPos(s, a || 1);
     requestAnimationFrame(() => { const el = a > 1 ? tx.querySelector('.q-v[data-a="' + a + '"]') : null;
@@ -2480,18 +2791,24 @@ function beep() {
 
 /* ============ العدّاد + التنبيهات + تغيّر اليوم ============ */
 const FIVE = ['Fajr','Dhuhr','Asr','Maghrib','Isha'];
-function tick() {
+let lastSlow = 0;
+const setText = (id, v) => { const e = $(id); if (e.textContent !== v) e.textContent = v; };
+/* العدّاد المرئي كل ثانية (فقط والتطبيق ظاهر في تبويب المواقيت)، أما الفحوص الثقيلة (تغيّر اليوم، التنبيهات، البطاقات) فكل 5 ثوانٍ */
+function tick(force) {
     if (!state.today) return;
+    if (!splashDone) showSplash();
     if (!PERF.first) PERF.first = Math.round(perfNow());
     const now = Date.now();
-
-    if (dayOf(state.tz).iso !== state.dayIso) { state.view = 0; recalc(); return; }
-
-    // الهجري يتغيّر عند وقت المغرب
-    const am = now >= state.today.Maghrib;
-    if (am !== state.afterMaghrib) { state.afterMaghrib = am; renderHeader(); }
-    if (settings.tab === 'adhkar' && lastRN !== readNight()) applyTheme('soft');
-
+    const slow = force === true || !lastSlow || now - lastSlow >= 5000 || now < lastSlow;
+    if (slow) {
+        lastSlow = now;
+        if (dayOf(state.tz).iso !== state.dayIso) { state.view = 0; recalc(); return; }
+        // الهجري يتغيّر عند وقت المغرب
+        const am = now >= state.today.Maghrib;
+        if (am !== state.afterMaghrib) { state.afterMaghrib = am; renderHeader(); }
+        if (settings.tab === 'adhkar' && lastRN !== readNight()) applyTheme('soft');
+    }
+    if (!document.hidden && settings.tab === 'times') {
     let next = null;
     const CD = ['Fajr','Sunrise','Dhuhr','Asr','Maghrib','Isha'];
     for (const k of CD) {
@@ -2502,13 +2819,13 @@ function tick() {
     let prev = state.yesterday.Isha;
     for (const k of CD) if (state.today[k] <= now) prev = state.today[k];
 
-    $('next-prayer-name').textContent = prayerName(next.k);
+    setText('next-prayer-name', prayerName(next.k));
     const diff = Math.max(0, next.ts - now);
     const hh = Math.floor(diff / 3600000);
     const mm = Math.floor((diff % 3600000) / 60000);
     const ss = Math.floor((diff % 60000) / 1000);
-    $('countdown').textContent = `${pad2(hh)}:${pad2(mm)}:${pad2(ss)}`;
-    $('next-prayer-time').textContent = fmtClock(next.ts);
+    setText('countdown', `${pad2(hh)}:${pad2(mm)}:${pad2(ss)}`);
+    setText('next-prayer-time', fmtClock(next.ts));
     const pct = Math.min(100, Math.max(0, (now - prev) / (next.ts - prev) * 100));
     setHeroRing(pct / 100);
     if (heroPending) playHeroIntro();
@@ -2520,6 +2837,8 @@ function tick() {
             r.classList.toggle('active-prayer', state.view === 0 && r.dataset.key === next.k));
     }
 
+    }
+    if (slow) {
     if (settings.notify) {
         const pre = Number(settings.preAlert) || 0;
         for (const k of FIVE) {
@@ -2588,6 +2907,7 @@ function tick() {
         });
     }
     updateCards(now);
+    }
 }
 
 let afterKey = '', backupShown = null, wirdCache = {}, khCache = {};
@@ -3548,7 +3868,24 @@ function renderDaily(dk) {
     $('daily-text').textContent = item.t;
     $('daily-en').textContent = isEn() ? DAILY_EN[idx] : '';
     $('daily-src').textContent = isEn() ? DAILY_SRC_EN[idx] : item.s;
+    const card = $('daily-card'); try { card.classList.remove('tap'); card.onclick = null; card.removeAttribute('role'); card.removeAttribute('title'); } catch (e) {}
+    if (item.k !== 'آية') return;
+    // أيام الآيات: آية مناسبة الطول من المصحف كله (تُحفظ لليوم كي لا نحمّل الملف كل مرة)
+    const iso = dk.y + '-' + pad2(dk.m) + '-' + pad2(dk.d);
+    const show = p => { if ($('daily-card') !== card) return; $('daily-title').textContent = t('verseOfDay'); $('daily-text').textContent = p.t; $('daily-en').textContent = ''; $('daily-src').textContent = surName(p.s) + ' · ' + (isEn() ? p.a : qNum(p.a));
+        try { card.classList.add('tap'); card.setAttribute('role', 'button'); } catch (e) {} card.title = t('dailyAyah'); card.onclick = () => openQuran(p.s, p.a); };
+    const c = store.get('pt-dailyv', null);
+    if (c && c.k === iso && c.t) { show(c); return; }
+    if (typeof fetch !== 'function') return;
+    const tok = ++dailyTok;
+    loadQuran().then(dd => {
+        if (tok !== dailyTok) return;
+        const cand = []; for (let sn = 0; sn < 114; sn++) for (let an = 0; an < dd[sn].length; an++) { const L = dd[sn][an].length; if (L >= 35 && L <= 150) cand.push([sn + 1, an + 1]); }
+        const dn = Math.floor(Date.UTC(dk.y, dk.m - 1, dk.d) / 864e5), pk = cand[(dn * 2654435761) % cand.length], p = { k: iso, s: pk[0], a: pk[1], t: dd[pk[0] - 1][pk[1] - 1] };
+        store.set('pt-dailyv', p); show(p);
+    }).catch(() => {});
 }
+let dailyTok = 0;
 function hexToRgb(hex) {
     const h = String(hex).replace('#', '');
     const f = h.length === 3 ? h.split('').map(c => c + c).join('') : h;
@@ -3922,6 +4259,25 @@ async function copyReport() {
     try { await navigator.clipboard.writeText(txt); toast(t('reportDone')); return; } catch (e) {}
     try { const ta = document.createElement('textarea'); ta.value = txt; ta.style.position = 'fixed'; ta.style.opacity = '0'; document.body.appendChild(ta); ta.select(); document.execCommand('copy'); document.body.removeChild(ta); toast(t('reportDone')); } catch (e) { toast(txt.slice(0, 120)); }
 }
+const OFF_FILES = [['dgOfApp', './'], ['dgOfQ', 'quran-uthmani.txt'], ['dgOfF', 'AmiriQuran-Regular.ttf'], ['dgOfIc', 'icon-192.png']];
+async function offlineCheck(tk, box, row) {
+    const hd = document.createElement('div'); hd.className = 'small muted'; hd.style.margin = '.8rem 0 .3rem'; hd.textContent = t('dgOfT'); box.appendChild(hd);
+    if (!('caches' in window)) { row(t('dgOfT'), t('dgOfNone'), 'bad'); $('dg-offline').hidden = true; return; }
+    let miss = 0;
+    for (const [k, u] of OFF_FILES) {
+        let r = null; try { r = (await caches.match(u)) || (u === './' ? await caches.match(location.pathname) : null); } catch (e) {}
+        if (tk !== diagTk) return;
+        if (r) { let sz = ''; try { const bl = await r.clone().blob(); sz = bl.size > 1048576 ? (bl.size / 1048576).toFixed(1) + ' MB' : Math.max(1, Math.round(bl.size / 1024)) + ' KB'; } catch (e) {} row(t(k), t('dgOfSaved', sz), 'ok'); }
+        else { miss++; row(t(k), t('dgOfMiss'), 'bad'); }
+    }
+    if (tk === diagTk) $('dg-offline').hidden = !miss;
+}
+async function offlineFetch() {
+    const bt = $('dg-offline'); bt.disabled = true; bt.textContent = t('dgOfBusy');
+    try { const c = await caches.open('pt-v2'); for (const [, u] of OFF_FILES) { try { await c.add(new Request(u, { cache: 'reload' })); } catch (e) {} } toast(t('dgOfDone')); } catch (e) {}
+    bt.disabled = false; bt.textContent = t('dgOfBtn'); renderDiag();
+}
+let diagTk = 0;
 function renderDiag() {
     const box = $('diag-list'); if (!box) return;
     box.innerHTML = '';
@@ -3955,6 +4311,8 @@ function renderDiag() {
     try { let n = 0; for (let i = 0; i < localStorage.length; i++) { const kk = localStorage.key(i); n += kk.length + (localStorage.getItem(kk) || '').length; } row(t('dgStore'), t('dgKB', Math.round(n * 2 / 1024)), n * 2 > 4 * 1024 * 1024 ? 'bad' : 'ok'); } catch (e) {}
     try { if (performance.memory) row(t('dgMem'), t('dgMB', Math.round(performance.memory.usedJSHeapSize / 1048576)), performance.memory.usedJSHeapSize > 150 * 1048576 ? 'bad' : 'ok'); } catch (e) {}
     $('dg-clrerr').hidden = !en;
+    const tk = ++diagTk; offlineCheck(tk, box, row);
+    if (navigator.storage && navigator.storage.persisted) navigator.storage.persisted().then(p => { if (tk !== diagTk) return; row(t('dgPersist'), p ? t('dgOn') : t('dgOff'), p ? 'ok' : 'bad'); $('dg-persist').hidden = !!p || !navigator.storage.persist; }).catch(() => {});
 }
 let dgResetT = 0;
 function resetNotifSettings() {
@@ -3997,7 +4355,7 @@ function syncControls() {
     $('remsleep-toggle').checked = !!settings.remindSleep; $('remwake-toggle').checked = !!settings.remindWake; $('remafter-toggle').checked = !!settings.remindAfter;
     $('h24-toggle').checked = settings.h24;
     $('fs-toggle').checked = settings.fullscreen;
-    $('anim-toggle').checked = settings.anim !== false;
+    $('anim-toggle').checked = settings.anim !== false; $('splash-toggle').checked = settings.splash !== false;
     $('city-select').value = settings.cityId;
     $('method-select').value = settings.method;
 }
@@ -4020,7 +4378,7 @@ function sanitizeSettings(s) {
     if (PT_METHODS[s.method]) out.method = Number(s.method);
     out.asr = Number(s.asr) === 2 ? 2 : 1;
     out.hijriAdj = clampInt(s.hijriAdj, 0, -2, 2);
-    out.notify = !!s.notify; out.sound = s.sound !== false; out.h24 = !!s.h24; out.fullscreen = s.fullscreen !== false; out.anim = s.anim !== false;
+    out.notify = !!s.notify; out.sound = s.sound !== false; out.h24 = !!s.h24; out.fullscreen = s.fullscreen !== false; out.anim = s.anim !== false; out.splash = s.splash !== false;
     out.lang = I18N[s.lang] ? s.lang : 'ar';
     out.preAlert = [0, 10, 15].includes(Number(s.preAlert)) ? Number(s.preAlert) : 0;
     out.tasbihPhrase = TASBIH_PHRASES.includes(s.tasbihPhrase) ? s.tasbihPhrase : 'ph_sub';
@@ -4306,6 +4664,8 @@ function bindUI() {
     });
     $('nightauto-toggle').addEventListener('change', e => { settings.nightAuto = e.target.checked; saveSettings(); applyTheme('soft'); });
     $('diag').addEventListener('toggle', renderDiag);
+    $('dg-offline').addEventListener('click', offlineFetch);
+    $('dg-persist').addEventListener('click', () => { askPersist(true).then(() => renderDiag()); });
     $('dg-clrerr').addEventListener('click', () => { store.set('pt-errs', []); renderDiag(); });
     $('dg-perm').addEventListener('click', async () => { try { await Notification.requestPermission(); } catch (e) {} syncNotifyStatus(); renderDiag(); });
     $('dg-sw').addEventListener('click', () => {
@@ -4335,7 +4695,7 @@ function bindUI() {
     $('tool-zakat').addEventListener('click', openZakat);
     $('wird-quran').addEventListener('click', () => openQuran());
     $('sheet-close').addEventListener('click', closeSheet);
-    document.addEventListener('keydown', e => { if (e.key === 'Escape' && !$('sheet').hidden) closeSheet(); });
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') { if (!$('splash').hidden) closeSplash(); else if (!$('sheet').hidden) closeSheet(); } });
     $('mig-go').addEventListener('click', () => { $('mig-card').hidden = true; store.set('pt-migdone', 1); showTab('settings'); showSec('data', true); setTimeout(() => $('mig-title').scrollIntoView({ block: 'start' }), 60); });
     $('mig-no').addEventListener('click', () => { store.set('pt-migdone', 1); $('mig-card').hidden = true; });
     $('bak-list').addEventListener('click', e => { const b = e.target.closest && e.target.closest('button'); if (!b) return; const x = bakList().find(y => String(y.at) === b.dataset.at); if (x && importText(x.d)) toast(t('bakDone')); });
@@ -4350,6 +4710,7 @@ function bindUI() {
         if (state.today) { renderHeader(); renderList(); lastNextKey = null; tick(); }
     });
     $('lang-select').addEventListener('change', e => { settings.lang = e.target.value; saveSettings(); refreshAll(); });
+    $('splash-toggle').addEventListener('change', e => { settings.splash = e.target.checked; saveSettings(); });
     $('anim-toggle').addEventListener('change', e => { settings.anim = e.target.checked; saveSettings(); applyFxClass(); });
     $('fs-toggle').addEventListener('change', e => {
         settings.fullscreen = e.target.checked; saveSettings();
@@ -4448,7 +4809,7 @@ function bindUI() {
     document.addEventListener('click', unlockAudio, { passive:true });
     window.addEventListener('scroll', onScroll, { passive: true });
     window.addEventListener('scroll', () => { clearTimeout(libSaveT); libSaveT = setTimeout(saveLibPos, 400); }, { passive: true });
-    document.addEventListener('visibilitychange', () => { if (!document.hidden) tick(); syncWake(); });
+    document.addEventListener('visibilitychange', () => { setTickRate(); if (!document.hidden) tick(true); syncWake(); });
 }
 
 /* ============ تشغيل ============ */
@@ -4471,7 +4832,8 @@ try { const q = new URLSearchParams(location.search); if (q.get('quran') === '1'
     if (q.get('tab') === 'adhkar') { settings.tab = 'adhkar'; const st = q.get('set'); if (['morning', 'evening', 'library', 'stats', 'tasbih'].includes(st)) adhkarSet = st; } } catch (e) {}
 showTab(firstVisibleTab(settings.tab || 'times'), true);
 clearInterval(timer);
-timer = setInterval(tick, 1000);   // عدّاد واحد فقط طول عمر الصفحة
+function setTickRate() { clearInterval(timer); timer = setInterval(tick, document.hidden ? 15000 : 1000); }   // عدّاد واحد فقط؛ أبطأ والتطبيق في الخلفية
+setTickRate();
 renderWird();
 recalc();
 setTimeout(checkLocDrift, 4000);
@@ -4482,6 +4844,8 @@ function maybeMigCard(force) {
     if ((https || force) && !store.get('pt-migdone', 0) && !Object.keys(track).length) $('mig-card').hidden = false;
 }
 setTimeout(maybeMigCard, 2500);
+setTimeout(askPersist, 5000);
+setTimeout(maybeWhatsNew, 3500);
 setTimeout(() => { autoBakDaily(); renderBak(); }, 6000);
 renderBak();
 if (FIRST_RUN && !settings.onboarded) startOnboarding();

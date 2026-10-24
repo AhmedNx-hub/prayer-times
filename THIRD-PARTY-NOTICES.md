@@ -58,3 +58,7 @@ Copyright 2010-2022 The Amiri Quran Project Authors (https://github.com/aliftype
 
 ## Tanzil Quran Metadata (page / juz / hizb / sajda positions, embedded in index.html)
 Quran Metadata (ver 1.0), Copyright (C) 2008-2009 Tanzil.info, licensed under Creative Commons Attribution 3.0. Source: https://tanzil.net/docs/Quran_Metadata
+
+
+## Al-Tafsir Al-Muyassar (tafsir-muyassar.txt)
+Arabic tafsir by the King Fahd Quran Complex, as distributed by Tanzil (https://tanzil.net/trans/ar.muyassar). Tanzil's terms allow non-commercial use only, require keeping the header in the file and linking back to https://tanzil.net, and the text must not be modified. The author should re-check these terms before any commercial use or redistribution.
