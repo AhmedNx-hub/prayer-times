@@ -318,7 +318,7 @@ html.sheet-open body { overflow:hidden; }
 .q-mb button svg { width:1.25rem; height:1.25rem; }
 .q-mb button.on { background:var(--accent-soft); color:var(--accent); border-color:var(--accent); }
 .q-mb button.on.g { background:rgba(46,204,113,.16); color:var(--ok); border-color:var(--ok); }
-.q-pg { display:block; text-align:center; font-family:system-ui,sans-serif; font-size:.72rem; color:var(--muted); margin:.5rem 0; line-height:1.4; border-top:1px dashed var(--border); padding-top:.3rem; }
+.q-pg { display:block; text-align:center; font-family:'AmiriQ',serif; font-size:1.7rem; color:var(--accent); opacity:.85; margin:.6rem 0; line-height:1.4; border-top:1px dashed var(--border); padding-top:.3rem; }
 .q-v.sj .q-n::after { content:'\00a0\06E9'; color:var(--accent); }
 .q-jz { display:flex; gap:.4rem; overflow-x:auto; padding-bottom:.4rem; margin-bottom:.6rem; scrollbar-width:thin; }
 .q-jz button { flex:none; min-width:2.6rem; min-height:2.4rem; padding:0 .6rem; border-radius:.7rem; }
@@ -636,7 +636,6 @@ html.onehand #tab-adhkar { padding-bottom:3.8rem; }
             <div id="adhkar-progress" class="muted small" style="margin-bottom:.7rem"></div>
             <div id="adhkar-list"></div>
             <button id="adhkar-reset" class="btn-block" style="margin-top:.4rem" data-i18n="resetCount"></button>
-            <p class="muted small" style="margin:.7rem 0 0" data-i18n="adhkarNote"></p>
         </div>
 
         <div id="lib-box" hidden>
@@ -936,7 +935,6 @@ html.onehand #tab-adhkar { padding-bottom:3.8rem; }
             <div class="ab-nick" dir="ltr"><svg class="orn" viewBox="0 0 14 30" aria-hidden="true"><path d="M11 2C3 9 3 21 11 28" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M2.6 15l1.9-1.9 1.9 1.9-1.9 1.9z" fill="currentColor"/></svg><span>Ahmed Nx</span><svg class="orn flip-x" viewBox="0 0 14 30" aria-hidden="true"><path d="M11 2C3 9 3 21 11 28" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M2.6 15l1.9-1.9 1.9 1.9-1.9 1.9z" fill="currentColor"/></svg></div>
             <div class="ab-line"><i data-ic="badge-check"></i><span data-i18n="aboutCreated"></span></div>
             <div class="ab-line"><i data-ic="badge-check"></i><span data-i18n="aboutRights"></span></div>
-            <p class="muted small center" style="margin:1.2rem 0 0" data-i18n="qCredit"></p>
             <button id="report-btn" class="btn-block ibtn" style="margin-top:1.4rem"><i data-ic="copy"></i><span data-i18n="reportBtn"></span></button>
         </div>
     </div>
@@ -1431,7 +1429,7 @@ const store = {
     set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) {} }
 };
 
-const APP_VER = '2026.10.24-5';
+const APP_VER = '2026.10.24-6';
 function logErr(m) { try { const l = store.get('pt-errs', []); l.push({ at: Date.now(), m: String(m).slice(0, 200) }); store.set('pt-errs', l.slice(-10)); } catch (e) {} }
 window.addEventListener('error', e => logErr((e.message || 'error') + ' @' + String(e.filename || '').split('/').pop() + ':' + (e.lineno || 0)));
 window.addEventListener('unhandledrejection', e => logErr('promise: ' + ((e.reason && e.reason.message) || e.reason)));
@@ -2016,7 +2014,7 @@ function qIndex(b, d) {
         grid.appendChild(bt);
     }
     const resBox = document.createElement('div'); resBox.hidden = true;
-    b.appendChild(bmBox); b.appendChild(grid); b.appendChild(resBox); qCredit(b);
+    b.appendChild(bmBox); b.appendChild(grid); b.appendChild(resBox);
     let tm = 0;
     inp.addEventListener('input', () => { clearTimeout(tm); tm = setTimeout(() => {
         const raw = inp.value.trim(), q = qNorm(raw).replace(/\s+/g, ' ').toLowerCase();
@@ -2052,7 +2050,7 @@ function qSurah(b, d, s, a) {
     const bms = new Set(qBms()), memAll = qMemAll(), memS = new Set(memAll[s] || []), stp = store.get('pt-qstop', null);
     d[s - 1].forEach((v, i) => {
         const gI = QOFF[s - 1] + i + 1;
-        if (QPGMAP.has(gI)) { const dv = document.createElement('span'); dv.className = 'q-pg'; dv.textContent = (QJZMAP.has(gI) ? t('qJuzN', QJZMAP.get(gI)) + ' · ' : '') + t('qPageN', QPGMAP.get(gI)); tx.appendChild(dv); }
+        if (QPGMAP.has(gI)) { const dv = document.createElement('span'); dv.className = 'q-pg'; dv.textContent = (QJZMAP.has(gI) ? t('qJuzN', QJZMAP.get(gI)) + '  ' : '') + '\u00AB ' + qNum(QPGMAP.get(gI)) + ' \u00BB'; tx.appendChild(dv); }
         const sp2 = document.createElement('span'); sp2.className = (QSJ.has(gI) ? 'q-v sj' : 'q-v') + (bms.has(s + ':' + (i + 1)) ? ' bm' : '') + (memS.has(i + 1) ? ' mem' : '') + (stp && stp.s === s && stp.a === i + 1 ? ' stop' : ''); sp2.dataset.a = i + 1;
         qWords(sp2, v);
         const n = document.createElement('span'); n.className = 'q-n'; n.textContent = '\uFD3F' + qNum(i + 1) + '\uFD3E'; sp2.appendChild(n);
@@ -2099,7 +2097,6 @@ function qSurah(b, d, s, a) {
     if (s > 1) nav.appendChild(qBtn('ibtn', 'chevron-left', t('qPrev'), () => { qSetPos(s - 1, 1); qSurah(b, d, s - 1, 1); }));
     b.appendChild(nav);
     const lg = qBtn('btn-block ibtn', 'book-open', t('qLog', unit), () => { wirdAdd(1); toast(t('qLogged', unit)); }); lg.style.marginTop = '.8rem'; b.appendChild(lg);
-    qCredit(b);
     tx.addEventListener('click', e => { const v = e.target.closest('.q-v'); if (!v) return;
         tx.querySelectorAll('.q-v.sel').forEach(x => x.classList.remove('sel'));
         if (qSel === Number(v.dataset.a)) { qSel = null; act.hidden = true; return; }
