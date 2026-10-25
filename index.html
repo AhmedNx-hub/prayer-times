@@ -293,9 +293,10 @@ html.focus #tab-adhkar h3[data-i18n=adhkarTitle] { opacity:0; max-height:0; marg
 #splash .sp-city { color:var(--muted); font-size:1rem; } #splash .sp-lab { color:var(--muted); font-size:1.05rem; margin-top:1rem; } #splash .sp-name { font-size:2.6rem; font-weight:700; color:var(--accent); line-height:1.2; } #splash .sp-time { font-size:3.2rem; font-weight:600; font-variant-numeric:tabular-nums; } #splash .sp-cd { font-size:1.4rem; color:var(--muted); font-variant-numeric:tabular-nums; }
 #splash .sp-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:.5rem; width:100%; max-width:26rem; margin-top:1.6rem; } #splash .sp-grid div { padding:.55rem .3rem; border-radius:.7rem; background:var(--hover); } #splash .sp-grid div.on { background:var(--accent); color:var(--on-accent); } #splash .sp-grid small { display:block; opacity:.8; } #splash .sp-grid b { font-variant-numeric:tabular-nums; }
 #splash .sp-tap { margin-top:1.4rem; color:var(--muted); font-size:.85rem; }
-.prayer-row.has-sheet { cursor:pointer; }
+.prayer-row.has-sheet { cursor:pointer; } .prayer-row.pinned { border-inline-start:3px solid var(--accent); }
 #sheet-body .btn-block.on { background:var(--accent-soft); color:var(--accent); border-color:var(--accent); }
-.sn-g { margin-bottom:.6rem; border-radius:.9rem; background:var(--hover); } .sn-g > summary { padding:.8rem 1rem; font-weight:700; cursor:pointer; } .sn-i { display:flex; gap:.6rem; align-items:flex-start; padding:.7rem 1rem; border-top:1px solid var(--border); } .sn-i .tx { flex:1; line-height:1.9; font-size:calc(1rem * var(--dfs, 1)); } .sn-i small { display:block; color:var(--muted); margin-top:.2rem; }
+.sn-g { margin-bottom:.6rem; border-radius:.9rem; background:var(--hover); } .sn-g > summary { padding:.8rem 1rem; font-weight:700; cursor:pointer; } .sn-i { display:flex; gap:.6rem; align-items:flex-start; padding:.7rem 1rem; border-top:1px solid var(--border); } .sn-i .tx { flex:1; line-height:1.9; font-size:calc(1rem * var(--dfs, 1)); } .sn-a { display:grid; grid-template-columns:repeat(2,auto); gap:.25rem 0; align-items:center; flex:none; } .sn-nt { display:block; margin-top:.3rem; padding:.3rem .6rem; border-radius:.6rem; background:var(--accent-soft); font-size:.9rem; } .sn-b svg { width:1rem; height:1rem; stroke:currentColor; fill:none; stroke-width:2; } .sn-b.on svg { fill:currentColor; } .sn-fav { background:var(--accent-soft); } #sod .sod-t { line-height:1.9; margin:.3rem 0 .6rem; } #sod .sod-t small { display:block; color:var(--muted); } .q-fs { display:flex; align-items:center; gap:.5rem; flex:1; min-width:9rem; } .q-fs input { flex:1; min-width:0; accent-color:var(--accent); }
+.sn-i small { display:block; color:var(--muted); margin-top:.2rem; }
 .pr-seg { display:grid; grid-template-columns:repeat(3,1fr); gap:.4rem; margin-bottom:.8rem; } .pr-seg button.on { background:var(--accent-soft); color:var(--accent); border-color:var(--accent); }
 .pr-panel { padding:.8rem 1rem; border-radius:.9rem; background:var(--hover); line-height:1.9; margin-bottom:1rem; } .pr-panel ol { margin:.4rem 0 0; padding-inline-start:1.3rem; } .pr-panel li { margin-bottom:.5rem; }
 #sheet { position:fixed; inset:0; z-index:60; background:var(--bg); overflow-y:auto; -webkit-overflow-scrolling:touch; }
@@ -361,7 +362,7 @@ html.sheet-open body { overflow:hidden; }
 .q-credit { text-align:center; margin-top:1.4rem; }
 .qtab .q-act { bottom:calc(4.6rem + env(safe-area-inset-bottom)); z-index:5; }
 @media (min-width:820px), (orientation:landscape) and (max-height:520px) and (min-width:560px) { .qtab .q-act { bottom:0; } }
-#tab-quran, #tab-tools { max-width:820px; margin-inline:auto; }
+#tab-quran, #tab-tools, #tab-sunan { max-width:820px; margin-inline:auto; }
 .q-v.mem { background:linear-gradient(to top, rgba(46,204,113,.2) 40%, transparent 40%); } .q-v.mem.sel { background:linear-gradient(to top, var(--accent-soft) 45%, transparent 45%); }
 .q-text.simple .q-v.sel { background:var(--accent-soft); text-decoration:none; } .q-text.simple .q-v.mem { background:rgba(46,204,113,.13); }
 .q-v.bm .q-n::before { content:'\2605\00a0'; }
@@ -423,6 +424,7 @@ html.sheet-open body { overflow:hidden; }
   html.onehand #abar { inset-inline-start:6.6rem; }
   #toast { bottom:2rem; }
 }
+@media (min-width:560px) and (max-width:819px) { #app { max-width:640px; } #bottom-nav .inner { max-width:640px; } }
 @media (min-width:820px) {
   #tab-times { display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); gap:0 1.2rem; align-items:start; }
   #tab-adhkar, #tab-settings { max-width:820px; margin-inline:auto; }
@@ -539,6 +541,7 @@ html.onehand #tab-adhkar { padding-bottom:3.8rem; }
                 <div id="next-prayer-time"></div>
             </div>
         </div>
+        <div id="cur-line" class="muted small" style="margin-top:.5rem;min-height:1.2em"></div>
         <div class="hero-dates">
             <span id="hijri-date" class="muted small il-block"></span>
             <span id="greg-date" class="muted small il-block"></span>
@@ -553,6 +556,7 @@ html.onehand #tab-adhkar { padding-bottom:3.8rem; }
             </div>
         </div>
         <div class="qw" id="qw"><div class="qi"><div class="wring sm" id="qw-ring"><svg viewBox="0 0 100 100" aria-hidden="true"><circle class="bg" cx="50" cy="50" r="46"/><circle class="fg" id="qw-fg" cx="50" cy="50" r="46"/></svg><span id="qw-n"></span></div><div class="qt"><span data-i18n="wirdToday"></span><b id="qw-val"></b></div></div><button id="qw-add" class="btn-accent"></button></div>
+        <div class="notice" id="sod" hidden></div>
         <div class="notice" id="loc-card" hidden>
             <div style="font-weight:700" id="loc-text"></div>
             <div class="grid2" style="margin-top:.7rem">
@@ -870,6 +874,8 @@ html.onehand #tab-adhkar { padding-bottom:3.8rem; }
         </details>
         <details class="opts gd"><summary data-i18n="grpKhatma"></summary>
         <label class="switch"><span class="il"><i data-ic="library"></i><span data-i18n="khRemOn"></span></span><input type="checkbox" id="khrem-toggle"></label>
+        <label class="switch"><span class="il"><i data-ic="library"></i><span data-i18n="revRemOn"></span></span><input type="checkbox" id="revrem-toggle"></label>
+        <div class="field sub" id="sub-revrem"><div class="muted small" data-i18n="revRemSub"></div><label for="revrem-time" data-i18n="wirdTime"></label><input type="time" id="revrem-time"></div>
         <div class="field sub" id="sub-khrem"><label for="khrem-time" data-i18n="wirdTime"></label><input type="time" id="khrem-time"></div>
         </details>
         <details class="opts" id="diag" style="margin-bottom:.8rem">
@@ -1080,7 +1086,14 @@ const PT_METHODS = {
     8:  { fajr:19.5, isha:{ min:90 } },                        // الخليج
     9:  { fajr:18,   isha:17.5 },                              // الكويت
     10: { fajr:18,   isha:{ min:90 } },                        // قطر
-    13: { fajr:18,   isha:17 }                                 // ديانت تركيا
+    13: { fajr:18,   isha:17 },                                // ديانت تركيا
+    21: { fajr:19,   isha:17, off:{ Sunrise:-3, Dhuhr:5, Maghrib:5 } }, // المغرب (الأوقاف)
+    19: { fajr:18,   isha:17 },                                // الجزائر
+    18: { fajr:18,   isha:18 },                                // تونس
+    17: { fajr:20,   isha:18 },                                // ماليزيا (JAKIM)
+    11: { fajr:20,   isha:18 },                                // سنغافورة (MUIS)
+    20: { fajr:20,   isha:18 },                                // إندونيسيا
+    12: { fajr:12,   isha:12 }                                 // فرنسا (UOIF)
 };
 function ptSin(d){ return Math.sin(d * Math.PI / 180); }
 function ptCos(d){ return Math.cos(d * Math.PI / 180); }
@@ -1161,12 +1174,12 @@ function ptCompute(o){
 }
 // يرجّع لحظات حقيقية (ms) مقرّبة لأقرب دقيقة + الضبط اليدوي، أو null لو الحساب مستحيل
 function ptInstants(o){
-    const h = ptCompute(o);
+    const h = ptCompute(o), PM = PT_METHODS[o.method] || PT_METHODS[5], off = PM.off || {};
     const base = Date.UTC(o.y, o.m - 1, o.d);
     const out = {};
     for (const key of Object.keys(h)) {
         if (!Number.isFinite(h[key])) return null;
-        out[key] = Math.round((base + h[key] * 3600000) / 60000) * 60000 + ((o.tune && o.tune[key]) || 0) * 60000;
+        out[key] = Math.round((base + h[key] * 3600000) / 60000) * 60000 + (((o.tune && o.tune[key]) || 0) + (off[key] || 0)) * 60000;
     }
     return out;
 }
@@ -1201,7 +1214,12 @@ const CITIES = [
     { id:'algiers',name:'الجزائر',      lat:36.7538, lng:3.0588,   tz:'Africa/Algiers' },
     { id:'casa',   name:'الدار البيضاء',lat:33.5731, lng:-7.5898,  tz:'Africa/Casablanca' },
     { id:'istanbul',name:'إسطنبول',     lat:41.0082, lng:28.9784,  tz:'Europe/Istanbul' },
-    { id:'london', name:'لندن',         lat:51.5072, lng:-0.1276,  tz:'Europe/London' }
+    { id:'london', name:'لندن',         lat:51.5072, lng:-0.1276,  tz:'Europe/London' },
+    { id:'rabat',  name:'الرباط',       lat:34.0209, lng:-6.8416,  tz:'Africa/Casablanca' },
+    { id:'paris',  name:'باريس',        lat:48.8566, lng:2.3522,   tz:'Europe/Paris' },
+    { id:'kl',     name:'كوالالمبور',   lat:3.1390,  lng:101.6869, tz:'Asia/Kuala_Lumpur' },
+    { id:'sg',     name:'سنغافورة',     lat:1.3521,  lng:103.8198, tz:'Asia/Singapore' },
+    { id:'jakarta',name:'جاكرتا',       lat:-6.2088, lng:106.8456, tz:'Asia/Jakarta' }
 ];
 const METHODS = [
     [5,'الهيئة المصرية العامة للمساحة'],
@@ -1212,7 +1230,14 @@ const METHODS = [
     [8,'منطقة الخليج'],
     [9,'الكويت'],
     [10,'قطر'],
-    [13,'رئاسة الشؤون الدينية التركية']
+    [13,'رئاسة الشؤون الدينية التركية'],
+    [21,'المغرب (وزارة الأوقاف والشؤون الإسلامية)'],
+    [19,'الجزائر (وزارة الشؤون الدينية والأوقاف)'],
+    [18,'تونس (وزارة الشؤون الدينية)'],
+    [17,'ماليزيا (JAKIM)'],
+    [11,'سنغافورة (MUIS)'],
+    [20,'إندونيسيا (وزارة الشؤون الدينية)'],
+    [12,'فرنسا (اتحاد المنظمات الإسلامية UOIF)']
 ];
 
 /* ===== الأذكار: حصن المسلم (من الملف المرفق، 132 قسم) ===== */
@@ -1229,7 +1254,7 @@ const ADHKAR = (() => {
 })();
 
 /* ===== أيقونات Lucide (ISC license) - المستخدم منها فقط ===== */
-const ICONS = {"layout-grid":"<rect width=\"7\" height=\"7\" x=\"3\" y=\"3\" rx=\"1\"/><rect width=\"7\" height=\"7\" x=\"14\" y=\"3\" rx=\"1\"/><rect width=\"7\" height=\"7\" x=\"14\" y=\"14\" rx=\"1\"/><rect width=\"7\" height=\"7\" x=\"3\" y=\"14\" rx=\"1\"/>","calculator":"<rect width=\"16\" height=\"20\" x=\"4\" y=\"2\" rx=\"2\"/><line x1=\"8\" x2=\"16\" y1=\"6\" y2=\"6\"/><line x1=\"16\" x2=\"16\" y1=\"14\" y2=\"18\"/><path d=\"M16 10h.01\"/><path d=\"M12 10h.01\"/><path d=\"M8 10h.01\"/><path d=\"M12 14h.01\"/><path d=\"M8 14h.01\"/><path d=\"M12 18h.01\"/><path d=\"M8 18h.01\"/>","calendar-days":"<path d=\"M8 2v3\"/><path d=\"M16 2v3\"/><rect x=\"3\" y=\"3\" width=\"18\" height=\"18\" rx=\"2\"/><path d=\"M3 9h18\"/><path d=\"M8 13h.01\"/><path d=\"M12 13h.01\"/><path d=\"M16 13h.01\"/><path d=\"M8 17h.01\"/><path d=\"M12 17h.01\"/><path d=\"M16 17h.01\"/>","chevron-right":"<path d=\"m9 18 6-6-6-6\"/>","chevron-left":"<path d=\"m15 18-6-6 6-6\"/>","copy":"<rect width=\"14\" height=\"14\" x=\"8\" y=\"8\" rx=\"2\" ry=\"2\"/><path d=\"M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2\"/>","badge-check":"<path d=\"M3.85 8.62a4 4 0 0 1 4.78-4.77 4 4 0 0 1 6.74 0 4 4 0 0 1 4.78 4.78 4 4 0 0 1 0 6.74 4 4 0 0 1-4.77 4.78 4 4 0 0 1-6.75 0 4 4 0 0 1-4.78-4.77 4 4 0 0 1 0-6.76Z\"/><path d=\"m16 9-5.5 5.5L8 12\"/>","clock":"<circle cx=\"12\" cy=\"12\" r=\"10\"/><path d=\"M12 6v6l4 2\"/>","book-open":"<path d=\"M12 5v16\"/><path d=\"M20.001 19A2 2 0 0022 17V5a2 2 0 00-1.999-2L16 3.002A5 5 0 0012 5a5 5 0 00-4-2H4a2 2 0 00-2 2v12a2 2 0 001.999 2H8a5 5 0 014 2 5 5 0 014-2z\"/>","sliders-horizontal":"<path d=\"M10 5H3\"/><path d=\"M12 19H3\"/><path d=\"M14 3v4\"/><path d=\"M16 17v4\"/><path d=\"M21 12h-9\"/><path d=\"M21 19h-5\"/><path d=\"M21 5h-7\"/><path d=\"M8 10v4\"/><path d=\"M8 12H3\"/>","sun":"<circle cx=\"12\" cy=\"12\" r=\"4\"/><path d=\"M12 2v2\"/><path d=\"M12 20v2\"/><path d=\"m4.93 4.93 1.41 1.41\"/><path d=\"m17.66 17.66 1.41 1.41\"/><path d=\"M2 12h2\"/><path d=\"M20 12h2\"/><path d=\"m6.34 17.66-1.41 1.41\"/><path d=\"m19.07 4.93-1.41 1.41\"/>","moon":"<path d=\"M20.985 12.486a9 9 0 1 1-9.473-9.472c.405-.022.617.46.402.803a6 6 0 0 0 8.268 8.268c.344-.215.825-.004.803.401\"/>","circle-dot":"<circle cx=\"12\" cy=\"12\" r=\"1\"/><circle cx=\"12\" cy=\"12\" r=\"10\"/>","library":"<path d=\"m16 6 4 14\"/><path d=\"M12 6v14\"/><path d=\"M8 8v12\"/><path d=\"M4 4v16\"/>","search":"<path d=\"m21 21-4.34-4.34\"/><circle cx=\"11\" cy=\"11\" r=\"8\"/>","arrow-right":"<path d=\"M5 12h14\"/><path d=\"m12 5 7 7-7 7\"/>","undo-2":"<path d=\"M9 14 4 9l5-5\"/><path d=\"M4 9h10.5a5.5 5.5 0 0 1 5.5 5.5a5.5 5.5 0 0 1-5.5 5.5H11\"/>","rotate-ccw":"<path d=\"M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8\"/><path d=\"M3 3v5h5\"/>","refresh-cw":"<path d=\"M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8\"/><path d=\"M21 3v5h-5\"/><path d=\"M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16\"/><path d=\"M8 16H3v5\"/>","smartphone":"<rect width=\"14\" height=\"20\" x=\"5\" y=\"2\" rx=\"2\" ry=\"2\"/><path d=\"M12 18h.01\"/>","square":"<rect width=\"18\" height=\"18\" x=\"3\" y=\"3\" rx=\"2\"/>","flame":"<path d=\"M12 3q1 4 4 6.5t3 5.5a1 1 0 0 1-14 0 5 5 0 0 1 1-3 1 1 0 0 0 5 0c0-2-1.5-3-1.5-5q0-2 2.5-4\"/>","map-pin":"<path d=\"M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0\"/><circle cx=\"12\" cy=\"10\" r=\"3\"/>","bell":"<path d=\"M10.268 21a2 2 0 0 0 3.464 0\"/><path d=\"M3.262 15.326A1 1 0 0 0 4 17h16a1 1 0 0 0 .74-1.673C19.41 13.956 18 12.499 18 8A6 6 0 0 0 6 8c0 4.499-1.411 5.956-2.738 7.326\"/>","volume-2":"<path d=\"M11 4.702a.705.705 0 0 0-1.203-.498L6.413 7.587A1.4 1.4 0 0 1 5.416 8H3a1 1 0 0 0-1 1v6a1 1 0 0 0 1 1h2.416a1.4 1.4 0 0 1 .997.413l3.383 3.384A.705.705 0 0 0 11 19.298z\"/><path d=\"M16 9a5 5 0 0 1 0 6\"/><path d=\"M19.364 18.364a9 9 0 0 0 0-12.728\"/>","alarm-clock":"<circle cx=\"12\" cy=\"13\" r=\"8\"/><path d=\"M12 9v4l2 2\"/><path d=\"M5 3 2 6\"/><path d=\"m22 6-3-3\"/><path d=\"M6.38 18.7 4 21\"/><path d=\"M17.64 18.67 20 21\"/>","flask-conical":"<path d=\"M14 2v6a2 2 0 0 0 .245.96l5.51 10.08A2 2 0 0 1 18 22H6a2 2 0 0 1-1.755-2.96l5.51-10.08A2 2 0 0 0 10 8V2\"/><path d=\"M6.453 15h11.094\"/><path d=\"M8.5 2h7\"/>","save":"<path d=\"M15.2 3a2 2 0 0 1 1.4.6l3.8 3.8a2 2 0 0 1 .6 1.4V19a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2z\"/><path d=\"M17 21v-7a1 1 0 0 0-1-1H8a1 1 0 0 0-1 1v7\"/><path d=\"M7 3v4a1 1 0 0 0 1 1h7\"/>","maximize":"<path d=\"M8 3H5a2 2 0 0 0-2 2v3\"/><path d=\"M21 8V5a2 2 0 0 0-2-2h-3\"/><path d=\"M3 16v3a2 2 0 0 0 2 2h3\"/><path d=\"M16 21h3a2 2 0 0 0 2-2v-3\"/>","download":"<path d=\"M12 15V3\"/><path d=\"M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4\"/><path d=\"m7 10 5 5 5-5\"/>","upload":"<path d=\"M12 3v12\"/><path d=\"m17 8-5-5-5 5\"/><path d=\"M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4\"/>","calendar":"<path d=\"M8 2v3\"/><path d=\"M16 2v3\"/><rect x=\"3\" y=\"3\" width=\"18\" height=\"18\" rx=\"2\"/><path d=\"M3 9h18\"/>","check":"<path d=\"M20 6 9 17l-5-5\"/>","x":"<path d=\"M18 6 6 18\"/><path d=\"m6 6 12 12\"/>","sparkles":"<path d=\"M11.017 2.814a1 1 0 0 1 1.966 0l1.051 5.558a2 2 0 0 0 1.594 1.594l5.558 1.051a1 1 0 0 1 0 1.966l-5.558 1.051a2 2 0 0 0-1.594 1.594l-1.051 5.558a1 1 0 0 1-1.966 0l-1.051-5.558a2 2 0 0 0-1.594-1.594l-5.558-1.051a1 1 0 0 1 0-1.966l5.558-1.051a2 2 0 0 0 1.594-1.594z\"/><path d=\"M20 2v4\"/><path d=\"M22 4h-4\"/><circle cx=\"4\" cy=\"20\" r=\"2\"/>","star":"<path d=\"M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z\"/>","grip-vertical":"<circle cx=\"9\" cy=\"12\" r=\"1\"/><circle cx=\"9\" cy=\"5\" r=\"1\"/><circle cx=\"9\" cy=\"19\" r=\"1\"/><circle cx=\"15\" cy=\"12\" r=\"1\"/><circle cx=\"15\" cy=\"5\" r=\"1\"/><circle cx=\"15\" cy=\"19\" r=\"1\"/>","printer":"<path d=\"M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2\"/><path d=\"M6 9V3a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v6\"/><rect x=\"6\" y=\"14\" width=\"12\" height=\"8\" rx=\"1\"/>"};
+const ICONS = {"pencil":"<path d=\"M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z\"/><path d=\"m15 5 4 4\"/>","layout-grid":"<rect width=\"7\" height=\"7\" x=\"3\" y=\"3\" rx=\"1\"/><rect width=\"7\" height=\"7\" x=\"14\" y=\"3\" rx=\"1\"/><rect width=\"7\" height=\"7\" x=\"14\" y=\"14\" rx=\"1\"/><rect width=\"7\" height=\"7\" x=\"3\" y=\"14\" rx=\"1\"/>","calculator":"<rect width=\"16\" height=\"20\" x=\"4\" y=\"2\" rx=\"2\"/><line x1=\"8\" x2=\"16\" y1=\"6\" y2=\"6\"/><line x1=\"16\" x2=\"16\" y1=\"14\" y2=\"18\"/><path d=\"M16 10h.01\"/><path d=\"M12 10h.01\"/><path d=\"M8 10h.01\"/><path d=\"M12 14h.01\"/><path d=\"M8 14h.01\"/><path d=\"M12 18h.01\"/><path d=\"M8 18h.01\"/>","calendar-days":"<path d=\"M8 2v3\"/><path d=\"M16 2v3\"/><rect x=\"3\" y=\"3\" width=\"18\" height=\"18\" rx=\"2\"/><path d=\"M3 9h18\"/><path d=\"M8 13h.01\"/><path d=\"M12 13h.01\"/><path d=\"M16 13h.01\"/><path d=\"M8 17h.01\"/><path d=\"M12 17h.01\"/><path d=\"M16 17h.01\"/>","chevron-right":"<path d=\"m9 18 6-6-6-6\"/>","chevron-left":"<path d=\"m15 18-6-6 6-6\"/>","copy":"<rect width=\"14\" height=\"14\" x=\"8\" y=\"8\" rx=\"2\" ry=\"2\"/><path d=\"M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2\"/>","badge-check":"<path d=\"M3.85 8.62a4 4 0 0 1 4.78-4.77 4 4 0 0 1 6.74 0 4 4 0 0 1 4.78 4.78 4 4 0 0 1 0 6.74 4 4 0 0 1-4.77 4.78 4 4 0 0 1-6.75 0 4 4 0 0 1-4.78-4.77 4 4 0 0 1 0-6.76Z\"/><path d=\"m16 9-5.5 5.5L8 12\"/>","clock":"<circle cx=\"12\" cy=\"12\" r=\"10\"/><path d=\"M12 6v6l4 2\"/>","book-open":"<path d=\"M12 5v16\"/><path d=\"M20.001 19A2 2 0 0022 17V5a2 2 0 00-1.999-2L16 3.002A5 5 0 0012 5a5 5 0 00-4-2H4a2 2 0 00-2 2v12a2 2 0 001.999 2H8a5 5 0 014 2 5 5 0 014-2z\"/>","sliders-horizontal":"<path d=\"M10 5H3\"/><path d=\"M12 19H3\"/><path d=\"M14 3v4\"/><path d=\"M16 17v4\"/><path d=\"M21 12h-9\"/><path d=\"M21 19h-5\"/><path d=\"M21 5h-7\"/><path d=\"M8 10v4\"/><path d=\"M8 12H3\"/>","sun":"<circle cx=\"12\" cy=\"12\" r=\"4\"/><path d=\"M12 2v2\"/><path d=\"M12 20v2\"/><path d=\"m4.93 4.93 1.41 1.41\"/><path d=\"m17.66 17.66 1.41 1.41\"/><path d=\"M2 12h2\"/><path d=\"M20 12h2\"/><path d=\"m6.34 17.66-1.41 1.41\"/><path d=\"m19.07 4.93-1.41 1.41\"/>","moon":"<path d=\"M20.985 12.486a9 9 0 1 1-9.473-9.472c.405-.022.617.46.402.803a6 6 0 0 0 8.268 8.268c.344-.215.825-.004.803.401\"/>","circle-dot":"<circle cx=\"12\" cy=\"12\" r=\"1\"/><circle cx=\"12\" cy=\"12\" r=\"10\"/>","library":"<path d=\"m16 6 4 14\"/><path d=\"M12 6v14\"/><path d=\"M8 8v12\"/><path d=\"M4 4v16\"/>","search":"<path d=\"m21 21-4.34-4.34\"/><circle cx=\"11\" cy=\"11\" r=\"8\"/>","arrow-right":"<path d=\"M5 12h14\"/><path d=\"m12 5 7 7-7 7\"/>","undo-2":"<path d=\"M9 14 4 9l5-5\"/><path d=\"M4 9h10.5a5.5 5.5 0 0 1 5.5 5.5a5.5 5.5 0 0 1-5.5 5.5H11\"/>","rotate-ccw":"<path d=\"M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8\"/><path d=\"M3 3v5h5\"/>","refresh-cw":"<path d=\"M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8\"/><path d=\"M21 3v5h-5\"/><path d=\"M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16\"/><path d=\"M8 16H3v5\"/>","smartphone":"<rect width=\"14\" height=\"20\" x=\"5\" y=\"2\" rx=\"2\" ry=\"2\"/><path d=\"M12 18h.01\"/>","square":"<rect width=\"18\" height=\"18\" x=\"3\" y=\"3\" rx=\"2\"/>","flame":"<path d=\"M12 3q1 4 4 6.5t3 5.5a1 1 0 0 1-14 0 5 5 0 0 1 1-3 1 1 0 0 0 5 0c0-2-1.5-3-1.5-5q0-2 2.5-4\"/>","map-pin":"<path d=\"M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0\"/><circle cx=\"12\" cy=\"10\" r=\"3\"/>","bell":"<path d=\"M10.268 21a2 2 0 0 0 3.464 0\"/><path d=\"M3.262 15.326A1 1 0 0 0 4 17h16a1 1 0 0 0 .74-1.673C19.41 13.956 18 12.499 18 8A6 6 0 0 0 6 8c0 4.499-1.411 5.956-2.738 7.326\"/>","volume-2":"<path d=\"M11 4.702a.705.705 0 0 0-1.203-.498L6.413 7.587A1.4 1.4 0 0 1 5.416 8H3a1 1 0 0 0-1 1v6a1 1 0 0 0 1 1h2.416a1.4 1.4 0 0 1 .997.413l3.383 3.384A.705.705 0 0 0 11 19.298z\"/><path d=\"M16 9a5 5 0 0 1 0 6\"/><path d=\"M19.364 18.364a9 9 0 0 0 0-12.728\"/>","alarm-clock":"<circle cx=\"12\" cy=\"13\" r=\"8\"/><path d=\"M12 9v4l2 2\"/><path d=\"M5 3 2 6\"/><path d=\"m22 6-3-3\"/><path d=\"M6.38 18.7 4 21\"/><path d=\"M17.64 18.67 20 21\"/>","flask-conical":"<path d=\"M14 2v6a2 2 0 0 0 .245.96l5.51 10.08A2 2 0 0 1 18 22H6a2 2 0 0 1-1.755-2.96l5.51-10.08A2 2 0 0 0 10 8V2\"/><path d=\"M6.453 15h11.094\"/><path d=\"M8.5 2h7\"/>","save":"<path d=\"M15.2 3a2 2 0 0 1 1.4.6l3.8 3.8a2 2 0 0 1 .6 1.4V19a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2z\"/><path d=\"M17 21v-7a1 1 0 0 0-1-1H8a1 1 0 0 0-1 1v7\"/><path d=\"M7 3v4a1 1 0 0 0 1 1h7\"/>","maximize":"<path d=\"M8 3H5a2 2 0 0 0-2 2v3\"/><path d=\"M21 8V5a2 2 0 0 0-2-2h-3\"/><path d=\"M3 16v3a2 2 0 0 0 2 2h3\"/><path d=\"M16 21h3a2 2 0 0 0 2-2v-3\"/>","download":"<path d=\"M12 15V3\"/><path d=\"M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4\"/><path d=\"m7 10 5 5 5-5\"/>","upload":"<path d=\"M12 3v12\"/><path d=\"m17 8-5-5-5 5\"/><path d=\"M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4\"/>","calendar":"<path d=\"M8 2v3\"/><path d=\"M16 2v3\"/><rect x=\"3\" y=\"3\" width=\"18\" height=\"18\" rx=\"2\"/><path d=\"M3 9h18\"/>","check":"<path d=\"M20 6 9 17l-5-5\"/>","x":"<path d=\"M18 6 6 18\"/><path d=\"m6 6 12 12\"/>","sparkles":"<path d=\"M11.017 2.814a1 1 0 0 1 1.966 0l1.051 5.558a2 2 0 0 0 1.594 1.594l5.558 1.051a1 1 0 0 1 0 1.966l-5.558 1.051a2 2 0 0 0-1.594 1.594l-1.051 5.558a1 1 0 0 1-1.966 0l-1.051-5.558a2 2 0 0 0-1.594-1.594l-5.558-1.051a1 1 0 0 1 0-1.966l5.558-1.051a2 2 0 0 0 1.594-1.594z\"/><path d=\"M20 2v4\"/><path d=\"M22 4h-4\"/><circle cx=\"4\" cy=\"20\" r=\"2\"/>","star":"<path d=\"M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z\"/>","grip-vertical":"<circle cx=\"9\" cy=\"12\" r=\"1\"/><circle cx=\"9\" cy=\"5\" r=\"1\"/><circle cx=\"9\" cy=\"19\" r=\"1\"/><circle cx=\"15\" cy=\"12\" r=\"1\"/><circle cx=\"15\" cy=\"5\" r=\"1\"/><circle cx=\"15\" cy=\"19\" r=\"1\"/>","printer":"<path d=\"M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2\"/><path d=\"M6 9V3a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v6\"/><rect x=\"6\" y=\"14\" width=\"12\" height=\"8\" rx=\"1\"/>"};
 
 const DAILY = [
     { k:'آية', t:'أَلَا بِذِكْرِ اللَّهِ تَطْمَئِنُّ الْقُلُوبُ', s:'سورة الرعد: 28' },
@@ -1304,7 +1329,7 @@ ar: {
     occNewYear:'رأس السنة الهجرية', occAshura:'تاسوعاء وعاشوراء', occRamStart:'بداية رمضان', occLast10:'العشر الأواخر', occEidFitr:'عيد الفطر', occFirst10:'العشر الأوائل من ذي الحجة', occArafa:'يوم عرفة', occEidAdha:'عيد الأضحى', occTashreeq:'أيام التشريق', occWhite:'الأيام البيض',
     zkTitle:'حاسبة الزكاة', zkCash:'النقود والمدخرات', zkGoldG:'الذهب الذي تملكه (جرام)', zkGoldP:'سعر جرام الذهب عيار 24', zkSilverG:'الفضة التي تملكها (جرام)', zkSilverP:'سعر جرام الفضة', zkTrade:'عروض التجارة', zkDebt:'الديون المستحقة عليك', zkBasis:'النصاب بحسب', zkGold85:'الذهب (85 جرامًا)', zkSilver595:'الفضة (595 جرامًا)',
     zkTotal:'إجمالي المال الزكوي', zkNisab:'قيمة النصاب', zkDue:'الزكاة الواجبة (2.5%)', zkBelow:'المال أقل من النصاب: لا زكاة عليك الآن', zkNeedPrice:'أدخل سعر الجرام لحساب النصاب', zkNote:'للاسترشاد فقط، ويشترط مرور الحول على المال. استفتِ أهل العلم في حالتك.',
-    toolQuran:'المصحف', qTitle:'المصحف الشريف', qSearchPh:'ابحث في القرآن أو اكتب اسم سورة', qContinue:'متابعة القراءة: {0} · آية {1}', qAyahs:'{0} آية', qBm:'العلامات', qNoData:'تعذّر تحميل ملف المصحف. تأكد من رفع الملف quran-uthmani.txt بجانب التطبيق.', qHere:'واصل من هنا', qMark:'علامة', qCopy:'نسخ', qCopied:'تم النسخ', qSaved:'تم حفظ الموضع', qLog:'سجّل {0} في ورد اليوم', qLogged:'تمت إضافة {0} إلى ورد اليوم', qNoRes:'لا نتائج. جرّب كلمة أخرى (البحث يتجاهل التشكيل).', qRes:'{0} نتيجة', qResMore:'{0} نتيجة (أول 50)', qPrev:'السورة السابقة', qNext:'السورة التالية', qIndex:'الفهرس', qFontP:'تكبير الخط', qFontM:'تصغير الخط', qCredit:'نص القرآن: مشروع Tanzil (CC BY 3.0) · الخط: Amiri Quran (OFL)', qLoading:'جارٍ التحميل...',
+    toolQuran:'المصحف', qTitle:'المصحف الشريف', qSearchPh:'ابحث في القرآن أو اكتب اسم سورة', qContinue:'متابعة القراءة: {0} · آية {1}', qAyahs:'{0} آية', qBm:'العلامات', qNoData:'تعذّر تحميل ملف المصحف (نحو 1.4 م.ب). تأكد من اتصالك بالإنترنت ثم أعد المحاولة. بعد أول تحميل يعمل دون اتصال.', qHere:'واصل من هنا', qMark:'علامة', qCopy:'نسخ', qCopied:'تم النسخ', qSaved:'تم حفظ الموضع', qLog:'سجّل {0} في ورد اليوم', qLogged:'تمت إضافة {0} إلى ورد اليوم', qNoRes:'لا نتائج. جرّب كلمة أخرى (البحث يتجاهل التشكيل).', qRes:'{0} نتيجة', qResMore:'{0} نتيجة (أول 50)', qPrev:'السورة السابقة', qNext:'السورة التالية', qIndex:'الفهرس', qFontP:'تكبير الخط', qFontM:'تصغير الخط', qCredit:'نص القرآن: مشروع Tanzil (CC BY 3.0) · الخط: Amiri Quran (OFL)', qLoading:'جارٍ التحميل...',
     navQuran:'المصحف', navTools:'أدوات', qStop:'وقفت هنا', qMem:'حفظت', qMemOff:'إلغاء الحفظ', qMemTo:'حفظت حتى هنا', qStopFrom:'علامة الوقوف: {0} · آية {1}', qMemSum:'المحفوظ: {0} آية من {1} ({2}٪)', qMemN:'حفظ {0}/{1}', qStopSaved:'تم وضع علامة الوقوف', qMemSaved:'تم تسجيل الحفظ', qMemSurah:'المحفوظ من السورة: {0}/{1}',
     qPlanT:'خطة الختمة', qPlanNone:'لم تبدأ خطة بعد. اختر مدة الختمة ليحسب لك التطبيق ورد كل يوم.', qPlanStart:'ابدأ الخطة', qPlan30:'30 يومًا', qPlanRam:'شهر رمضان (30 يومًا)', qPlanCust:'مدة أخرى', qPlanDays:'عدد الأيام', qPlanFrom:'البداية من', qPlanFromStart:'أول المصحف', qPlanFromPos:'موضعي الحالي', qPlanDay:'اليوم {0} من {1}', qPlanToday:'ورد اليوم: {0} آية، من {1} آية {2} إلى {3} آية {4}', qPlanLeft:'المتبقي لإتمام ورد اليوم: {0} آية', qPlanDoneToday:'أتممت ورد اليوم', qPlanAhead:'أنت متقدم بـ {0} آية', qPlanBehind:'أنت متأخر بـ {0} آية', qPlanOn:'أنت على الجدول', qPlanRead:'اقرأ الآن', qPlanSync:'اعتبر قراءتي حتى موضعي الحالي', qPlanResched:'أعد توزيع المتبقي', qPlanDelete:'حذف الخطة', qPlanSoon:'تبدأ الخطة بعد {0} يوم', qPlanFin:'ما شاء الله، ختمت القرآن', qPlanOver:'انتهت مدة الخطة ويتبقى {0} آية', qPlanProg:'{0} من {1} آية ({2}٪)', qPlanCancel:'إلغاء', qPlanNote:'التقدم يُحسب من القراءة داخل التطبيق (تمرير الصفحة). إن قرأت من مصحف ورقي استخدم زر «اعتبر قراءتي حتى موضعي الحالي».',
     qRevBtn:'مراجعة المحفوظ', qRevInfo:'{0} آية محفوظة', qRevHead:'{0}: آية {1} إلى {2}', qRevLast:'آخر مراجعة: قبل {0} يوم', qRevNever:'لم تُراجع من قبل', qRevToday:'روجعت اليوم', qRevShow:'اكشف', qRevHide:'أخفِ', qRevDone:'راجعتها', qRevSkip:'تخطي', qRevNone:'لا يوجد محفوظ بعد. علّم الآيات بزر «حفظت» أثناء القراءة.', qRevCnt:'راجعت اليوم {0} مقطعًا', qHideL:'الإخفاء: {0}', qHide0:'متوقف', qHide1:'جزئي', qHide2:'كامل',
@@ -1316,7 +1341,7 @@ ar: {
     qMapHint:'ضغطة مطولة على مربع الجزء تعلّمه كمقروء أو تلغيه.', qMapMarked:'تم تعليم الجزء {0} كمقروء', qMapCleared:'تم إلغاء تعليم الجزء {0}',
     qBmSearch:'ابحث في العلامات', qNone2:'لا توجد نتائج', qMemListBtn:'قائمة المحفوظ', qMemT:'المحفوظ', qMemNone:'لا يوجد محفوظ بعد. علّم الآيات من قائمة الآية داخل المصحف.', qMemSearch:'ابحث باسم السورة', qStatShare:'نسخ الإحصائية كصورة', qStatImgT:'إحصائية القراءة', qJuzWord:'الأجزاء المقروءة',
     splashOn:'شاشة البداية السريعة', splashNote:'تظهر لثوانٍ معدودة عند فتح التطبيق لتعرف الصلاة القادمة بسرعة.', spNext:'الصلاة القادمة', spTap:'اضغط للمتابعة',
-    qTaf:'تفسير', qTafLoad:'جارٍ تحميل التفسير…', qTafFail:'تعذّر تحميل التفسير. يلزم اتصال بالإنترنت مرة واحدة، ثم يعمل بدون إنترنت.', qTafSrc:'التفسير الميسر · مجمع الملك فهد لطباعة المصحف الشريف · Tanzil.net', qModeL:'وضع القراءة: {0}', qModeN:'الوضع العادي', qModeS:'المبسط',
+    qTaf:'تفسير', qTafLoad:'جارٍ تحميل التفسير…', qTafFail:'تعذّر تحميل التفسير (نحو 2.4 م.ب). يلزم اتصال بالإنترنت مرة واحدة، ثم يعمل دون اتصال.', qTafSrc:'التفسير الميسر · مجمع الملك فهد لطباعة المصحف الشريف · Tanzil.net', qModeL:'وضع القراءة: {0}', qModeN:'الوضع العادي', qModeS:'المبسط',
     navSunan:'سنن', sunanTitle:'السنن النبوية', sunanDone:'طبّقت اليوم: {0}', sunanSearch:'ابحث في السنن', sunanNote:'نصوص مختصرة مع بيان من رواها. عند الاستفسار عن صحة سنة أو حكمها راجع كتب السنة وأهل العلم.', sunanMark:'طبّقتها اليوم',
     adhAutoOn:'فتح أذكار الصباح أو المساء تلقائيًا بحسب الوقت', friOn:'تنبيهات يوم الجمعة', remFriM:'يوم الجمعة: الغسل والتطيّب، وقراءة سورة الكهف، والإكثار من الصلاة على النبي ﷺ، والتبكير إلى المسجد.', remFriG:'اقترب وقت صلاة الجمعة: توجّه إلى المسجد.',
     toolMosque:'أقرب مسجد', shareText:'نسخ المواقيت كنص', textCopied:'تم نسخ المواقيت',
@@ -1328,6 +1353,11 @@ ar: {
     how1:'استقبل القبلة وانوِ الصلاة بقلبك.', how2:'كبّر تكبيرة الإحرام: «الله أكبر» مع رفع اليدين إلى حذو المنكبين.', how3:'ضع يدك اليمنى على اليسرى على صدرك، وقل دعاء الاستفتاح في الركعة الأولى: «سبحانك اللهم وبحمدك وتبارك اسمك وتعالى جدّك ولا إله غيرك».', how4:'استعذ بالله، وسمِّ، واقرأ سورة الفاتحة في كل ركعة.', how5:'اقرأ سورة أو ما تيسّر من القرآن في الركعتين الأوليين.', how6:'اركع مكبّرًا، وقل: «سبحان ربي العظيم» ثلاثًا.', how7:'ارفع من الركوع قائلًا: «سمع الله لمن حمده»، ثم: «ربنا ولك الحمد».', how8:'اسجد مكبّرًا على سبعة أعضاء، وقل: «سبحان ربي الأعلى» ثلاثًا.', how9:'اجلس بين السجدتين وقل: «رب اغفر لي».', how10:'اسجد السجدة الثانية، ثم قم للركعة التالية مكبّرًا.', how11:'بعد الركعة الثانية في الثلاثية والرباعية اجلس للتشهد الأول: «التحيات لله والصلوات والطيبات، السلام عليك أيها النبي ورحمة الله وبركاته، السلام علينا وعلى عباد الله الصالحين، أشهد أن لا إله إلا الله وأشهد أن محمدًا عبده ورسوله».', how12:'في التشهد الأخير أتمّ التشهد، ثم صلِّ على النبي ﷺ بالصلاة الإبراهيمية، واستعذ بالله من عذاب جهنم وعذاب القبر وفتنة المحيا والممات وفتنة المسيح الدجال.', how13:'سلّم عن يمينك ثم عن يسارك: «السلام عليكم ورحمة الله».',
     weekRaw:'السنن الراتبة المسجّلة: {0} من {1}', rawFajr:'ركعتان قبل الفجر', rawDB:'أربع ركعات قبل الظهر', rawDA:'ركعتان بعد الظهر', rawMA:'ركعتان بعد المغرب', rawIA:'ركعتان بعد العشاء',
     grpStart:'عند فتح التطبيق',
+    qRetry:'أعد المحاولة', qPerLine:'أنت تقرأ غالبًا {0}', qPerF:'بعد الفجر', qPerM:'في الضحى', qPerD:'بعد الظهر', qPerA:'بعد العصر', qPerG:'بعد المغرب', qPerI:'بعد العشاء وفي الليل',
+    sunanWeekBtn:'نسخ ملخص الأسبوع كصورة', sunanWeekT:'سنن هذا الأسبوع', sunanWeekNone:'لا توجد سنن مسجّلة هذا الأسبوع', sunanWeekTot:'مجموع ما طبّقته: {0}', sunanWeekDays:'أيام المواظبة: {0} من 7', sunanWeekTop:'أكثر المجالات مواظبة: {0}',
+    curLeft:'الصلاة الحالية: {0} · يتبقى على خروج وقتها {1}', curMin:'{0} د', curHM:'{0} س و{1} د', prPin:'تثبيت في أعلى القائمة', prUnpin:'إلغاء التثبيت',
+    sunanFavG:'سنني المفضلة', sunanFav:'إضافة إلى المفضلة', sunanUnfav:'إزالة من المفضلة', sunanRemT:'تذكير بسنة', sunanRemTime:'وقت التذكير اليومي', sunanRemSave:'حفظ التذكير', sunanRemDel:'حذف التذكير', sunanRemBell:'ضبط تذكير', sunanRemOk:'سيصلك التذكير يوميًا عند {0}', remSunan:'تذكير بسنة: {0}', sod:'سنة اليوم', sodDo:'طبّقتها', sodDone:'طُبّقت اليوم', qFontSl:'حجم الخط',
+    sunanStreak:'أيام متتالية: {0}', sunanPresBtn:'مجموعات تذكير جاهزة', sunanPresT:'مجموعات التذكير', sunanPresOk:'ضُبطت {0} تذكيرات', sunanPresClr:'حذف جميع تذكيرات السنن', sunanPresNone:'لا توجد تذكيرات للحذف.', spJum:'سنن يوم الجمعة', spSleep:'سنن النوم والاستيقاظ', spNaf:'صلاة التطوع', spFast:'صيام الاثنين والخميس', sunanNoteBtn:'ملاحظة', sunanNoteT:'ملاحظتي على السنة', sunanNotePh:'اكتب ملاحظتك هنا', sunanNoteSave:'حفظ الملاحظة', sunanNoteDel:'حذف الملاحظة', revRemOn:'تذكير بمراجعة المحفوظ', revRemSub:'ينبّهك عند مرور سبعة أيام أو أكثر على آخر مراجعة لسورة محفوظة', remRev:'حان وقت مراجعة سورة {0}: {1}', remRevNever:'لم تراجعها بعد', remRevDays:'مضى {0} يومًا على آخر مراجعة',
     afterOpen:'فتح الأذكار', afterHide:'إخفاء',
     backupOn:'تذكير أسبوعي بالنسخة الاحتياطية', backupTitle:'مرّ أسبوع على آخر نسخة احتياطية', backupNow:'تصدير الآن', backupLater:'لاحقًا',
     readOpts:'خيارات القراءة', fontFace:'خط الأذكار', ffDefault:'الافتراضي', ffNaskh:'نسخ', ffThuluth:'ثلث / رقعة', fontNote:'يظهر حسب الخطوط المتاحة على جهازك',
@@ -1426,7 +1456,7 @@ en: {
     occNewYear:'Islamic New Year', occAshura:'Tasu\u2019a and Ashura', occRamStart:'Start of Ramadan', occLast10:'Last ten nights', occEidFitr:'Eid al-Fitr', occFirst10:'First ten days of Dhul-Hijjah', occArafa:'Day of Arafah', occEidAdha:'Eid al-Adha', occTashreeq:'Days of Tashreeq', occWhite:'White days',
     zkTitle:'Zakat calculator', zkCash:'Cash and savings', zkGoldG:'Gold you own (grams)', zkGoldP:'24K gold price per gram', zkSilverG:'Silver you own (grams)', zkSilverP:'Silver price per gram', zkTrade:'Trade goods', zkDebt:'Debts you owe', zkBasis:'Nisab based on', zkGold85:'Gold (85 g)', zkSilver595:'Silver (595 g)',
     zkTotal:'Total zakatable wealth', zkNisab:'Nisab value', zkDue:'Zakat due (2.5%)', zkBelow:'Your wealth is below the nisab: no zakat is due now', zkNeedPrice:'Enter the price per gram to compute the nisab', zkNote:'For guidance only; a full lunar year must pass over the wealth. Ask a scholar about your case.',
-    toolQuran:'Quran', qTitle:'The Holy Quran', qSearchPh:'Search the Quran or type a surah name', qContinue:'Continue reading: {0} · verse {1}', qAyahs:'{0} verses', qBm:'Bookmarks', qNoData:'Could not load the Quran file. Make sure quran-uthmani.txt is uploaded next to the app.', qHere:'Resume from here', qMark:'Bookmark', qCopy:'Copy', qCopied:'Copied', qSaved:'Position saved', qLog:'Log {0} to today’s portion', qLogged:'{0} added to today’s portion', qNoRes:'No results. Try another word (search ignores diacritics).', qRes:'{0} results', qResMore:'{0} results (first 50)', qPrev:'Previous surah', qNext:'Next surah', qIndex:'Index', qFontP:'Larger text', qFontM:'Smaller text', qCredit:'Quran text: Tanzil Project (CC BY 3.0) · Font: Amiri Quran (OFL)', qLoading:'Loading...',
+    toolQuran:'Quran', qTitle:'The Holy Quran', qSearchPh:'Search the Quran or type a surah name', qContinue:'Continue reading: {0} · verse {1}', qAyahs:'{0} verses', qBm:'Bookmarks', qNoData:'Could not load the Quran file (about 1.4 MB). Check your internet connection and try again. After the first load it works offline.', qHere:'Resume from here', qMark:'Bookmark', qCopy:'Copy', qCopied:'Copied', qSaved:'Position saved', qLog:'Log {0} to today’s portion', qLogged:'{0} added to today’s portion', qNoRes:'No results. Try another word (search ignores diacritics).', qRes:'{0} results', qResMore:'{0} results (first 50)', qPrev:'Previous surah', qNext:'Next surah', qIndex:'Index', qFontP:'Larger text', qFontM:'Smaller text', qCredit:'Quran text: Tanzil Project (CC BY 3.0) · Font: Amiri Quran (OFL)', qLoading:'Loading...',
     navQuran:'Mushaf', navTools:'Tools', qStop:'I stopped here', qMem:'Memorized', qMemOff:'Unmark memorized', qMemTo:'Memorized up to here', qStopFrom:'Stop mark: {0} · verse {1}', qMemSum:'Memorized: {0} of {1} verses ({2}%)', qMemN:'Memorized {0}/{1}', qStopSaved:'Stop mark set', qMemSaved:'Memorization saved', qMemSurah:'Memorized in this surah: {0}/{1}',
     qPlanT:'Khatma plan', qPlanNone:'No plan yet. Choose a duration and the app works out each day’s portion.', qPlanStart:'Start plan', qPlan30:'30 days', qPlanRam:'Ramadan (30 days)', qPlanCust:'Other duration', qPlanDays:'Number of days', qPlanFrom:'Start from', qPlanFromStart:'Beginning', qPlanFromPos:'My current position', qPlanDay:'Day {0} of {1}', qPlanToday:'Today’s portion: {0} verses, from {1} verse {2} to {3} verse {4}', qPlanLeft:'Left to finish today’s portion: {0} verses', qPlanDoneToday:'Today’s portion complete', qPlanAhead:'You are {0} verses ahead', qPlanBehind:'You are {0} verses behind', qPlanOn:'You are on schedule', qPlanRead:'Read now', qPlanSync:'Count my reading up to my current position', qPlanResched:'Redistribute the rest', qPlanDelete:'Delete plan', qPlanSoon:'Plan starts in {0} day(s)', qPlanFin:'Well done, you completed the Quran', qPlanOver:'Plan period is over; {0} verses remain', qPlanProg:'{0} of {1} verses ({2}%)', qPlanCancel:'Cancel', qPlanNote:'Progress is counted from reading inside the app (scrolling). If you read from a printed copy, use “Count my reading up to my current position”.',
     qRevBtn:'Review memorized', qRevInfo:'{0} memorized verses', qRevHead:'{0}: verses {1} to {2}', qRevLast:'Last reviewed {0} day(s) ago', qRevNever:'Never reviewed', qRevToday:'Reviewed today', qRevShow:'Reveal', qRevHide:'Hide', qRevDone:'Reviewed', qRevSkip:'Skip', qRevNone:'Nothing memorized yet. Mark verses with “Memorized” while reading.', qRevCnt:'Reviewed {0} passages today', qHideL:'Hiding: {0}', qHide0:'Off', qHide1:'Partial', qHide2:'Full',
@@ -1438,7 +1468,7 @@ en: {
     qMapHint:'Long-press a juz square to mark it read or undo it.', qMapMarked:'Juz {0} marked as read', qMapCleared:'Juz {0} unmarked',
     qBmSearch:'Search bookmarks', qNone2:'No results', qMemListBtn:'Memorized list', qMemT:'Memorized', qMemNone:'Nothing memorized yet. Mark verses from the verse menu in the reader.', qMemSearch:'Search by surah name', qStatShare:'Share statistics as image', qStatImgT:'Reading statistics', qJuzWord:'Juz read',
     splashOn:'Quick start screen', splashNote:'Shows for a few seconds on launch so you can see the next prayer fast.', spNext:'Next prayer', spTap:'Tap to continue',
-    qTaf:'Tafsir', qTafLoad:'Loading tafsir…', qTafFail:'Could not load the tafsir. It needs the internet once, then works offline.', qTafSrc:'Al-Tafsir Al-Muyassar · King Fahd Quran Complex · Tanzil.net', qModeL:'Reading mode: {0}', qModeN:'Normal', qModeS:'Simple',
+    qTaf:'Tafsir', qTafLoad:'Loading tafsir…', qTafFail:'Could not load the tafsir (about 2.4 MB). It needs the internet once, then works offline.', qTafSrc:'Al-Tafsir Al-Muyassar · King Fahd Quran Complex · Tanzil.net', qModeL:'Reading mode: {0}', qModeN:'Normal', qModeS:'Simple',
     navSunan:'Sunnah', sunanTitle:'Prophetic Sunnah', sunanDone:'Practised today: {0}', sunanSearch:'Search the Sunnah', sunanNote:'Short texts with the narrator source (Arabic only). For the authenticity or ruling of a Sunnah, consult the books of Sunnah and people of knowledge.', sunanMark:'Practised today',
     adhAutoOn:'Open morning or evening adhkar automatically by time', friOn:'Friday alerts', remFriM:'Friday: ghusl and perfume, reading Surat al-Kahf, sending blessings upon the Prophet ﷺ, and going early to the mosque.', remFriG:'Jumu’ah time is near: head to the mosque.',
     toolMosque:'Nearest mosque', shareText:'Copy times as text', textCopied:'Times copied',
@@ -1450,6 +1480,11 @@ en: {
     how1:'Face the qiblah and intend the prayer in your heart.', how2:'Say the opening takbir “Allahu akbar” raising your hands to shoulder level.', how3:'Place your right hand over the left on your chest and, in the first rak’ah, say the opening supplication: “Subhanaka Allahumma wa bihamdik…”.', how4:'Seek refuge in Allah, say Bismillah, and recite Surat al-Fatihah in every rak’ah.', how5:'Recite a surah or any part of the Quran in the first two rak’ahs.', how6:'Bow saying takbir, then say “Subhana rabbiyal-azim” three times.', how7:'Rise saying “Sami’a Allahu liman hamidah”, then “Rabbana wa lakal-hamd”.', how8:'Prostrate saying takbir on seven body parts, and say “Subhana rabbiyal-a’la” three times.', how9:'Sit between the two prostrations and say “Rabbighfir li”.', how10:'Make the second prostration, then rise for the next rak’ah saying takbir.', how11:'After the 2nd rak’ah of a three- or four-rak’ah prayer, sit for the first tashahhud: “At-tahiyyatu lillahi…”.', how12:'In the final tashahhud complete it, send blessings on the Prophet ﷺ (Ibrahimic salawat), and seek refuge from the punishment of Hell and the grave, the trials of life and death, and the trial of the Antichrist.', how13:'Give the salam to your right then to your left: “As-salamu alaykum wa rahmatullah”.',
     weekRaw:'Regular Sunnah logged: {0} of {1}', rawFajr:'2 rak’ahs before Fajr', rawDB:'4 rak’ahs before Dhuhr', rawDA:'2 rak’ahs after Dhuhr', rawMA:'2 rak’ahs after Maghrib', rawIA:'2 rak’ahs after Isha',
     grpStart:'On launch',
+    qRetry:'Try again', qPerLine:'You usually read {0}', qPerF:'after Fajr', qPerM:'in the morning', qPerD:'after Dhuhr', qPerA:'after Asr', qPerG:'after Maghrib', qPerI:'after Isha and at night',
+    sunanWeekBtn:'Share weekly summary as image', sunanWeekT:'Sunnah this week', sunanWeekNone:'No Sunnah logged this week', sunanWeekTot:'Total practised: {0}', sunanWeekDays:'Days practised: {0} of 7', sunanWeekTop:'Most consistent areas: {0}',
+    curLeft:'Current prayer: {0} · {1} left before its time ends', curMin:'{0} min', curHM:'{0} h {1} min', prPin:'Pin to the top of the list', prUnpin:'Unpin',
+    sunanFavG:'My favourite Sunnahs', sunanFav:'Add to favourites', sunanUnfav:'Remove from favourites', sunanRemT:'Sunnah reminder', sunanRemTime:'Daily reminder time', sunanRemSave:'Save reminder', sunanRemDel:'Delete reminder', sunanRemBell:'Set reminder', sunanRemOk:'You will be reminded daily at {0}', remSunan:'Sunnah reminder: {0}', sod:'Sunnah of the day', sodDo:'I did it', sodDone:'Done today', qFontSl:'Font size',
+    sunanStreak:'Streak: {0}', sunanPresBtn:'Ready-made reminder sets', sunanPresT:'Reminder sets', sunanPresOk:'{0} reminders set', sunanPresClr:'Delete all Sunnah reminders', sunanPresNone:'No reminders to delete.', spJum:'Friday Sunnahs', spSleep:'Sleep and waking Sunnahs', spNaf:'Voluntary prayers', spFast:'Monday and Thursday fasting', sunanNoteBtn:'Note', sunanNoteT:'My note on this Sunnah', sunanNotePh:'Write your note here', sunanNoteSave:'Save note', sunanNoteDel:'Delete note', revRemOn:'Memorisation review reminder', revRemSub:'Alerts you when seven or more days have passed since you last reviewed a memorised surah', remRev:'Time to review Surah {0}: {1}', remRevNever:'not reviewed yet', remRevDays:'{0} days since last review',
     afterOpen:'Open adhkar', afterHide:'Hide',
     backupOn:'Weekly backup reminder', backupTitle:'It has been a week since your last backup', backupNow:'Export now', backupLater:'Later',
     readOpts:'Reading options', fontFace:'Adhkar font', ffDefault:'Default', ffNaskh:'Naskh', ffThuluth:'Thuluth / Ruqaa', fontNote:'Shown using the fonts available on your device',
@@ -1496,9 +1531,9 @@ en: {
 const CITY_EN = { cairo:'Cairo', alex:'Alexandria', giza:'Giza', luxor:'Luxor', aswan:'Aswan', makkah:'Makkah', madina:'Madinah',
     riyadh:'Riyadh', dubai:'Dubai', kuwait:'Kuwait City', doha:'Doha', amman:'Amman', quds:'Jerusalem', beirut:'Beirut',
     damas:'Damascus', baghdad:'Baghdad', khartoum:'Khartoum', tripoli:'Tripoli', tunis:'Tunis', algiers:'Algiers',
-    casa:'Casablanca', istanbul:'Istanbul', london:'London' };
+    casa:'Casablanca', istanbul:'Istanbul', london:'London', rabat:'Rabat', paris:'Paris', kl:'Kuala Lumpur', sg:'Singapore', jakarta:'Jakarta' };
 const METHOD_EN = { 5:'Egyptian General Authority of Survey', 4:'Umm al-Qura (Makkah)', 3:'Muslim World League',
-    2:'ISNA (North America)', 1:'University of Islamic Sciences, Karachi', 8:'Gulf Region', 9:'Kuwait', 10:'Qatar', 13:'Diyanet (Turkey)' };
+    2:'ISNA (North America)', 1:'University of Islamic Sciences, Karachi', 8:'Gulf Region', 9:'Kuwait', 10:'Qatar', 13:'Diyanet (Turkey)', 21:'Morocco (Ministry of Habous and Islamic Affairs)', 19:'Algeria (Ministry of Religious Affairs)', 18:'Tunisia (Ministry of Religious Affairs)', 17:'Malaysia (JAKIM)', 11:'Singapore (MUIS)', 20:'Indonesia (Ministry of Religious Affairs)', 12:'France (UOIF)' };
 // معاني آية/حديث اليوم بالإنجليزية (بنفس ترتيب DAILY)، معاني تقريبية
 const DAILY_EN = [
     'Verily, in the remembrance of Allah do hearts find rest.',
@@ -1535,7 +1570,7 @@ const store = {
     set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) {} }
 };
 
-const APP_VER = '2026.10.25-8';
+const APP_VER = '2026.10.26-3';
 function logErr(m) { try { const l = store.get('pt-errs', []); l.push({ at: Date.now(), m: String(m).slice(0, 200) }); store.set('pt-errs', l.slice(-10)); } catch (e) {} }
 window.addEventListener('error', e => logErr((e.message || 'error') + ' @' + String(e.filename || '').split('/').pop() + ':' + (e.lineno || 0)));
 window.addEventListener('unhandledrejection', e => logErr('promise: ' + ((e.reason && e.reason.message) || e.reason)));
@@ -1545,7 +1580,7 @@ const FIRST_RUN = (() => { try { return localStorage.getItem('pt-settings') === 
 const DEFAULTS = {
     cityId:'cairo', method:5, asr:1, hijriAdj:0, notify:false, sound:true, h24:false,
     gps:null, theme:'dark', customThemes:[], draft:null, tab:'times', sec:'loc',
-    lang:'ar', preAlert:0, fullscreen:true, anim:true, splash:true, adhkarAuto:true, friRemind:true, tasbihPhrase:'ph_sub', tasbihTarget:33, fontScale:1, autoNext:true, hideDone:false, vibTarget:'double', vibTap:true, keepAwake:false, adhkarRemind:false, sndPrayers:{ Fajr:'default', Dhuhr:'default', Asr:'default', Maghrib:'default', Isha:'default' }, weeklyGoal:0, monthGoal:0, wirdUnit:'page', wirdGoal:0, dndFri:false, dndFriFrom:'23:00', dndFriTo:'08:00', sndPrayer:'rise', sndAdhkar:'chime', sndWird:'soft', sndGoal:'triple', hiddenTabs:[], onboarded:false, oneHand:false, wirdRemind:false, wirdTime:'21:00', dnd:false, dndFrom:'23:00', dndTo:'05:00', dndPrayer:true, remindDelay:20, sleepDelay:60, afterDelay:5, afterCard:true, backupRemind:true, backupAt:0, backupSnooze:0, endAlert:0, logRemind:false, occRemind:false, qDark:false, qAwake:false, khRemind:false, khTime:'20:00', nightAuto:true, nawRemind:false, nawCard:true, hifz:0, fontFace:'default', remindSleep:false, remindWake:false, remindAfter:false, readDark:false,
+    lang:'ar', preAlert:0, fullscreen:true, anim:true, splash:true, pinPrayer:'', adhkarAuto:true, friRemind:true, tasbihPhrase:'ph_sub', tasbihTarget:33, fontScale:1, autoNext:true, hideDone:false, vibTarget:'double', vibTap:true, keepAwake:false, adhkarRemind:false, sndPrayers:{ Fajr:'default', Dhuhr:'default', Asr:'default', Maghrib:'default', Isha:'default' }, weeklyGoal:0, monthGoal:0, wirdUnit:'page', wirdGoal:0, dndFri:false, dndFriFrom:'23:00', dndFriTo:'08:00', sndPrayer:'rise', sndAdhkar:'chime', sndWird:'soft', sndGoal:'triple', hiddenTabs:[], onboarded:false, oneHand:false, wirdRemind:false, wirdTime:'21:00', dnd:false, dndFrom:'23:00', dndTo:'05:00', dndPrayer:true, remindDelay:20, sleepDelay:60, afterDelay:5, afterCard:true, backupRemind:true, backupAt:0, backupSnooze:0, endAlert:0, logRemind:false, occRemind:false, qDark:false, qAwake:false, khRemind:false, khTime:'20:00', nightAuto:true, nawRemind:false, nawCard:true, hifz:0, fontFace:'default', remindSleep:false, remindWake:false, remindAfter:false, readDark:false,
     tune:{ Fajr:0, Sunrise:0, Dhuhr:0, Asr:0, Maghrib:0, Isha:0 }
 };
 let settings = Object.assign({}, DEFAULTS, store.get('pt-settings', {}));
@@ -1821,6 +1856,7 @@ function renderList() {
         row.append(a, grp);
         box.appendChild(row);
     }
+    if (settings.pinPrayer && FIVE.includes(settings.pinPrayer)) { const pr = box.querySelector('.prayer-row[data-key="' + settings.pinPrayer + '"]'); if (pr) { pr.classList.add('pinned'); box.insertBefore(pr, box.firstChild); } }
     syncPrayed(); renderNaw();
     const nav = state.navDir || 0;
     state.navDir = 0;
@@ -1843,6 +1879,77 @@ function togglePrayed(k) {
 }
 const SUNAN = [["الطهارة والنظافة", "Purification and cleanliness", [["السواك عند الوضوء، وعند القيام من النوم، وقبل الصلاة. قال ﷺ: «لولا أن أشقّ على أمتي لأمرتهم بالسواك عند كل صلاة».", "متفق عليه"], ["خصال الفطرة خمس: الختان، والاستحداد، وقصّ الشارب، وتقليم الأظفار، ونتف الإبط.", "متفق عليه"], ["البدء باليمين في الوضوء والغسل والترجّل ولبس النعل وفي شأنه كله.", "متفق عليه"], ["المضمضة والاستنشاق والاستنثار في الوضوء.", "متفق عليه"], ["تخليل الأصابع واللحية في الوضوء.", "رواه الترمذي وأبو داود"], ["الذكر بعد الوضوء: «أشهد أن لا إله إلا الله وحده لا شريك له، وأشهد أن محمدًا عبده ورسوله».", "رواه مسلم"], ["صلاة ركعتين بعد الوضوء.", "متفق عليه"], ["دخول الخلاء بالرجل اليسرى والخروج باليمنى، والقول عند الدخول: «اللهم إني أعوذ بك من الخُبُث والخبائث»، وعند الخروج: «غفرانك».", "رواه البخاري ومسلم، والترمذي وأبو داود"]]], ["الصلاة والمسجد", "Prayer and the mosque", [["ترديد الأذان مع المؤذن، ثم الصلاة على النبي ﷺ، ثم سؤال الله له الوسيلة.", "رواه البخاري ومسلم"], ["الدعاء بين الأذان والإقامة، فإنه لا يُردّ.", "رواه أبو داود والترمذي"], ["التبكير إلى الصلاة والحرص على الصف الأول.", "متفق عليه"], ["دعاء دخول المسجد: «اللهم افتح لي أبواب رحمتك»، وعند الخروج: «اللهم إني أسألك من فضلك».", "رواه مسلم"], ["ركعتان تحية المسجد قبل الجلوس.", "متفق عليه"], ["الإكثار من الدعاء في السجود: «أقرب ما يكون العبد من ربه وهو ساجد».", "رواه مسلم"], ["الاستغفار ثلاثًا بعد السلام من الفريضة، ثم التسبيح والتحميد والتكبير ثلاثًا وثلاثين.", "رواه مسلم"], ["قراءة آية الكرسي دبر كل صلاة مكتوبة.", "رواه النسائي في السنن الكبرى"]]], ["صلاة التطوع", "Voluntary prayers", [["السنن الرواتب اثنتا عشرة ركعة: أربع قبل الظهر، وركعتان بعدها، وركعتان بعد المغرب، وركعتان بعد العشاء، وركعتان قبل الفجر.", "رواه مسلم والترمذي"], ["ركعتا الفجر: «خير من الدنيا وما فيها».", "رواه مسلم"], ["صلاة الضحى: ركعتان تجزئان عن صدقة كل مفصل من مفاصل الجسد.", "رواه مسلم"], ["الوتر، واجعله آخر صلاتك بالليل.", "متفق عليه"], ["قيام الليل: «أفضل الصلاة بعد الفريضة صلاة الليل».", "رواه مسلم"]]], ["النوم والاستيقاظ", "Sleep and waking", [["الوضوء قبل النوم، والاضطجاع على الشق الأيمن.", "متفق عليه"], ["نفض الفراش قبل النوم.", "متفق عليه"], ["قراءة آية الكرسي عند النوم.", "رواه البخاري"], ["قراءة المعوذات: الإخلاص والفلق والناس، والنفث في الكفين ومسح الجسد بهما.", "رواه البخاري"], ["دعاء النوم: «باسمك اللهم أموت وأحيا».", "رواه البخاري"], ["دعاء الاستيقاظ: «الحمد لله الذي أحيانا بعد ما أماتنا وإليه النشور».", "رواه البخاري"]]], ["الطعام والشراب", "Food and drink", [["التسمية والأكل باليمين مما يليك.", "متفق عليه"], ["حمد الله بعد الطعام: «الحمد لله الذي أطعمني هذا ورزقنيه من غير حول مني ولا قوة».", "رواه أبو داود والترمذي"], ["لعق الأصابع وأكل ما سقط من اللقمة بعد إماطة الأذى عنه.", "رواه مسلم"], ["عدم عيب الطعام: إن اشتهاه أكله وإلا تركه.", "متفق عليه"], ["الشرب على ثلاث دفعات، والتنفس خارج الإناء.", "متفق عليه"]]], ["البيت والخروج واللباس", "Home, going out and clothing", [["ذكر الله عند دخول البيت وعند الطعام.", "رواه مسلم"], ["دعاء الخروج من البيت: «بسم الله، توكلت على الله، ولا حول ولا قوة إلا بالله».", "رواه أبو داود والترمذي"], ["دعاء لبس الثوب الجديد: «اللهم لك الحمد أنت كسوتنيه، أسألك خيره وخير ما صنع له».", "رواه أبو داود والترمذي"], ["البدء باليمين عند لبس الثياب والنعال، وبالشمال عند خلعها.", "متفق عليه"]]], ["الأخلاق والمعاملة", "Character and dealings", [["إفشاء السلام بين الناس.", "رواه مسلم"], ["التبسّم في وجه أخيك: «تبسّمك في وجه أخيك لك صدقة».", "رواه الترمذي"], ["قول الخير أو الصمت.", "متفق عليه"], ["مصافحة المسلم عند اللقاء.", "رواه أبو داود والترمذي"], ["تشميت العاطس إذا حمد الله بقول: «يرحمك الله».", "رواه البخاري"], ["زيارة المريض والدعاء له: «أسأل الله العظيم رب العرش العظيم أن يشفيك» سبع مرات.", "رواه أبو داود والترمذي"], ["إماطة الأذى عن الطريق صدقة.", "متفق عليه"]]], ["يوم الجمعة", "Friday", [["الغسل والتطيّب والسواك ولبس أحسن الثياب.", "متفق عليه"], ["التبكير إلى صلاة الجمعة.", "متفق عليه"], ["قراءة سورة الكهف يوم الجمعة.", "رواه الحاكم والبيهقي"], ["الإكثار من الصلاة على النبي ﷺ يوم الجمعة.", "رواه أبو داود وابن ماجه"], ["الدعاء في ساعة الإجابة يوم الجمعة.", "متفق عليه"]]], ["الصيام والأيام الفاضلة", "Fasting and virtuous days", [["صيام الاثنين والخميس.", "رواه الترمذي والنسائي"], ["صيام ثلاثة أيام من كل شهر، ومنها الأيام البيض.", "متفق عليه"], ["صيام ستة أيام من شوال بعد رمضان.", "رواه مسلم"], ["صيام يوم عرفة لغير الحاج، وصيام عاشوراء.", "رواه مسلم"], ["السحور: «تسحّروا فإن في السحور بركة».", "متفق عليه"], ["تعجيل الفطر، والدعاء عنده: «ذهب الظمأ وابتلّت العروق وثبت الأجر إن شاء الله».", "متفق عليه، ورواه أبو داود (الدعاء)"]]], ["القرآن والذكر والدعاء", "Quran, remembrance and supplication", [["تعاهد القرآن بالتلاوة: «خيركم من تعلّم القرآن وعلّمه».", "رواه البخاري"], ["الإكثار من الاستغفار والتوبة.", "رواه البخاري"], ["الدعاء في الثلث الأخير من الليل حين ينزل ربنا إلى السماء الدنيا.", "متفق عليه"], ["الصلاة على النبي ﷺ كلما ذُكر.", "رواه الترمذي"], ["«سبحان الله وبحمده، سبحان الله العظيم»: كلمتان خفيفتان على اللسان ثقيلتان في الميزان.", "متفق عليه"]]], ["السفر", "Travel", [["دعاء الركوب والسفر: «سبحان الذي سخّر لنا هذا وما كنا له مقرنين، وإنا إلى ربنا لمنقلبون».", "رواه مسلم"], ["التكبير عند الصعود والتسبيح عند النزول.", "رواه البخاري"]]]];
 function sunanDoneGet() { const iso = dayOf(state.tz, 0).iso, o = store.get('pt-sunan', null); return o && o.d === iso && Array.isArray(o.ids) ? o : { d: iso, ids: [] }; }
+function sunanHistGet() { const h = store.get('pt-sunanh', {}); return h && typeof h === 'object' && !Array.isArray(h) ? h : {}; }
+function sunanHistSave(done) { const h = sunanHistGet(); if (done.ids.length) h[done.d] = done.ids.slice(); else delete h[done.d]; const ks = Object.keys(h).sort(); while (ks.length > 400) delete h[ks.shift()]; store.set('pt-sunanh', h); }
+async function shareSunanWeek() {
+    try { await document.fonts.load('60px AmiriQ'); } catch (e) {}
+    const h = sunanHistGet(), days = [], gc = new Array(SUNAN.length).fill(0); let tot = 0, act = 0;
+    for (let i = 6; i >= 0; i--) { const dk = dayOf(state.tz, -i), ids = Array.isArray(h[dk.iso]) ? h[dk.iso] : []; days.push({ dk, n: ids.length }); tot += ids.length; if (ids.length) act++; ids.forEach(id => { const gi = Math.floor(id / 100); if (gi < gc.length) gc[gi]++; }); }
+    if (!tot) { toast(t('sunanWeekNone')); return; }
+    const W = 1080, H = 1350, cv = document.createElement('canvas'); cv.width = W; cv.height = H;
+    const g = cv.getContext('2d'), cs = getComputedStyle(document.documentElement), c = n => cs.getPropertyValue(n).trim(), rtl = !isEn(), ff = 'AmiriQ, serif', sf = 'system-ui, "Segoe UI", Tahoma, sans-serif';
+    const bg = c('--bg') || '#1e1e2f', fg = c('--text') || '#fff', acc = c('--accent') || '#f1c40f', mut = c('--muted') || '#9aa0a6', hv = c('--hover') || 'rgba(255,255,255,.1)';
+    g.fillStyle = bg; g.fillRect(0, 0, W, H);
+    g.strokeStyle = acc; g.globalAlpha = 0.55; g.lineWidth = 3; g.strokeRect(44, 44, W - 88, H - 88); g.lineWidth = 1; g.strokeRect(58, 58, W - 116, H - 116); g.globalAlpha = 1;
+    g.direction = rtl ? 'rtl' : 'ltr'; g.textAlign = 'center'; g.textBaseline = 'alphabetic';
+    g.fillStyle = acc; g.font = '700 70px ' + ff; g.fillText(t('sunanWeekT'), W / 2, 170);
+    const mx = Math.max(1, ...days.map(x => x.n)), bx = 150, bw = 120, gap = (W - 300 - bw * 7) / 6, by = 560, bh = 260;
+    days.forEach((x, i) => { const px = bx + (rtl ? 6 - i : i) * (bw + gap), hh = Math.max(6, Math.round(x.n / mx * bh));
+        g.fillStyle = x.n ? acc : hv; g.fillRect(px, by - hh, bw, hh); g.fillStyle = fg; g.font = '30px ' + sf; if (x.n) g.fillText(String(x.n), px + bw / 2, by - hh - 14);
+        g.fillStyle = mut; g.font = '26px ' + sf; let lb = ''; try { lb = new Intl.DateTimeFormat(isEn() ? 'en-GB' : 'ar-EG', { timeZone: 'UTC', weekday: 'short' }).format(Date.UTC(x.dk.y, x.dk.m - 1, x.dk.d)); } catch (e) {} g.fillText(lb, px + bw / 2, by + 40); });
+    g.fillStyle = fg; g.font = '40px ' + sf; let y = 700;
+    [t('sunanWeekTot', tot), t('sunanWeekDays', act)].forEach(x => { g.fillText(x, W / 2, y); y += 66; });
+    const top = gc.map((n, i) => [n, i]).filter(x => x[0] > 0).sort((a, b) => b[0] - a[0]).slice(0, 3).map(x => isEn() ? SUNAN[x[1]][1] : SUNAN[x[1]][0]);
+    g.fillStyle = acc; g.font = '38px ' + sf; y += 30; g.fillText(t('sunanWeekTop', ''), W / 2, y); y += 70; g.fillStyle = fg; g.font = '44px ' + (rtl ? ff : sf);
+    top.forEach(x => { g.fillText(x, W / 2, y); y += 72; });
+    g.fillStyle = mut; g.font = '28px system-ui, sans-serif'; g.direction = 'ltr'; g.fillText('Ahmed Nx', W / 2, H - 96);
+    shareCanvas(cv, 'sunan-week.png');
+}
+const SUNAN_IDS = SUNAN.flatMap((g, gi) => g[2].map((x, ii) => gi * 100 + ii));
+function sunanStreak() { const h = sunanHistGet(), dn = sunanDoneGet(); let n = 0; for (let i = 0; i < 400; i++) { const ids = i === 0 ? dn.ids : (h[dayOf(state.tz, -i).iso] || []); if (ids.length) n++; else if (i > 0) break; } return n; }
+function sunanNoteGet() { const o = store.get('pt-sunannote', {}), r = {}; if (o && typeof o === 'object' && !Array.isArray(o)) Object.keys(o).forEach(k => { if (sunanItem(+k) && typeof o[k] === 'string' && o[k].trim()) r[k] = o[k].trim().slice(0, 300); }); return r; }
+const SUNAN_PRESETS = [['spJum', { 700: '08:00@5', 702: '10:00@5', 703: '14:00@5', 704: '17:00@5' }], ['spSleep', { 302: '22:30', 305: '05:30' }], ['spNaf', { 202: '09:00', 203: '22:00' }], ['spFast', { 800: '20:30@03' }]];
+function sunanPresetsSheet(after) {
+    openSheet(t('sunanPresT'), b => {
+        SUNAN_PRESETS.forEach(([k, m]) => { const x = qBtn('btn-block', 'bell', t(k) + ' (' + Object.keys(m).length + ')', () => { const r = sunanRemGet(); Object.assign(r, m); store.set('pt-sunanrem', r); closeSheet(); toast(t('sunanPresOk', Object.keys(m).length)); after(); }); x.style.marginBottom = '.5rem'; b.appendChild(x); });
+        const c = qBtn('btn-block', 'x', t('sunanPresClr'), () => { if (!Object.keys(sunanRemGet()).length) { toast(t('sunanPresNone')); return; } store.set('pt-sunanrem', {}); closeSheet(); after(); }); b.appendChild(c);
+    });
+}
+function sunanNoteSheet(id, after) {
+    const cur = sunanNoteGet()[id] || '';
+    openSheet(t('sunanNoteT'), b => {
+        const p = document.createElement('div'); p.dir = 'rtl'; p.lang = 'ar'; p.style.lineHeight = '1.9'; p.textContent = sunanShort(id); b.appendChild(p);
+        const ta = document.createElement('textarea'); ta.rows = 4; ta.maxLength = 300; ta.value = cur; ta.placeholder = t('sunanNotePh'); ta.setAttribute('aria-label', t('sunanNoteT')); ta.id = 'sunan-note-ta'; ta.style.width = '100%'; ta.style.margin = '.6rem 0'; b.appendChild(ta);
+        b.appendChild(qBtn('btn-accent btn-block', 'check', t('sunanNoteSave'), () => { const o = sunanNoteGet(), v = ta.value.trim(); if (v) o[id] = v.slice(0, 300); else delete o[id]; store.set('pt-sunannote', o); closeSheet(); after(); }));
+        if (cur) { const dl = qBtn('btn-block', 'x', t('sunanNoteDel'), () => { const o = sunanNoteGet(); delete o[id]; store.set('pt-sunannote', o); closeSheet(); after(); }); dl.style.marginTop = '.5rem'; b.appendChild(dl); }
+    });
+}
+function sunanItem(id) { const g = SUNAN[Math.floor(id / 100)]; return g && g[2][id % 100] || null; }
+function sunanFavGet() { const a = store.get('pt-sunanfav', []); return Array.isArray(a) ? [...new Set(a.map(Number).filter(x => Number.isInteger(x) && sunanItem(x)))] : []; }
+function sunanRemGet() { const o = store.get('pt-sunanrem', {}), r = {}; if (o && typeof o === 'object' && !Array.isArray(o)) Object.keys(o).forEach(k => { if (sunanItem(+k) && /^\d\d:\d\d(@[0-6]+)?$/.test(o[k])) r[k] = o[k]; }); return r; }
+function sunanShort(id) { const x = sunanItem(id); if (!x) return ''; const s = String(x[0]).split(/[.،:؛]/)[0].trim(); return s.length > 80 ? s.slice(0, 80) + '…' : s; }
+function sunanTodayId() { const [y, m, d] = state.dayIso.split('-').map(Number); return SUNAN_IDS[Math.floor(Date.UTC(y, m - 1, d) / 86400000) % SUNAN_IDS.length]; }
+let revCache = {}, sodKey = '', sunanRemCache = {};
+function renderSod() {
+    const box = $('sod'); if (!box || !state.dayIso) return;
+    const id = sunanTodayId(), it = sunanItem(id), done = sunanDoneGet(), dn = done.ids.includes(id);
+    sodKey = state.dayIso + (dn ? 1 : 0) + (isEn() ? 'e' : 'a'); box.innerHTML = '';
+    const h = document.createElement('div'); h.style.fontWeight = '700'; h.textContent = t('sod'); box.appendChild(h);
+    const tx = document.createElement('div'); tx.className = 'sod-t'; tx.dir = 'rtl'; tx.lang = 'ar'; tx.textContent = it[0].length > 170 ? sunanShort(id) : it[0]; box.appendChild(tx);
+    const b = qBtn(dn ? '' : 'btn-accent', 'check', dn ? t('sodDone') : t('sodDo'), () => { if (dn) return; const dd = sunanDoneGet(); if (!dd.ids.includes(id)) dd.ids.push(id); store.set('pt-sunan', dd); sunanHistSave(dd); tapVib(12); renderSod(); if (!$('tab-sunan').hidden) renderSunan(); });
+    b.disabled = dn; box.appendChild(b); box.hidden = false;
+}
+function sunanRemSheet(id, after) {
+    const rem = sunanRemGet(), cur = rem[id];
+    openSheet(t('sunanRemT'), b => {
+        const p = document.createElement('div'); p.dir = 'rtl'; p.lang = 'ar'; p.style.lineHeight = '1.9'; p.textContent = sunanShort(id); b.appendChild(p);
+        const f = document.createElement('div'); f.className = 'field'; const lb = document.createElement('label'); lb.textContent = t('sunanRemTime'); lb.htmlFor = 'sunan-rem-time';
+        const ti = document.createElement('input'); ti.type = 'time'; ti.id = 'sunan-rem-time'; ti.value = cur ? cur.slice(0, 5) : '09:00'; f.appendChild(lb); f.appendChild(ti); b.appendChild(f);
+        const sv = qBtn('btn-accent btn-block', 'check', t('sunanRemSave'), () => { if (!/^\d\d:\d\d$/.test(ti.value)) return; const r = sunanRemGet(); r[id] = ti.value; store.set('pt-sunanrem', r); closeSheet(); toast(t('sunanRemOk', ti.value)); after(); });
+        b.appendChild(sv);
+        if (cur) { const dl = qBtn('btn-block', 'x', t('sunanRemDel'), () => { const r = sunanRemGet(); delete r[id]; store.set('pt-sunanrem', r); closeSheet(); after(); }); dl.style.marginTop = '.5rem'; b.appendChild(dl); }
+    });
+}
 function renderSunan() {
     const card = $('sunan-card'); if (!card) return;
     card.innerHTML = '';
@@ -1850,28 +1957,46 @@ function renderSunan() {
     [['A−', -0.1, 'qFontM'], ['A+', 0.1, 'qFontP']].forEach(([lb, d, k]) => { const x = qBtn('', null, lb, () => { settings.fontScale = Math.round(Math.min(1.8, Math.max(0.8, (Number(settings.fontScale) || 1) + d)) * 10) / 10; saveSettings(); applyFont(); }); x.setAttribute('aria-label', t(k)); hd.appendChild(x); });
     card.appendChild(hd);
     const sum = document.createElement('div'); sum.className = 'muted small'; sum.style.marginBottom = '.6rem'; card.appendChild(sum);
-    const inp = document.createElement('input'); inp.type = 'search'; inp.className = 'q-search'; inp.placeholder = t('sunanSearch'); inp.setAttribute('aria-label', t('sunanSearch')); card.appendChild(inp);
-    const done = sunanDoneGet(), upd = () => { sum.textContent = t('sunanDone', done.ids.length); };
-    const rows = [], groups = [];
+    const inp = document.createElement('input'); inp.type = 'text'; inp.setAttribute('inputmode', 'search'); inp.setAttribute('enterkeyhint', 'search'); inp.className = 'q-search'; inp.placeholder = t('sunanSearch'); inp.setAttribute('aria-label', t('sunanSearch')); card.appendChild(inp);
+    const done = sunanDoneGet(), upd = () => { const sk = sunanStreak(); sum.textContent = t('sunanDone', done.ids.length) + (sk > 0 ? ' · ' + t('sunanStreak', sk) : ''); };
+    const rows = [], groups = []; let openSet = store.get('pt-sunan-ui', [0]); if (!Array.isArray(openSet)) openSet = [0];
+    const favs = sunanFavGet(), rems0 = sunanRemGet(), notes0 = sunanNoteGet(), redo = () => { const y = window.scrollY; renderSunan(); window.scrollTo(0, y); };
+    const mkRow = (id, list) => {
+        const it = sunanItem(id), row = document.createElement('div'); row.className = 'sn-i';
+        const tx = document.createElement('div'); tx.className = 'tx'; tx.dir = 'rtl'; tx.lang = 'ar'; tx.textContent = it[0];
+        const sr = document.createElement('small'); sr.textContent = it[1]; tx.appendChild(sr);
+        const ac = document.createElement('div'); ac.className = 'sn-a';
+        const isF = favs.includes(id), fb = document.createElement('button'); fb.type = 'button'; fb.className = 'pchk sn-b' + (isF ? ' on' : ''); fb.appendChild(iconEl('star')); fb.setAttribute('aria-label', t(isF ? 'sunanUnfav' : 'sunanFav'));
+        fb.addEventListener('click', () => { const a = sunanFavGet(), ix = a.indexOf(id); if (ix >= 0) a.splice(ix, 1); else a.push(id); store.set('pt-sunanfav', a); tapVib(12); redo(); });
+        const bb = document.createElement('button'); bb.type = 'button'; bb.className = 'pchk sn-b' + (rems0[id] ? ' on' : ''); bb.appendChild(iconEl('bell')); bb.setAttribute('aria-label', t('sunanRemBell'));
+        bb.addEventListener('click', () => sunanRemSheet(id, redo));
+        const nb = document.createElement('button'); nb.type = 'button'; nb.className = 'pchk sn-b' + (notes0[id] ? ' on' : ''); nb.appendChild(iconEl('pencil')); nb.setAttribute('aria-label', t('sunanNoteBtn')); nb.addEventListener('click', () => sunanNoteSheet(id, redo));
+        if (notes0[id]) { const nt = document.createElement('span'); nt.className = 'sn-nt'; nt.textContent = notes0[id]; tx.appendChild(nt); }
+        const c = document.createElement('button'); c.type = 'button'; c.className = 'pchk' + (done.ids.includes(id) ? ' on' : ''); c.appendChild(iconEl('check')); c.setAttribute('aria-label', t('sunanMark'));
+        c.addEventListener('click', () => { const ix = done.ids.indexOf(id); if (ix >= 0) done.ids.splice(ix, 1); else done.ids.push(id); store.set('pt-sunan', done); sunanHistSave(done); document.querySelectorAll('.pchk[data-sid="' + id + '"]').forEach(x => x.classList.toggle('on', ix < 0)); upd(); tapVib(12); if (typeof renderSod === 'function') renderSod(); });
+        c.dataset.sid = id; ac.appendChild(fb); ac.appendChild(bb); ac.appendChild(nb); ac.appendChild(c);
+        row.appendChild(tx); row.appendChild(ac); list.push({ row, key: qNorm(it[0]) }); rows.push(list[list.length - 1]); return row;
+    };
+    if (favs.length) {
+        const dt = document.createElement('details'); dt.className = 'sn-g sn-fav'; dt.open = true;
+        const sm = document.createElement('summary'); sm.textContent = t('sunanFavG') + ' (' + favs.length + ')'; dt.appendChild(sm);
+        const list = []; favs.forEach(id => dt.appendChild(mkRow(id, list))); groups.push({ dt, list }); card.appendChild(dt);
+    }
     SUNAN.forEach((g, gi) => {
-        const dt = document.createElement('details'); dt.className = 'sn-g'; if (gi === 0) dt.open = true;
+        const dt = document.createElement('details'); dt.className = 'sn-g'; dt.open = openSet.includes(gi);
+        dt.addEventListener('toggle', () => { if (inp.value) return; const cur = [...card.querySelectorAll('details.sn-g:not(.sn-fav)')].map((x, i) => x.open ? i : -1).filter(i => i >= 0); store.set('pt-sunan-ui', cur); });
         const sm = document.createElement('summary'); sm.textContent = isEn() ? g[1] : g[0]; dt.appendChild(sm);
         const list = [];
-        g[2].forEach((it, ii) => {
-            const id = gi * 100 + ii, row = document.createElement('div'); row.className = 'sn-i';
-            const tx = document.createElement('div'); tx.className = 'tx'; tx.dir = 'rtl'; tx.lang = 'ar'; tx.textContent = it[0];
-            const sr = document.createElement('small'); sr.textContent = it[1]; tx.appendChild(sr);
-            const c = document.createElement('button'); c.type = 'button'; c.className = 'pchk' + (done.ids.includes(id) ? ' on' : ''); c.appendChild(iconEl('check')); c.setAttribute('aria-label', t('sunanMark'));
-            c.addEventListener('click', () => { const ix = done.ids.indexOf(id); if (ix >= 0) done.ids.splice(ix, 1); else done.ids.push(id); store.set('pt-sunan', done); c.classList.toggle('on', ix < 0); upd(); tapVib(12); });
-            row.appendChild(tx); row.appendChild(c); dt.appendChild(row); list.push({ row, key: qNorm(it[0]) }); rows.push(list[list.length - 1]);
-        });
+        g[2].forEach((it, ii) => dt.appendChild(mkRow(gi * 100 + ii, list)));
         groups.push({ dt, list }); card.appendChild(dt);
     });
     upd();
     let tm = 0;
     inp.addEventListener('input', () => { clearTimeout(tm); tm = setTimeout(() => { const q = qNorm(inp.value.trim());
         groups.forEach(g => { let n = 0; g.list.forEach(r => { const ok = !q || r.key.includes(q); r.row.hidden = !ok; if (ok) n++; }); g.dt.hidden = !n; if (q && n) g.dt.open = true; }); }, 120); });
-    const nt = document.createElement('p'); nt.className = 'muted small'; nt.textContent = t('sunanNote'); card.appendChild(nt);
+    { const pb = qBtn('btn-block ibtn', 'bell', t('sunanPresBtn'), () => sunanPresetsSheet(redo)); pb.style.marginTop = '.6rem'; card.appendChild(pb); }
+    { const wb = qBtn('btn-block ibtn', 'download', t('sunanWeekBtn'), shareSunanWeek); wb.style.marginTop = '.6rem'; card.appendChild(wb); }
+    const nt = document.createElement('p'); nt.className = 'muted small'; nt.style.marginTop = '.8rem'; nt.textContent = t('sunanNote'); card.appendChild(nt);
 }
 const PR_RAW = { Fajr: [['f', 'rawFajr']], Dhuhr: [['d', 'rawDB'], ['D', 'rawDA']], Asr: [], Maghrib: [['m', 'rawMA']], Isha: [['i', 'rawIA']] };
 function openPrayerSheet(k) {
@@ -1891,6 +2016,7 @@ function openPrayerSheet(k) {
         };
         [['rak', 'prBtnRak'], ['sjd', 'prBtnSjd'], ['how', 'prBtnHow']].forEach(([id, key]) => { const x = qBtn('', null, t(key), () => show(id)); x.dataset.id = id; seg.appendChild(x); });
         b.appendChild(seg); b.appendChild(panel);
+        { const pinned = settings.pinPrayer === k, pb = qBtn('btn-block ibtn', 'map-pin', t(pinned ? 'prUnpin' : 'prPin'), () => { settings.pinPrayer = settings.pinPrayer === k ? '' : k; saveSettings(); pb.lastChild.textContent = t(settings.pinPrayer === k ? 'prUnpin' : 'prPin'); renderList(); }); pb.style.marginBottom = '.8rem'; b.appendChild(pb); }
         const groups = jum ? [['D', 'rawDA']] : PR_RAW[k];
         if (groups.length && state.view <= 0) {
             const hh = document.createElement('h3'); hh.textContent = t('prRaw'); b.appendChild(hh);
@@ -1995,15 +2121,17 @@ function qAt(arr, g) { let lo = 0, hi = arr.length - 1, r = 0; while (lo <= hi) 
 let qLastPg = 0;
 function qPagesGet() { const v = store.get('pt-qpages', ''); return typeof v === 'string' && v.length === 604 ? v : '0'.repeat(604); }
 function qMarkPage(pg) { const v = qPagesGet(); if (v[pg - 1] === '1') return; store.set('pt-qpages', v.slice(0, pg - 1) + '1' + v.slice(pg)); }
+function readPeriod(now) { const T = state.today; if (!T) return 'M'; return (now >= T.Isha || now < T.Fajr) ? 'I' : now >= T.Maghrib ? 'G' : now >= T.Asr ? 'A' : now >= T.Dhuhr ? 'D' : now >= T.Sunrise ? 'M' : 'F'; }
 function qAutoPage(g, force) {
     try {
         const pg = qAt(QMETA.pg, g), iso = dayOf(state.tz, 0).iso;
         qMarkPage(pg);
         if (store.get('pt-qauto', true) === false && !force) return;
         let o = store.get('pt-qpg', null); if (!o || o.d !== iso) o = { d: iso, p: [] };
-        const add = [pg]; if (qLastPg && pg > qLastPg && pg - qLastPg <= 5) for (let x = qLastPg + 1; x < pg; x++) add.push(x);
-        qLastPg = pg; let ch = false; add.forEach(x => { if (!o.p.includes(x)) { o.p.push(x); ch = true; } });
+        let nn = 0; const add = [pg]; if (qLastPg && pg > qLastPg && pg - qLastPg <= 5) for (let x = qLastPg + 1; x < pg; x++) add.push(x);
+        qLastPg = pg; let ch = false; add.forEach(x => { if (!o.p.includes(x)) { o.p.push(x); ch = true; nn++; } });
         if (!ch) return; store.set('pt-qpg', o);
+        { const m = store.get('pt-qper', {}), k = readPeriod(Date.now()); if (m && typeof m === 'object') { m[k] = (m[k] || 0) + nn; store.set('pt-qper', m); } }
         const r = trackDay(iso); if ((r.q || 0) < o.p.length) { r.q = Math.min(604, o.p.length); saveTrack(); renderWird(); checkBadges(); clearTimeout(wirdT); wirdT = setTimeout(() => { renderTrack(); renderBadges(); }, 400); }
     } catch (e) {}
 }
@@ -2035,7 +2163,7 @@ const qNum = n => String(n).replace(/\d/g, c => '٠١٢٣٤٥٦٧٨٩'[c]);
 function qNorm(x) { return x.replace(/[\u0640\u064B-\u065F\u0670\u06D6-\u06ED]/g, '').replace(/[\u0671\u0622\u0623\u0625]/g, '\u0627').replace(/\u0649/g, '\u064A').replace(/\u0629/g, '\u0647'); }
 function qPos() { return store.get('pt-qpos', null); }
 function qBms() { return store.get('pt-qbm', []); }
-function qBackup() { return { pages: qPagesGet(), mem: qMemAll(), rev: qRevMap(), bm: qBms(), stop: store.get('pt-qstop', null), plan: store.get('pt-qplan', null), pos: qPos(), sp: qSpMap() }; }
+function qBackup() { return { pages: qPagesGet(), mem: qMemAll(), rev: qRevMap(), bm: qBms(), stop: store.get('pt-qstop', null), plan: store.get('pt-qplan', null), pos: qPos(), sp: qSpMap(), per: store.get('pt-qper', {}) }; }
 function qRestore(o, merge) {
     if (!o || typeof o !== 'object') return false;
     const int = (v, lo, hi) => { v = Math.round(Number(v)); return Number.isFinite(v) && v >= lo && v <= hi ? v : null; };
@@ -2054,6 +2182,7 @@ function qRestore(o, merge) {
     const st = loc(o.stop); if (st && (!merge || !store.get('pt-qstop', null))) store.set('pt-qstop', st);
     const ps = loc(o.pos); if (ps && (!merge || !qPos())) store.set('pt-qpos', ps);
     if (o.sp && typeof o.sp === 'object') { const m = merge ? qSpMap() : {}; Object.keys(o.sp).forEach(k => { const sn = int(k, 1, 114), an = sn ? int(o.sp[k], 1, SUR_LEN[sn - 1]) : null; if (sn && an && (!merge || !m[sn])) m[sn] = an; }); store.set('pt-qsp', m); }
+    if (o.per && typeof o.per === 'object') { const m = merge ? store.get('pt-qper', {}) : {}; 'FMDAGI'.split('').forEach(k => { const v = Math.round(Number(o.per[k])); if (Number.isFinite(v) && v > 0) m[k] = Math.max(Number(m[k]) || 0, Math.min(v, 1e6)); }); store.set('pt-qper', m); }
     const pl = o.plan;
     if (pl && typeof pl === 'object' && /^\d{4}-\d\d-\d\d$/.test(String(pl.start)) && (!merge || !store.get('pt-qplan', null))) {
         const days = int(pl.days, 1, 365), base = int(pl.base, 0, 6236); if (days && base !== null) store.set('pt-qplan', { start: pl.start, days, base, max: int(pl.max, base, 6236) || base });
@@ -2088,7 +2217,7 @@ function renderQuranTab(goS, goA) {
     if (!goS && b.dataset.r === '1') return;
     b.dataset.r = '1'; b.textContent = t('qLoading'); b.className = 'card qtab muted center';
     loadQuran().then(d => { b.className = 'card qtab'; b.innerHTML = ''; if (goS) qSurah(b, d, goS, goA); else qIndex(b, d); })
-        .catch(() => { b.dataset.r = ''; b.className = 'card qtab muted center'; b.textContent = t('qNoData'); });
+        .catch(() => { b.dataset.r = ''; b.className = 'card qtab muted center'; b.textContent = ''; const p = document.createElement('p'); p.textContent = t('qNoData'); const rb = document.createElement('button'); rb.type = 'button'; rb.className = 'btn-accent'; rb.textContent = t('qRetry'); rb.addEventListener('click', () => renderQuranTab(goS, goA)); b.appendChild(p); b.appendChild(rb); });
 }
 function qWords(el, v) {
     v.split(' ').forEach((w, i) => { if (i) el.appendChild(document.createTextNode(' ')); const x = document.createElement('span'); x.className = 'q-w'; x.textContent = w; el.appendChild(x); });
@@ -2165,6 +2294,15 @@ function qRevPick() {
     if (!cands.length) return null;
     let pool = cands.filter(c => !qSkip.has(c.key)); if (!pool.length) { qSkip = new Set(); pool = cands; }
     return pool.reduce((m, c) => c.sc < m.sc ? c : m, pool[0]);
+}
+let revDueC = { k: '', v: null };
+function qRevDue() {
+    const iso = state.dayIso, mem = qMemAll(), k = iso + Object.keys(mem).length + ':' + qMemCount(mem) + ':' + JSON.stringify(store.get('pt-qrev', {})).length;
+    if (revDueC.k === k) return revDueC.v;
+    const rev = qRevMap(), today = qDay(iso); let best = null;
+    Object.keys(mem).forEach(x => { const s = +x, arr = mem[x]; if (!arr || !arr.length) return; let last = 0; arr.forEach(a => { last = Math.max(last, (rev[s] || {})[a] || 0); });
+        const dd = last ? today - last : 9999; if (dd >= 7 && (!best || dd > best.dd)) best = { s, a: arr[0], d: last ? dd : -1, dd }; });
+    revDueC = { k, v: best }; return best;
 }
 function qReview(b, d) {
     qCur = 0; b.innerHTML = '';
@@ -2355,6 +2493,8 @@ function qStatsBox(redo) {
         l.textContent = fm ? fm.format(Date.UTC(x.dk.y, x.dk.m - 1, x.dk.d)) : ''; col.appendChild(n); col.appendChild(b); col.appendChild(l); ch.appendChild(col); });
     box.appendChild(ch);
     [t('qStatWeek', wk), t('qStatStreak', streak), t('qStatBest', best), t('qStatMonth', month)].forEach(x => { const p = document.createElement('p'); p.className = 'small'; p.textContent = x; box.appendChild(p); });
+    { const m = store.get('pt-qper', {}); let tot = 0, bk = '', bv = 0; if (m && typeof m === 'object') Object.keys(m).forEach(k => { const v = Number(m[k]) || 0; tot += v; if (v > bv && /^[FMDAGI]$/.test(k)) { bv = v; bk = k; } });
+      if (tot >= 10 && bk) { const p = document.createElement('p'); p.className = 'small'; p.style.color = 'var(--accent)'; p.textContent = t('qPerLine', t('qPer' + bk)); box.appendChild(p); } }
     box.appendChild(qJuzMap(redo));
     { const sh = qBtn('q-cont ibtn', 'download', t('qStatShare'), shareStatsImage); sh.style.marginTop = '.6rem'; box.appendChild(sh); }
     return box;
@@ -2424,7 +2564,7 @@ function qBookmarks(b, d) {
     const h = document.createElement('h3'); h.textContent = t('qBmT'); h.style.marginTop = '.8rem'; b.appendChild(h);
     const list = qBms().map(k => k.split(':').map(Number)).filter(([sn, an]) => d[sn - 1] && d[sn - 1][an - 1]).sort((x, y) => x[0] - y[0] || x[1] - y[1]);
     if (!list.length) { const p = document.createElement('p'); p.className = 'muted'; p.textContent = t('qBmNone'); b.appendChild(p); return; }
-    const inp = document.createElement('input'); inp.type = 'search'; inp.className = 'q-search'; inp.placeholder = t('qBmSearch'); inp.setAttribute('aria-label', t('qBmSearch')); b.appendChild(inp);
+    const inp = document.createElement('input'); inp.type = 'text'; inp.setAttribute('inputmode', 'search'); inp.setAttribute('enterkeyhint', 'search'); inp.className = 'q-search'; inp.placeholder = t('qBmSearch'); inp.setAttribute('aria-label', t('qBmSearch')); b.appendChild(inp);
     const box = document.createElement('div'); b.appendChild(box);
     const none = document.createElement('p'); none.className = 'muted'; none.textContent = t('qNone2'); none.hidden = true; b.appendChild(none);
     const rows = list.map(([sn, an]) => {
@@ -2454,7 +2594,7 @@ function qMemList(b, d) {
     const h = document.createElement('h3'); h.textContent = t('qMemT'); h.style.marginTop = '.8rem'; b.appendChild(h);
     const mem = qMemAll(), ks = Object.keys(mem).map(Number).filter(n => d[n - 1] && mem[n] && mem[n].length).sort((x, y) => x - y);
     if (!ks.length) { const p = document.createElement('p'); p.className = 'muted'; p.textContent = t('qMemNone'); b.appendChild(p); return; }
-    const inp = document.createElement('input'); inp.type = 'search'; inp.className = 'q-search'; inp.placeholder = t('qMemSearch'); inp.setAttribute('aria-label', t('qMemSearch')); b.appendChild(inp);
+    const inp = document.createElement('input'); inp.type = 'text'; inp.setAttribute('inputmode', 'search'); inp.setAttribute('enterkeyhint', 'search'); inp.className = 'q-search'; inp.placeholder = t('qMemSearch'); inp.setAttribute('aria-label', t('qMemSearch')); b.appendChild(inp);
     const box = document.createElement('div'); b.appendChild(box);
     const none = document.createElement('p'); none.className = 'muted'; none.textContent = t('qNone2'); none.hidden = true; b.appendChild(none);
     const rows = ks.map(n => {
@@ -2583,7 +2723,7 @@ function qSurah(b, d, s, a) {
     bar.appendChild(qBtn('ibtn q-back', 'arrow-right', t('qIndex'), () => qIndex(b, d)));
     const sp = document.createElement('span'); sp.className = 'sp'; bar.appendChild(sp);
     const fs = () => Number(store.get('pt-qfs', 1.7));
-    const setFs = v => { v = Math.max(1.1, Math.min(3.2, v)); store.set('pt-qfs', v); b.style.setProperty('--qfs', v + 'rem'); };
+    let fsl = null; const setFs = v => { v = Math.max(1.1, Math.min(3.2, v)); store.set('pt-qfs', v); b.style.setProperty('--qfs', v + 'rem'); if (fsl) fsl.value = v; };
     const mi = qBtn('', null, 'A−', () => setFs(fs() - 0.15)); mi.setAttribute('aria-label', t('qFontM'));
     const pl = qBtn('', null, 'A+', () => setFs(fs() + 0.15)); pl.setAttribute('aria-label', t('qFontP'));
     const hm = Number(store.get('pt-qhide', 0)) || 0;
@@ -2593,6 +2733,7 @@ function qSurah(b, d, s, a) {
     const mb0 = qBtn('', null, t('qModeL', t(mdOf() === 's' ? 'qModeS' : 'qModeN')), () => { const n = mdOf() === 's' ? 'n' : 's'; store.set('pt-qmode', n);
         tx.classList.toggle('simple', n === 's'); mb0.lastChild.textContent = t('qModeL', t(n === 's' ? 'qModeS' : 'qModeN')); });
     const bar2 = document.createElement('div'); bar2.className = 'q-bar q-chips'; bar2.appendChild(mb0); bar2.appendChild(hb);
+    { const w = document.createElement('label'); w.className = 'q-fs muted small'; w.appendChild(document.createTextNode(t('qFontSl'))); fsl = document.createElement('input'); fsl.type = 'range'; fsl.min = '1.1'; fsl.max = '3.2'; fsl.step = '0.05'; fsl.value = fs(); fsl.setAttribute('aria-label', t('qFontSl')); fsl.addEventListener('input', () => setFs(Number(fsl.value))); w.appendChild(fsl); bar2.appendChild(w); }
     sp.after(qBtn('', 'check', t('qDonePage'), qDonePage)); bar.appendChild(mi); bar.appendChild(pl); b.appendChild(bar); b.appendChild(bar2); setFs(fs());
     const hd = document.createElement('div'); hd.className = 'q-head'; hd.textContent = surName(s); b.appendChild(hd);
     if (s !== 1 && s !== 9) { const bs = document.createElement('div'); bs.className = 'q-bsm'; bs.textContent = d[0][0]; b.appendChild(bs); }
@@ -2632,7 +2773,7 @@ function qSurah(b, d, s, a) {
     const taf = document.createElement('div'); taf.className = 'q-taf'; taf.hidden = true; let tafOn = false;
     const showTaf = () => { if (!qSel) return; const g = QOFF[s - 1] + qSel - 1, my = qSel; taf.hidden = false; taf.textContent = t('qTafLoad');
         loadTafsir().then(A => { if (qSel !== my) return; taf.textContent = A[g] || ''; const sm = document.createElement('small'); sm.textContent = t('qTafSrc'); taf.appendChild(sm); })
-        .catch(() => { if (qSel === my) taf.textContent = t('qTafFail'); }); };
+        .catch(() => { if (qSel !== my) return; taf.textContent = ''; const p = document.createElement('div'); p.textContent = t('qTafFail'); const rb = qBtn('btn-accent', null, t('qRetry'), showTaf); rb.style.marginTop = '.5rem'; taf.appendChild(p); taf.appendChild(rb); }); };
     const bTf = qBtn('', 'library', t('qTaf'), () => { if (!qSel) return; tafOn = !tafOn; bTf.classList.toggle('on', tafOn); if (tafOn) showTaf(); else taf.hidden = true; });
     [bStop, bMem, bTo, bBm, bCp, bTf].forEach(x => mg.appendChild(x));
     act.appendChild(taf);
@@ -2954,6 +3095,16 @@ function tick(force) {
     const ss = Math.floor((diff % 60000) / 1000);
     setText('countdown', `${pad2(hh)}:${pad2(mm)}:${pad2(ss)}`);
     setText('next-prayer-time', fmtClock(next.ts));
+    { let line = '';
+      if (state.view === 0) {
+          const T = state.today, Y = state.yesterday, TM = state.tomorrow;
+          const ends = { Fajr: T.Sunrise, Dhuhr: T.Asr, Asr: T.Maghrib, Maghrib: T.Isha, Isha: T.Maghrib + (TM.Fajr - T.Maghrib) / 2 };
+          let ck = null, ce = 0;
+          for (const k of FIVE) if (now >= T[k] && now < ends[k]) { ck = k; ce = ends[k]; }
+          if (!ck && now < T.Fajr) { const ye = Y.Maghrib + (T.Fajr - Y.Maghrib) / 2; if (now < ye) { ck = 'Isha'; ce = ye; } }
+          if (ck) { const mn = Math.max(1, Math.ceil((ce - now) / 60000)); line = t('curLeft', prayerName(ck), mn < 60 ? t('curMin', mn) : t('curHM', Math.floor(mn / 60), mn % 60)); }
+      }
+      setText('cur-line', line); if (sodKey.slice(0, 10) !== state.dayIso) renderSod(); }
     const pct = Math.min(100, Math.max(0, (now - prev) / (next.ts - prev) * 100));
     setHeroRing(pct / 100);
     if (heroPending) playHeroIntro();
@@ -3020,6 +3171,15 @@ function tick(force) {
             if (wirdCache.k !== wk) { const [y, m, d] = state.dayIso.split('-').map(Number), tt = hm(settings.wirdTime); wirdCache = { k: wk, at: zonedToUtc(y, m, d, Math.floor(tt / 60), tt % 60, state.tz) }; }
             rems.push(['q', wirdCache.at, 'remQ', { set: 'stats', wird: 1 }, null, 'wird']);
         }
+        { const sr = sunanRemGet(); const wd = new Date(Date.UTC(...state.dayIso.split('-').map((v, i) => i === 1 ? v - 1 : +v))).getUTCDay(); Object.keys(sr).forEach(k => { const dys = sr[k].split('@')[1]; if (dys && !dys.includes(String(wd))) return; const kk = state.dayIso + sr[k] + k; let c = sunanRemCache[kk]; if (!c) { sunanRemCache = {}; const [y, m, d] = state.dayIso.split('-').map(Number), tt = hm(sr[k].slice(0, 5)); c = sunanRemCache[kk] = zonedToUtc(y, m, d, Math.floor(tt / 60), tt % 60, state.tz); } rems.push(['sr' + k, c, () => t('remSunan', sunanShort(+k)), { tab: 'sunan' }, null, 'wird']); }); }
+        if (settings.revRemind) {
+            const rv = qRevDue();
+            if (rv) {
+                const rk = state.dayIso + settings.revTime;
+                if (revCache.k !== rk) { const [y, m, d] = state.dayIso.split('-').map(Number), tt = hm(settings.revTime); revCache = { k: rk, at: zonedToUtc(y, m, d, Math.floor(tt / 60), tt % 60, state.tz) }; }
+                rems.push(['rv', revCache.at, () => t('remRev', surName(rv.s), rv.d < 0 ? t('remRevNever') : t('remRevDays', rv.d)), { q: [rv.s, rv.a] }, null, 'wird']);
+            }
+        }
         if (settings.khRemind) {
             const kh = qKhInfo();
             if (kh) {
@@ -3062,7 +3222,7 @@ function syncSubs() {
     $('sub-sleep').hidden = !settings.remindSleep;
     $('sub-after').hidden = !settings.remindAfter;
     $('sub-wird').hidden = !settings.wirdRemind;
-    $('sub-khrem').hidden = !settings.khRemind;
+    $('sub-khrem').hidden = !settings.khRemind; $('sub-revrem').hidden = !settings.revRemind;
     $('sub-dnd').hidden = !settings.dnd;
     $('sub-dndfri').hidden = !settings.dndFri;
 }
@@ -4285,6 +4445,13 @@ function onbMethodFor(tz) {
     if (tz === 'Asia/Dubai' || tz === 'Asia/Muscat' || tz === 'Asia/Bahrain') return 8;
     if (tz === 'Europe/Istanbul') return 13;
     if (tz === 'Asia/Karachi') return 1;
+    if (tz === 'Africa/Casablanca') return 21;
+    if (tz === 'Africa/Algiers') return 19;
+    if (tz === 'Africa/Tunis') return 18;
+    if (tz === 'Asia/Kuala_Lumpur') return 17;
+    if (tz === 'Asia/Singapore') return 11;
+    if (/^Asia\/(Jakarta|Makassar|Jayapura|Pontianak)$/.test(tz)) return 20;
+    if (tz === 'Europe/Paris') return 12;
     if (tz.indexOf('America/') === 0) return 2;
     return 3;
 }
@@ -4445,7 +4612,7 @@ function renderDiag() {
 }
 let dgResetT = 0;
 function resetNotifSettings() {
-    ['notify', 'sound', 'preAlert', 'endAlert', 'adhkarRemind', 'remindSleep', 'remindWake', 'remindAfter', 'wirdRemind', 'nawRemind', 'logRemind', 'occRemind', 'khRemind', 'dnd', 'dndFri', 'sndPrayer', 'sndAdhkar', 'sndWird', 'sndGoal'].forEach(k => { settings[k] = DEFAULTS[k]; });
+    ['notify', 'sound', 'preAlert', 'endAlert', 'adhkarRemind', 'remindSleep', 'remindWake', 'remindAfter', 'wirdRemind', 'nawRemind', 'logRemind', 'occRemind', 'khRemind', 'revRemind', 'dnd', 'dndFri', 'sndPrayer', 'sndAdhkar', 'sndWird', 'sndGoal'].forEach(k => { settings[k] = DEFAULTS[k]; });
     settings.sndPrayers = Object.assign({}, DEFAULTS.sndPrayers);
     saveSettings(); syncControls(); syncSubs(); renderDiag(); toast(t('dgResetDone'));
 }
@@ -4475,7 +4642,7 @@ function syncControls() {
     $('wird-unit').value = settings.wirdUnit || 'page'; $('wird-goal').value = String(settings.wirdGoal || 0);
     $('dndfri-toggle').checked = !!settings.dndFri; $('dndfri-from').value = settings.dndFriFrom || '23:00'; $('dndfri-to').value = settings.dndFriTo || '08:00';
     [['snd-prayer', 'sndPrayer'], ['snd-adhkar', 'sndAdhkar'], ['snd-wird', 'sndWird'], ['snd-goal', 'sndGoal']].forEach(([id, k]) => { $(id).value = settings[k]; });
-    $('khrem-toggle').checked = !!settings.khRemind; $('khrem-time').value = settings.khTime || '20:00'; $('wird-toggle').checked = !!settings.wirdRemind; $('wird-time').value = settings.wirdTime || '21:00';
+    $('revrem-toggle').checked = !!settings.revRemind; $('revrem-time').value = settings.revTime || '17:00'; $('khrem-toggle').checked = !!settings.khRemind; $('khrem-time').value = settings.khTime || '20:00'; $('wird-toggle').checked = !!settings.wirdRemind; $('wird-time').value = settings.wirdTime || '21:00';
     $('dnd-toggle').checked = !!settings.dnd; $('dnd-from').value = settings.dndFrom || '23:00'; $('dnd-to').value = settings.dndTo || '05:00';
     $('dndprayer-toggle').checked = settings.dndPrayer !== false;
     $('remsleep-delay').value = String(settings.sleepDelay || 60); $('remafter-delay').value = String(settings.afterDelay || 5);
@@ -4507,7 +4674,7 @@ function sanitizeSettings(s) {
     if (PT_METHODS[s.method]) out.method = Number(s.method);
     out.asr = Number(s.asr) === 2 ? 2 : 1;
     out.hijriAdj = clampInt(s.hijriAdj, 0, -2, 2);
-    out.notify = !!s.notify; out.sound = s.sound !== false; out.h24 = !!s.h24; out.fullscreen = s.fullscreen !== false; out.anim = s.anim !== false; out.splash = s.splash !== false; out.adhkarAuto = s.adhkarAuto !== false; out.friRemind = s.friRemind !== false;
+    out.notify = !!s.notify; out.sound = s.sound !== false; out.h24 = !!s.h24; out.fullscreen = s.fullscreen !== false; out.anim = s.anim !== false; out.splash = s.splash !== false; out.pinPrayer = FIVE.includes(s.pinPrayer) ? s.pinPrayer : ''; out.adhkarAuto = s.adhkarAuto !== false; out.friRemind = s.friRemind !== false;
     out.lang = I18N[s.lang] ? s.lang : 'ar';
     out.preAlert = [0, 10, 15].includes(Number(s.preAlert)) ? Number(s.preAlert) : 0;
     out.tasbihPhrase = TASBIH_PHRASES.includes(s.tasbihPhrase) ? s.tasbihPhrase : 'ph_sub';
@@ -4537,7 +4704,7 @@ function sanitizeSettings(s) {
     out.fontFace = ['default', 'naskh', 'thuluth'].includes(s.fontFace) ? s.fontFace : 'default';
     out.remindSleep = !!s.remindSleep; out.remindWake = !!s.remindWake; out.remindAfter = !!s.remindAfter; out.readDark = !!s.readDark; out.qDark = !!s.qDark; out.qAwake = !!s.qAwake;
     out.vibTap = s.vibTap !== false; out.keepAwake = !!s.keepAwake; out.adhkarRemind = !!s.adhkarRemind;
-    out.endAlert = [0, 10, 20, 30].includes(Number(s.endAlert)) ? Number(s.endAlert) : 0; out.nightAuto = s.nightAuto !== false; out.khRemind = !!s.khRemind; out.khTime = tm(s.khTime, '20:00'); out.logRemind = !!s.logRemind; out.occRemind = !!s.occRemind; out.nawRemind = !!s.nawRemind; out.nawCard = s.nawCard !== false; out.hifz = [0, 1, 2].includes(Number(s.hifz)) ? Number(s.hifz) : 0;
+    out.endAlert = [0, 10, 20, 30].includes(Number(s.endAlert)) ? Number(s.endAlert) : 0; out.nightAuto = s.nightAuto !== false; out.revRemind = !!s.revRemind; out.revTime = tm(s.revTime, '17:00'); out.khRemind = !!s.khRemind; out.khTime = tm(s.khTime, '20:00'); out.logRemind = !!s.logRemind; out.occRemind = !!s.occRemind; out.nawRemind = !!s.nawRemind; out.nawCard = s.nawCard !== false; out.hifz = [0, 1, 2].includes(Number(s.hifz)) ? Number(s.hifz) : 0;
     out.vibTarget = VIB_PATTERNS[s.vibTarget] !== undefined ? s.vibTarget : 'double';
     const g = s.gps;
     out.gps = (g && Number.isFinite(+g.lat) && Number.isFinite(+g.lng) && Math.abs(+g.lat) <= 90 && Math.abs(+g.lng) <= 180)
@@ -4591,7 +4758,7 @@ function renderBak() {
         r.append(a, b); box.appendChild(r);
     });
 }
-function backupObj() { return { app: APP_ID, v: 2, exportedAt: new Date().toISOString(), settings, track, favs, tasbih: { n: tasbihCount }, qada: qadaGet(), quran: qBackup() }; }
+function backupObj() { return { app: APP_ID, v: 2, exportedAt: new Date().toISOString(), settings, track, favs, tasbih: { n: tasbihCount }, qada: qadaGet(), quran: qBackup(), sunanh: sunanHistGet(), sunanfav: sunanFavGet(), sunanrem: sunanRemGet(), sunannote: sunanNoteGet() }; }
 async function exportShare() {
     if (!window.CompressionStream) { toast(t('importBad')); return; }
     settings.backupAt = Date.now(); settings.backupSnooze = 0; saveSettings(); updateCards(Date.now());
@@ -4630,6 +4797,10 @@ function importText(text) {
     tasbihCount = Number.isFinite(n) && n >= 0 ? Math.min(n, 1000000) : 0;
     store.set('pt-tasbih', { n: tasbihCount });
     if (obj.quran) qRestore(obj.quran, false);
+    if (obj.sunannote && typeof obj.sunannote === 'object' && !Array.isArray(obj.sunannote)) { const r = {}; Object.keys(obj.sunannote).forEach(k => { const v = obj.sunannote[k]; if (sunanItem(+k) && typeof v === 'string' && v.trim()) r[k] = v.trim().slice(0, 300); }); store.set('pt-sunannote', r); }
+    if (Array.isArray(obj.sunanfav)) store.set('pt-sunanfav', [...new Set(obj.sunanfav.map(Number).filter(x => Number.isInteger(x) && sunanItem(x)))]);
+    if (obj.sunanrem && typeof obj.sunanrem === 'object' && !Array.isArray(obj.sunanrem)) { const r = {}; Object.keys(obj.sunanrem).forEach(k => { if (sunanItem(+k) && /^\d\d:\d\d(@[0-6]+)?$/.test(obj.sunanrem[k])) r[k] = obj.sunanrem[k]; }); store.set('pt-sunanrem', r); }
+    if (obj.sunanh && typeof obj.sunanh === 'object') { const h = {}; Object.keys(obj.sunanh).filter(k => /^\d{4}-\d\d-\d\d$/.test(k)).sort().slice(-400).forEach(k => { const a = obj.sunanh[k]; if (Array.isArray(a)) { const ids = [...new Set(a.map(Number).filter(n => Number.isInteger(n) && n >= 0 && n < 5000))]; if (ids.length) h[k] = ids; } }); store.set('pt-sunanh', h); }
     { const qd = Math.round(Number(obj.qada)); store.set('pt-qada', Number.isFinite(qd) && qd > 0 ? Math.min(qd, 99999) : 0); }
     favs = loadFavs(obj.favs);
     store.set('pt-favs', favs);
@@ -4721,6 +4892,7 @@ function showTab(id, noFx) {
     syncWake();
     if (lastRN !== readMode()) applyTheme('soft');
     if (!noFx) fxIn(document.querySelectorAll('#tab-' + id + ' > .card, #tab-' + id + ' > .seg'), { y: 12, s: 40, d: 280 });
+    if (id === 'sunan') { const y = Number(store.get('pt-sunan-y', 0)) || 0; if (y > 0) setTimeout(() => window.scrollTo(0, y), 60); }
 }
 function showSec(id, noFx) {
     if (!document.getElementById('sec-' + id)) id = 'loc';
@@ -4818,7 +4990,13 @@ function bindUI() {
     $('end-select').addEventListener('change', e => { settings.endAlert = Number(e.target.value); saveSettings(); });
     $('naw-toggle').addEventListener('change', e => { settings.nawRemind = e.target.checked; saveSettings(); });
     $('nawcard-toggle').addEventListener('change', e => { settings.nawCard = e.target.checked; saveSettings(); renderNaw(); });
-    $('prayers-list').addEventListener('click', e => { const c = e.target.closest && e.target.closest('.pchk'); if (c) { togglePrayed(c.dataset.k); return; } const r = e.target.closest && e.target.closest('.prayer-row.has-sheet'); if (r) openPrayerSheet(r.dataset.key); });
+    let pdx = 0, pdy = 0, scrAt = 0, sunT = 0;
+    window.addEventListener('load', () => {
+    window.addEventListener('scroll', () => { scrAt = Date.now(); if (settings.tab === 'sunan') { clearTimeout(sunT); sunT = setTimeout(() => { if (settings.tab === 'sunan') store.set('pt-sunan-y', Math.round(window.scrollY)); }, 400); } }, { passive: true });
+    });
+    $('prayers-list').addEventListener('pointerdown', e => { pdx = e.clientX; pdy = e.clientY; });
+    $('prayers-list').addEventListener('click', e => { const c = e.target.closest && e.target.closest('.pchk'); if (c) { togglePrayed(c.dataset.k); return; } const r = e.target.closest && e.target.closest('.prayer-row.has-sheet');
+        if (!r || Math.abs(e.clientX - pdx) + Math.abs(e.clientY - pdy) > 12 || Date.now() - scrAt < 200) return; openPrayerSheet(r.dataset.key); });
     $('prayers-list').addEventListener('keydown', e => { if (e.key !== 'Enter' && e.key !== ' ') return; const r = e.target.classList && e.target.classList.contains('has-sheet') ? e.target : null; if (r) { e.preventDefault(); openPrayerSheet(r.dataset.key); } });
     $('share-text').addEventListener('click', shareTimesText);
     $('tool-mosque').addEventListener('click', openMosque);
@@ -4908,6 +5086,8 @@ function bindUI() {
     [['snd-prayer', 'sndPrayer'], ['snd-adhkar', 'sndAdhkar'], ['snd-wird', 'sndWird'], ['snd-goal', 'sndGoal']].forEach(([id, k]) =>
         $(id).addEventListener('change', e => { settings[k] = e.target.value; saveSettings(); playSound(settings[k]); }));
     $('goal-select').addEventListener('change', e => { settings.weeklyGoal = Number(e.target.value); saveSettings(); renderGoal(); });
+    $('revrem-toggle').addEventListener('change', e => { settings.revRemind = e.target.checked; saveSettings(); syncSubs(); });
+    $('revrem-time').addEventListener('change', e => { if (/^\d\d:\d\d$/.test(e.target.value)) { settings.revTime = e.target.value; saveSettings(); } });
     $('khrem-toggle').addEventListener('change', e => { settings.khRemind = e.target.checked; saveSettings(); syncSubs(); });
     $('khrem-time').addEventListener('change', e => { if (/^\d\d:\d\d$/.test(e.target.value)) { settings.khTime = e.target.value; saveSettings(); } });
     $('wird-toggle').addEventListener('change', e => { settings.wirdRemind = e.target.checked; saveSettings(); syncSubs(); renderWird(); });
