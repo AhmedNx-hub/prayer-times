@@ -295,7 +295,8 @@ html.focus #tab-adhkar h3[data-i18n=adhkarTitle] { opacity:0; max-height:0; marg
 #splash .sp-tap { margin-top:1.4rem; color:var(--muted); font-size:.85rem; }
 .prayer-row.has-sheet { cursor:pointer; } .prayer-row.pinned { border-inline-start:3px solid var(--accent); }
 #sheet-body .btn-block.on { background:var(--accent-soft); color:var(--accent); border-color:var(--accent); }
-.sn-g { margin-bottom:.6rem; border-radius:.9rem; background:var(--hover); } .sn-g > summary { padding:.8rem 1rem; font-weight:700; cursor:pointer; } .sn-i { display:flex; gap:.6rem; align-items:flex-start; padding:.7rem 1rem; border-top:1px solid var(--border); } .sn-i .tx { flex:1; line-height:1.9; font-size:calc(1rem * var(--dfs, 1)); } .sn-a { display:grid; grid-template-columns:repeat(2,auto); gap:.25rem 0; align-items:center; flex:none; } .sn-nt { display:block; margin-top:.3rem; padding:.3rem .6rem; border-radius:.6rem; background:var(--accent-soft); font-size:.9rem; } .sn-b svg { width:1rem; height:1rem; stroke:currentColor; fill:none; stroke-width:2; } .sn-b.on svg { fill:currentColor; } .sn-fav { background:var(--accent-soft); } #sod .sod-t { line-height:1.9; margin:.3rem 0 .6rem; } #sod .sod-t small { display:block; color:var(--muted); } .q-fs { display:flex; align-items:center; gap:.5rem; flex:1; min-width:9rem; } .q-fs input { flex:1; min-width:0; accent-color:var(--accent); }
+.sn-g { margin-bottom:.6rem; border-radius:.9rem; background:var(--hover); } .sn-g > summary { padding:.8rem 1rem; font-weight:700; cursor:pointer; } .sn-i { display:flex; gap:.6rem; align-items:flex-start; padding:.7rem 1rem; border-top:1px solid var(--border); } .sn-i .tx { flex:1; line-height:1.9; font-size:calc(1rem * var(--dfs, 1)); } html.lowpower *, html.lowpower *::before, html.lowpower *::after { transition-duration:.01ms !important; animation-duration:.01ms !important; } .flash { outline:2px solid var(--accent); outline-offset:3px; border-radius:.5rem; } .gs-g { font-size:.8rem; color:var(--muted); margin:.7rem 0 .2rem; } .td-r { display:flex; justify-content:space-between; gap:1rem; padding:.6rem 0; border-top:1px solid var(--border); } .td-r span:first-child { color:var(--muted); } .tab-hint { margin-bottom:.8rem; }
+.sn-a { display:grid; grid-template-columns:repeat(2,auto); gap:.25rem 0; align-items:center; flex:none; } .sn-nt { display:block; margin-top:.3rem; padding:.3rem .6rem; border-radius:.6rem; background:var(--accent-soft); font-size:.9rem; } .sn-b svg { width:1rem; height:1rem; stroke:currentColor; fill:none; stroke-width:2; } .sn-b.on svg { fill:currentColor; } .sn-fav { background:var(--accent-soft); } #sod .sod-t { line-height:1.9; margin:.3rem 0 .6rem; } #sod .sod-t small { display:block; color:var(--muted); } .q-fs { display:flex; align-items:center; gap:.5rem; flex:1; min-width:9rem; } .q-fs input { flex:1; min-width:0; accent-color:var(--accent); }
 .sn-i small { display:block; color:var(--muted); margin-top:.2rem; }
 .pr-seg { display:grid; grid-template-columns:repeat(3,1fr); gap:.4rem; margin-bottom:.8rem; } .pr-seg button.on { background:var(--accent-soft); color:var(--accent); border-color:var(--accent); }
 .pr-panel { padding:.8rem 1rem; border-radius:.9rem; background:var(--hover); line-height:1.9; margin-bottom:1rem; } .pr-panel ol { margin:.4rem 0 0; padding-inline-start:1.3rem; } .pr-panel li { margin-bottom:.5rem; }
@@ -542,6 +543,7 @@ html.onehand #tab-adhkar { padding-bottom:3.8rem; }
             </div>
         </div>
         <div id="cur-line" class="muted small" style="margin-top:.5rem;min-height:1.2em"></div>
+        <button id="hero-log" class="ibtn" type="button" hidden style="margin-top:.5rem"><i data-ic="check"></i><span id="hero-log-t"></span></button>
         <div class="hero-dates">
             <span id="hijri-date" class="muted small il-block"></span>
             <span id="greg-date" class="muted small il-block"></span>
@@ -625,6 +627,7 @@ html.onehand #tab-adhkar { padding-bottom:3.8rem; }
 <section class="panel" id="tab-tools" hidden>
     <div class="card" id="tools-card">
         <h3 data-i18n="toolsTitle"></h3>
+        <div class="grid2" style="margin-bottom:.6rem"><button id="tool-search" class="ibtn"><i data-ic="search"></i><span data-i18n="gsBtn"></span></button><button id="tool-today" class="ibtn"><i data-ic="calendar"></i><span data-i18n="tdBtn"></span></button></div>
         <div class="grid2">
             <button id="tool-imsak" class="ibtn"><i data-ic="calendar-days"></i><span data-i18n="toolImsak"></span></button>
             <button id="tool-cal" class="ibtn"><i data-ic="moon"></i><span data-i18n="toolCal"></span></button>
@@ -887,6 +890,7 @@ html.onehand #tab-adhkar { padding-bottom:3.8rem; }
                 <button id="dg-sw" data-i18n="dgReSW"></button>
             </div>
             <button id="dg-clrerr" class="btn-block" style="margin-top:.6rem" data-i18n="dgClrErr" hidden></button>
+            <button id="dg-export" class="btn-block ibtn" style="margin-top:.6rem"><i data-ic="download"></i><span data-i18n="exportShare"></span></button>
             <button id="dg-persist" class="btn-block" style="margin-top:.6rem" data-i18n="dgPersistBtn" hidden></button>
             <button id="dg-offline" class="btn-block btn-accent" style="margin-top:.6rem" data-i18n="dgOfBtn" hidden></button>
             <button id="dg-reset" class="btn-block" style="margin-top:.6rem" data-i18n="dgReset"></button>
@@ -1358,6 +1362,8 @@ ar: {
     curLeft:'الصلاة الحالية: {0} · يتبقى على خروج وقتها {1}', curMin:'{0} د', curHM:'{0} س و{1} د', prPin:'تثبيت في أعلى القائمة', prUnpin:'إلغاء التثبيت',
     sunanFavG:'سنني المفضلة', sunanFav:'إضافة إلى المفضلة', sunanUnfav:'إزالة من المفضلة', sunanRemT:'تذكير بسنة', sunanRemTime:'وقت التذكير اليومي', sunanRemSave:'حفظ التذكير', sunanRemDel:'حذف التذكير', sunanRemBell:'ضبط تذكير', sunanRemOk:'سيصلك التذكير يوميًا عند {0}', remSunan:'تذكير بسنة: {0}', sod:'سنة اليوم', sodDo:'طبّقتها', sodDone:'طُبّقت اليوم', qFontSl:'حجم الخط',
     sunanStreak:'أيام متتالية: {0}', sunanPresBtn:'مجموعات تذكير جاهزة', sunanPresT:'مجموعات التذكير', sunanPresOk:'ضُبطت {0} تذكيرات', sunanPresClr:'حذف جميع تذكيرات السنن', sunanPresNone:'لا توجد تذكيرات للحذف.', spJum:'سنن يوم الجمعة', spSleep:'سنن النوم والاستيقاظ', spNaf:'صلاة التطوع', spFast:'صيام الاثنين والخميس', sunanNoteBtn:'ملاحظة', sunanNoteT:'ملاحظتي على السنة', sunanNotePh:'اكتب ملاحظتك هنا', sunanNoteSave:'حفظ الملاحظة', sunanNoteDel:'حذف الملاحظة', revRemOn:'تذكير بمراجعة المحفوظ', revRemSub:'ينبّهك عند مرور سبعة أيام أو أكثر على آخر مراجعة لسورة محفوظة', remRev:'حان وقت مراجعة سورة {0}: {1}', remRevNever:'لم تراجعها بعد', remRevDays:'مضى {0} يومًا على آخر مراجعة',
+    bakNewer:'هذه النسخة أحدث من إصدار التطبيق. حدّث التطبيق أولًا ثم أعد المحاولة.', bakIdb:'نسخة المتصفح', bakFoundT:'عُثر على نسخة احتياطية', bakFoundB:'عُثر على نسخة محفوظة في المتصفح بتاريخ {0}. هل تريد استعادتها؟', bakFoundYes:'استعادة النسخة', bakFoundNo:'تجاهل', gsBtn:'بحث شامل', gsPh:'ابحث في الأذكار والسنن والسور والإعدادات', gsAdhkar:'الأذكار', gsQuran:'القرآن', gsSunan:'السنن', gsSet:'الإعدادات', gsSurah:'سورة {0}', gsNone:'لا توجد نتائج مطابقة.', tdBtn:'ملخص اليوم', tdMissed:'ما فاتك من الصلوات', tdNoMiss:'لا شيء فاتك', tdWirdP:'المقروء اليوم: {0} صفحة', tdAdhkar:'أذكار اليوم', tdMor:'الصباح', tdEve:'المساء', tdDone:'تم', tdNot:'لم يتم', logNow:'سجّلتُ صلاة {0}', hintOk:'فهمت', hintOff:'إخفاء التلميحات', hint_adhkar:'تنقّل بين الأذكار من الأعلى، واضغط على الذكر لعدّه، وبالنجمة تضيفه إلى المفضلة.', hint_quran:'اختر سورة من الفهرس، واضغط على آية لتظهر أدواتها، ويُحفظ موضع قراءتك تلقائيًا.', hint_sunan:'اضغط العلامة لتسجيل ما طبّقته اليوم، والنجمة للمفضلة، والجرس لضبط تذكير.', hint_tools:'تجد هنا البحث الشامل وملخص اليوم وأدوات الإمساكية والتقويم والزكاة.',
+    dgOfTaf:'ملف التفسير', dgBakRow:'آخر نسخة خارجية', dgBakNever:'لم تُصدَّر نسخة بعد', dgBakOld:'{0} (مضى أكثر من 30 يومًا)',
     afterOpen:'فتح الأذكار', afterHide:'إخفاء',
     backupOn:'تذكير أسبوعي بالنسخة الاحتياطية', backupTitle:'مرّ أسبوع على آخر نسخة احتياطية', backupNow:'تصدير الآن', backupLater:'لاحقًا',
     readOpts:'خيارات القراءة', fontFace:'خط الأذكار', ffDefault:'الافتراضي', ffNaskh:'نسخ', ffThuluth:'ثلث / رقعة', fontNote:'يظهر حسب الخطوط المتاحة على جهازك',
@@ -1485,6 +1491,8 @@ en: {
     curLeft:'Current prayer: {0} · {1} left before its time ends', curMin:'{0} min', curHM:'{0} h {1} min', prPin:'Pin to the top of the list', prUnpin:'Unpin',
     sunanFavG:'My favourite Sunnahs', sunanFav:'Add to favourites', sunanUnfav:'Remove from favourites', sunanRemT:'Sunnah reminder', sunanRemTime:'Daily reminder time', sunanRemSave:'Save reminder', sunanRemDel:'Delete reminder', sunanRemBell:'Set reminder', sunanRemOk:'You will be reminded daily at {0}', remSunan:'Sunnah reminder: {0}', sod:'Sunnah of the day', sodDo:'I did it', sodDone:'Done today', qFontSl:'Font size',
     sunanStreak:'Streak: {0}', sunanPresBtn:'Ready-made reminder sets', sunanPresT:'Reminder sets', sunanPresOk:'{0} reminders set', sunanPresClr:'Delete all Sunnah reminders', sunanPresNone:'No reminders to delete.', spJum:'Friday Sunnahs', spSleep:'Sleep and waking Sunnahs', spNaf:'Voluntary prayers', spFast:'Monday and Thursday fasting', sunanNoteBtn:'Note', sunanNoteT:'My note on this Sunnah', sunanNotePh:'Write your note here', sunanNoteSave:'Save note', sunanNoteDel:'Delete note', revRemOn:'Memorisation review reminder', revRemSub:'Alerts you when seven or more days have passed since you last reviewed a memorised surah', remRev:'Time to review Surah {0}: {1}', remRevNever:'not reviewed yet', remRevDays:'{0} days since last review',
+    bakNewer:'This backup is newer than the app version. Update the app first, then try again.', bakIdb:'Browser copy', bakFoundT:'A backup was found', bakFoundB:'A copy saved in this browser on {0} was found. Restore it?', bakFoundYes:'Restore copy', bakFoundNo:'Ignore', gsBtn:'Search everything', gsPh:'Search adhkar, Sunnah, surahs and settings', gsAdhkar:'Adhkar', gsQuran:'Quran', gsSunan:'Sunnah', gsSet:'Settings', gsSurah:'Surah {0}', gsNone:'No matching results.', tdBtn:'Today summary', tdMissed:'Prayers you missed', tdNoMiss:'Nothing missed', tdWirdP:'Read today: {0} pages', tdAdhkar:'Today’s adhkar', tdMor:'Morning', tdEve:'Evening', tdDone:'Done', tdNot:'Not yet', logNow:'I prayed {0}', hintOk:'Got it', hintOff:'Hide hints', hint_adhkar:'Switch between adhkar at the top, tap a dhikr to count it, and use the star to add it to favourites.', hint_quran:'Pick a surah from the index and tap a verse to show its tools. Your reading position is saved automatically.', hint_sunan:'Tap the tick to log what you practised today, the star for favourites and the bell to set a reminder.', hint_tools:'Here you will find search, the day summary, the Imsakiyah, the calendar and Zakat tools.',
+    dgOfTaf:'Tafsir file', dgBakRow:'Last external backup', dgBakNever:'No backup exported yet', dgBakOld:'{0} (over 30 days ago)',
     afterOpen:'Open adhkar', afterHide:'Hide',
     backupOn:'Weekly backup reminder', backupTitle:'It has been a week since your last backup', backupNow:'Export now', backupLater:'Later',
     readOpts:'Reading options', fontFace:'Adhkar font', ffDefault:'Default', ffNaskh:'Naskh', ffThuluth:'Thuluth / Ruqaa', fontNote:'Shown using the fonts available on your device',
@@ -1570,7 +1578,30 @@ const store = {
     set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) {} }
 };
 
-const APP_VER = '2026.10.26-3';
+(function validateStore() {
+    const fixed = [];
+    try {
+        const OBJ = ['pt-settings', 'pt-track', 'pt-qmem', 'pt-qrev', 'pt-qsp', 'pt-sunanh', 'pt-sunanrem', 'pt-sunannote'], ARR = ['pt-qbm', 'pt-sunanfav', 'pt-errs', 'pt-sunan-ui', 'pt-autobak'];
+        for (let i = localStorage.length - 1; i >= 0; i--) {
+            const k = localStorage.key(i); if (!k || k.indexOf('pt-') !== 0) continue;
+            let v; try { v = JSON.parse(localStorage.getItem(k)); } catch (e) { localStorage.removeItem(k); fixed.push(k); continue; }
+            if ((OBJ.includes(k) && v !== null && (typeof v !== 'object' || Array.isArray(v))) || (ARR.includes(k) && v !== null && !Array.isArray(v))) { localStorage.removeItem(k); fixed.push(k); }
+        }
+        if (fixed.length) store.set('pt-fixed', { at: Date.now(), k: fixed.slice(0, 20) });
+    } catch (e) {}
+})();
+const SCHEMA = 3;
+(function migrateStore() {
+    try {
+        const v = Number(store.get('pt-schema', 0)) || 0; if (v >= SCHEMA) return;
+        if (v < 3) {
+            const h = store.get('pt-sunanh', null); if (h && typeof h === 'object' && !Array.isArray(h)) { const ks = Object.keys(h).sort(); while (ks.length > 400) delete h[ks.shift()]; store.set('pt-sunanh', h); }
+            const ui = store.get('pt-sunan-ui', null); if (Array.isArray(ui)) store.set('pt-sunan-ui', ui.filter(n => Number.isInteger(n) && n >= 0 && n < 40));
+        }
+        store.set('pt-schema', SCHEMA);
+    } catch (e) {}
+})();
+const APP_VER = '2026.10.26-6';
 function logErr(m) { try { const l = store.get('pt-errs', []); l.push({ at: Date.now(), m: String(m).slice(0, 200) }); store.set('pt-errs', l.slice(-10)); } catch (e) {} }
 window.addEventListener('error', e => logErr((e.message || 'error') + ' @' + String(e.filename || '').split('/').pop() + ':' + (e.lineno || 0)));
 window.addEventListener('unhandledrejection', e => logErr('promise: ' + ((e.reason && e.reason.message) || e.reason)));
@@ -1654,7 +1685,7 @@ function setBadge(badge, n) {
 }
 
 /* ============ الحركات (anime.js) - خفيفة: opacity/transform فقط ============ */
-const reduceMotion = (() => { try { return !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches); } catch (e) { return false; } })();
+let reduceMotion = (() => { try { return !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches); } catch (e) { return false; } })();
 function fxOn() {
     return settings.anim !== false && !reduceMotion && typeof anime !== 'undefined' && !!anime.animate && !document.hidden;
 }
@@ -1986,13 +2017,14 @@ function renderSunan() {
         const dt = document.createElement('details'); dt.className = 'sn-g'; dt.open = openSet.includes(gi);
         dt.addEventListener('toggle', () => { if (inp.value) return; const cur = [...card.querySelectorAll('details.sn-g:not(.sn-fav)')].map((x, i) => x.open ? i : -1).filter(i => i >= 0); store.set('pt-sunan-ui', cur); });
         const sm = document.createElement('summary'); sm.textContent = isEn() ? g[1] : g[0]; dt.appendChild(sm);
-        const list = [];
-        g[2].forEach((it, ii) => dt.appendChild(mkRow(gi * 100 + ii, list)));
-        groups.push({ dt, list }); card.appendChild(dt);
+        const list = []; let built = false;
+        const build = () => { if (built) return; built = true; g[2].forEach((it, ii) => dt.appendChild(mkRow(gi * 100 + ii, list))); };
+        if (dt.open) build(); else dt.addEventListener('toggle', build, { once: true });
+        groups.push({ dt, list, build }); card.appendChild(dt);
     });
     upd();
     let tm = 0;
-    inp.addEventListener('input', () => { clearTimeout(tm); tm = setTimeout(() => { const q = qNorm(inp.value.trim());
+    inp.addEventListener('input', () => { clearTimeout(tm); tm = setTimeout(() => { const q = qNorm(inp.value.trim()); if (q) groups.forEach(g => g.build && g.build());
         groups.forEach(g => { let n = 0; g.list.forEach(r => { const ok = !q || r.key.includes(q); r.row.hidden = !ok; if (ok) n++; }); g.dt.hidden = !n; if (q && n) g.dt.open = true; }); }, 120); });
     { const pb = qBtn('btn-block ibtn', 'bell', t('sunanPresBtn'), () => sunanPresetsSheet(redo)); pb.style.marginTop = '.6rem'; card.appendChild(pb); }
     { const wb = qBtn('btn-block ibtn', 'download', t('sunanWeekBtn'), shareSunanWeek); wb.style.marginTop = '.6rem'; card.appendChild(wb); }
@@ -2032,7 +2064,7 @@ function shareTimesText() {
     const lines = [$('city-title').textContent, $('greg-date').textContent + ' · ' + $('hijri-date').textContent];
     PRAYERS.forEach(([k]) => lines.push(prayerName(k) + ': ' + fmtClock(state.shown[k])));
     const txt = lines.join('\n');
-    try { navigator.clipboard.writeText(txt).then(() => toast(t('textCopied')), () => { try { navigator.share({ text: txt }); } catch (e) {} }); } catch (e) { try { navigator.share({ text: txt }); } catch (e2) {} }
+    try { navigator.clipboard.writeText(txt).then(() => toast(t('textCopied')), () => { try { navigator.share({ text: txt }).catch(() => {}); } catch (e) {} }); } catch (e) { try { navigator.share({ text: txt }).catch(() => {}); } catch (e2) {} }
 }
 function openMosque() {
     const L = state.loc, q = encodeURIComponent(isEn() ? 'mosque' : 'مسجد');
@@ -2109,7 +2141,7 @@ function openSheet(title, build) {
     $('sheet-title').textContent = title; const b = $('sheet-body'); b.innerHTML = ''; build(b);
     $('sheet').hidden = false; $('sheet').scrollTop = 0; document.documentElement.classList.add('sheet-open');
 }
-function closeSheet() { $('sheet').hidden = true; document.documentElement.classList.remove('sheet-open'); }
+function closeSheet() { $('sheet').hidden = true; $('sheet').style.zIndex = ''; document.documentElement.classList.remove('sheet-open'); }
 
 const SUR_AR = ["الفاتحة", "البقرة", "آل عمران", "النساء", "المائدة", "الأنعام", "الأعراف", "الأنفال", "التوبة", "يونس", "هود", "يوسف", "الرعد", "إبراهيم", "الحجر", "النحل", "الإسراء", "الكهف", "مريم", "طه", "الأنبياء", "الحج", "المؤمنون", "النور", "الفرقان", "الشعراء", "النمل", "القصص", "العنكبوت", "الروم", "لقمان", "السجدة", "الأحزاب", "سبأ", "فاطر", "يس", "الصافات", "ص", "الزمر", "غافر", "فصلت", "الشورى", "الزخرف", "الدخان", "الجاثية", "الأحقاف", "محمد", "الفتح", "الحجرات", "ق", "الذاريات", "الطور", "النجم", "القمر", "الرحمن", "الواقعة", "الحديد", "المجادلة", "الحشر", "الممتحنة", "الصف", "الجمعة", "المنافقون", "التغابن", "الطلاق", "التحريم", "الملك", "القلم", "الحاقة", "المعارج", "نوح", "الجن", "المزمل", "المدثر", "القيامة", "الإنسان", "المرسلات", "النبأ", "النازعات", "عبس", "التكوير", "الانفطار", "المطففين", "الانشقاق", "البروج", "الطارق", "الأعلى", "الغاشية", "الفجر", "البلد", "الشمس", "الليل", "الضحى", "الشرح", "التين", "العلق", "القدر", "البينة", "الزلزلة", "العاديات", "القارعة", "التكاثر", "العصر", "الهمزة", "الفيل", "قريش", "الماعون", "الكوثر", "الكافرون", "النصر", "المسد", "الإخلاص", "الفلق", "الناس"];
 const SUR_EN = ["Al-Fatihah", "Al-Baqarah", "Aal-Imran", "An-Nisa", "Al-Ma’idah", "Al-An’am", "Al-A’raf", "Al-Anfal", "At-Tawbah", "Yunus", "Hud", "Yusuf", "Ar-Ra’d", "Ibrahim", "Al-Hijr", "An-Nahl", "Al-Isra", "Al-Kahf", "Maryam", "Ta-Ha", "Al-Anbiya", "Al-Hajj", "Al-Mu’minun", "An-Nur", "Al-Furqan", "Ash-Shu’ara", "An-Naml", "Al-Qasas", "Al-Ankabut", "Ar-Rum", "Luqman", "As-Sajdah", "Al-Ahzab", "Saba", "Fatir", "Ya-Sin", "As-Saffat", "Sad", "Az-Zumar", "Ghafir", "Fussilat", "Ash-Shura", "Az-Zukhruf", "Ad-Dukhan", "Al-Jathiyah", "Al-Ahqaf", "Muhammad", "Al-Fath", "Al-Hujurat", "Qaf", "Adh-Dhariyat", "At-Tur", "An-Najm", "Al-Qamar", "Ar-Rahman", "Al-Waqi’ah", "Al-Hadid", "Al-Mujadila", "Al-Hashr", "Al-Mumtahanah", "As-Saff", "Al-Jumu’ah", "Al-Munafiqun", "At-Taghabun", "At-Talaq", "At-Tahrim", "Al-Mulk", "Al-Qalam", "Al-Haqqah", "Al-Ma’arij", "Nuh", "Al-Jinn", "Al-Muzzammil", "Al-Muddaththir", "Al-Qiyamah", "Al-Insan", "Al-Mursalat", "An-Naba", "An-Nazi’at", "Abasa", "At-Takwir", "Al-Infitar", "Al-Mutaffifin", "Al-Inshiqaq", "Al-Buruj", "At-Tariq", "Al-A’la", "Al-Ghashiyah", "Al-Fajr", "Al-Balad", "Ash-Shams", "Al-Layl", "Ad-Duha", "Ash-Sharh", "At-Tin", "Al-Alaq", "Al-Qadr", "Al-Bayyinah", "Az-Zalzalah", "Al-Adiyat", "Al-Qari’ah", "At-Takathur", "Al-Asr", "Al-Humazah", "Al-Fil", "Quraysh", "Al-Ma’un", "Al-Kawthar", "Al-Kafirun", "An-Nasr", "Al-Masad", "Al-Ikhlas", "Al-Falaq", "An-Nas"];
@@ -2704,7 +2736,7 @@ function qIndex(b, d) {
 let TAFP = null, TAF = null;
 function loadTafsir() {
     if (TAF) return Promise.resolve(TAF);
-    if (!TAFP) TAFP = fetch('tafsir-muyassar.txt').then(r => { if (!r.ok) throw 0; return r.text(); }).then(tx => {
+    if (!TAFP) TAFP = (async () => { let er; for (let i = 0; i < 3; i++) { try { const r = await fetch('tafsir-muyassar.txt'); if (!r.ok) throw 0; return await r.text(); } catch (e) { er = e; await new Promise(z => setTimeout(z, 700 * (i + 1))); } } throw er; })().then(tx => {
         const arr = new Array(6236); let n = 0;
         tx.split('\n').forEach(l => { const p1 = l.indexOf('|'); if (p1 < 1) return; const p2 = l.indexOf('|', p1 + 1); if (p2 < 0) return;
             const sn = +l.slice(0, p1), an = +l.slice(p1 + 1, p2); if (!(sn >= 1 && sn <= 114 && an >= 1)) return; arr[QOFF[sn - 1] + an - 1] = l.slice(p2 + 1).trim(); n++; });
@@ -2769,7 +2801,7 @@ function qSurah(b, d, s, a) {
         tx.querySelector('.q-v[data-a="' + qSel + '"]').classList.toggle('bm', ix < 0); syncMenu(); });
     const bCp = qBtn('', 'copy', t('qCopy'), () => { if (!qSel) return;
         const txt = d[s - 1][qSel - 1] + ' ﴿' + qNum(qSel) + '﴾ [' + surName(s) + ']';
-        try { navigator.clipboard.writeText(txt).then(() => toast(t('qCopied'))); } catch (e) {} });
+        copyText(txt).then(ok => { if (ok) toast(t('qCopied')); }); });
     const taf = document.createElement('div'); taf.className = 'q-taf'; taf.hidden = true; let tafOn = false;
     const showTaf = () => { if (!qSel) return; const g = QOFF[s - 1] + qSel - 1, my = qSel; taf.hidden = false; taf.textContent = t('qTafLoad');
         loadTafsir().then(A => { if (qSel !== my) return; taf.textContent = A[g] || ''; const sm = document.createElement('small'); sm.textContent = t('qTafSrc'); taf.appendChild(sm); })
@@ -3095,15 +3127,17 @@ function tick(force) {
     const ss = Math.floor((diff % 60000) / 1000);
     setText('countdown', `${pad2(hh)}:${pad2(mm)}:${pad2(ss)}`);
     setText('next-prayer-time', fmtClock(next.ts));
-    { let line = '';
+    { let line = '', ckLog = null;
       if (state.view === 0) {
           const T = state.today, Y = state.yesterday, TM = state.tomorrow;
           const ends = { Fajr: T.Sunrise, Dhuhr: T.Asr, Asr: T.Maghrib, Maghrib: T.Isha, Isha: T.Maghrib + (TM.Fajr - T.Maghrib) / 2 };
           let ck = null, ce = 0;
           for (const k of FIVE) if (now >= T[k] && now < ends[k]) { ck = k; ce = ends[k]; }
+          ckLog = ck;
           if (!ck && now < T.Fajr) { const ye = Y.Maghrib + (T.Fajr - Y.Maghrib) / 2; if (now < ye) { ck = 'Isha'; ce = ye; } }
           if (ck) { const mn = Math.max(1, Math.ceil((ce - now) / 60000)); line = t('curLeft', prayerName(ck), mn < 60 ? t('curMin', mn) : t('curHM', Math.floor(mn / 60), mn % 60)); }
       }
+      { const lb = $('hero-log'), sh = !!ckLog && !prayedSet(state.dayIso).includes(pLetter(ckLog)); if (lb.hidden === sh) lb.hidden = !sh; if (sh) { lb.dataset.k = ckLog; setText('hero-log-t', t('logNow', prayerName(ckLog))); } }
       setText('cur-line', line); if (sodKey.slice(0, 10) !== state.dayIso) renderSod(); }
     const pct = Math.min(100, Math.max(0, (now - prev) / (next.ts - prev) * 100));
     setHeroRing(pct / 100);
@@ -3225,6 +3259,56 @@ function syncSubs() {
     $('sub-khrem').hidden = !settings.khRemind; $('sub-revrem').hidden = !settings.revRemind;
     $('sub-dnd').hidden = !settings.dnd;
     $('sub-dndfri').hidden = !settings.dndFri;
+}
+function openGlobalSearch() {
+    openSheet(t('gsBtn'), b => {
+        const inp = document.createElement('input'); inp.type = 'text'; inp.setAttribute('inputmode', 'search'); inp.className = 'q-search'; inp.placeholder = t('gsPh'); inp.setAttribute('aria-label', t('gsPh')); b.appendChild(inp);
+        const res = document.createElement('div'); b.appendChild(res); let tm = 0;
+        const nz = x => normAr(x).toLowerCase();
+        const run = () => {
+            res.innerHTML = ''; const q = nz(inp.value.trim()); if (q.length < 2) return; const ws = q.split(' '), hit = x => { const n = nz(x); return ws.every(w => n.includes(w)); };
+            const out = {};
+            const add = (g, label, fn) => { (out[g] = out[g] || []).length < 8 && out[g].push([label, fn]); };
+            HISN.forEach((g, i) => { if (hit(g[0]) || g[1].some(x => hit(x[0]))) add(t('gsAdhkar'), g[0], () => { closeSheet(); openTarget({ lib: i }); }); });
+            SUR_AR.forEach((n, i) => { if (hit(n) || hit(SUR_EN[i])) add(t('gsQuran'), t('gsSurah', isEn() ? SUR_EN[i] : n), () => { closeSheet(); openQuran(i + 1); }); });
+            SUNAN_IDS.forEach(id => { if (hit(sunanItem(id)[0])) add(t('gsSunan'), sunanShort(id), () => { closeSheet(); showTab('sunan'); const si = document.querySelector('#sunan-card .q-search'); if (si) { si.value = inp.value.trim(); si.dispatchEvent(new Event('input')); } }); });
+            document.querySelectorAll('#tab-settings label').forEach(l => { let hd = false; for (let q = l; q && !q.classList.contains('sec') && q.id !== 'tab-settings'; q = q.parentElement) if (q.hidden) hd = true; if (hd) return; const tx = l.textContent.trim(); if (tx && hit(tx)) add(t('gsSet'), tx, () => { closeSheet(); showTab('settings'); { const sc = l.closest('.sec'); if (sc) showSec(sc.id.replace('sec-', ''), true); } for (let p = l; p && p.id !== 'tab-settings'; p = p.parentElement) if (p.tagName === 'DETAILS') p.open = true; setTimeout(() => { l.scrollIntoView({ block: 'center' }); l.classList.add('flash'); setTimeout(() => l.classList.remove('flash'), 1800); }, 100); }); });
+            const keys = Object.keys(out);
+            if (!keys.length) { const e = document.createElement('div'); e.className = 'muted small'; e.style.marginTop = '.8rem'; e.textContent = t('gsNone'); res.appendChild(e); return; }
+            keys.forEach(g => { const h = document.createElement('div'); h.className = 'gs-g'; h.textContent = g; res.appendChild(h); out[g].forEach(([lb, fn]) => { const x = document.createElement('button'); x.type = 'button'; x.className = 'btn-block'; x.style.marginBottom = '.4rem'; x.style.textAlign = 'start'; x.textContent = lb; x.addEventListener('click', fn); res.appendChild(x); }); });
+        };
+        inp.addEventListener('input', () => { clearTimeout(tm); tm = setTimeout(run, 150); });
+        setTimeout(() => { try { inp.focus(); } catch (e) {} }, 60);
+    });
+}
+function openToday() {
+    if (!state.today) return;
+    openSheet(t('tdBtn'), b => {
+        const row = (k, v) => { const r = document.createElement('div'); r.className = 'td-r'; const a = document.createElement('span'), c = document.createElement('span'); a.textContent = k; c.textContent = v; c.style.textAlign = 'end'; r.append(a, c); b.appendChild(r); };
+        const now = Date.now(), CD = ['Fajr', 'Sunrise', 'Dhuhr', 'Asr', 'Maghrib', 'Isha']; let nx = CD.find(k => state.today[k] > now); const nts = nx ? state.today[nx] : state.tomorrow.Fajr; nx = nx || 'Fajr';
+        row(t('nextPrayer'), prayerName(nx) + ' · ' + fmtClock(nts));
+        const pp = prayedSet(state.dayIso), miss = FIVE.filter(k => now >= state.today[k] && !pp.includes(pLetter(k)));
+        row(t('tdMissed'), miss.length ? miss.map(prayerName).join('، ') : t('tdNoMiss'));
+        const tr = track[state.dayIso] || {};
+        row(t('tdAdhkar'), t('tdMor') + ': ' + (tr.m ? t('tdDone') : t('tdNot')) + ' · ' + t('tdEve') + ': ' + (tr.e ? t('tdDone') : t('tdNot')));
+        const kh = qKhInfo(); row(t('grpWird'), kh ? kh.text : t('tdWirdP', wirdToday()));
+        const id = sunanTodayId(), it = sunanItem(id), done = sunanDoneGet().ids.includes(id);
+        const h = document.createElement('div'); h.className = 'gs-g'; h.textContent = t('sod'); b.appendChild(h);
+        const p = document.createElement('div'); p.dir = 'rtl'; p.lang = 'ar'; p.style.lineHeight = '1.9'; p.textContent = it[0].length > 170 ? sunanShort(id) : it[0]; b.appendChild(p);
+        const bt = qBtn(done ? 'btn-block' : 'btn-accent btn-block', 'check', done ? t('sodDone') : t('sodDo'), () => { const dd = sunanDoneGet(); if (!dd.ids.includes(id)) dd.ids.push(id); store.set('pt-sunan', dd); sunanHistSave(dd); tapVib(12); renderSod(); closeSheet(); }); bt.disabled = done; bt.style.marginTop = '.6rem'; b.appendChild(bt);
+    });
+}
+function maybeHint(id) {
+    try {
+        if (!['adhkar', 'quran', 'sunan', 'tools'].includes(id) || !settings.onboarded) return;
+        const hs = store.get('pt-hints', {}); if (hs.off || hs[id]) return;
+        const pn = $('tab-' + id); if (!pn || pn.querySelector('.tab-hint')) return;
+        const c = document.createElement('div'); c.className = 'card tab-hint'; const tx = document.createElement('div'); tx.textContent = t('hint_' + id); c.appendChild(tx);
+        const g = document.createElement('div'); g.className = 'grid2'; g.style.marginTop = '.7rem';
+        const ok = document.createElement('button'); ok.type = 'button'; ok.className = 'btn-accent'; ok.textContent = t('hintOk'); ok.addEventListener('click', () => { hs[id] = 1; store.set('pt-hints', hs); c.remove(); });
+        const off = document.createElement('button'); off.type = 'button'; off.textContent = t('hintOff'); off.addEventListener('click', () => { hs.off = 1; store.set('pt-hints', hs); document.querySelectorAll('.tab-hint').forEach(x => x.remove()); });
+        g.append(ok, off); c.appendChild(g); pn.insertBefore(c, pn.firstChild);
+    } catch (e) {}
 }
 function openTarget(tg) {
     if (!tg) return;
@@ -4547,15 +4631,20 @@ function problemReport() {
     let used = 0; try { for (let i = 0; i < localStorage.length; i++) { const k = localStorage.key(i); used += k.length + (localStorage.getItem(k) || '').length; } } catch (e) {}
     add('data', 'trackDays=' + Object.keys(track).length + ', qada=' + qadaGet() + ', backups=' + bakList().length + ', storage=' + Math.round(used / 1024) + 'KB');
     add('lastNotification', JSON.stringify(store.get('pt-lastnotif', null)));
+    add('schema', SCHEMA + ', repaired=' + JSON.stringify(store.get('pt-fixed', null)));
     add('errors', JSON.stringify(store.get('pt-errs', [])));
     return L.join('\n');
+}
+async function copyText(txt) {
+    try { await navigator.clipboard.writeText(txt); return true; } catch (e) {}
+    try { const ta = document.createElement('textarea'); ta.value = txt; ta.style.position = 'fixed'; ta.style.opacity = '0'; document.body.appendChild(ta); ta.select(); const ok = document.execCommand('copy'); ta.remove(); return !!ok; } catch (e) { return false; }
 }
 async function copyReport() {
     const txt = problemReport();
     try { await navigator.clipboard.writeText(txt); toast(t('reportDone')); return; } catch (e) {}
     try { const ta = document.createElement('textarea'); ta.value = txt; ta.style.position = 'fixed'; ta.style.opacity = '0'; document.body.appendChild(ta); ta.select(); document.execCommand('copy'); document.body.removeChild(ta); toast(t('reportDone')); } catch (e) { toast(txt.slice(0, 120)); }
 }
-const OFF_FILES = [['dgOfApp', './'], ['dgOfQ', 'quran-uthmani.txt'], ['dgOfF', 'AmiriQuran-Regular.ttf'], ['dgOfIc', 'icon-192.png']];
+const OFF_FILES = [['dgOfApp', './'], ['dgOfQ', 'quran-uthmani.txt'], ['dgOfF', 'AmiriQuran-Regular.ttf'], ['dgOfIc', 'icon-192.png'], ['dgOfTaf', 'tafsir-muyassar.txt']];
 async function offlineCheck(tk, box, row) {
     const hd = document.createElement('div'); hd.className = 'small muted'; hd.style.margin = '.8rem 0 .3rem'; hd.textContent = t('dgOfT'); box.appendChild(hd);
     if (!('caches' in window)) { row(t('dgOfT'), t('dgOfNone'), 'bad'); $('dg-offline').hidden = true; return; }
@@ -4606,6 +4695,7 @@ function renderDiag() {
     const en = store.get('pt-errs', []).length; row(t('dgErrN'), String(en), en ? 'bad' : 'ok');
     try { let n = 0; for (let i = 0; i < localStorage.length; i++) { const kk = localStorage.key(i); n += kk.length + (localStorage.getItem(kk) || '').length; } row(t('dgStore'), t('dgKB', Math.round(n * 2 / 1024)), n * 2 > 4 * 1024 * 1024 ? 'bad' : 'ok'); } catch (e) {}
     try { if (performance.memory) row(t('dgMem'), t('dgMB', Math.round(performance.memory.usedJSHeapSize / 1048576)), performance.memory.usedJSHeapSize > 150 * 1048576 ? 'bad' : 'ok'); } catch (e) {}
+    { const ex = Number(settings.exportAt) || 0; row(t('dgBakRow'), !ex ? t('dgBakNever') : Date.now() - ex > 30 * 86400000 ? t('dgBakOld', bakDate(ex)) : bakDate(ex), !ex || Date.now() - ex > 30 * 86400000 ? 'bad' : 'ok'); }
     $('dg-clrerr').hidden = !en;
     const tk = ++diagTk; offlineCheck(tk, box, row);
     if (navigator.storage && navigator.storage.persisted) navigator.storage.persisted().then(p => { if (tk !== diagTk) return; row(t('dgPersist'), p ? t('dgOn') : t('dgOff'), p ? 'ok' : 'bad'); $('dg-persist').hidden = !!p || !navigator.storage.persist; }).catch(() => {});
@@ -4700,7 +4790,7 @@ function sanitizeSettings(s) {
     out.afterDelay = [5, 10, 15, 30].includes(Number(s.afterDelay)) ? Number(s.afterDelay) : 5;
     out.afterCard = s.afterCard !== false; out.backupRemind = s.backupRemind !== false;
     out.backupAt = Number.isFinite(+s.backupAt) && +s.backupAt > 0 ? Math.min(+s.backupAt, Date.now()) : 0;
-    out.backupSnooze = 0;
+    out.backupSnooze = 0; out.exportAt = Number.isFinite(+s.exportAt) && +s.exportAt > 0 ? Math.min(+s.exportAt, Date.now()) : 0;
     out.fontFace = ['default', 'naskh', 'thuluth'].includes(s.fontFace) ? s.fontFace : 'default';
     out.remindSleep = !!s.remindSleep; out.remindWake = !!s.remindWake; out.remindAfter = !!s.remindAfter; out.readDark = !!s.readDark; out.qDark = !!s.qDark; out.qAwake = !!s.qAwake;
     out.vibTap = s.vibTap !== false; out.keepAwake = !!s.keepAwake; out.adhkarRemind = !!s.adhkarRemind;
@@ -4744,24 +4834,55 @@ function sanitizeTrack(tr) {
 function bakList() { const l = store.get('pt-autobak', []); return Array.isArray(l) ? l.filter(x => x && typeof x.d === 'string' && x.at > 0).slice(-3) : []; }
 function autoBak() { const l = bakList(); l.push({ at: Date.now(), d: JSON.stringify(backupObj()) }); store.set('pt-autobak', l.slice(-3)); renderBak(); }
 function autoBakDaily() { const l = bakList(); if (Date.now() - (l.length ? l[l.length - 1].at : 0) > 20 * 3600000 && Object.keys(track).length) autoBak(); }
+const idb = {
+    open() { return new Promise((res, rej) => { try { const r = indexedDB.open('pt-bak', 1); r.onupgradeneeded = () => r.result.createObjectStore('s', { keyPath: 'at' }); r.onsuccess = () => res(r.result); r.onerror = () => rej(r.error); } catch (e) { rej(e); } }); },
+    async run(mode, fn) { const db = await this.open(); return new Promise((res, rej) => { const tx = db.transaction('s', mode); let out; const q = fn(tx.objectStore('s')); if (q) q.onsuccess = () => { out = q.result; }; tx.oncomplete = () => { db.close(); res(out); }; tx.onerror = tx.onabort = () => { db.close(); rej(tx.error); }; }); }
+};
+let idbCache = [];
+async function idbRefresh() { try { idbCache = ((await idb.run('readonly', o => o.getAll())) || []).filter(x => x && typeof x.d === 'string' && x.at > 0).sort((a, b) => a.at - b.at).slice(-3); } catch (e) { idbCache = []; } }
+async function idbBakWeekly() {
+    try {
+        await idbRefresh();
+        if (Object.keys(track).length && Date.now() - (idbCache.length ? idbCache[idbCache.length - 1].at : 0) > 6 * 864e5) {
+            await idb.run('readwrite', o => { o.put({ at: Date.now(), d: JSON.stringify(backupObj()) }); });
+            const all = (await idb.run('readonly', o => o.getAll())) || [];
+            all.sort((a, b) => a.at - b.at); const old = all.slice(0, Math.max(0, all.length - 3));
+            if (old.length) await idb.run('readwrite', o => { old.forEach(x => o.delete(x.at)); });
+            await idbRefresh();
+        }
+    } catch (e) {}
+}
+function bakAllList() { return bakList().concat(idbCache.filter(x => !bakList().some(y => y.at === x.at)).map(x => ({ at: x.at, d: x.d, idb: true }))).sort((a, b) => a.at - b.at); }
+const bakDate = at => { try { return new Intl.DateTimeFormat(isEn() ? 'en-GB' : 'ar-EG-u-nu-latn', { timeZone: state.tz, day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' }).format(new Date(at)); } catch (e) { return new Date(at).toISOString(); } };
+async function idbRecover() {
+    await idbRefresh();
+    if (!idbCache.length || (settings.onboarded && Object.keys(track).length)) return;
+    if (settings.onboarded && store.get('pt-settings', null)) return;
+    const x = idbCache[idbCache.length - 1];
+    openSheet(t('bakFoundT'), b => {
+        $('sheet').style.zIndex = '120';
+        const p = document.createElement('p'); p.textContent = t('bakFoundB', bakDate(x.at)); b.appendChild(p);
+        b.appendChild(qBtn('btn-accent btn-block', 'check', t('bakFoundYes'), () => { closeSheet(); if (importText(x.d)) { toast(t('bakDone')); setTimeout(() => location.reload(), 700); } }));
+        const n = qBtn('btn-block', 'x', t('bakFoundNo'), closeSheet); n.style.marginTop = '.5rem'; b.appendChild(n);
+    });
+}
 function renderBak() {
     const box = $('bak-list'); if (!box) return;
     box.innerHTML = '';
-    const l = bakList().reverse();
+    const l = bakAllList().reverse();
     if (!l.length) { const e = document.createElement('div'); e.className = 'muted small'; e.textContent = t('bakEmpty'); box.appendChild(e); return; }
     l.forEach(x => {
         const r = document.createElement('div'); r.className = 'naw-row';
-        const a = document.createElement('span'); let lbl = new Date(x.at).toISOString();
-        try { lbl = new Intl.DateTimeFormat(isEn() ? 'en-GB' : 'ar-EG-u-nu-latn', { timeZone: state.tz, day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' }).format(new Date(x.at)); } catch (e) {}
-        a.textContent = lbl + ' · \u200e' + Math.max(1, Math.round(x.d.length / 1024)) + ' KB';
+        const a = document.createElement('span'); const lbl = bakDate(x.at);
+        a.textContent = lbl + (x.idb ? ' · ' + t('bakIdb') : '') + ' · \u200e' + Math.max(1, Math.round(x.d.length / 1024)) + ' KB';
         const b = document.createElement('button'); b.className = 'linkbtn'; b.textContent = t('bakRestore'); b.dataset.at = String(x.at);
         r.append(a, b); box.appendChild(r);
     });
 }
-function backupObj() { return { app: APP_ID, v: 2, exportedAt: new Date().toISOString(), settings, track, favs, tasbih: { n: tasbihCount }, qada: qadaGet(), quran: qBackup(), sunanh: sunanHistGet(), sunanfav: sunanFavGet(), sunanrem: sunanRemGet(), sunannote: sunanNoteGet() }; }
+function backupObj() { return { app: APP_ID, v: 2, schema: SCHEMA, exportedAt: new Date().toISOString(), settings, track, favs, tasbih: { n: tasbihCount }, qada: qadaGet(), quran: qBackup(), sunanh: sunanHistGet(), sunanfav: sunanFavGet(), sunanrem: sunanRemGet(), sunannote: sunanNoteGet() }; }
 async function exportShare() {
     if (!window.CompressionStream) { toast(t('importBad')); return; }
-    settings.backupAt = Date.now(); settings.backupSnooze = 0; saveSettings(); updateCards(Date.now());
+    settings.backupAt = settings.exportAt = Date.now(); settings.backupSnooze = 0; saveSettings(); updateCards(Date.now());
     try {
         const blob = await new Response(new Blob([JSON.stringify(backupObj())]).stream().pipeThrough(new CompressionStream('gzip'))).blob();
         const name = 'prayer-times-' + (state.dayIso || 'backup') + '.ptb', f = new File([blob], name, { type: 'application/gzip' });
@@ -4770,7 +4891,7 @@ async function exportShare() {
     } catch (e) { toast(t('importBad')); }
 }
 function exportData() {
-    settings.backupAt = Date.now(); settings.backupSnooze = 0; saveSettings(); updateCards(Date.now());
+    settings.backupAt = settings.exportAt = Date.now(); settings.backupSnooze = 0; saveSettings(); updateCards(Date.now());
     const data = backupObj();
     const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
     const url = URL.createObjectURL(blob);
@@ -4786,6 +4907,7 @@ function exportData() {
 function importText(text) {
     let obj;
     try { obj = JSON.parse(text); } catch (e) { toast(t('importBad')); return false; }
+    if (obj && obj.app === APP_ID && Number(obj.schema) > SCHEMA) { toast(t('bakNewer')); return false; }
     const clean = obj && obj.app === APP_ID ? sanitizeSettings(obj.settings) : null;
     if (!clean) { toast(t('importBad')); return false; }
     autoBak();
@@ -4886,6 +5008,7 @@ function showTab(id, noFx) {
     }
     if (id === 'sunan') renderSunan();
     if (id === 'quran') renderQuranTab();
+    maybeHint(id);
     saveSettings();
     window.scrollTo(0, 0);
     lastScrollY = 0; setNav(true);
@@ -5016,7 +5139,7 @@ function bindUI() {
     document.addEventListener('keydown', e => { if (e.key === 'Escape') { if (!$('splash').hidden) closeSplash(); else if (!$('sheet').hidden) closeSheet(); } });
     $('mig-go').addEventListener('click', () => { $('mig-card').hidden = true; store.set('pt-migdone', 1); showTab('settings'); showSec('data', true); setTimeout(() => $('mig-title').scrollIntoView({ block: 'start' }), 60); });
     $('mig-no').addEventListener('click', () => { store.set('pt-migdone', 1); $('mig-card').hidden = true; });
-    $('bak-list').addEventListener('click', e => { const b = e.target.closest && e.target.closest('button'); if (!b) return; const x = bakList().find(y => String(y.at) === b.dataset.at); if (x && importText(x.d)) toast(t('bakDone')); });
+    $('bak-list').addEventListener('click', e => { const b = e.target.closest && e.target.closest('button'); if (!b) return; const x = bakAllList().find(y => String(y.at) === b.dataset.at); if (x && importText(x.d)) toast(t('bakDone')); });
     $('qada-plus').addEventListener('click', () => qadaSet(qadaGet() + 1));
     $('qada-minus').addEventListener('click', () => qadaSet(qadaGet() - 1));
     $('qada-add').addEventListener('click', () => { const mp = missedPending(); if (!mp.n) return; qadaSet(qadaGet() + mp.n); mp.isos.forEach(iso => { track[iso].c = 1; }); saveTrack(); renderQada(); });
@@ -5086,6 +5209,9 @@ function bindUI() {
     [['snd-prayer', 'sndPrayer'], ['snd-adhkar', 'sndAdhkar'], ['snd-wird', 'sndWird'], ['snd-goal', 'sndGoal']].forEach(([id, k]) =>
         $(id).addEventListener('change', e => { settings[k] = e.target.value; saveSettings(); playSound(settings[k]); }));
     $('goal-select').addEventListener('change', e => { settings.weeklyGoal = Number(e.target.value); saveSettings(); renderGoal(); });
+    $('dg-export').addEventListener('click', () => { exportShare().then(() => renderDiag()); });
+    $('tool-search').addEventListener('click', openGlobalSearch); $('tool-today').addEventListener('click', openToday);
+    $('hero-log').addEventListener('click', e => { const k = e.currentTarget.dataset.k; if (k) { togglePrayed(k); tick(true); } });
     $('revrem-toggle').addEventListener('change', e => { settings.revRemind = e.target.checked; saveSettings(); syncSubs(); });
     $('revrem-time').addEventListener('change', e => { if (/^\d\d:\d\d$/.test(e.target.value)) { settings.revTime = e.target.value; saveSettings(); } });
     $('khrem-toggle').addEventListener('change', e => { settings.khRemind = e.target.checked; saveSettings(); syncSubs(); });
@@ -5154,6 +5280,8 @@ try { const q = new URLSearchParams(location.search); if (q.get('quran') === '1'
     if (q.get('tab') === 'adhkar') { settings.tab = 'adhkar'; const st = q.get('set'); if (['morning', 'evening', 'library', 'stats', 'tasbih'].includes(st)) adhkarSet = st; } } catch (e) {}
 showTab(firstVisibleTab(settings.tab || 'times'), true);
 clearInterval(timer);
+try { const rm0 = reduceMotion; if (navigator.connection && navigator.connection.saveData) reduceMotion = true;
+    if (navigator.getBattery) navigator.getBattery().then(bt => { const f = () => { const low = !bt.charging && bt.level <= 0.2; reduceMotion = rm0 || low; document.documentElement.classList.toggle('lowpower', reduceMotion && !rm0); }; f(); bt.addEventListener('levelchange', f); bt.addEventListener('chargingchange', f); }).catch(() => {}); } catch (e) {}
 function setTickRate() { clearInterval(timer); timer = setInterval(tick, document.hidden ? 15000 : 1000); }   // عدّاد واحد فقط؛ أبطأ والتطبيق في الخلفية
 setTickRate();
 renderWird();
@@ -5168,7 +5296,8 @@ function maybeMigCard(force) {
 setTimeout(maybeMigCard, 2500);
 setTimeout(askPersist, 5000);
 setTimeout(maybeWhatsNew, 3500);
-setTimeout(() => { autoBakDaily(); renderBak(); }, 6000);
+setTimeout(() => { autoBakDaily(); renderBak(); idbBakWeekly().then(renderBak); }, 6000);
+setTimeout(() => { idbRecover(); }, 2500);
 renderBak();
 if (FIRST_RUN && !settings.onboarded) startOnboarding();
 </script>

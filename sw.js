@@ -7,17 +7,23 @@ self.addEventListener('install', e => {
 self.addEventListener('activate', e => {
   e.waitUntil(caches.keys().then(ks => Promise.all(ks.filter(k => k !== CACHE).map(k => caches.delete(k)))).then(() => self.clients.claim()));
 });
-// الشبكة أولًا (لتصلك التحديثات)، وعند انقطاع الإنترنت تُفتح النسخة المخزّنة
+// الشبكة أولًا (لتصلك التحديثات)، وعند انقطاع الإنترنت أو بطئه الشديد تُفتح النسخة المخزّنة
 self.addEventListener('fetch', e => {
   if (e.request.method !== 'GET') return;
   const u = new URL(e.request.url);
   if (u.origin !== location.origin) return;
-  const fromCache = () => caches.match(e.request).then(m => m || caches.match('./'));
-  e.respondWith(fetch(e.request).then(r => {
+  const nav = e.request.mode === 'navigate';
+  const cached = () => caches.match(e.request).then(m => m || caches.match(e.request, { ignoreSearch: true }));
+  const fromCache = () => cached().then(m => m || (nav ? caches.match('./') : undefined));
+  const net = fetch(e.request).then(r => {
     if (r && r.ok) { const cp = r.clone(); caches.open(CACHE).then(c => c.put(e.request, cp)); return r; }
     // الموقع محذوف أو الخادم يعطي خطأ (404/5xx): نفتح النسخة المخزّنة بدل صفحة الخطأ
     return fromCache().then(m => m || r);
-  }).catch(fromCache));
+  }).catch(() => fromCache().then(m => m || Response.error()));
+  // شبكة بطيئة جدًا: نعرض النسخة المخزّنة بعد مهلة، ويكمل التحديث في الخلفية
+  const slow = new Promise(res => setTimeout(() => { cached().then(m => { if (m) res(m); }); }, nav ? 3500 : 6000));
+  e.waitUntil(net.catch(() => {}));
+  e.respondWith(Promise.race([net, slow]));
 });
 self.addEventListener('notificationclick', e => {
   e.notification.close();
