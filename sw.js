@@ -23,7 +23,8 @@ self.addEventListener('fetch', e => {
   // شبكة بطيئة جدًا: نعرض النسخة المخزّنة بعد مهلة، ويكمل التحديث في الخلفية
   const slow = new Promise(res => setTimeout(() => { cached().then(m => { if (m) res(m); }); }, nav ? 3500 : 6000));
   e.waitUntil(net.catch(() => {}));
-  e.respondWith(Promise.race([net, slow]));
+  // طلب فحص التحديث (no-store) ينتظر الشبكة فقط كي لا يعيد نسخة قديمة
+  e.respondWith(e.request.cache === 'no-store' ? net : Promise.race([net, slow]));
 });
 self.addEventListener('notificationclick', e => {
   e.notification.close();
