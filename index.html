@@ -296,6 +296,25 @@ html.focus #tab-adhkar h3[data-i18n=adhkarTitle] { opacity:0; max-height:0; marg
 .prayer-row.has-sheet { cursor:pointer; } .prayer-row.pinned { border-inline-start:3px solid var(--accent); }
 #sheet-body .btn-block.on { background:var(--accent-soft); color:var(--accent); border-color:var(--accent); }
 .sn-g { margin-bottom:.6rem; border-radius:.9rem; background:var(--hover); } .sn-g > summary { padding:.8rem 1rem; font-weight:700; cursor:pointer; } .sn-i { display:flex; gap:.6rem; align-items:flex-start; padding:.7rem 1rem; border-top:1px solid var(--border); } .sn-i .tx { flex:1; line-height:1.9; font-size:calc(1rem * var(--dfs, 1)); } html.lowpower *, html.lowpower *::before, html.lowpower *::after { transition-duration:.01ms !important; animation-duration:.01ms !important; } .flash { outline:2px solid var(--accent); outline-offset:3px; border-radius:.5rem; } .gs-g { font-size:.8rem; color:var(--muted); margin:.7rem 0 .2rem; } .td-r { display:flex; justify-content:space-between; gap:1rem; padding:.6rem 0; border-top:1px solid var(--border); } .td-r span:first-child { color:var(--muted); } .tab-hint { margin-bottom:.8rem; }
+/* حركات خفيفة: transform وopacity فقط، وتُعطَّل مع «تقليل الحركة» وإيقاف المؤثرات */
+@keyframes navPop { 0% { transform:scale(.8); } 55% { transform:scale(1.18); } 100% { transform:scale(1); } }
+@keyframes sheetIn { from { transform:translateY(26px); opacity:0; } to { transform:none; opacity:1; } }
+@keyframes detIn { from { transform:translateY(-6px); opacity:0; } to { transform:none; opacity:1; } }
+@keyframes badgePop { 0% { transform:scale(.6); } 60% { transform:scale(1.2); } 100% { transform:scale(1); } }
+.nav-btn { position:relative; transition:color .2s, transform .12s; }
+.nav-btn::after { content:''; position:absolute; top:0; left:32%; right:32%; height:3px; border-radius:0 0 3px 3px; background:var(--accent); transform:scaleX(0); transition:transform .28s cubic-bezier(.22,.8,.3,1); }
+.nav-btn.on::after { transform:scaleX(1); }
+.nav-btn:active { transform:scale(.92); }
+:where(button, summary, .prayer-row.has-sheet):active { transform:scale(.97); }
+:where(button, summary) { transition:transform .12s ease, background-color .2s, color .2s, border-color .2s, opacity .2s; }
+html:not(.no-fx) .nav-btn.on svg { animation:navPop .38s ease; }
+html:not(.no-fx) #sheet:not([hidden]) .sheet-in { animation:sheetIn .3s cubic-bezier(.22,.8,.3,1); }
+html:not(.no-fx) details[open] > :not(summary) { animation:detIn .26s ease; }
+html:not(.no-fx) .dhikr.done .badge svg, html:not(.no-fx) .pchk.on svg { animation:badgePop .32s ease; }
+html:not(.no-fx) .star.on svg { animation:badgePop .32s ease; }
+.dhikr .note { font-size:.82rem; color:var(--muted); line-height:1.7; margin-top:.35rem; }
+.skipbtn { flex:none; align-self:flex-start; min-height:0; padding:.3rem .75rem; border-radius:.7rem; font-size:.82rem; background:none; border:1px solid var(--border); color:var(--muted); }
+.dhikr.done .skipbtn { display:none; }
 .sn-a { display:grid; grid-template-columns:repeat(2,auto); gap:.25rem 0; align-items:center; flex:none; } .sn-nt { display:block; margin-top:.3rem; padding:.3rem .6rem; border-radius:.6rem; background:var(--accent-soft); font-size:.9rem; } .sn-b svg { width:1rem; height:1rem; stroke:currentColor; fill:none; stroke-width:2; } .sn-b.on svg { fill:currentColor; } .sn-fav { background:var(--accent-soft); } #sod .sod-t { line-height:1.9; margin:.3rem 0 .6rem; } #sod .sod-t small { display:block; color:var(--muted); } .q-fs { display:flex; align-items:center; gap:.5rem; flex:1; min-width:9rem; } .q-fs input { flex:1; min-width:0; accent-color:var(--accent); }
 .sn-i small { display:block; color:var(--muted); margin-top:.2rem; }
 .pr-seg { display:grid; grid-template-columns:repeat(3,1fr); gap:.4rem; margin-bottom:.8rem; } .pr-seg button.on { background:var(--accent-soft); color:var(--accent); border-color:var(--accent); }
@@ -1250,7 +1269,7 @@ const HISN = [["أذكار الصباح والمساء",[["أَعُوذُ بِا
 // القسم الأول (صباح/مساء) في الملف مدموج: نفصله لقائمتين
 // 23 = "إذا أمسى" فقط (مساء)، 19/20/21 = "إذا أصبح" فقط (صباح)
 const ADHKAR = (() => {
-    const base = HISN[0][1].map(([t, n], i) => ({ id: i + 1, t, n }));
+    const base = HISN[0][1].map(([t, n], i) => ({ id: i + 1, t, n, nk: i === 17 ? 'dupNote' : undefined }));
     return {
         morning: base.filter(x => x.id !== 23),
         evening: base.filter(x => ![19, 20, 21].includes(x.id))
@@ -1364,6 +1383,7 @@ ar: {
     sunanStreak:'أيام متتالية: {0}', sunanPresBtn:'مجموعات تذكير جاهزة', sunanPresT:'مجموعات التذكير', sunanPresOk:'ضُبطت {0} تذكيرات', sunanPresClr:'حذف جميع تذكيرات السنن', sunanPresNone:'لا توجد تذكيرات للحذف.', spJum:'سنن يوم الجمعة', spSleep:'سنن النوم والاستيقاظ', spNaf:'صلاة التطوع', spFast:'صيام الاثنين والخميس', sunanNoteBtn:'ملاحظة', sunanNoteT:'ملاحظتي على السنة', sunanNotePh:'اكتب ملاحظتك هنا', sunanNoteSave:'حفظ الملاحظة', sunanNoteDel:'حذف الملاحظة', revRemOn:'تذكير بمراجعة المحفوظ', revRemSub:'ينبّهك عند مرور سبعة أيام أو أكثر على آخر مراجعة لسورة محفوظة', remRev:'حان وقت مراجعة سورة {0}: {1}', remRevNever:'لم تراجعها بعد', remRevDays:'مضى {0} يومًا على آخر مراجعة',
     bakNewer:'هذه النسخة أحدث من إصدار التطبيق. حدّث التطبيق أولًا ثم أعد المحاولة.', bakIdb:'نسخة المتصفح', bakFoundT:'عُثر على نسخة احتياطية', bakFoundB:'عُثر على نسخة محفوظة في المتصفح بتاريخ {0}. هل تريد استعادتها؟', bakFoundYes:'استعادة النسخة', bakFoundNo:'تجاهل', gsBtn:'بحث شامل', gsPh:'ابحث في الأذكار والسنن والسور والإعدادات', gsAdhkar:'الأذكار', gsQuran:'القرآن', gsSunan:'السنن', gsSet:'الإعدادات', gsSurah:'سورة {0}', gsNone:'لا توجد نتائج مطابقة.', tdBtn:'ملخص اليوم', tdMissed:'ما فاتك من الصلوات', tdNoMiss:'لا شيء فاتك', tdWirdP:'المقروء اليوم: {0} صفحة', tdAdhkar:'أذكار اليوم', tdMor:'الصباح', tdEve:'المساء', tdDone:'تم', tdNot:'لم يتم', logNow:'سجّلتُ صلاة {0}', hintOk:'فهمت', hintOff:'إخفاء التلميحات', hint_adhkar:'تنقّل بين الأذكار من الأعلى، واضغط على الذكر لعدّه، وبالنجمة تضيفه إلى المفضلة.', hint_quran:'اختر سورة من الفهرس، واضغط على آية لتظهر أدواتها، ويُحفظ موضع قراءتك تلقائيًا.', hint_sunan:'اضغط العلامة لتسجيل ما طبّقته اليوم، والنجمة للمفضلة، والجرس لضبط تذكير.', hint_tools:'تجد هنا البحث الشامل وملخص اليوم وأدوات الإمساكية والتقويم والزكاة.',
     dgOfTaf:'ملف التفسير', dgBakRow:'آخر نسخة خارجية', dgBakNever:'لم تُصدَّر نسخة بعد', dgBakOld:'{0} (مضى أكثر من 30 يومًا)',
+    skipBtn:'تخطي', skipAria:'تخطي هذا الذكر واعتباره مكتملًا', dupNote:'ورد هذا الذكر بعدد آخر (مئة مرة) في الذكر التالي، وهما روايتان مختلفتان.',
     afterOpen:'فتح الأذكار', afterHide:'إخفاء',
     backupOn:'تذكير أسبوعي بالنسخة الاحتياطية', backupTitle:'مرّ أسبوع على آخر نسخة احتياطية', backupNow:'تصدير الآن', backupLater:'لاحقًا',
     readOpts:'خيارات القراءة', fontFace:'خط الأذكار', ffDefault:'الافتراضي', ffNaskh:'نسخ', ffThuluth:'ثلث / رقعة', fontNote:'يظهر حسب الخطوط المتاحة على جهازك',
@@ -1493,6 +1513,7 @@ en: {
     sunanStreak:'Streak: {0}', sunanPresBtn:'Ready-made reminder sets', sunanPresT:'Reminder sets', sunanPresOk:'{0} reminders set', sunanPresClr:'Delete all Sunnah reminders', sunanPresNone:'No reminders to delete.', spJum:'Friday Sunnahs', spSleep:'Sleep and waking Sunnahs', spNaf:'Voluntary prayers', spFast:'Monday and Thursday fasting', sunanNoteBtn:'Note', sunanNoteT:'My note on this Sunnah', sunanNotePh:'Write your note here', sunanNoteSave:'Save note', sunanNoteDel:'Delete note', revRemOn:'Memorisation review reminder', revRemSub:'Alerts you when seven or more days have passed since you last reviewed a memorised surah', remRev:'Time to review Surah {0}: {1}', remRevNever:'not reviewed yet', remRevDays:'{0} days since last review',
     bakNewer:'This backup is newer than the app version. Update the app first, then try again.', bakIdb:'Browser copy', bakFoundT:'A backup was found', bakFoundB:'A copy saved in this browser on {0} was found. Restore it?', bakFoundYes:'Restore copy', bakFoundNo:'Ignore', gsBtn:'Search everything', gsPh:'Search adhkar, Sunnah, surahs and settings', gsAdhkar:'Adhkar', gsQuran:'Quran', gsSunan:'Sunnah', gsSet:'Settings', gsSurah:'Surah {0}', gsNone:'No matching results.', tdBtn:'Today summary', tdMissed:'Prayers you missed', tdNoMiss:'Nothing missed', tdWirdP:'Read today: {0} pages', tdAdhkar:'Today’s adhkar', tdMor:'Morning', tdEve:'Evening', tdDone:'Done', tdNot:'Not yet', logNow:'I prayed {0}', hintOk:'Got it', hintOff:'Hide hints', hint_adhkar:'Switch between adhkar at the top, tap a dhikr to count it, and use the star to add it to favourites.', hint_quran:'Pick a surah from the index and tap a verse to show its tools. Your reading position is saved automatically.', hint_sunan:'Tap the tick to log what you practised today, the star for favourites and the bell to set a reminder.', hint_tools:'Here you will find search, the day summary, the Imsakiyah, the calendar and Zakat tools.',
     dgOfTaf:'Tafsir file', dgBakRow:'Last external backup', dgBakNever:'No backup exported yet', dgBakOld:'{0} (over 30 days ago)',
+    skipBtn:'Skip', skipAria:'Skip this dhikr and mark it complete', dupNote:'This dhikr is also reported with another count (one hundred times) in the next item; they are two different narrations.',
     afterOpen:'Open adhkar', afterHide:'Hide',
     backupOn:'Weekly backup reminder', backupTitle:'It has been a week since your last backup', backupNow:'Export now', backupLater:'Later',
     readOpts:'Reading options', fontFace:'Adhkar font', ffDefault:'Default', ffNaskh:'Naskh', ffThuluth:'Thuluth / Ruqaa', fontNote:'Shown using the fonts available on your device',
@@ -1601,7 +1622,7 @@ const SCHEMA = 3;
         store.set('pt-schema', SCHEMA);
     } catch (e) {}
 })();
-const APP_VER = '2026.10.26-6';
+const APP_VER = '2026.11.02-1';
 function logErr(m) { try { const l = store.get('pt-errs', []); l.push({ at: Date.now(), m: String(m).slice(0, 200) }); store.set('pt-errs', l.slice(-10)); } catch (e) {} }
 window.addEventListener('error', e => logErr((e.message || 'error') + ' @' + String(e.filename || '').split('/').pop() + ':' + (e.lineno || 0)));
 window.addEventListener('unhandledrejection', e => logErr('promise: ' + ((e.reason && e.reason.message) || e.reason)));
@@ -3487,6 +3508,7 @@ function buildDhikrList(box, list, rem, onChange, opts) {
         const txt = document.createElement('div');
         if (settings.hifz > 0) hifzFill(txt, item.t); else txt.textContent = item.t;
         body.appendChild(txt);
+        if (item.nk) { const nt = document.createElement('div'); nt.className = 'note'; nt.textContent = t(item.nk); body.appendChild(nt); }
         el.append(badge, body);
         if (opts && opts.drag) {
             const g = document.createElement('button');
@@ -3510,6 +3532,11 @@ function buildDhikrList(box, list, rem, onChange, opts) {
                 if (opts.onFav) opts.onFav(item, on);
             });
             el.appendChild(star);
+        }
+        if ((item.n || rem[i]) >= 100) {
+            const sk = document.createElement('button'); sk.type = 'button'; sk.className = 'skipbtn'; sk.textContent = t('skipBtn'); sk.setAttribute('aria-label', t('skipAria'));
+            sk.addEventListener('click', e => { e.stopPropagation(); if (rem[i] > 0) { rem[i] = 1; el.click(); } });
+            el.appendChild(sk);
         }
         el.addEventListener('click', () => {
             if (el.classList.contains('dragging')) return;
@@ -3748,7 +3775,7 @@ function renderLibrary(anim) {
         const [name, items] = HISN[libOpen];
         $('lib-title').textContent = name;
         if (!libRem || libRem.idx !== libOpen) libRem = { idx: libOpen, r: libArr(libOpen, items) };
-        buildDhikrList($('lib-items'), items.map(([tx, n], i) => ({ t: tx, n, c: libOpen, i })), libRem.r, () => saveLibCnt(), { fav: true });
+        buildDhikrList($('lib-items'), items.map(([tx, n], i) => ({ t: tx, n, c: libOpen, i, nk: libOpen === 0 && i === 17 ? 'dupNote' : undefined })), libRem.r, () => saveLibCnt(), { fav: true });
         if (anim) fxIn($('lib-items').children, { y: 10, s: 30, d: 240 });
         saveLibPos();
         return;
