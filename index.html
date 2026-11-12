@@ -8,7 +8,7 @@
 <title>مواقيت الصلاة - Ahmed Nx</title>
 <style>
 :root {
-    --bg:#1e1e2f; --bg2:#2d3436; --text:#ffffff; --surface:#292b3c; --accent:#f1c40f; --muted:#9aa0a6;
+    --bg:#1e1e2f; --bg2:#2d3436; --text:#ffffff; --surface:#292b3c; --accent:#f1c40f; --muted:#b0b6bd;
     --border:rgba(255,255,255,.16); --hover:rgba(255,255,255,.08); --accent-soft:rgba(241,196,15,.18);
     --on-accent:#1a1a1a; --ok:#2ecc71; --danger:#e74c3c;
 }
@@ -35,7 +35,7 @@ h3 { font-size:1rem; margin:0 0 .8rem; color:var(--accent); }
 /* الصلاة القادمة */
 .hero { text-align:center; border-bottom:4px solid var(--accent); }
 #next-prayer-name { font-size:2.2rem; font-weight:700; color:var(--accent); margin:.1rem 0; }
-#countdown { font-size:1.7rem; font-family:ui-monospace,Menlo,Consolas,monospace; direction:ltr; font-variant-numeric:tabular-nums; }
+#countdown { font-size:1.7rem; font-family:inherit; font-weight:700; letter-spacing:.02em; direction:ltr; font-variant-numeric:tabular-nums lining-nums; }
 #next-prayer-time { font-size:.85rem; color:var(--muted); margin-top:.2rem; }
 .bar { height:6px; border-radius:99px; background:var(--hover); overflow:hidden; margin-top:.9rem; }
 .bar > i { display:block; height:100%; width:100%; background:var(--accent); transform:scaleX(0); transform-origin:left; transition:transform .6s; }
@@ -47,7 +47,7 @@ h3 { font-size:1rem; margin:0 0 .8rem; color:var(--accent); }
     display:flex; justify-content:space-between; align-items:center;
     border-inline-start:4px solid transparent; transition:.3s;
 }
-.prayer-row .time { font-family:ui-monospace,Menlo,Consolas,monospace; font-size:1.05rem; }
+.prayer-row .time { font-family:inherit; font-variant-numeric:tabular-nums lining-nums; font-size:1.1rem; font-weight:600; }
 .active-prayer { border-inline-start-color:var(--accent); background:var(--accent-soft); }
 
 #error-box {
@@ -62,7 +62,8 @@ button, select, input[type=text], input[type=number], input[type=time] {
     border-radius:.8rem; padding:.6rem .9rem;
 }
 button { cursor:pointer; }
-select { width:100%; }
+select { width:100%; appearance:none; -webkit-appearance:none; padding-inline-end:2.2rem; background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' fill='none' stroke='%23b0b6bd' stroke-width='1.6' stroke-linecap='round'/%3E%3C/svg%3E"); background-repeat:no-repeat; background-position:right .8rem center; min-height:2.6rem; }
+[dir=rtl] select { background-position:left .8rem center; }
 input[type=time] { width:100%; text-align:center; }
 .timerow { display:grid; grid-template-columns:1fr 1fr; gap:.6rem; }
 .timerow label { display:block; font-size:.75rem; color:var(--muted); margin-bottom:.2rem; }
@@ -126,6 +127,8 @@ input[type=color] { width:3rem; height:2.1rem; padding:0; border:1px solid var(-
 .abar .fs { display:flex; align-items:center; gap:.2rem; }
 .abar .fs span { min-width:2.6rem; text-align:center; font-size:.8rem; color:var(--muted); }
 .abar2 { margin-top:-.3rem; }
+#abar { position:sticky; top:0; z-index:5; background:var(--surface); padding:.4rem 0; margin-bottom:.4rem; justify-content:space-between; }
+#adhkar-progress { font-weight:700; color:var(--text); }
 #lib-continue { display:flex; width:100%; justify-content:space-between; align-items:center; gap:.5rem; background:var(--accent-soft); color:var(--accent); border:1px solid var(--accent); border-radius:1rem; padding:.7rem .9rem; margin-bottom:.7rem; font-size:.85rem; }
 #lib-continue span:last-child { font-weight:700; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
 .alldone { text-align:center; padding:1rem 0; color:var(--ok); }
@@ -153,7 +156,7 @@ input[type=color] { width:3rem; height:2.1rem; padding:0; border:1px solid var(-
     opacity:0; pointer-events:none; transition:.3s; z-index:50; max-width:90%; text-align:center; font-size:.9rem;
 }
 #toast.show { opacity:1; transform:translate(-50%,0); }
-.sig { margin:.8rem 0 .5rem; text-align:center; font-size:15px; letter-spacing:.04em; color:var(--muted); direction:ltr; }
+.sig { margin:.8rem 0 .5rem; text-align:center; font-size:14px; font-weight:600; letter-spacing:.08em; color:var(--muted); direction:ltr; }
 
 /* أيقونات Lucide */
 .il { display:inline-flex; align-items:center; gap:.45em; }
@@ -269,7 +272,6 @@ html.focus #tab-adhkar h3[data-i18n=adhkarTitle] { opacity:0; max-height:0; marg
 .nav-btn[hidden] { display:none; }
 html.simple .adv, html.simple .nav-btn[data-tab="sunan"], html.simple .nav-btn[data-tab="tools"] { display:none !important; }
 html:not(.simple) .simple-only { display:none; }
-.more-box h3 { margin-top:0; }
 .goal { white-space:pre-line; }
 .wirdrow { display:flex; align-items:center; justify-content:center; gap:1rem; margin:.4rem 0; }
 .wirdrow button { width:3rem; height:3rem; border-radius:50%; font-size:1.4rem; padding:0; line-height:1; }
@@ -281,10 +283,10 @@ html:not(.simple) .simple-only { display:none; }
 .wring.sm { width:2.9rem; height:2.9rem; flex:none; } .wring.sm circle { stroke-width:7; } .wring.sm span { font-size:.8rem; font-weight:700; }
 .wring.done .fg { stroke:var(--ok); } .wring.sm.done span { color:var(--ok); }
 .notice button, .hint button, .qw button { min-height:2.5rem; padding:.5rem 1rem; border-radius:.8rem; font-size:.9rem; white-space:nowrap; }
-.tiny { font-size:.7rem; margin-top:.3rem; }
+.tiny { font-size:.78rem; margin-top:.3rem; }
 .pgrp { display:inline-flex; align-items:center; }
 .pchk { margin-inline-start:.7rem; width:2rem; height:2rem; min-height:0; padding:0; border-radius:50%; flex:none; display:inline-grid; place-items:center; color:var(--muted); background:transparent; }
-.pchk-sp { margin-inline-start:.7rem; width:2rem; height:2rem; flex:none; }
+.pchk-sp { margin-inline-start:.7rem; width:2rem; height:2rem; flex:none; display:grid; place-items:center; color:var(--muted); opacity:.7; } .pchk-sp svg { width:1.1rem; height:1.1rem; }
 .pchk svg { width:1rem; height:1rem; stroke:currentColor; fill:none; stroke-width:3; }
 .pchk.on { background:var(--accent-soft); color:var(--accent); border-color:var(--accent); }
 .naw-row { display:flex; justify-content:space-between; align-items:center; gap:.8rem; padding:.65rem .1rem; border-top:1px solid var(--border); font-size:.9rem; }
@@ -298,7 +300,8 @@ html:not(.simple) .simple-only { display:none; }
 #splash .sp-tap { margin-top:1.4rem; color:var(--muted); font-size:.85rem; }
 .prayer-row.has-sheet { cursor:pointer; } .prayer-row.pinned { border-inline-start:3px solid var(--accent); }
 #sheet-body .btn-block.on { background:var(--accent-soft); color:var(--accent); border-color:var(--accent); }
-.sn-g { margin-bottom:.6rem; border-radius:.9rem; background:var(--hover); } .sn-g > summary { padding:.8rem 1rem; font-weight:700; cursor:pointer; } .sn-i { display:flex; gap:.6rem; align-items:flex-start; padding:.7rem 1rem; border-top:1px solid var(--border); } .sn-i .tx { flex:1; line-height:1.9; font-size:calc(1rem * var(--dfs, 1)); } html.lowpower *, html.lowpower *::before, html.lowpower *::after { transition-duration:.01ms !important; animation-duration:.01ms !important; } .flash { outline:2px solid var(--accent); outline-offset:3px; border-radius:.5rem; } .gs-g { font-size:.8rem; color:var(--muted); margin:.7rem 0 .2rem; } .td-r { display:flex; justify-content:space-between; gap:1rem; padding:.6rem 0; border-top:1px solid var(--border); } .td-r span:first-child { color:var(--muted); } .tab-hint { margin-bottom:.8rem; }
+.sn-g { margin-bottom:.6rem; border-radius:.9rem; background:var(--hover); } .sn-g > summary { padding:.8rem 1rem; font-weight:700; cursor:pointer; } .sn-i { display:flex; gap:.6rem; align-items:flex-start; padding:.7rem 1rem; border-top:1px solid var(--border); } .sn-i .tx { flex:1; line-height:1.9; font-size:calc(1rem * var(--dfs, 1)); } html.lowpower *, html.lowpower *::before, html.lowpower *::after { transition-duration:.01ms !important; animation-duration:.01ms !important; } .flash { outline:2px solid var(--accent); outline-offset:3px; border-radius:.5rem; } .gs-g { font-size:.8rem; color:var(--muted); margin:.7rem 0 .2rem; } .td-r { display:flex; justify-content:space-between; gap:1rem; padding:.6rem 0; border-top:1px solid var(--border); } .td-r span:first-child { color:var(--muted); } .tab-hint { margin-bottom:.8rem; padding:.7rem .9rem; font-size:.85rem; line-height:1.7; } .tab-hint .th-row { display:flex; gap:.5rem; margin-top:.5rem; } .tab-hint .th-row button { min-height:0; padding:.3rem .9rem; font-size:.8rem; }
+.after-card { margin-bottom:1rem; border-inline-start:3px solid var(--accent); }
 /* حركات خفيفة: transform وopacity فقط، وتُعطَّل مع «تقليل الحركة» وإيقاف المؤثرات */
 @keyframes navPop { 0% { transform:scale(.8); } 55% { transform:scale(1.18); } 100% { transform:scale(1); } }
 @keyframes sheetIn { from { transform:translateY(26px); opacity:0; } to { transform:none; opacity:1; } }
@@ -334,8 +337,8 @@ html.sheet-open body { overflow:hidden; }
 .q-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(9.5rem,1fr)); gap:.5rem; }
 .q-s { display:flex; align-items:center; gap:.5rem; padding:.55rem .7rem; text-align:start; border-radius:.8rem; min-height:3rem; }
 .q-s b { flex:none; min-width:1.8rem; height:1.8rem; border-radius:50%; background:var(--accent-soft); color:var(--accent); display:grid; place-items:center; font-size:.8rem; }
-.q-s span { font-family:'AmiriQ',serif; font-size:1.15rem; line-height:1.3; flex:1; min-width:0; }
-.q-s small { color:var(--muted); font-size:.7rem; flex:none; }
+.q-s span { font-family:'AmiriQ',serif; font-size:1.2rem; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; line-height:1.3; flex:1; min-width:0; }
+.q-s small { color:var(--muted); font-size:.72rem; opacity:.85; flex:none; }
 .q-bar { display:flex; align-items:center; gap:.5rem; margin-bottom:.8rem; flex-wrap:wrap; }
 .q-bar { gap:.35rem; } .q-bar button { min-height:2.4rem; padding:0 .45rem; font-size:.8rem; } .q-bar .sp { flex:1; } .q-chips { margin-top:-.3rem; gap:.4rem; } .q-chips button { min-height:2.1rem; padding:0 .55rem; font-size:.78rem; border-radius:999px; }
 .q-bar svg, .q-act svg { width:1.1rem; height:1.1rem; fill:none; stroke:currentColor; stroke-width:2; }
@@ -360,8 +363,8 @@ html.sheet-open body { overflow:hidden; }
 .q-taf { margin-top:.6rem; padding:.7rem .8rem; max-height:40vh; overflow:auto; border-radius:.8rem; background:var(--hover); direction:rtl; font-size:1.02rem; line-height:1.9; } .q-taf small { display:block; margin-top:.5rem; color:var(--muted); font-size:.72rem; }
 .q-pg { display:block; text-align:center; font-family:'AmiriQ',serif; font-size:1.7rem; color:var(--ok); opacity:.9; margin:.6rem 0; line-height:1.4; border-top:1px dashed var(--border); padding-top:.3rem; }
 .q-v.sj .q-n::after { content:'\00a0\06E9'; color:var(--accent); }
-.q-jz { display:flex; gap:.4rem; overflow-x:auto; padding-bottom:.4rem; margin-bottom:.6rem; scrollbar-width:thin; }
-.q-jz button { flex:none; min-width:2.6rem; min-height:2.4rem; padding:0 .6rem; border-radius:.7rem; }
+.q-jz { display:grid; grid-template-columns:repeat(auto-fill,minmax(2.9rem,1fr)); gap:.4rem; margin-bottom:.6rem; }
+.q-jz button { min-width:0; min-height:2.4rem; padding:0 .6rem; border-radius:.7rem; }
  #fab-back { position:fixed; inset-inline-start:.9rem; bottom:calc(5rem + env(safe-area-inset-bottom)); z-index:30; width:2.9rem; height:2.9rem; padding:0; border-radius:50%; display:grid; place-items:center; background:var(--surface); color:var(--text); border:1px solid var(--border); box-shadow:0 4px 16px rgba(0,0,0,.4); opacity:.92; animation:qUp .18s ease-out; }
 #fab-back svg { width:1.3rem; height:1.3rem; fill:none; stroke:currentColor; stroke-width:2; }
 [dir=ltr] #fab-back svg { transform:scaleX(-1); }
@@ -369,7 +372,7 @@ html.sheet-open body { overflow:hidden; }
 .qjz { display:grid; grid-template-columns:repeat(10,1fr); gap:.3rem; } .qjz b { aspect-ratio:1; display:grid; place-items:center; border-radius:.4rem; font-size:.7rem; font-weight:600; }
 .q-bmi { display:flex; align-items:flex-start; gap:.5rem; padding:.7rem .8rem; margin-bottom:.5rem; border-radius:.8rem; background:var(--hover); }
 .q-bmi .bt { flex:1; text-align:start; background:none; border:0; padding:0; color:inherit; } .q-bmi small { color:var(--muted); display:block; margin-bottom:.2rem; }
-.q-bmi .tx { font-family:'AmiriQ',serif; font-size:1.3rem; line-height:1.9; direction:rtl; display:block; }
+.q-bmi .tx { font-family:'AmiriQ',serif; font-size:1.2rem; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; line-height:1.9; direction:rtl; display:block; }
 .q-bmi .del { width:2.4rem; height:2.4rem; min-height:0; padding:0; border-radius:50%; flex:none; display:grid; place-items:center; } .q-bmi .del svg { width:1.1rem; height:1.1rem; fill:none; stroke:currentColor; stroke-width:2; }
 #daily-card.tap { cursor:pointer; }
 .qchart { display:flex; gap:.4rem; align-items:flex-end; height:7rem; margin:.6rem 0; }
@@ -423,7 +426,7 @@ html.sheet-open body { overflow:hidden; }
 .ab-line i[data-ic] { width:1.2rem; height:1.2rem; color:var(--accent); flex:none; }
 .ab-line svg { width:100%; height:100%; fill:none; stroke:currentColor; stroke-width:2; stroke-linecap:round; stroke-linejoin:round; }
 .naw-row .v.ok { color:var(--ok); } .naw-row .v.bad { color:var(--danger); }
-.naw-row:first-child { border-top:none; } .naw-row .v { color:var(--muted); font-family:ui-monospace,Menlo,Consolas,monospace; font-size:.85rem; text-align:end; }
+.naw-row:first-child { border-top:none; } .naw-row .v { color:var(--muted); font-family:inherit; font-variant-numeric:tabular-nums; font-size:.85rem; text-align:end; }
 .w.hid { color:transparent; background:var(--hover); border-radius:.3rem; border-bottom:2px solid var(--border); cursor:pointer; user-select:none; -webkit-user-select:none; }
 .qada { display:flex; align-items:center; justify-content:center; gap:1rem; margin:.4rem 0; }
 .qada button { width:3rem; height:3rem; border-radius:50%; font-size:1.4rem; padding:0; line-height:1; }
@@ -452,10 +455,16 @@ html.sheet-open body { overflow:hidden; }
   #tab-times { display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); gap:0 1.2rem; align-items:start; }
   #tab-adhkar, #tab-settings { max-width:820px; margin-inline:auto; }
   #tab-times > .card.hero { grid-column:1; grid-row:1; }
-  #tab-times > .card:nth-child(2) { grid-column:2; grid-row:1 / span 4; }
-  #tab-times > .card:nth-child(n+3) { grid-column:1; }
+  #tab-times > .card.prayers { grid-column:2; grid-row:1 / span 4; }
+  #tab-times > .card:not(.prayers):not(.hero) { grid-column:1; }
 }
 @media (min-width:1200px) { #app { max-width:1240px; } .hero-ring { width:17rem; height:17rem; } }
+@media (min-width:1700px) { html { font-size:112.5%; } #app { max-width:1400px; } #tab-adhkar, #tab-settings, #tab-quran, #tab-tools, #tab-sunan { max-width:940px; } }
+@media (min-width:2200px) { html { font-size:125%; } #app { max-width:1600px; } }
+@media (max-width:559px) and (max-height:680px) { html .hero-ring { width:11.5rem; height:11.5rem; } }
+input::placeholder { text-overflow:ellipsis; }
+.q-go input, .q-search { min-width:0; text-overflow:ellipsis; }
+#cur-line, .hero-dates { text-wrap:balance; }
 @media (max-width:359px) {
   .card { padding:1rem .85rem; }
   .hero-ring { width:13.5rem; height:13.5rem; }
@@ -485,7 +494,7 @@ html[dir=ltr] .wbar > i { transform-origin:left; }
 .tc.okc { color:var(--ok); font-weight:700; }
 
 /* توحيد الأحجام والمسافات */
-:root { --fs-label:.8rem; --fs-ctl:.9rem; --fs-note:.78rem; --fs-title:1.05rem; }
+:root { --fs-label:.82rem; --fs-ctl:.9rem; --fs-note:.82rem; --fs-title:1.05rem; }
 h3, .grp { font-size:var(--fs-title); font-weight:700; margin:0 0 .8rem; color:var(--accent); }
 .grp { margin:1.3rem 0 .7rem; }
 .grp:first-child { margin-top:0; }
@@ -570,15 +579,6 @@ html.onehand #tab-adhkar { padding-bottom:3.8rem; }
             <span id="hijri-date" class="muted small il-block"></span>
             <span id="greg-date" class="muted small il-block"></span>
         </div>
-        <div class="notice" id="after-card" hidden>
-            <div id="after-title" style="font-weight:700"></div>
-            <div class="pbar" aria-hidden="true"><i id="after-bar"></i></div>
-            <div class="tiny muted" id="after-left"></div>
-            <div class="grid2" style="margin-top:.7rem">
-                <button id="after-open" class="btn-accent" data-i18n="afterOpen"></button>
-                <button id="after-hide" data-i18n="afterHide"></button>
-            </div>
-        </div>
         <div class="qw adv" id="qw"><div class="qi"><div class="wring sm" id="qw-ring"><svg viewBox="0 0 100 100" aria-hidden="true"><circle class="bg" cx="50" cy="50" r="46"/><circle class="fg" id="qw-fg" cx="50" cy="50" r="46"/></svg><span id="qw-n"></span></div><div class="qt"><span data-i18n="wirdToday"></span><b id="qw-val"></b></div></div><button id="qw-add" class="btn-accent"></button></div>
         <div class="notice adv" id="sod" hidden></div>
         <div class="notice" id="loc-card" hidden>
@@ -603,8 +603,17 @@ html.onehand #tab-adhkar { padding-bottom:3.8rem; }
             </div>
         </div>
     </div>
+    <div class="card after-card" id="after-card" hidden>
+        <div id="after-title" style="font-weight:700"></div>
+        <div class="pbar" aria-hidden="true"><i id="after-bar"></i></div>
+        <div class="tiny muted" id="after-left"></div>
+        <div class="grid2" style="margin-top:.7rem">
+            <button id="after-open" class="btn-accent" data-i18n="afterOpen"></button>
+            <button id="after-hide" data-i18n="afterHide"></button>
+        </div>
+    </div>
 
-    <div class="card">
+    <div class="card prayers">
         <header class="center" style="margin-bottom:.8rem">
             <h1 id="city-title"></h1>
         </header>
@@ -675,6 +684,7 @@ html.onehand #tab-adhkar { padding-bottom:3.8rem; }
             <div class="grid2" style="margin-top:.7rem"><button id="oh-try" class="btn-accent" data-i18n="ohTry"></button><button id="oh-later" data-i18n="ohLater"></button></div>
         </div>
         <div class="abar" id="abar">
+            <span id="adhkar-progress" class="small"></span>
             <div class="fs"><button id="fs-minus" aria-label="-">A−</button><span id="fs-val"></span><button id="fs-plus" aria-label="+">A+</button></div>
             <button id="undo-fin" hidden><i data-ic="undo-2"></i> <span data-i18n="undoFin"></span></button>
         </div>
@@ -702,7 +712,6 @@ html.onehand #tab-adhkar { padding-bottom:3.8rem; }
         </details>
 
         <div id="adhkar-box">
-            <div id="adhkar-progress" class="muted small" style="margin-bottom:.7rem"></div>
             <div id="adhkar-list"></div>
             <button id="adhkar-reset" class="btn-block" style="margin-top:.4rem" data-i18n="resetCount"></button>
         </div>
@@ -825,7 +834,7 @@ html.onehand #tab-adhkar { padding-bottom:3.8rem; }
 
 <!-- ============ تبويب الإعدادات ============ -->
 <section class="panel" id="tab-settings" hidden>
-    <div class="card more-box simple-only"><h3 data-i18n="moreTitle"></h3><div class="grid2"><button type="button" class="ibtn" id="more-sunan"><i data-ic="badge-check"></i><span data-i18n="navSunan"></span></button><button type="button" class="ibtn" id="more-tools"><i data-ic="layout-grid"></i><span data-i18n="navTools"></span></button></div></div>
+    <div class="grid2 more-box simple-only" style="margin-bottom:.8rem"><button type="button" class="ibtn" id="more-sunan"><i data-ic="badge-check"></i><span data-i18n="sunanTitle"></span></button><button type="button" class="ibtn" id="more-tools"><i data-ic="layout-grid"></i><span data-i18n="navTools"></span></button></div>
     <div class="seg scroll" id="settings-seg">
         <button data-sec="loc" data-i18n="sLoc"></button>
         <button data-sec="alert" data-i18n="sAlert"></button>
@@ -1053,7 +1062,7 @@ html.onehand #tab-adhkar { padding-bottom:3.8rem; }
     </div>
 </section>
 
-<footer class="sig">𝐃𝐞𝐯𝐞𝐥𝐨𝐩𝐞𝐝 𝐛𝐲 𝔸𝕙𝕞𝕖𝕕 ℕ𝕩</footer>
+<footer class="sig">Developed by Ahmed Nx</footer>
 </div>
 
 <div id="onb" hidden><div class="onb-card">
@@ -1620,7 +1629,7 @@ const SCHEMA = 3;
         store.set('pt-schema', SCHEMA);
     } catch (e) {}
 })();
-const APP_VER = '2026.11.12-2';
+const APP_VER = '2026.11.12-5';
 function logErr(m) { try { const l = store.get('pt-errs', []); l.push({ at: Date.now(), m: String(m).slice(0, 200) }); store.set('pt-errs', l.slice(-10)); } catch (e) {} }
 window.addEventListener('error', e => logErr((e.message || 'error') + ' @' + String(e.filename || '').split('/').pop() + ':' + (e.lineno || 0)));
 window.addEventListener('unhandledrejection', e => logErr('promise: ' + ((e.reason && e.reason.message) || e.reason)));
@@ -1889,7 +1898,7 @@ function renderList() {
         if (state.view <= 0 && FIVE.includes(k)) {
             const c = document.createElement('button'); c.className = 'pchk'; c.dataset.k = k;
             c.setAttribute('aria-label', t('prayedLbl', prayerName(k))); c.appendChild(iconEl('check')); grp.appendChild(c);
-        } else if (state.view <= 0) { const sp = document.createElement('span'); sp.className = 'pchk-sp'; grp.appendChild(sp); }
+        } else if (state.view <= 0) { const sp = document.createElement('span'); sp.className = 'pchk-sp'; sp.appendChild(iconEl('sun')); grp.appendChild(sp); }
         row.append(a, grp);
         box.appendChild(row);
     }
@@ -3310,7 +3319,7 @@ function maybeHint(id) {
         const hs = store.get('pt-hints', {}); if (hs.off || hs[id]) return;
         const pn = $('tab-' + id); if (!pn || pn.querySelector('.tab-hint')) return;
         const c = document.createElement('div'); c.className = 'card tab-hint'; const tx = document.createElement('div'); tx.textContent = t('hint_' + id); c.appendChild(tx);
-        const g = document.createElement('div'); g.className = 'grid2'; g.style.marginTop = '.7rem';
+        const g = document.createElement('div'); g.className = 'th-row';
         const ok = document.createElement('button'); ok.type = 'button'; ok.className = 'btn-accent'; ok.textContent = t('hintOk'); ok.addEventListener('click', () => { hs[id] = 1; store.set('pt-hints', hs); c.remove(); });
         const off = document.createElement('button'); off.type = 'button'; off.textContent = t('hintOff'); off.addEventListener('click', () => { hs.off = 1; store.set('pt-hints', hs); document.querySelectorAll('.tab-hint').forEach(x => x.remove()); });
         g.append(ok, off); c.appendChild(g); pn.insertBefore(c, pn.firstChild);
@@ -4191,7 +4200,7 @@ function renderWird() {
     $('qw-add').textContent = '+ ' + t(juz ? 'juzU' : 'pageU');
 }
 function showOhHint() {
-    if (settings.oneHand || store.get('pt-ohhint', '') || !$('oh-hint').hidden) return;
+    if (settings.simple !== false || settings.oneHand || store.get('pt-ohhint', '') || !$('oh-hint').hidden) return;
     $('oh-hint').hidden = false; fxIn([$('oh-hint')], { y: 8, s: 0, d: 260 });
 }
 function hideOhHint() { store.set('pt-ohhint', '1'); $('oh-hint').hidden = true; }
