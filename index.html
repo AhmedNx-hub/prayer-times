@@ -267,6 +267,9 @@ html.focus #app { padding-bottom:1.5rem; }
 #tab-adhkar h3[data-i18n=adhkarTitle] { max-height:2rem; overflow:hidden; transition:opacity .25s ease, max-height .3s ease, margin .3s ease; }
 html.focus #tab-adhkar h3[data-i18n=adhkarTitle] { opacity:0; max-height:0; margin:0; }
 .nav-btn[hidden] { display:none; }
+html.simple .adv, html.simple .nav-btn[data-tab="sunan"], html.simple .nav-btn[data-tab="tools"] { display:none !important; }
+html:not(.simple) .simple-only { display:none; }
+.more-box h3 { margin-top:0; }
 .goal { white-space:pre-line; }
 .wirdrow { display:flex; align-items:center; justify-content:center; gap:1rem; margin:.4rem 0; }
 .wirdrow button { width:3rem; height:3rem; border-radius:50%; font-size:1.4rem; padding:0; line-height:1; }
@@ -562,7 +565,7 @@ html.onehand #tab-adhkar { padding-bottom:3.8rem; }
             </div>
         </div>
         <div id="cur-line" class="muted small" style="margin-top:.5rem;min-height:1.2em"></div>
-        <button id="hero-log" class="ibtn" type="button" hidden style="margin-top:.5rem"><i data-ic="check"></i><span id="hero-log-t"></span></button>
+        <button id="hero-log" class="ibtn adv" type="button" hidden style="margin-top:.5rem"><i data-ic="check"></i><span id="hero-log-t"></span></button>
         <div class="hero-dates">
             <span id="hijri-date" class="muted small il-block"></span>
             <span id="greg-date" class="muted small il-block"></span>
@@ -576,8 +579,8 @@ html.onehand #tab-adhkar { padding-bottom:3.8rem; }
                 <button id="after-hide" data-i18n="afterHide"></button>
             </div>
         </div>
-        <div class="qw" id="qw"><div class="qi"><div class="wring sm" id="qw-ring"><svg viewBox="0 0 100 100" aria-hidden="true"><circle class="bg" cx="50" cy="50" r="46"/><circle class="fg" id="qw-fg" cx="50" cy="50" r="46"/></svg><span id="qw-n"></span></div><div class="qt"><span data-i18n="wirdToday"></span><b id="qw-val"></b></div></div><button id="qw-add" class="btn-accent"></button></div>
-        <div class="notice" id="sod" hidden></div>
+        <div class="qw adv" id="qw"><div class="qi"><div class="wring sm" id="qw-ring"><svg viewBox="0 0 100 100" aria-hidden="true"><circle class="bg" cx="50" cy="50" r="46"/><circle class="fg" id="qw-fg" cx="50" cy="50" r="46"/></svg><span id="qw-n"></span></div><div class="qt"><span data-i18n="wirdToday"></span><b id="qw-val"></b></div></div><button id="qw-add" class="btn-accent"></button></div>
+        <div class="notice adv" id="sod" hidden></div>
         <div class="notice" id="loc-card" hidden>
             <div style="font-weight:700" id="loc-text"></div>
             <div class="grid2" style="margin-top:.7rem">
@@ -626,7 +629,7 @@ html.onehand #tab-adhkar { padding-bottom:3.8rem; }
     </div>
 
 
-    <div class="card" id="daily-card">
+    <div class="card adv" id="daily-card">
         <h3 id="daily-title"></h3>
         <div id="daily-text" class="verse" lang="ar" dir="rtl"></div>
         <div id="daily-en" class="muted small" style="margin-top:.4rem"></div>
@@ -675,7 +678,7 @@ html.onehand #tab-adhkar { padding-bottom:3.8rem; }
             <div class="fs"><button id="fs-minus" aria-label="-">A−</button><span id="fs-val"></span><button id="fs-plus" aria-label="+">A+</button></div>
             <button id="undo-fin" hidden><i data-ic="undo-2"></i> <span data-i18n="undoFin"></span></button>
         </div>
-        <details class="opts" id="opts">
+        <details class="opts adv" id="opts">
             <summary data-i18n="readOpts"></summary>
             <div class="abar">
                 <button id="opt-next" data-i18n="autoNext"></button>
@@ -822,6 +825,7 @@ html.onehand #tab-adhkar { padding-bottom:3.8rem; }
 
 <!-- ============ تبويب الإعدادات ============ -->
 <section class="panel" id="tab-settings" hidden>
+    <div class="card more-box simple-only"><h3 data-i18n="moreTitle"></h3><div class="grid2"><button type="button" class="ibtn" id="more-sunan"><i data-ic="badge-check"></i><span data-i18n="navSunan"></span></button><button type="button" class="ibtn" id="more-tools"><i data-ic="layout-grid"></i><span data-i18n="navTools"></span></button></div></div>
     <div class="seg scroll" id="settings-seg">
         <button data-sec="loc" data-i18n="sLoc"></button>
         <button data-sec="alert" data-i18n="sAlert"></button>
@@ -850,7 +854,7 @@ html.onehand #tab-adhkar { padding-bottom:3.8rem; }
                 <option value="2" data-i18n="asr2"></option>
             </select>
         </div>
-        <div class="field">
+        <div class="field adv">
             <label for="hijri-adj" data-i18n="hijriAdj"></label>
             <select id="hijri-adj">
                 <option value="-2" data-i18n="adjM2"></option>
@@ -860,12 +864,12 @@ html.onehand #tab-adhkar { padding-bottom:3.8rem; }
                 <option value="2" data-i18n="adjP2"></option>
             </select>
         </div>
-        <div class="field">
+        <div class="field adv">
             <label data-i18n="tuneLabel"></label>
             <div class="grid2" id="tune-grid"></div>
             <button id="tune-reset" class="btn-block" style="margin-top:.6rem" data-i18n="tuneReset"></button>
         </div>
-        <p class="muted small" style="margin:0" data-i18n="calcNote"></p>
+        <p class="muted small adv" style="margin:0" data-i18n="calcNote"></p>
     </div>
 
     <!-- التنبيهات -->
@@ -887,20 +891,20 @@ html.onehand #tab-adhkar { padding-bottom:3.8rem; }
             <select id="end-select"><option value="0" data-i18n="endOff"></option><option value="10" data-i18n="end10"></option><option value="20" data-i18n="end20"></option><option value="30" data-i18n="end30"></option></select>
         </div>
         </details>
-        <details class="opts gd"><summary data-i18n="grpExtra"></summary>
+        <details class="opts gd adv"><summary data-i18n="grpExtra"></summary>
         <label class="switch"><span class="il"><i data-ic="moon"></i><span data-i18n="nawOn"></span></span><input type="checkbox" id="naw-toggle"></label>
         <label class="switch"><span class="il"><i data-ic="sun"></i><span data-i18n="nawCardOn"></span></span><input type="checkbox" id="nawcard-toggle"></label>
         <label class="switch"><span class="il"><i data-ic="check"></i><span data-i18n="logRemindOn"></span></span><input type="checkbox" id="logrem-toggle"></label>
         <label class="switch"><span class="il"><i data-ic="calendar"></i><span data-i18n="occRemindOn"></span></span><input type="checkbox" id="occrem-toggle"></label>
         <label class="switch"><span class="il"><i data-ic="calendar"></i><span data-i18n="friOn"></span></span><input type="checkbox" id="frirem-toggle"></label>
         </details>
-        <details class="opts gd"><summary data-i18n="grpKhatma"></summary>
+        <details class="opts gd adv"><summary data-i18n="grpKhatma"></summary>
         <label class="switch"><span class="il"><i data-ic="library"></i><span data-i18n="khRemOn"></span></span><input type="checkbox" id="khrem-toggle"></label>
         <label class="switch"><span class="il"><i data-ic="library"></i><span data-i18n="revRemOn"></span></span><input type="checkbox" id="revrem-toggle"></label>
         <div class="field sub" id="sub-revrem"><div class="muted small" data-i18n="revRemSub"></div><label for="revrem-time" data-i18n="wirdTime"></label><input type="time" id="revrem-time"></div>
         <div class="field sub" id="sub-khrem"><label for="khrem-time" data-i18n="wirdTime"></label><input type="time" id="khrem-time"></div>
         </details>
-        <details class="opts" id="diag" style="margin-bottom:.8rem">
+        <details class="opts adv" id="diag" style="margin-bottom:.8rem">
             <summary data-i18n="diagTitle"></summary>
             <div id="diag-list"></div>
             <p class="muted small" style="margin:.6rem 0" data-i18n="dgTip"></p>
@@ -915,7 +919,7 @@ html.onehand #tab-adhkar { padding-bottom:3.8rem; }
             <button id="dg-reset" class="btn-block" style="margin-top:.6rem" data-i18n="dgReset"></button>
         </details>
 
-        <details class="opts gd"><summary data-i18n="grpDnd"></summary>
+        <details class="opts gd adv"><summary data-i18n="grpDnd"></summary>
         <label class="switch"><span class="il"><i data-ic="moon"></i><span data-i18n="dndOn"></span></span><input type="checkbox" id="dnd-toggle"></label>
         <div class="sub" id="sub-dnd">
             <div class="timerow field">
@@ -931,7 +935,7 @@ html.onehand #tab-adhkar { padding-bottom:3.8rem; }
             <p class="muted small" style="margin:0" data-i18n="dndNote"></p>
         </div>
         </details>
-        <details class="opts gd"><summary data-i18n="grpSounds"></summary>
+        <details class="opts gd adv"><summary data-i18n="grpSounds"></summary>
         <div class="field"><label for="snd-prayer" data-i18n="sndPrayer"></label><select id="snd-prayer"><option value="rise" data-i18n="snd_rise"></option><option value="chime" data-i18n="snd_chime"></option><option value="soft" data-i18n="snd_soft"></option><option value="bell" data-i18n="snd_bell"></option><option value="triple" data-i18n="snd_triple"></option><option value="off" data-i18n="snd_off"></option></select></div>
         <div class="field"><label for="snd-adhkar" data-i18n="sndAdhkar"></label><select id="snd-adhkar"><option value="rise" data-i18n="snd_rise"></option><option value="chime" data-i18n="snd_chime"></option><option value="soft" data-i18n="snd_soft"></option><option value="bell" data-i18n="snd_bell"></option><option value="triple" data-i18n="snd_triple"></option><option value="off" data-i18n="snd_off"></option></select></div>
         <div class="field"><label for="snd-wird" data-i18n="sndWird"></label><select id="snd-wird"><option value="rise" data-i18n="snd_rise"></option><option value="chime" data-i18n="snd_chime"></option><option value="soft" data-i18n="snd_soft"></option><option value="bell" data-i18n="snd_bell"></option><option value="triple" data-i18n="snd_triple"></option><option value="off" data-i18n="snd_off"></option></select></div>
@@ -949,26 +953,26 @@ html.onehand #tab-adhkar { padding-bottom:3.8rem; }
             <label for="remind-delay" data-i18n="remDelay"></label>
             <select id="remind-delay"><option value="10">10</option><option value="20">20</option><option value="30">30</option></select>
         </div>
-        <label class="switch"><span class="il"><i data-ic="moon"></i><span data-i18n="remSleep"></span></span><input type="checkbox" id="remsleep-toggle"></label>
-        <div class="field sub" id="sub-sleep">
+        <label class="switch adv"><span class="il"><i data-ic="moon"></i><span data-i18n="remSleep"></span></span><input type="checkbox" id="remsleep-toggle"></label>
+        <div class="field sub adv" id="sub-sleep">
             <label for="remsleep-delay" data-i18n="remSleepDelay"></label>
             <select id="remsleep-delay"><option value="30">30</option><option value="60">60</option><option value="90">90</option><option value="120">120</option></select>
         </div>
-        <label class="switch"><span class="il"><i data-ic="sun"></i><span data-i18n="remWake"></span></span><input type="checkbox" id="remwake-toggle"></label>
-        <label class="switch"><span class="il"><i data-ic="bell"></i><span data-i18n="remAfter"></span></span><input type="checkbox" id="remafter-toggle"></label>
-        <div class="field sub" id="sub-after">
+        <label class="switch adv"><span class="il"><i data-ic="sun"></i><span data-i18n="remWake"></span></span><input type="checkbox" id="remwake-toggle"></label>
+        <label class="switch adv"><span class="il"><i data-ic="bell"></i><span data-i18n="remAfter"></span></span><input type="checkbox" id="remafter-toggle"></label>
+        <div class="field sub adv" id="sub-after">
             <label for="remafter-delay" data-i18n="remAfterDelay"></label>
             <select id="remafter-delay"><option value="5">5</option><option value="10">10</option><option value="15">15</option><option value="30">30</option></select>
         </div>
-        <label class="switch"><span class="il"><i data-ic="check"></i><span data-i18n="afterCardOn"></span></span><input type="checkbox" id="aftercard-toggle"></label>
-        <label class="switch"><span class="il"><i data-ic="moon"></i><span data-i18n="nightAutoOn"></span></span><input type="checkbox" id="nightauto-toggle"></label>
+        <label class="switch adv"><span class="il"><i data-ic="check"></i><span data-i18n="afterCardOn"></span></span><input type="checkbox" id="aftercard-toggle"></label>
+        <label class="switch adv"><span class="il"><i data-ic="moon"></i><span data-i18n="nightAutoOn"></span></span><input type="checkbox" id="nightauto-toggle"></label>
         <h3 class="grp" data-i18n="grpWird"></h3>
         <label class="switch"><span class="il"><i data-ic="book-open"></i><span data-i18n="wirdOn"></span></span><input type="checkbox" id="wird-toggle"></label>
         <div class="field sub" id="sub-wird">
             <label for="wird-time" data-i18n="wirdTime"></label>
             <input type="time" id="wird-time">
         </div>
-        <div class="timerow field" id="wird-grp" style="margin-top:.6rem">
+        <div class="timerow field adv" id="wird-grp" style="margin-top:.6rem">
             <div><label for="wird-unit" data-i18n="wirdUnit"></label><select id="wird-unit"><option value="page" data-i18n="pageU"></option><option value="juz" data-i18n="juzU"></option></select></div>
             <div><label for="wird-goal" data-i18n="wirdGoal"></label><select id="wird-goal"><option value="0" data-i18n="goalOff"></option><option value="1">1</option><option value="2">2</option><option value="5">5</option><option value="10">10</option><option value="20">20</option></select></div>
         </div>
@@ -979,17 +983,17 @@ html.onehand #tab-adhkar { padding-bottom:3.8rem; }
         <h3 data-i18n="themes"></h3>
         <div class="chips" id="theme-chips"></div>
 
-        <h3 style="margin-top:1.2rem" data-i18n="customTheme"></h3>
-        <div id="color-editor"></div>
-        <div class="field" style="margin-top:.8rem">
+        <h3 class="adv" style="margin-top:1.2rem" data-i18n="customTheme"></h3>
+        <div id="color-editor" class="adv"></div>
+        <div class="field adv" style="margin-top:.8rem">
             <label for="theme-name" data-i18n="themeName"></label>
             <input type="text" id="theme-name" maxlength="24" data-i18n-ph="themeNamePh">
         </div>
-        <div class="grid2">
+        <div class="grid2 adv">
             <button id="theme-save" class="btn-accent ibtn"><i data-ic="save"></i><span data-i18n="saveAs"></span></button>
             <button id="theme-reset" class="ibtn"><i data-ic="rotate-ccw"></i><span data-i18n="resetDark"></span></button>
         </div>
-        <p class="muted small" style="margin:.8rem 0 0" data-i18n="themeNote"></p>
+        <p class="muted small adv" style="margin:.8rem 0 0" data-i18n="themeNote"></p>
     </div>
 
     <!-- عام -->
@@ -1001,21 +1005,23 @@ html.onehand #tab-adhkar { padding-bottom:3.8rem; }
                 <option value="en">English</option>
             </select>
         </div>
+        <label class="switch"><span class="il"><i data-ic="layout-grid"></i><span data-i18n="simpleOn"></span></span><input type="checkbox" id="simple-toggle"></label>
+        <p class="muted small" style="margin:0 0 1rem" data-i18n="simpleNote"></p>
         <label class="switch"><span class="il"><i data-ic="clock"></i><span data-i18n="h24"></span></span><input type="checkbox" id="h24-toggle"></label>
         <label class="switch"><span class="il"><i data-ic="maximize"></i><span data-i18n="fsOn"></span></span><input type="checkbox" id="fs-toggle"></label>
         <label class="switch"><span class="il"><i data-ic="sparkles"></i><span data-i18n="animOn"></span></span><input type="checkbox" id="anim-toggle"></label>
         <p class="muted small" style="margin:0 0 1rem"><span data-i18n="fsNote"></span> <span data-i18n="animNote"></span></p>
-        <h3 class="grp" data-i18n="grpStart"></h3>
-        <label class="switch"><span class="il"><i data-ic="circle-dot"></i><span data-i18n="splashOn"></span></span><input type="checkbox" id="splash-toggle"></label>
-        <p class="muted small" style="margin:0 0 .6rem" data-i18n="splashNote"></p>
-        <label class="switch"><span class="il"><i data-ic="book-open"></i><span data-i18n="adhAutoOn"></span></span><input type="checkbox" id="adhauto-toggle"></label>
-        <h3 class="grp" data-i18n="grpNav"></h3>
-        <label class="switch"><span class="il"><i data-ic="clock"></i><span data-i18n="navTimes"></span></span><input type="checkbox" id="navshow-times"></label>
-        <label class="switch"><span class="il"><i data-ic="book-open"></i><span data-i18n="navAdhkar"></span></span><input type="checkbox" id="navshow-adhkar"></label>
-        <label class="switch"><span class="il"><i data-ic="library"></i><span data-i18n="navQuran"></span></span><input type="checkbox" id="navshow-quran"></label>
-        <label class="switch"><span class="il"><i data-ic="badge-check"></i><span data-i18n="navSunan"></span></span><input type="checkbox" id="navshow-sunan"></label>
-        <label class="switch"><span class="il"><i data-ic="layout-grid"></i><span data-i18n="navTools"></span></span><input type="checkbox" id="navshow-tools"></label>
-        <p class="muted small" style="margin:0" data-i18n="navNote"></p>
+        <h3 class="grp adv" data-i18n="grpStart"></h3>
+        <label class="switch adv"><span class="il"><i data-ic="circle-dot"></i><span data-i18n="splashOn"></span></span><input type="checkbox" id="splash-toggle"></label>
+        <p class="muted small adv" style="margin:0 0 .6rem" data-i18n="splashNote"></p>
+        <label class="switch adv"><span class="il"><i data-ic="book-open"></i><span data-i18n="adhAutoOn"></span></span><input type="checkbox" id="adhauto-toggle"></label>
+        <h3 class="grp adv" data-i18n="grpNav"></h3>
+        <label class="switch adv"><span class="il"><i data-ic="clock"></i><span data-i18n="navTimes"></span></span><input type="checkbox" id="navshow-times"></label>
+        <label class="switch adv"><span class="il"><i data-ic="book-open"></i><span data-i18n="navAdhkar"></span></span><input type="checkbox" id="navshow-adhkar"></label>
+        <label class="switch adv"><span class="il"><i data-ic="library"></i><span data-i18n="navQuran"></span></span><input type="checkbox" id="navshow-quran"></label>
+        <label class="switch adv"><span class="il"><i data-ic="badge-check"></i><span data-i18n="navSunan"></span></span><input type="checkbox" id="navshow-sunan"></label>
+        <label class="switch adv"><span class="il"><i data-ic="layout-grid"></i><span data-i18n="navTools"></span></span><input type="checkbox" id="navshow-tools"></label>
+        <p class="muted small adv" style="margin:0" data-i18n="navNote"></p>
     </div>
 
     <div class="card sec" id="sec-about" hidden>
@@ -1034,9 +1040,9 @@ html.onehand #tab-adhkar { padding-bottom:3.8rem; }
             <button id="export-btn" class="ibtn"><i data-ic="download"></i><span data-i18n="exportBtn"></span></button>
             <button id="import-btn" class="ibtn"><i data-ic="upload"></i><span data-i18n="importBtn"></span></button>
         </div>
-        <h3 class="grp" id="mig-title" data-i18n="migTitle"></h3>
-        <p class="muted small" style="margin:0 0 .6rem;white-space:pre-line" data-i18n="migSteps"></p>
-        <button id="mig-pick" class="btn-accent btn-block ibtn"><i data-ic="upload"></i><span data-i18n="migPick"></span></button>
+        <h3 class="grp adv" id="mig-title" data-i18n="migTitle"></h3>
+        <p class="muted small adv" style="margin:0 0 .6rem;white-space:pre-line" data-i18n="migSteps"></p>
+        <button id="mig-pick" class="btn-accent btn-block ibtn adv"><i data-ic="upload"></i><span data-i18n="migPick"></span></button>
         <h3 class="grp" data-i18n="bakTitle"></h3>
         <div id="bak-list"></div>
         <p class="muted small" style="margin:.5rem 0 .8rem" data-i18n="bakNote"></p>
@@ -1374,6 +1380,7 @@ ar: {
     bakNewer:'هذه النسخة أحدث من إصدار التطبيق. حدّث التطبيق أولًا ثم أعد المحاولة.', bakIdb:'نسخة المتصفح', bakFoundT:'عُثر على نسخة احتياطية', bakFoundB:'عُثر على نسخة محفوظة في المتصفح بتاريخ {0}. هل تريد استعادتها؟', bakFoundYes:'استعادة النسخة', bakFoundNo:'تجاهل', gsBtn:'بحث شامل', gsPh:'ابحث في الأذكار والسنن والسور والإعدادات', gsAdhkar:'الأذكار', gsQuran:'القرآن', gsSunan:'السنن', gsSet:'الإعدادات', gsSurah:'سورة {0}', gsNone:'لا توجد نتائج مطابقة.', tdBtn:'ملخص اليوم', tdMissed:'ما فاتك من الصلوات', tdNoMiss:'لا شيء فاتك', tdWirdP:'المقروء اليوم: {0} صفحة', tdAdhkar:'أذكار اليوم', tdMor:'الصباح', tdEve:'المساء', tdDone:'تم', tdNot:'لم يتم', logNow:'سجّلتُ صلاة {0}', hintOk:'فهمت', hintOff:'إخفاء التلميحات', hint_adhkar:'تنقّل بين الأذكار من الأعلى، واضغط على الذكر لعدّه، وبالنجمة تضيفه إلى المفضلة.', hint_quran:'اختر سورة من الفهرس، واضغط على آية لتظهر أدواتها، ويُحفظ موضع قراءتك تلقائيًا.', hint_sunan:'اضغط العلامة لتسجيل ما طبّقته اليوم، والنجمة للمفضلة، والجرس لضبط تذكير.', hint_tools:'تجد هنا البحث الشامل وملخص اليوم وأدوات الإمساكية والتقويم والزكاة.',
     dgOfTaf:'ملف التفسير', dgBakRow:'آخر نسخة خارجية', dgBakNever:'لم تُصدَّر نسخة بعد', dgBakOld:'{0} (مضى أكثر من 30 يومًا)',
     skipBtn:'تخطي', skipAria:'تخطي هذا الذكر واعتباره مكتملًا', dupNote:'ورد هذا الذكر بعدد آخر (مئة مرة) في الذكر التالي، وهما روايتان مختلفتان.',
+    moreTitle:'المزيد', simpleOn:'الوضع المبسط', simpleNote:'يعرض الأساسيات فقط ويُخفي المميزات الإضافية. أوقفه لإظهار كل شيء.',
     afterOpen:'فتح الأذكار', afterHide:'إخفاء',
     backupOn:'تذكير أسبوعي بالنسخة الاحتياطية', backupTitle:'مرّ أسبوع على آخر نسخة احتياطية', backupNow:'تصدير الآن', backupLater:'لاحقًا',
     readOpts:'خيارات القراءة', fontFace:'خط الأذكار', ffDefault:'الافتراضي', ffNaskh:'نسخ', ffThuluth:'ثلث / رقعة', fontNote:'يظهر حسب الخطوط المتاحة على جهازك',
@@ -1504,6 +1511,7 @@ en: {
     bakNewer:'This backup is newer than the app version. Update the app first, then try again.', bakIdb:'Browser copy', bakFoundT:'A backup was found', bakFoundB:'A copy saved in this browser on {0} was found. Restore it?', bakFoundYes:'Restore copy', bakFoundNo:'Ignore', gsBtn:'Search everything', gsPh:'Search adhkar, Sunnah, surahs and settings', gsAdhkar:'Adhkar', gsQuran:'Quran', gsSunan:'Sunnah', gsSet:'Settings', gsSurah:'Surah {0}', gsNone:'No matching results.', tdBtn:'Today summary', tdMissed:'Prayers you missed', tdNoMiss:'Nothing missed', tdWirdP:'Read today: {0} pages', tdAdhkar:'Today’s adhkar', tdMor:'Morning', tdEve:'Evening', tdDone:'Done', tdNot:'Not yet', logNow:'I prayed {0}', hintOk:'Got it', hintOff:'Hide hints', hint_adhkar:'Switch between adhkar at the top, tap a dhikr to count it, and use the star to add it to favourites.', hint_quran:'Pick a surah from the index and tap a verse to show its tools. Your reading position is saved automatically.', hint_sunan:'Tap the tick to log what you practised today, the star for favourites and the bell to set a reminder.', hint_tools:'Here you will find search, the day summary, the Imsakiyah, the calendar and Zakat tools.',
     dgOfTaf:'Tafsir file', dgBakRow:'Last external backup', dgBakNever:'No backup exported yet', dgBakOld:'{0} (over 30 days ago)',
     skipBtn:'Skip', skipAria:'Skip this dhikr and mark it complete', dupNote:'This dhikr is also reported with another count (one hundred times) in the next item; they are two different narrations.',
+    moreTitle:'More', simpleOn:'Simple mode', simpleNote:'Shows the essentials only and hides the extra features. Turn it off to show everything.',
     afterOpen:'Open adhkar', afterHide:'Hide',
     backupOn:'Weekly backup reminder', backupTitle:'It has been a week since your last backup', backupNow:'Export now', backupLater:'Later',
     readOpts:'Reading options', fontFace:'Adhkar font', ffDefault:'Default', ffNaskh:'Naskh', ffThuluth:'Thuluth / Ruqaa', fontNote:'Shown using the fonts available on your device',
@@ -1612,7 +1620,7 @@ const SCHEMA = 3;
         store.set('pt-schema', SCHEMA);
     } catch (e) {}
 })();
-const APP_VER = '2026.11.12-1';
+const APP_VER = '2026.11.12-2';
 function logErr(m) { try { const l = store.get('pt-errs', []); l.push({ at: Date.now(), m: String(m).slice(0, 200) }); store.set('pt-errs', l.slice(-10)); } catch (e) {} }
 window.addEventListener('error', e => logErr((e.message || 'error') + ' @' + String(e.filename || '').split('/').pop() + ':' + (e.lineno || 0)));
 window.addEventListener('unhandledrejection', e => logErr('promise: ' + ((e.reason && e.reason.message) || e.reason)));
@@ -2668,11 +2676,11 @@ function qIndex(b, d) {
         b.appendChild(qBtn('q-cont ibtn', 'check', t('qMemListBtn'), () => qMemList(b, d))); }
     { const pb = qPlanBox(b, d); pb.hidden = !qPlanOpen;
       const tg = qBtn('q-cont ibtn', qPlanOpen ? 'chevron-left' : 'chevron-right', t('qPlanT'), () => { qPlanOpen = !qPlanOpen; qIndex(b, d); });
-      tg.style.justifyContent = 'center'; tg.setAttribute('aria-expanded', String(qPlanOpen)); b.appendChild(tg); b.appendChild(pb);
-      let cur = null; const mkSb = () => { const n = qStatsBox(() => { const m = mkSb(); cur.replaceWith(m); cur = m; }); n.hidden = !qStatOpen; return n; }; cur = mkSb(); const sb = cur;
+      tg.classList.add('adv'); pb.classList.add('adv'); tg.style.justifyContent = 'center'; tg.setAttribute('aria-expanded', String(qPlanOpen)); b.appendChild(tg); b.appendChild(pb);
+      let cur = null; const mkSb = () => { const n = qStatsBox(() => { const m = mkSb(); cur.replaceWith(m); cur = m; }); n.hidden = !qStatOpen; n.classList.add('adv'); return n; }; cur = mkSb(); const sb = cur;
       const st = qBtn('q-cont ibtn', qStatOpen ? 'chevron-left' : 'chevron-right', t('qStatT'), () => { qStatOpen = !qStatOpen; qIndex(b, d); });
-      st.style.justifyContent = 'center'; st.setAttribute('aria-expanded', String(qStatOpen)); b.appendChild(st); b.appendChild(sb); }
-    b.appendChild(qOptions());
+      st.classList.add('adv'); sb.classList.add('adv'); st.style.justifyContent = 'center'; st.setAttribute('aria-expanded', String(qStatOpen)); b.appendChild(st); b.appendChild(sb); }
+    { const qo = qOptions(); qo.classList.add('adv'); b.appendChild(qo); }
     const jz = document.createElement('div'); jz.className = 'q-jz'; jz.setAttribute('aria-label', t('qJuz'));
     for (let n = 1; n <= 30; n++) jz.appendChild(qBtn('', null, String(n), () => { const [s2, a2] = qLoc(QMETA.j[n - 1]); qSurah(b, d, s2, a2); }));
     const jh = document.createElement('h3'); jh.className = 'grp'; jh.textContent = t('qJuz'); b.appendChild(jh); b.appendChild(jz);
@@ -2696,7 +2704,7 @@ function qIndex(b, d) {
     }
     const resBox = document.createElement('div'); resBox.hidden = true;
     b.appendChild(bmBox); b.appendChild(grid); b.appendChild(resBox);
-    { const bx = document.createElement('div'); bx.className = 'qbox'; bx.style.marginTop = '1rem';
+    { const bx = document.createElement('div'); bx.className = 'qbox adv'; bx.style.marginTop = '1rem';
       const hh = document.createElement('h3'); hh.textContent = t('qBakTitle'); bx.appendChild(hh);
       const nn = document.createElement('p'); nn.className = 'muted small'; nn.textContent = t('qBakNote'); bx.appendChild(nn);
       const fi = document.createElement('input'); fi.type = 'file'; fi.accept = '.json,application/json'; fi.hidden = true;
@@ -4350,6 +4358,7 @@ function applyTheme(mode) {
     st.setProperty('--on-accent', onColor(c.accent));
     $('meta-theme').setAttribute('content', c.bg);
 }
+function applySimple() { document.documentElement.classList.toggle('simple', settings.simple !== false); }
 function applyFxClass() { document.documentElement.classList.toggle('no-fx', settings.anim === false); }
 function currentEditorColors() {
     const o = {};
@@ -4609,7 +4618,8 @@ function applyNav() {
     HIDEABLE.forEach(k => { $('navshow-' + k).checked = !(settings.hiddenTabs || []).includes(k); });
 }
 function firstVisibleTab(id) {
-    if (!['times', 'adhkar', 'quran', 'tools', 'settings'].includes(id)) id = 'times';
+    if (!['times', 'adhkar', 'quran', 'sunan', 'tools', 'settings'].includes(id)) id = 'times';
+    if (settings.simple !== false && (id === 'sunan' || id === 'tools')) return 'times';
     if (!(settings.hiddenTabs || []).includes(id)) return id;
     return HIDEABLE.find(k => !settings.hiddenTabs.includes(k)) || 'settings';
 }
@@ -4749,7 +4759,7 @@ function syncControls() {
     $('remsleep-toggle').checked = !!settings.remindSleep; $('remwake-toggle').checked = !!settings.remindWake; $('remafter-toggle').checked = !!settings.remindAfter;
     $('h24-toggle').checked = settings.h24;
     $('fs-toggle').checked = settings.fullscreen;
-    $('anim-toggle').checked = settings.anim !== false; $('splash-toggle').checked = settings.splash !== false; $('adhauto-toggle').checked = settings.adhkarAuto !== false; $('frirem-toggle').checked = settings.friRemind !== false;
+    $('simple-toggle').checked = settings.simple !== false; $('anim-toggle').checked = settings.anim !== false; $('splash-toggle').checked = settings.splash !== false; $('adhauto-toggle').checked = settings.adhkarAuto !== false; $('frirem-toggle').checked = settings.friRemind !== false;
     $('city-select').value = settings.cityId;
     $('method-select').value = settings.method;
 }
@@ -4773,6 +4783,7 @@ function sanitizeSettings(s) {
     out.asr = Number(s.asr) === 2 ? 2 : 1;
     out.hijriAdj = clampInt(s.hijriAdj, 0, -2, 2);
     out.notify = !!s.notify; out.sound = s.sound !== false; out.h24 = !!s.h24; out.fullscreen = s.fullscreen !== false; out.anim = s.anim !== false; out.splash = s.splash !== false; out.pinPrayer = FIVE.includes(s.pinPrayer) ? s.pinPrayer : ''; out.adhkarAuto = s.adhkarAuto !== false; out.friRemind = s.friRemind !== false;
+    out.simple = s.simple !== false;
     out.lang = I18N[s.lang] ? s.lang : 'ar';
     out.preAlert = [0, 10, 15].includes(Number(s.preAlert)) ? Number(s.preAlert) : 0;
     out.tasbihPhrase = TASBIH_PHRASES.includes(s.tasbihPhrase) ? s.tasbihPhrase : 'ph_sub';
@@ -5042,7 +5053,7 @@ function refreshAll() {
     afterKey = '';
     applyLang();
     applyTheme();
-    applyFxClass();
+    applyFxClass(); applySimple();
     renderCitySelect();
     renderMethodSelect();
     buildTuneGrid();
@@ -5162,6 +5173,9 @@ function bindUI() {
     $('splash-toggle').addEventListener('change', e => { settings.splash = e.target.checked; saveSettings(); });
     $('adhauto-toggle').addEventListener('change', e => { settings.adhkarAuto = e.target.checked; saveSettings(); });
     $('frirem-toggle').addEventListener('change', e => { settings.friRemind = e.target.checked; saveSettings(); });
+    $('simple-toggle').addEventListener('change', e => { settings.simple = e.target.checked; saveSettings(); applySimple(); if (!settings.simple) { try { if (state.today) tick(); } catch (x) {} } else if (['sunan', 'tools'].includes(settings.tab)) showTab('times'); });
+    $('more-sunan').addEventListener('click', () => showTab('sunan'));
+    $('more-tools').addEventListener('click', () => showTab('tools'));
     $('anim-toggle').addEventListener('change', e => { settings.anim = e.target.checked; saveSettings(); applyFxClass(); });
     $('fs-toggle').addEventListener('change', e => {
         settings.fullscreen = e.target.checked; saveSettings();
@@ -5274,7 +5288,7 @@ document.querySelectorAll('i[data-ic]').forEach(el => {
 });
 applyLang();
 applyTheme();
-applyFxClass();
+applyFxClass(); applySimple();
 renderCitySelect();
 renderMethodSelect();
 buildTuneGrid();
