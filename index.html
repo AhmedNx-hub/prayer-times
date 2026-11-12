@@ -8,7 +8,7 @@
 <title>مواقيت الصلاة - Ahmed Nx</title>
 <style>
 :root {
-    --bg:#1e1e2f; --bg2:#2d3436; --text:#ffffff; --surface:#292b3c; --accent:#f1c40f; --muted:#b0b6bd;
+    --bg:#1e1e2f; --bg2:#2d3436; --text:#ffffff; --surface:#292b3c; --accent:#f1c40f; --muted:#b9bfc6;
     --border:rgba(255,255,255,.16); --hover:rgba(255,255,255,.08); --accent-soft:rgba(241,196,15,.18);
     --on-accent:#1a1a1a; --ok:#2ecc71; --danger:#e74c3c;
 }
@@ -37,18 +37,21 @@ h3 { font-size:1rem; margin:0 0 .8rem; color:var(--accent); }
 #next-prayer-name { font-size:2.2rem; font-weight:700; color:var(--accent); margin:.1rem 0; }
 #countdown { font-size:1.7rem; font-family:inherit; font-weight:700; letter-spacing:.02em; direction:ltr; font-variant-numeric:tabular-nums lining-nums; }
 #next-prayer-time { font-size:.85rem; color:var(--muted); margin-top:.2rem; }
-.bar { height:6px; border-radius:99px; background:var(--hover); overflow:hidden; margin-top:.9rem; }
+.bar { height:6px; border-radius:99px; background:var(--hover); overflow:hidden; margin-top:.75rem; }
 .bar > i { display:block; height:100%; width:100%; background:var(--accent); transform:scaleX(0); transform-origin:left; transition:transform .6s; }
 [dir=rtl] .bar > i { transform-origin:right; }
 
 /* القائمة */
 .prayer-row {
-    background:var(--hover); margin-bottom:.55rem; padding:.9rem 1rem; border-radius:.9rem;
+    background:var(--hover); margin-bottom:.55rem; padding:.9rem 1rem; border-radius:.8rem;
     display:flex; justify-content:space-between; align-items:center;
     border-inline-start:4px solid transparent; transition:.3s;
 }
 .prayer-row .time { font-family:inherit; font-variant-numeric:tabular-nums lining-nums; font-size:1.1rem; font-weight:600; }
 .active-prayer { border-inline-start-color:var(--accent); background:var(--accent-soft); }
+.prayer-row.past-prayer { opacity:.55; } .prayer-row.past-prayer.active-prayer { opacity:1; }
+.prayer-row.cur-prayer .pn::after { content:''; width:.5rem; height:.5rem; border-radius:50%; background:var(--accent); box-shadow:0 0 0 3px var(--accent-soft); flex:none; }
+.done-burst { position:fixed; left:50%; top:45%; width:5.5rem; height:5.5rem; border-radius:50%; background:var(--accent); color:var(--bg); display:grid; place-items:center; z-index:60; pointer-events:none; opacity:0; box-shadow:0 8px 30px rgba(0,0,0,.35); } .done-burst svg { width:2.8rem; height:2.8rem; stroke-width:3; }
 
 #error-box {
     background:rgba(231,76,60,.15); border:1px solid rgba(231,76,60,.5);
@@ -65,7 +68,7 @@ button { cursor:pointer; }
 select { width:100%; appearance:none; -webkit-appearance:none; padding-inline-end:2.2rem; background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' fill='none' stroke='%23b0b6bd' stroke-width='1.6' stroke-linecap='round'/%3E%3C/svg%3E"); background-repeat:no-repeat; background-position:right .8rem center; min-height:2.6rem; }
 [dir=rtl] select { background-position:left .8rem center; }
 input[type=time] { width:100%; text-align:center; }
-.timerow { display:grid; grid-template-columns:1fr 1fr; gap:.6rem; }
+.timerow { display:grid; grid-template-columns:1fr 1fr; gap:.5rem; }
 .timerow label { display:block; font-size:.75rem; color:var(--muted); margin-bottom:.2rem; }
 select option { background:var(--surface); color:var(--text); }
 input[type=text] { width:100%; }
@@ -73,10 +76,27 @@ input[type=number] { width:100%; text-align:center; padding:.45rem; }
 input[type=color] { width:3rem; height:2.1rem; padding:0; border:1px solid var(--border); border-radius:.5rem; background:none; cursor:pointer; }
 .btn-accent { background:var(--accent); color:var(--on-accent); border:none; font-weight:700; }
 .btn-block { width:100%; }
-.field { margin-bottom:.9rem; }
+.field { margin-bottom:.75rem; }
 .field > label { display:block; font-size:.8rem; color:var(--muted); margin-bottom:.3rem; }
 .switch { display:flex; align-items:center; justify-content:space-between; margin-bottom:.8rem; font-size:.92rem; }
 .switch input { width:1.2rem; height:1.2rem; accent-color:var(--accent); }
+.set-list { display:flex; flex-direction:column; gap:.5rem; margin-bottom:1rem; }
+.set-row { display:flex; align-items:center; gap:.85rem; width:100%; text-align:start; padding:.85rem 1rem; border-radius:.8rem; background:var(--surface); border:1px solid var(--border); }
+.set-row .sr-i { color:var(--accent); display:grid; place-items:center; flex:none; width:2.4rem; height:2.4rem; border-radius:.8rem; background:var(--accent-soft); } .set-row .sr-i svg { width:1.3rem; height:1.3rem; }
+.set-row .sr-t { flex:1; min-width:0; display:flex; flex-direction:column; gap:.1rem; } .set-row .sr-t b { font-size:1rem; } .set-row .sr-t small { color:var(--muted); font-size:.8rem; }
+.set-row .sr-go { color:var(--muted); flex:none; } .set-row .sr-go svg { width:1.1rem; height:1.1rem; } [dir=ltr] .set-row .sr-go, [dir=ltr] .set-back i { transform:scaleX(-1); }
+.set-back { display:flex; align-items:center; gap:.5rem; margin-bottom:.8rem; } .set-back b { font-size:1.05rem; } .set-back .ibtn { padding:.4rem .7rem; }
+#tab-settings.in-sec .more-box { display:none; }
+#settings-seg { display:none; }
+.btn-text { background:none; border-color:transparent; color:var(--muted); }
+:focus-visible { outline:2px solid var(--accent); outline-offset:2px; }
+#mini-cd { position:fixed; top:0; inset-inline:0; margin:0 auto; max-width:460px; z-index:45; display:flex; justify-content:space-between; align-items:center; padding:calc(.55rem + env(safe-area-inset-top)) 1.1rem .55rem; background:var(--surface); border-bottom:2px solid var(--accent); border-radius:0 0 1rem 1rem; box-shadow:0 6px 18px rgba(0,0,0,.25); transform:translateY(-110%); opacity:0; pointer-events:none; transition:transform .22s ease-out, opacity .22s; font-weight:700; }
+#mini-cd.show { transform:none; opacity:1; } #mini-cd.warn { border-bottom-color:#ff8a3d; } #mini-t { direction:ltr; font-variant-numeric:tabular-nums lining-nums; color:var(--accent); }
+@media (min-width:820px) { #mini-cd { display:none; } }
+.sk { height:3.2rem; border-radius:.8rem; background:var(--hover); margin-bottom:.5rem; animation:skp 1.4s ease-in-out infinite; } .sk:nth-child(3n) { height:5rem; } .no-fx .sk, html.lowpower .sk { animation:none; }
+@keyframes skp { 50% { opacity:.45; } }
+#app { padding-left:max(1rem, env(safe-area-inset-left)); padding-right:max(1rem, env(safe-area-inset-right)); }
+.grid2 > * { min-width:0; } .ibtn { min-width:0; }
 .seg { display:flex; flex-wrap:wrap; background:var(--hover); border-radius:1rem; padding:.25rem; gap:.25rem; margin-bottom:1rem; }
 .seg button { flex:1 1 auto; border:none; background:none; border-radius:.8rem; padding:.55rem .3rem; font-size:.82rem; color:var(--muted); }
 .seg.scroll { flex-wrap:nowrap; overflow-x:auto; overflow-y:hidden; -webkit-overflow-scrolling:touch; scrollbar-width:none; overscroll-behavior-x:contain; padding-inline:14px;
@@ -84,7 +104,7 @@ input[type=color] { width:3rem; height:2.1rem; padding:0; border:1px solid var(-
 .seg.scroll::-webkit-scrollbar { display:none; }
 .seg.scroll button { flex:0 0 auto; white-space:nowrap; padding:.55rem .95rem; }
 .seg button.on { background:var(--accent); color:var(--on-accent); font-weight:700; }
-.grid2 { display:grid; grid-template-columns:1fr 1fr; gap:.6rem; }
+.grid2 { display:grid; grid-template-columns:1fr 1fr; gap:.5rem; }
 .grid2 label { display:block; font-size:.75rem; color:var(--muted); margin-bottom:.2rem; text-align:center; }
 
 /* الثيمات */
@@ -96,12 +116,12 @@ input[type=color] { width:3rem; height:2.1rem; padding:0; border:1px solid var(-
 .chip.on { border-color:var(--accent); box-shadow:0 0 0 1px var(--accent); }
 .sw { width:1rem; height:1rem; border-radius:50%; border:1px solid var(--border); flex:none; }
 .chip .x { opacity:.7; padding:0 .2rem; }
-.color-row { display:flex; align-items:center; justify-content:space-between; margin-bottom:.6rem; font-size:.9rem; }
+.color-row { display:flex; align-items:center; justify-content:space-between; margin-bottom:.75rem; font-size:.9rem; }
 
 
 /* الأذكار */
 .dhikr {
-    background:var(--hover); border-radius:1rem; padding:.9rem; margin-bottom:.6rem;
+    background:var(--hover); border-radius:1rem; padding:.9rem; margin-bottom:.75rem;
     cursor:pointer; user-select:none; -webkit-user-select:none;
     display:flex; gap:.75rem; align-items:flex-start; transition:.2s; line-height:2;
 }
@@ -121,7 +141,7 @@ input[type=color] { width:3rem; height:2.1rem; padding:0; border:1px solid var(-
 .dhikr.shifting { transition:transform .15s; }
 .grip { flex:none; align-self:flex-start; background:none; border:none; padding:.2rem; color:var(--muted); line-height:0; touch-action:none; cursor:grab; }
 .grip i[data-ic] { width:1.3em; height:1.3em; }
-.abar { display:flex; flex-wrap:wrap; gap:.4rem; align-items:center; margin-bottom:.8rem; }
+.abar { display:flex; flex-wrap:wrap; gap:.5rem; align-items:center; margin-bottom:.8rem; }
 .abar button { background:var(--hover); border:1px solid transparent; border-radius:.8rem; padding:.4rem .7rem; font-size:.8rem; color:var(--muted); }
 .abar button.on { background:var(--accent-soft); color:var(--accent); border-color:var(--accent); }
 .abar .fs { display:flex; align-items:center; gap:.2rem; }
@@ -129,7 +149,7 @@ input[type=color] { width:3rem; height:2.1rem; padding:0; border:1px solid var(-
 .abar2 { margin-top:-.3rem; }
 #abar { position:sticky; top:0; z-index:5; background:var(--surface); padding:.4rem 0; margin-bottom:.4rem; justify-content:space-between; }
 #adhkar-progress { font-weight:700; color:var(--text); }
-#lib-continue { display:flex; width:100%; justify-content:space-between; align-items:center; gap:.5rem; background:var(--accent-soft); color:var(--accent); border:1px solid var(--accent); border-radius:1rem; padding:.7rem .9rem; margin-bottom:.7rem; font-size:.85rem; }
+#lib-continue { display:flex; width:100%; justify-content:space-between; align-items:center; gap:.5rem; background:var(--accent-soft); color:var(--accent); border:1px solid var(--accent); border-radius:1rem; padding:.7rem .9rem; margin-bottom:.75rem; font-size:.85rem; }
 #lib-continue span:last-child { font-weight:700; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
 .alldone { text-align:center; padding:1rem 0; color:var(--ok); }
 .verse { font-size:1.15rem; line-height:2.1; }
@@ -170,14 +190,14 @@ i[data-ic] { display:inline-flex; width:1.15em; height:1.15em; flex:none; vertic
 i[data-ic] svg { width:100%; height:100%; fill:none; stroke:currentColor; stroke-width:2; stroke-linecap:round; stroke-linejoin:round; }
 .nav-btn i[data-ic] { width:24px; height:24px; }
 .seg button { display:flex; align-items:center; justify-content:center; gap:.35rem; }
-.ibtn { display:flex; align-items:center; justify-content:center; gap:.4rem; }
+.ibtn { display:flex; align-items:center; justify-content:center; gap:.5rem; }
 [dir=rtl] .flip svg { transform:scaleX(-1); }
 .searchbox { display:flex; align-items:center; gap:.5rem; background:var(--hover); border:1px solid var(--border); border-radius:.8rem; padding:0 .8rem; color:var(--muted); }
 .searchbox input { border:none; background:none; flex:1; padding:.65rem 0; outline:none; }
-.cat-row { display:flex; align-items:center; justify-content:space-between; gap:.6rem; width:100%; text-align:start; background:var(--hover); border:none; border-radius:.9rem; padding:.8rem .9rem; margin-bottom:.45rem; line-height:1.7; }
+.cat-row { display:flex; align-items:center; justify-content:space-between; gap:.5rem; width:100%; text-align:start; background:var(--hover); border:none; border-radius:.8rem; padding:.8rem .9rem; margin-bottom:.45rem; line-height:1.7; }
 .cat-row.grp { font-weight:700; border-inline-start:3px solid var(--accent); }
 .cat-row .n { flex:none; font-size:.75rem; color:var(--accent); background:var(--accent-soft); border-radius:99px; padding:.1rem .55rem; }
-.back-btn { display:flex; align-items:center; gap:.4rem; }
+.back-btn { display:flex; align-items:center; gap:.5rem; }
 
 /* حلقة المسبحة */
 .tasbih-wrap { position:relative; width:216px; height:216px; margin:.4rem auto; }
@@ -207,7 +227,7 @@ html.no-fx *, html.no-fx *::before, html.no-fx *::after { transition-duration:.0
 @media (prefers-reduced-motion: reduce) { *, *::before, *::after { transition-duration:.01ms !important; animation-duration:.01ms !important; } }
 
 /* تصفح الأيام */
-.daynav { display:flex; gap:.5rem; margin-bottom:.9rem; }
+.daynav { display:flex; gap:.5rem; margin-bottom:.75rem; }
 .daynav button { flex:1; padding:.5rem .3rem; font-size:.82rem; }
 
 /* المسبحة */
@@ -230,8 +250,8 @@ html.no-fx *, html.no-fx *::before, html.no-fx *::after { transition-duration:.0
 .opts summary::after { content:'+'; float:inline-end; font-weight:700; }
 .opts[open] summary::after { content:'−'; }
 .gd > summary { color:var(--accent); font-weight:700; font-size:var(--fs-title); }
-.gd .field:last-child, .gd .switch:last-child { margin-bottom:.6rem; }
-.opts .abar { margin-bottom:.6rem; }
+.gd .field:last-child, .gd .switch:last-child { margin-bottom:.75rem; }
+.opts .abar { margin-bottom:.75rem; }
 .heat { display:grid; grid-template-columns:repeat(10,1fr); gap:.25rem; margin:.5rem 0; }
 .heat button { padding:0; border:none; }
 .heat button { display:block; width:100%; aspect-ratio:1; border-radius:.3rem; background:var(--hover); position:relative; overflow:hidden; }
@@ -243,8 +263,8 @@ html.no-fx *, html.no-fx *::before, html.no-fx *::after { transition-duration:.0
 .legend span.c i { position:absolute; inset:0; background:var(--accent); }
 .detail { font-size:.82rem; min-height:1.4em; margin:.2rem 0 .8rem; color:var(--text); }
 .goal { margin:.3rem 0 .6rem; }
-#adhkar-seg { flex-wrap:nowrap; }
-#adhkar-seg button { flex:1 1 0; min-width:0; flex-direction:column; gap:.15rem; font-size:.74rem; padding:.5rem .1rem; }
+#adhkar-seg { flex-wrap:nowrap; padding-inline:.25rem; }
+#adhkar-seg button { flex:1 0 auto; white-space:nowrap; flex-direction:column; gap:.15rem; font-size:.74rem; padding:.5rem .4rem; }
 .medals { display:flex; gap:.7rem; flex-wrap:wrap; margin:.4rem 0 1rem; }
 .mw { display:flex; flex-direction:column; align-items:center; gap:.25rem; }
 .mn { font-size:.72rem; color:var(--muted); }
@@ -277,7 +297,7 @@ html:not(.simple) .simple-only { display:none; }
 .wirdrow button { width:3rem; height:3rem; border-radius:50%; font-size:1.4rem; padding:0; line-height:1; }
 #stats-box.bigwird #wird-val { font-size:1.7rem; }
 #stats-box.bigwird .wirdrow button { width:3.6rem; height:3.6rem; }
-.qw { display:flex; align-items:center; justify-content:space-between; gap:.8rem; margin-top:.9rem; padding-top:.9rem; border-top:1px solid var(--border); }
+.qw { display:flex; align-items:center; justify-content:space-between; gap:.8rem; margin-top:.75rem; padding-top:.9rem; border-top:1px solid var(--border); }
 .qw .qi { display:flex; align-items:center; gap:.7rem; min-width:0; text-align:start; }
 .qw .qt { font-size:.85rem; line-height:1.5; } .qw .qt b { display:block; font-size:.78rem; font-weight:400; color:var(--muted); }
 .wring.sm { width:2.9rem; height:2.9rem; flex:none; } .wring.sm circle { stroke-width:7; } .wring.sm span { font-size:.8rem; font-weight:700; }
@@ -290,17 +310,17 @@ html:not(.simple) .simple-only { display:none; }
 .pchk svg { width:1rem; height:1rem; stroke:currentColor; fill:none; stroke-width:3; }
 .pchk.on { background:var(--accent-soft); color:var(--accent); border-color:var(--accent); }
 .naw-row { display:flex; justify-content:space-between; align-items:center; gap:.8rem; padding:.65rem .1rem; border-top:1px solid var(--border); font-size:.9rem; }
-#upd-bar { position:fixed; top:0; inset-inline:0; z-index:70; display:flex; align-items:center; gap:.6rem; padding:.6rem 1rem; background:var(--surface); border-bottom:2px solid var(--accent); box-shadow:0 4px 16px rgba(0,0,0,.35); }
+#upd-bar { position:fixed; top:0; inset-inline:0; z-index:70; display:flex; align-items:center; gap:.5rem; padding:.6rem 1rem; background:var(--surface); border-bottom:2px solid var(--accent); box-shadow:0 4px 16px rgba(0,0,0,.35); }
 #upd-bar span { flex:1; font-weight:700; font-size:.9rem; } #upd-bar button { min-height:2.3rem; padding:.4rem .9rem; border-radius:.8rem; font-size:.85rem; }
 .qjz b { cursor:pointer; user-select:none; -webkit-user-select:none; -webkit-touch-callout:none; touch-action:manipulation; } .qjz b.hold { outline:2px solid var(--accent); }
 .q-mem-row { display:block; width:100%; text-align:start; padding:.7rem .8rem; margin-bottom:.5rem; border-radius:.8rem; background:var(--hover); border:0; color:inherit; } .q-mem-row small { display:block; color:var(--muted); margin-top:.2rem; }
-#splash { position:fixed; inset:0; z-index:120; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:.4rem; padding:1.5rem; text-align:center; background:linear-gradient(135deg,var(--bg),var(--bg2)); transition:opacity .25s; } #splash[hidden] { display:none; } #splash.out { opacity:0; }
+#splash { position:fixed; inset:0; z-index:120; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:.5rem; padding:1.5rem; text-align:center; background:linear-gradient(135deg,var(--bg),var(--bg2)); transition:opacity .25s; } #splash[hidden] { display:none; } #splash.out { opacity:0; }
 #splash .sp-city { color:var(--muted); font-size:1rem; } #splash .sp-lab { color:var(--muted); font-size:1.05rem; margin-top:1rem; } #splash .sp-name { font-size:2.6rem; font-weight:700; color:var(--accent); line-height:1.2; } #splash .sp-time { font-size:3.2rem; font-weight:600; font-variant-numeric:tabular-nums; } #splash .sp-cd { font-size:1.4rem; color:var(--muted); font-variant-numeric:tabular-nums; }
-#splash .sp-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:.5rem; width:100%; max-width:26rem; margin-top:1.6rem; } #splash .sp-grid div { padding:.55rem .3rem; border-radius:.7rem; background:var(--hover); } #splash .sp-grid div.on { background:var(--accent); color:var(--on-accent); } #splash .sp-grid small { display:block; opacity:.8; } #splash .sp-grid b { font-variant-numeric:tabular-nums; }
+#splash .sp-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:.5rem; width:100%; max-width:26rem; margin-top:1.6rem; } #splash .sp-grid div { padding:.55rem .3rem; border-radius:.8rem; background:var(--hover); } #splash .sp-grid div.on { background:var(--accent); color:var(--on-accent); } #splash .sp-grid small { display:block; opacity:.8; } #splash .sp-grid b { font-variant-numeric:tabular-nums; }
 #splash .sp-tap { margin-top:1.4rem; color:var(--muted); font-size:.85rem; }
 .prayer-row.has-sheet { cursor:pointer; } .prayer-row.pinned { border-inline-start:3px solid var(--accent); }
 #sheet-body .btn-block.on { background:var(--accent-soft); color:var(--accent); border-color:var(--accent); }
-.sn-g { margin-bottom:.6rem; border-radius:.9rem; background:var(--hover); } .sn-g > summary { padding:.8rem 1rem; font-weight:700; cursor:pointer; } .sn-i { display:flex; gap:.6rem; align-items:flex-start; padding:.7rem 1rem; border-top:1px solid var(--border); } .sn-i .tx { flex:1; line-height:1.9; font-size:calc(1rem * var(--dfs, 1)); } html.lowpower *, html.lowpower *::before, html.lowpower *::after { transition-duration:.01ms !important; animation-duration:.01ms !important; } .flash { outline:2px solid var(--accent); outline-offset:3px; border-radius:.5rem; } .gs-g { font-size:.8rem; color:var(--muted); margin:.7rem 0 .2rem; } .td-r { display:flex; justify-content:space-between; gap:1rem; padding:.6rem 0; border-top:1px solid var(--border); } .td-r span:first-child { color:var(--muted); } .tab-hint { margin-bottom:.8rem; padding:.7rem .9rem; font-size:.85rem; line-height:1.7; } .tab-hint .th-row { display:flex; gap:.5rem; margin-top:.5rem; } .tab-hint .th-row button { min-height:0; padding:.3rem .9rem; font-size:.8rem; }
+.sn-g { margin-bottom:.75rem; border-radius:.8rem; background:var(--hover); } .sn-g > summary { padding:.8rem 1rem; font-weight:700; cursor:pointer; } .sn-i { display:flex; gap:.5rem; align-items:flex-start; padding:.7rem 1rem; border-top:1px solid var(--border); } .sn-i .tx { flex:1; line-height:1.9; font-size:calc(1rem * var(--dfs, 1)); } html.lowpower *, html.lowpower *::before, html.lowpower *::after { transition-duration:.01ms !important; animation-duration:.01ms !important; } .flash { outline:2px solid var(--accent); outline-offset:3px; border-radius:.5rem; } .gs-g { font-size:.8rem; color:var(--muted); margin:.7rem 0 .2rem; } .td-r { display:flex; justify-content:space-between; gap:1rem; padding:.6rem 0; border-top:1px solid var(--border); } .td-r span:first-child { color:var(--muted); } .tab-hint { margin-bottom:.8rem; padding:.7rem .9rem; font-size:.85rem; line-height:1.7; } .tab-hint .th-row { display:flex; gap:.5rem; margin-top:.5rem; } .tab-hint .th-row button { min-height:0; padding:.3rem .9rem; font-size:.8rem; }
 .after-card { margin-bottom:1rem; border-inline-start:3px solid var(--accent); }
 /* حركات خفيفة: transform وopacity فقط، وتُعطَّل مع «تقليل الحركة» وإيقاف المؤثرات */
 @keyframes navPop { 0% { transform:scale(.8); } 55% { transform:scale(1.18); } 100% { transform:scale(1); } }
@@ -319,12 +339,12 @@ html:not(.no-fx) details[open] > :not(summary) { animation:detIn .26s ease; }
 html:not(.no-fx) .dhikr.done .badge svg, html:not(.no-fx) .pchk.on svg { animation:badgePop .32s ease; }
 html:not(.no-fx) .star.on svg { animation:badgePop .32s ease; }
 .dhikr .note { font-size:.82rem; color:var(--muted); line-height:1.7; margin-top:.35rem; }
-.skipbtn { flex:none; align-self:flex-start; min-height:0; padding:.3rem .75rem; border-radius:.7rem; font-size:.82rem; background:none; border:1px solid var(--border); color:var(--muted); }
+.skipbtn { flex:none; align-self:flex-start; min-height:0; padding:.3rem .75rem; border-radius:.8rem; font-size:.82rem; background:none; border:1px solid var(--border); color:var(--muted); }
 .dhikr.done .skipbtn { display:none; }
-.sn-a { display:grid; grid-template-columns:repeat(2,auto); gap:.25rem 0; align-items:center; flex:none; } .sn-nt { display:block; margin-top:.3rem; padding:.3rem .6rem; border-radius:.6rem; background:var(--accent-soft); font-size:.9rem; } .sn-b svg { width:1rem; height:1rem; stroke:currentColor; fill:none; stroke-width:2; } .sn-b.on svg { fill:currentColor; } .sn-fav { background:var(--accent-soft); } #sod .sod-t { line-height:1.9; margin:.3rem 0 .6rem; } #sod .sod-t small { display:block; color:var(--muted); } .q-fs { display:flex; align-items:center; gap:.5rem; flex:1; min-width:9rem; } .q-fs input { flex:1; min-width:0; accent-color:var(--accent); }
+.sn-a { display:grid; grid-template-columns:repeat(2,auto); gap:.25rem 0; align-items:center; flex:none; } .sn-nt { display:block; margin-top:.3rem; padding:.3rem .6rem; border-radius:.5rem; background:var(--accent-soft); font-size:.9rem; } .sn-b svg { width:1rem; height:1rem; stroke:currentColor; fill:none; stroke-width:2; } .sn-b.on svg { fill:currentColor; } .sn-fav { background:var(--accent-soft); } #sod .sod-t { line-height:1.9; margin:.3rem 0 .6rem; } #sod .sod-t small { display:block; color:var(--muted); } .q-fs { display:flex; align-items:center; gap:.5rem; flex:1; min-width:9rem; } .q-fs input { flex:1; min-width:0; accent-color:var(--accent); }
 .sn-i small { display:block; color:var(--muted); margin-top:.2rem; }
-.pr-seg { display:grid; grid-template-columns:repeat(3,1fr); gap:.4rem; margin-bottom:.8rem; } .pr-seg button.on { background:var(--accent-soft); color:var(--accent); border-color:var(--accent); }
-.pr-panel { padding:.8rem 1rem; border-radius:.9rem; background:var(--hover); line-height:1.9; margin-bottom:1rem; } .pr-panel ol { margin:.4rem 0 0; padding-inline-start:1.3rem; } .pr-panel li { margin-bottom:.5rem; }
+.pr-seg { display:grid; grid-template-columns:repeat(3,1fr); gap:.5rem; margin-bottom:.8rem; } .pr-seg button.on { background:var(--accent-soft); color:var(--accent); border-color:var(--accent); }
+.pr-panel { padding:.8rem 1rem; border-radius:.8rem; background:var(--hover); line-height:1.9; margin-bottom:1rem; } .pr-panel ol { margin:.4rem 0 0; padding-inline-start:1.3rem; } .pr-panel li { margin-bottom:.5rem; }
 #sheet { position:fixed; inset:0; z-index:60; background:var(--bg); overflow-y:auto; -webkit-overflow-scrolling:touch; }
 .sheet-in { max-width:780px; margin:0 auto; padding:1rem 1rem 3rem; }
 .sheet-head { display:flex; align-items:center; justify-content:space-between; gap:1rem; margin-bottom:1rem; }
@@ -335,12 +355,13 @@ html.sheet-open body { overflow:hidden; }
 .q-search { width:100%; margin-bottom:.8rem; }
 .q-cont { width:100%; margin-bottom:.8rem; justify-content:space-between; }
 .q-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(9.5rem,1fr)); gap:.5rem; }
-.q-s { display:flex; align-items:center; gap:.5rem; padding:.55rem .7rem; text-align:start; border-radius:.8rem; min-height:3rem; }
+.q-s { display:grid; grid-template-columns:auto minmax(0,1fr); grid-template-areas:'b n' 'b c'; align-items:center; column-gap:.55rem; row-gap:0; padding:.5rem .7rem; text-align:start; border-radius:.8rem; min-height:3.4rem; }
+.q-s b { grid-area:b; } .q-s span { grid-area:n; } .q-s small { grid-area:c; line-height:1.2; }
 .q-s b { flex:none; min-width:1.8rem; height:1.8rem; border-radius:50%; background:var(--accent-soft); color:var(--accent); display:grid; place-items:center; font-size:.8rem; }
 .q-s span { font-family:'AmiriQ',serif; font-size:1.2rem; line-height:1.8; flex:1; min-width:0; }
 .q-s small { color:var(--muted); font-size:.72rem; opacity:.85; flex:none; }
 .q-bar { display:flex; align-items:center; gap:.5rem; margin-bottom:.8rem; flex-wrap:wrap; }
-.q-bar { gap:.35rem; } .q-bar button { min-height:2.4rem; padding:0 .45rem; font-size:.8rem; } .q-bar .sp { flex:1; } .q-chips { margin-top:-.3rem; gap:.4rem; } .q-chips button { min-height:2.1rem; padding:0 .55rem; font-size:.78rem; border-radius:999px; }
+.q-bar { gap:.35rem; } .q-bar button { min-height:2.4rem; padding:0 .45rem; font-size:.8rem; } .q-bar .sp { flex:1; } .q-chips { margin-top:-.3rem; gap:.5rem; } .q-chips button { min-height:2.1rem; padding:0 .55rem; font-size:.78rem; border-radius:999px; }
 .q-bar svg, .q-act svg { width:1.1rem; height:1.1rem; fill:none; stroke:currentColor; stroke-width:2; }
 .q-head { text-align:center; font-family:'AmiriQ',serif; font-size:2rem; color:var(--accent); margin:.4rem 0; }
 .q-bsm { text-align:center; font-family:'AmiriQ',serif; font-size:calc(var(--qfs,1.7rem)*1.05); margin:.4rem 0 1rem; }
@@ -348,7 +369,7 @@ html.sheet-open body { overflow:hidden; }
 .q-v { cursor:pointer; padding:0 .1rem; -webkit-box-decoration-break:clone; box-decoration-break:clone; }
 .q-v.sel { background:linear-gradient(to top, var(--accent-soft) 45%, transparent 45%); text-decoration:underline; text-decoration-color:var(--accent); text-decoration-thickness:.07em; text-underline-offset:.45em; }
 .q-n { color:var(--accent); font-size:.8em; margin:0 .15em; white-space:nowrap; }
-.q-act { position:sticky; bottom:0; margin:1rem .2rem 0; padding:.6rem .6rem .5rem; background:var(--surface); border:1px solid var(--border); border-radius:1.1rem; box-shadow:0 -6px 24px rgba(0,0,0,.35); animation:qUp .18s ease-out; z-index:5; }
+.q-act { position:sticky; bottom:0; margin:1rem .2rem 0; padding:.6rem .6rem .5rem; background:var(--surface); border:1px solid var(--border); border-radius:1rem; box-shadow:0 -6px 24px rgba(0,0,0,.35); animation:qUp .18s ease-out; z-index:5; }
 @keyframes qUp { from { transform:translateY(10px); opacity:0; } to { transform:none; opacity:1; } }
 .q-mh { display:flex; align-items:center; justify-content:space-between; gap:.5rem; margin-bottom:.5rem; }
 .q-mh b { font-size:.9rem; color:var(--accent); } .q-mh small { color:var(--muted); font-size:.72rem; display:block; margin-top:.1rem; }
@@ -360,11 +381,11 @@ html.sheet-open body { overflow:hidden; }
 .q-mb button.on.g { background:rgba(46,204,113,.16); color:var(--ok); border-color:var(--ok); }
 .q-text.simple .q-pg { display:none; }
 .q-text.simple { text-align:start; text-align-last:start; line-height:2.1; } .q-text.simple .q-v { display:block; padding:.55rem .3rem; border-bottom:1px solid var(--border); border-radius:0; }
-.q-taf { margin-top:.6rem; padding:.7rem .8rem; max-height:40vh; overflow:auto; border-radius:.8rem; background:var(--hover); direction:rtl; font-size:1.02rem; line-height:1.9; } .q-taf small { display:block; margin-top:.5rem; color:var(--muted); font-size:.72rem; }
+.q-taf { margin-top:.75rem; padding:.7rem .8rem; max-height:40vh; overflow:auto; border-radius:.8rem; background:var(--hover); direction:rtl; font-size:1.02rem; line-height:1.9; } .q-taf small { display:block; margin-top:.5rem; color:var(--muted); font-size:.72rem; }
 .q-pg { display:block; text-align:center; font-family:'AmiriQ',serif; font-size:1.7rem; color:var(--ok); opacity:.9; margin:.6rem 0; line-height:1.4; border-top:1px dashed var(--border); padding-top:.3rem; }
 .q-v.sj .q-n::after { content:'\00a0\06E9'; color:var(--accent); }
-.q-jz { display:grid; grid-template-columns:repeat(auto-fill,minmax(2.9rem,1fr)); gap:.4rem; margin-bottom:.6rem; }
-.q-jz button { min-width:0; min-height:2.4rem; padding:0 .6rem; border-radius:.7rem; }
+.q-jz { display:grid; grid-template-columns:repeat(auto-fill,minmax(2.9rem,1fr)); gap:.5rem; margin-bottom:.75rem; }
+.q-jz button { min-width:0; min-height:2.4rem; padding:0 .6rem; border-radius:.8rem; }
  #fab-back { position:fixed; inset-inline-start:.9rem; bottom:calc(5rem + env(safe-area-inset-bottom)); z-index:30; width:2.9rem; height:2.9rem; padding:0; border-radius:50%; display:grid; place-items:center; background:var(--surface); color:var(--text); border:1px solid var(--border); box-shadow:0 4px 16px rgba(0,0,0,.4); opacity:.92; animation:qUp .18s ease-out; }
 #fab-back svg { width:1.3rem; height:1.3rem; fill:none; stroke:currentColor; stroke-width:2; }
 [dir=ltr] #fab-back svg { transform:scaleX(-1); }
@@ -375,13 +396,13 @@ html.sheet-open body { overflow:hidden; }
 .q-bmi .tx { font-family:'AmiriQ',serif; font-size:1.2rem; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; line-height:1.9; direction:rtl; display:block; }
 .q-bmi .del { width:2.4rem; height:2.4rem; min-height:0; padding:0; border-radius:50%; flex:none; display:grid; place-items:center; } .q-bmi .del svg { width:1.1rem; height:1.1rem; fill:none; stroke:currentColor; stroke-width:2; }
 #daily-card.tap { cursor:pointer; }
-.qchart { display:flex; gap:.4rem; align-items:flex-end; height:7rem; margin:.6rem 0; }
+.qchart { display:flex; gap:.5rem; align-items:flex-end; height:7rem; margin:.6rem 0; }
 .qchart > div { flex:1; display:flex; flex-direction:column; align-items:center; justify-content:flex-end; height:100%; min-width:0; }
 .qchart i { display:block; width:100%; background:var(--accent); border-radius:.4rem .4rem 0 0; min-height:3px; }
 .qchart i.z { background:var(--hover); }
 .qchart span { font-size:.7rem; margin-bottom:.15rem; } .qchart small { font-size:.7rem; color:var(--muted); margin-top:.25rem; }
 .wn-list { margin:0 0 1rem; padding:0; list-style:none; } .wn-list li { padding:.7rem .9rem; margin-bottom:.5rem; border-radius:.8rem; background:var(--hover); line-height:1.7; }
-.q-go { display:flex; gap:.4rem; margin-bottom:.8rem; } .q-go input { flex:1; min-width:0; }
+.q-go { display:flex; gap:.5rem; margin-bottom:.8rem; } .q-go input { flex:1; min-width:0; }
 .q-res { display:block; width:100%; text-align:start; padding:.7rem .9rem; margin-bottom:.5rem; border-radius:.8rem; }
 .q-res small { color:var(--muted); display:block; margin-bottom:.2rem; }
 .q-res span { font-family:'AmiriQ',serif; font-size:1.25rem; line-height:1.9; direction:rtl; display:block; }
@@ -397,21 +418,21 @@ html.sheet-open body { overflow:hidden; }
 .q-w { border-radius:.3rem; }
 .q-text.h1 .q-w:nth-child(3n+3), .q-text.h2 .q-w { color:transparent; -webkit-text-fill-color:transparent; background:var(--hover); text-shadow:none; }
 .q-text .q-v.sel .q-w, .q-text.rev .q-w { color:inherit !important; -webkit-text-fill-color:currentColor !important; background:none !important; }
-.qbox { border:1px solid var(--border); border-radius:.9rem; padding:.8rem; margin-bottom:.8rem; }
+.qbox { border:1px solid var(--border); border-radius:.8rem; padding:.8rem; margin-bottom:.8rem; }
 .qbox h3 { margin:0 0 .5rem; }
 .qbar { height:.5rem; border-radius:1rem; background:var(--hover); overflow:hidden; margin:.5rem 0; }
 .qbar i { display:block; height:100%; background:var(--accent); border-radius:1rem; }
-.qbox .row { display:flex; gap:.5rem; flex-wrap:wrap; margin-top:.6rem; } .qbox .row > * { flex:1 1 auto; }
+.qbox .row { display:flex; gap:.5rem; flex-wrap:wrap; margin-top:.75rem; } .qbox .row > * { flex:1 1 auto; }
 .qbox p { margin:.3rem 0; }
 .qbox select, .qbox input { width:100%; margin-top:.3rem; }
 .q-bar2 { display:flex; gap:.5rem; flex-direction:column; margin-bottom:.8rem; }
 
 .mt-cv { width:100%; display:block; border-radius:.8rem; margin:.8rem 0; background:#fff; }
-.cal-nav { display:flex; align-items:center; justify-content:space-between; gap:.6rem; margin-bottom:.6rem; }
+.cal-nav { display:flex; align-items:center; justify-content:space-between; gap:.5rem; margin-bottom:.75rem; }
 .cal-nav button { width:2.6rem; height:2.6rem; padding:0; border-radius:50%; display:grid; place-items:center; flex:none; } .cal-nav svg { width:1.2rem; height:1.2rem; fill:none; stroke:currentColor; stroke-width:2; }
 .cal-grid { display:grid; grid-template-columns:repeat(7,1fr); gap:.3rem; }
 .cal-h { text-align:center; font-size:.72rem; color:var(--muted); padding:.2rem 0; }
-.cal-c { position:relative; aspect-ratio:1; border-radius:.7rem; background:var(--hover); display:flex; flex-direction:column; align-items:center; justify-content:center; font-weight:700; }
+.cal-c { position:relative; aspect-ratio:1; border-radius:.8rem; background:var(--hover); display:flex; flex-direction:column; align-items:center; justify-content:center; font-weight:700; }
 .cal-c small { font-weight:400; font-size:.62rem; color:var(--muted); }
 .cal-c.today { outline:2px solid var(--accent); } .cal-c.occ { background:var(--accent-soft); color:var(--accent); } .cal-c.white small::after { content:''; }
 .cal-c.white { box-shadow:inset 0 -3px 0 var(--accent); }
@@ -420,9 +441,9 @@ html.sheet-open body { overflow:hidden; }
 .zk-res .r { display:flex; justify-content:space-between; gap:1rem; padding:.35rem 0; } .zk-res .big { font-size:1.3rem; font-weight:700; color:var(--accent); }
 .about { text-align:center; padding:1.2rem .5rem .8rem; }
 .ab-name { font-size:1.3rem; font-weight:700; letter-spacing:.02em; }
-.ab-nick { display:flex; align-items:center; justify-content:center; gap:.6rem; margin:.5rem 0 1.2rem; color:var(--accent); font-size:1.05rem; letter-spacing:.08em; }
+.ab-nick { display:flex; align-items:center; justify-content:center; gap:.5rem; margin:.5rem 0 1.2rem; color:var(--accent); font-size:1.05rem; letter-spacing:.08em; }
 .ab-nick .orn { width:.8rem; height:1.8rem; flex:none; } .ab-nick .orn.flip-x { transform:scaleX(-1); }
-.ab-line { display:flex; align-items:center; justify-content:center; gap:.5rem; margin-top:.7rem; color:var(--muted); font-size:.9rem; }
+.ab-line { display:flex; align-items:center; justify-content:center; gap:.5rem; margin-top:.75rem; color:var(--muted); font-size:.9rem; }
 .ab-line i[data-ic] { width:1.2rem; height:1.2rem; color:var(--accent); flex:none; }
 .ab-line svg { width:100%; height:100%; fill:none; stroke:currentColor; stroke-width:2; stroke-linecap:round; stroke-linejoin:round; }
 .naw-row .v.ok { color:var(--ok); } .naw-row .v.bad { color:var(--danger); }
@@ -435,10 +456,10 @@ html.sheet-open body { overflow:hidden; }
 .linkbtn { background:none; border:none; padding:0 .2rem; min-height:0; color:var(--accent); text-decoration:underline; font-size:inherit; border-radius:.3rem; }
 #wird-meta { margin:.2rem 0 .4rem; }
 .sec > .grp { margin:1.4rem 0 .7rem; } .sec > .grp:first-child { margin-top:0; }
-.sec > .switch { margin-bottom:.5rem; } .sec > .sub { margin-top:.2rem; margin-bottom:.9rem; }
+.sec > .switch { margin-bottom:.5rem; } .sec > .sub { margin-top:.2rem; margin-bottom:.75rem; }
 .wring circle.bg { stroke:var(--track); } .pbar { background:var(--track); }
 .wring.sm span svg { width:1.15rem; height:1.15rem; stroke:currentColor; fill:none; stroke-width:3; }
-#after-card:not([hidden]) ~ #backup-card { border-top-color:color-mix(in srgb, var(--border) 40%, transparent); margin-top:.6rem; padding-top:.7rem; }
+#after-card:not([hidden]) ~ #backup-card { border-top-color:color-mix(in srgb, var(--border) 40%, transparent); margin-top:.75rem; padding-top:.7rem; }
 
 /* تخطيط التابلت والكمبيوتر: شريط جانبي + أعمدة */
 @media (min-width:820px), (orientation:landscape) and (max-height:520px) and (min-width:560px) {
@@ -459,6 +480,8 @@ html.sheet-open body { overflow:hidden; }
   #tab-times > .card:not(.prayers):not(.hero) { grid-column:1; }
 }
 @media (min-width:1200px) { #app { max-width:1240px; } .hero-ring { width:17rem; height:17rem; } }
+@media (orientation:landscape) and (max-height:520px) { #bottom-nav { padding-left:env(safe-area-inset-left); padding-right:env(safe-area-inset-right); } }
+#app { padding-top:max(1rem, env(safe-area-inset-top)); }
 @media (min-width:1700px) { html { font-size:112.5%; } #app { max-width:1400px; } #tab-adhkar, #tab-settings, #tab-quran, #tab-tools, #tab-sunan { max-width:940px; } }
 @media (min-width:2200px) { html { font-size:125%; } #app { max-width:1600px; } }
 @media (max-width:559px) and (max-height:680px) { html .hero-ring { width:11.5rem; height:11.5rem; } }
@@ -468,14 +491,14 @@ input::placeholder { text-overflow:ellipsis; }
 @media (max-width:359px) {
   .card { padding:1rem .85rem; }
   .hero-ring { width:13.5rem; height:13.5rem; }
-  .medals { gap:.45rem; }
+  .medals { gap:.5rem; }
   .qw { gap:.5rem; } .qw .qi { gap:.5rem; } .qw .qt { font-size:.8rem; }
   .notice button, .hint button, .qw button { padding:.5rem .6rem; font-size:.85rem; }
   #stats-box.bigwird .wring { width:9.5rem; height:9.5rem; }
 }
 .hint { margin:0 0 .9rem; padding:.9rem 1rem; border:1px solid var(--border); border-radius:12px; background:var(--surface); }
-.hint .grid2 { margin-top:.7rem; }
-.pbar { height:3px; border-radius:3px; background:var(--border); margin-top:.6rem; overflow:hidden; }
+.hint .grid2 { margin-top:.75rem; }
+.pbar { height:3px; border-radius:3px; background:var(--border); margin-top:.75rem; overflow:hidden; }
 .pbar i { display:block; height:100%; width:100%; background:var(--accent); transform-origin:inline-start; transform:scaleX(0); }
 html[dir=rtl] .pbar i { transform-origin:right; } html[dir=ltr] .pbar i { transform-origin:left; }
 .wring { position:relative; width:8.5rem; height:8.5rem; display:grid; place-items:center; }
@@ -489,7 +512,7 @@ html.no-fx .wring .fg { transition:none; }
 .wbar > i { display:block; height:100%; background:var(--accent); transform-origin:right; }
 html[dir=ltr] .wbar > i { transform-origin:left; }
 .trackgrid { display:grid; grid-template-columns:1.6fr 1fr 1fr 1fr; gap:.3rem; }
-.tc { background:var(--hover); border-radius:.6rem; padding:.4rem .2rem; text-align:center; font-size:.8rem; color:var(--muted); }
+.tc { background:var(--hover); border-radius:.5rem; padding:.4rem .2rem; text-align:center; font-size:.8rem; color:var(--muted); }
 .tc.th { background:none; color:var(--muted); font-size:.72rem; }
 .tc.okc { color:var(--ok); font-weight:700; }
 
@@ -501,7 +524,7 @@ h3, .grp { font-size:var(--fs-title); font-weight:700; margin:0 0 .8rem; color:v
 .field { margin-bottom:1rem; }
 .field > label, .timerow label, .grid2 label { font-size:var(--fs-label); }
 .small { font-size:var(--fs-note); }
-.switch { font-size:var(--fs-ctl); margin-bottom:.9rem; min-height:2.4rem; }
+.switch { font-size:var(--fs-ctl); margin-bottom:.75rem; min-height:2.4rem; }
 .opts summary { font-size:var(--fs-ctl); }
 .abar button { font-size:var(--fs-label); min-height:2.2rem; }
 .seg button { font-size:var(--fs-label); min-height:2.4rem; }
@@ -512,14 +535,14 @@ h3, .grp { font-size:var(--fs-title); font-weight:700; margin:0 0 .8rem; color:v
 #onb { position:fixed; inset:0; z-index:100; overflow:auto; background:linear-gradient(135deg,var(--bg),var(--bg2)); display:flex; align-items:center; justify-content:center; padding:1.2rem; }
 #onb[hidden] { display:none; }
 .onb-card { width:100%; max-width:420px; }
-.onb-dots { display:flex; gap:.4rem; justify-content:center; margin-bottom:1.6rem; }
+.onb-dots { display:flex; gap:.5rem; justify-content:center; margin-bottom:1.6rem; }
 .onb-dots i { width:.5rem; height:.5rem; border-radius:99px; background:var(--border); transition:width .25s ease, background .25s ease; }
 .onb-dots i.on { width:1.6rem; background:var(--accent); }
 #onb h2 { margin:0 0 .4rem; text-align:center; color:var(--accent); }
 #onb p { text-align:center; margin:0 0 1.4rem; }
-.onb-opt { display:block; width:100%; margin-bottom:.7rem; padding:1rem; font-size:1.05rem; }
+.onb-opt { display:block; width:100%; margin-bottom:.75rem; padding:1rem; font-size:1.05rem; }
 .onb-opt.on { background:var(--accent); color:var(--on-accent); font-weight:700; border-color:var(--accent); }
-.onb-nav { display:flex; gap:.6rem; margin-top:1.4rem; }
+.onb-nav { display:flex; gap:.5rem; margin-top:1.4rem; }
 .onb-nav button { flex:1; }
 .onb-skip { display:block; margin:1rem auto 0; background:none; border:none; color:var(--muted); }
 
@@ -528,6 +551,7 @@ h3, .grp { font-size:var(--fs-title); font-weight:700; margin:0 0 .8rem; color:v
 .hero-ring svg { position:absolute; inset:0; width:100%; height:100%; transform:rotate(-90deg); }
 .hero-ring circle { fill:none; }
 .hr-bg { stroke:var(--border); stroke-width:3; }
+.hr-pg.warn { stroke:#ff8a3d; }
 .hr-pg { stroke:var(--accent); stroke-width:3.6; stroke-linecap:round; stroke-dasharray:289.03; stroke-dashoffset:289.03; transition:stroke-dashoffset .9s linear; }
 .hero-in { position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center; }
 /* الطباعة / PDF */
@@ -542,8 +566,8 @@ h3, .grp { font-size:var(--fs-title); font-weight:700; margin:0 0 .8rem; color:v
 
 /* بطاقة اليوم */
 .hero-dates { display:flex; flex-wrap:wrap; justify-content:center; gap:.15rem 1rem; margin-top:.4rem; }
-.notice { margin-top:.9rem; padding-top:.9rem; border-top:1px solid var(--border); text-align:start; }
-.pills { display:flex; flex-wrap:wrap; gap:.4rem; margin-top:.45rem; }
+.notice { margin-top:.75rem; padding-top:.9rem; border-top:1px solid var(--border); text-align:start; }
+.pills { display:flex; flex-wrap:wrap; gap:.5rem; margin-top:.45rem; }
 .pill { padding:.25rem .75rem; border-radius:99px; font-size:var(--fs-label); background:var(--hover); color:var(--muted); border:1px solid transparent; }
 .pill.on { background:var(--accent-soft); color:var(--accent); border-color:var(--accent); }
 .detail { min-height:3.4rem; }
@@ -554,6 +578,10 @@ html.onehand.nav-away #abar { bottom:calc(1rem + env(safe-area-inset-bottom)); }
 html.onehand.focus #abar { bottom:4.6rem; }
 html.onehand #tab-adhkar { padding-bottom:3.8rem; }
 [hidden] { display:none !important; }
+.dhikr { background-image:linear-gradient(to left, color-mix(in srgb, var(--accent) 7%, transparent) calc(var(--p, 0) * 1%), transparent 0); }
+[dir=ltr] .dhikr { background-image:linear-gradient(to right, color-mix(in srgb, var(--accent) 7%, transparent) calc(var(--p, 0) * 1%), transparent 0); }
+.dhikr .badge { background:radial-gradient(circle, var(--hover) 56%, transparent 59%), conic-gradient(var(--accent) calc(var(--p, 0) * 1%), var(--accent-soft) 0); }
+.dhikr.done .badge { background:rgba(46,204,113,.25); }
 </style>
 <link rel="manifest" href="manifest.json">
 <link rel="apple-touch-icon" href="icon-192.png">
@@ -583,23 +611,23 @@ html.onehand #tab-adhkar { padding-bottom:3.8rem; }
         <div class="notice adv" id="sod" hidden></div>
         <div class="notice" id="loc-card" hidden>
             <div style="font-weight:700" id="loc-text"></div>
-            <div class="grid2" style="margin-top:.7rem">
+            <div class="grid2" style="margin-top:.75rem">
                 <button id="loc-yes" class="btn-accent" data-i18n="locYes"></button>
-                <button id="loc-no" data-i18n="locNo"></button>
+                <button class="btn-text" id="loc-no" data-i18n="locNo"></button>
             </div>
         </div>
         <div class="notice" id="mig-card" hidden>
             <div style="font-weight:700" data-i18n="migCard"></div>
-            <div class="grid2" style="margin-top:.7rem">
+            <div class="grid2" style="margin-top:.75rem">
                 <button id="mig-go" class="btn-accent" data-i18n="migGo"></button>
-                <button id="mig-no" data-i18n="migNo"></button>
+                <button class="btn-text" id="mig-no" data-i18n="migNo"></button>
             </div>
         </div>
         <div class="notice" id="backup-card" hidden>
             <div style="font-weight:700" data-i18n="backupTitle"></div>
-            <div class="grid2" style="margin-top:.7rem">
+            <div class="grid2" style="margin-top:.75rem">
                 <button id="backup-now" class="btn-accent" data-i18n="backupNow"></button>
-                <button id="backup-later" data-i18n="backupLater"></button>
+                <button class="btn-text" id="backup-later" data-i18n="backupLater"></button>
             </div>
         </div>
     </div>
@@ -607,9 +635,9 @@ html.onehand #tab-adhkar { padding-bottom:3.8rem; }
         <div id="after-title" style="font-weight:700"></div>
         <div class="pbar" aria-hidden="true"><i id="after-bar"></i></div>
         <div class="tiny muted" id="after-left"></div>
-        <div class="grid2" style="margin-top:.7rem">
+        <div class="grid2" style="margin-top:.75rem">
             <button id="after-open" class="btn-accent" data-i18n="afterOpen"></button>
-            <button id="after-hide" data-i18n="afterHide"></button>
+            <button class="btn-text" id="after-hide" data-i18n="afterHide"></button>
         </div>
     </div>
 
@@ -625,7 +653,7 @@ html.onehand #tab-adhkar { padding-bottom:3.8rem; }
         </div>
 
         <div id="error-box" hidden>
-            <div style="margin-bottom:.6rem" id="error-text"></div>
+            <div style="margin-bottom:.75rem" id="error-text"></div>
             <button id="retry-btn" class="btn-accent ibtn"><i data-ic="refresh-cw"></i><span data-i18n="retry"></span></button>
         </div>
         <div id="prayers-list"></div>
@@ -658,20 +686,20 @@ html.onehand #tab-adhkar { padding-bottom:3.8rem; }
 <section class="panel" id="tab-tools" hidden>
     <div class="card" id="tools-card">
         <h3 data-i18n="toolsTitle"></h3>
-        <div class="grid2" style="margin-bottom:.6rem"><button id="tool-search" class="ibtn"><i data-ic="search"></i><span data-i18n="gsBtn"></span></button><button id="tool-today" class="ibtn"><i data-ic="calendar"></i><span data-i18n="tdBtn"></span></button></div>
+        <div class="grid2" style="margin-bottom:.75rem"><button id="tool-search" class="ibtn"><i data-ic="search"></i><span data-i18n="gsBtn"></span></button><button id="tool-today" class="ibtn"><i data-ic="calendar"></i><span data-i18n="tdBtn"></span></button></div>
         <div class="grid2">
             <button id="tool-imsak" class="ibtn"><i data-ic="calendar-days"></i><span data-i18n="toolImsak"></span></button>
             <button id="tool-cal" class="ibtn"><i data-ic="moon"></i><span data-i18n="toolCal"></span></button>
         </div>
-        <button id="tool-zakat" class="btn-block ibtn" style="margin-top:.6rem"><i data-ic="calculator"></i><span data-i18n="toolZakat"></span></button>
-        <button id="tool-mosque" class="btn-block ibtn" style="margin-top:.6rem"><i data-ic="map-pin"></i><span data-i18n="toolMosque"></span></button>
+        <button id="tool-zakat" class="btn-block ibtn" style="margin-top:.75rem"><i data-ic="calculator"></i><span data-i18n="toolZakat"></span></button>
+        <button id="tool-mosque" class="btn-block ibtn" style="margin-top:.75rem"><i data-ic="map-pin"></i><span data-i18n="toolMosque"></span></button>
     </div>
 </section>
 
 <section class="panel" id="tab-adhkar" hidden>
     <div class="card">
         <h3 data-i18n="adhkarTitle"></h3>
-        <div class="seg" id="adhkar-seg">
+        <div class="seg scroll" id="adhkar-seg">
             <button data-set="morning"><i data-ic="sun"></i><span data-i18n="morning"></span></button>
             <button data-set="evening"><i data-ic="moon"></i><span data-i18n="evening"></span></button>
             <button data-set="tasbih"><i data-ic="circle-dot"></i><span data-i18n="tasbih"></span></button>
@@ -681,7 +709,7 @@ html.onehand #tab-adhkar { padding-bottom:3.8rem; }
 
         <div class="hint" id="oh-hint" hidden>
             <div style="font-weight:700" data-i18n="ohHint"></div>
-            <div class="grid2" style="margin-top:.7rem"><button id="oh-try" class="btn-accent" data-i18n="ohTry"></button><button id="oh-later" data-i18n="ohLater"></button></div>
+            <div class="grid2" style="margin-top:.75rem"><button id="oh-try" class="btn-accent" data-i18n="ohTry"></button><button class="btn-text" id="oh-later" data-i18n="ohLater"></button></div>
         </div>
         <div class="abar" id="abar">
             <span id="adhkar-progress" class="small"></span>
@@ -752,7 +780,7 @@ html.onehand #tab-adhkar { padding-bottom:3.8rem; }
                 <button id="tasbih-undo" class="ibtn"><i data-ic="undo-2" class="flip"></i><span data-i18n="undo"></span></button>
                 <button id="tasbih-reset" class="ibtn"><i data-ic="rotate-ccw"></i><span data-i18n="resetCount"></span></button>
             </div>
-            <details class="opts" style="margin-top:.9rem">
+            <details class="opts" style="margin-top:.75rem">
                 <summary data-i18n="tasbihSet"></summary>
                 <div class="field">
                     <label for="tasbih-phrase" data-i18n="tasbihPhrase"></label>
@@ -801,7 +829,7 @@ html.onehand #tab-adhkar { padding-bottom:3.8rem; }
         <div id="wird-meta" class="center small muted"><span id="wird-meta-t"></span> · <button id="wird-edit" class="linkbtn" data-i18n="wirdEdit"></button></div>
         <div class="wirdrow"><button id="wird-minus" aria-label="-">−</button><div class="wring" id="wring"><svg viewBox="0 0 100 100" aria-hidden="true"><circle class="bg" cx="50" cy="50" r="46"/><circle class="fg" id="wring-fg" cx="50" cy="50" r="46"/></svg><div id="wird-val"></div></div><button id="wird-plus" aria-label="+">+</button></div>
         <div id="wird-sub" class="center muted small"></div>
-        <button id="wird-quran" class="btn-block ibtn" style="margin-top:.6rem"><i data-ic="book-open"></i><span data-i18n="toolQuran"></span></button>
+        <button id="wird-quran" class="btn-block ibtn" style="margin-top:.75rem"><i data-ic="book-open"></i><span data-i18n="toolQuran"></span></button>
         <h3 data-i18n="qadaTitle" style="margin-top:1.2rem"></h3>
         <div class="qada"><button id="qada-minus" aria-label="-">−</button><b id="qada-n"></b><button id="qada-plus" aria-label="+">+</button></div>
         <div id="qada-pend" class="center muted small" hidden></div>
@@ -828,14 +856,24 @@ html.onehand #tab-adhkar { padding-bottom:3.8rem; }
             <button id="report-img" class="ibtn"><i data-ic="download"></i><span data-i18n="reportImg"></span></button>
             <button id="report-csv" class="ibtn"><i data-ic="download"></i><span data-i18n="reportCsv"></span></button>
         </div>
-        <button id="report-pdf" class="btn-block ibtn" style="margin-top:.6rem"><i data-ic="printer"></i><span data-i18n="reportPdf"></span></button>
+        <button id="report-pdf" class="btn-block ibtn" style="margin-top:.75rem"><i data-ic="printer"></i><span data-i18n="reportPdf"></span></button>
     </div>
 </section>
 
 <!-- ============ تبويب الإعدادات ============ -->
 <section class="panel" id="tab-settings" hidden>
     <div class="grid2 more-box simple-only" style="margin-bottom:.8rem"><button type="button" class="ibtn" id="more-sunan"><i data-ic="badge-check"></i><span data-i18n="sunanTitle"></span></button><button type="button" class="ibtn" id="more-tools"><i data-ic="layout-grid"></i><span data-i18n="navTools"></span></button></div>
-    <div class="seg scroll" id="settings-seg">
+    <div class="set-back" id="set-back" hidden><button type="button" id="set-back-btn" class="ibtn btn-text"><i data-ic="chevron-right"></i><span data-i18n="navSettings"></span></button><b id="set-back-t"></b></div>
+    <div class="set-list" id="set-list">
+        <button type="button" class="set-row" data-sec="loc"><i data-ic="map-pin" class="sr-i"></i><span class="sr-t"><b data-i18n="sLoc"></b><small data-i18n="sLocD"></small></span><i data-ic="chevron-left" class="sr-go"></i></button>
+        <button type="button" class="set-row" data-sec="alert"><i data-ic="bell" class="sr-i"></i><span class="sr-t"><b data-i18n="sAlert"></b><small data-i18n="sAlertD"></small></span><i data-ic="chevron-left" class="sr-go"></i></button>
+        <button type="button" class="set-row" data-sec="adh"><i data-ic="sparkles" class="sr-i"></i><span class="sr-t"><b data-i18n="sAdh"></b><small data-i18n="sAdhD"></small></span><i data-ic="chevron-left" class="sr-go"></i></button>
+        <button type="button" class="set-row" data-sec="theme"><i data-ic="pencil" class="sr-i"></i><span class="sr-t"><b data-i18n="sTheme"></b><small data-i18n="sThemeD"></small></span><i data-ic="chevron-left" class="sr-go"></i></button>
+        <button type="button" class="set-row" data-sec="general"><i data-ic="sliders-horizontal" class="sr-i"></i><span class="sr-t"><b data-i18n="sGeneral"></b><small data-i18n="sGeneralD"></small></span><i data-ic="chevron-left" class="sr-go"></i></button>
+        <button type="button" class="set-row" data-sec="data"><i data-ic="save" class="sr-i"></i><span class="sr-t"><b data-i18n="sData"></b><small data-i18n="sDataD"></small></span><i data-ic="chevron-left" class="sr-go"></i></button>
+        <button type="button" class="set-row" data-sec="about"><i data-ic="circle-dot" class="sr-i"></i><span class="sr-t"><b data-i18n="sAbout"></b><small data-i18n="sAboutD"></small></span><i data-ic="chevron-left" class="sr-go"></i></button>
+    </div>
+    <div class="seg scroll" id="settings-seg" hidden>
         <button data-sec="loc" data-i18n="sLoc"></button>
         <button data-sec="alert" data-i18n="sAlert"></button>
         <button data-sec="adh" data-i18n="sAdh"></button>
@@ -876,7 +914,7 @@ html.onehand #tab-adhkar { padding-bottom:3.8rem; }
         <div class="field adv">
             <label data-i18n="tuneLabel"></label>
             <div class="grid2" id="tune-grid"></div>
-            <button id="tune-reset" class="btn-block" style="margin-top:.6rem" data-i18n="tuneReset"></button>
+            <button id="tune-reset" class="btn-block" style="margin-top:.75rem" data-i18n="tuneReset"></button>
         </div>
         <p class="muted small adv" style="margin:0" data-i18n="calcNote"></p>
     </div>
@@ -921,11 +959,11 @@ html.onehand #tab-adhkar { padding-bottom:3.8rem; }
                 <button id="dg-perm" data-i18n="dgReqPerm"></button>
                 <button id="dg-sw" data-i18n="dgReSW"></button>
             </div>
-            <button id="dg-clrerr" class="btn-block" style="margin-top:.6rem" data-i18n="dgClrErr" hidden></button>
-            <button id="dg-export" class="btn-block ibtn" style="margin-top:.6rem"><i data-ic="download"></i><span data-i18n="exportShare"></span></button>
-            <button id="dg-persist" class="btn-block" style="margin-top:.6rem" data-i18n="dgPersistBtn" hidden></button>
-            <button id="dg-offline" class="btn-block btn-accent" style="margin-top:.6rem" data-i18n="dgOfBtn" hidden></button>
-            <button id="dg-reset" class="btn-block" style="margin-top:.6rem" data-i18n="dgReset"></button>
+            <button id="dg-clrerr" class="btn-block" style="margin-top:.75rem" data-i18n="dgClrErr" hidden></button>
+            <button id="dg-export" class="btn-block ibtn" style="margin-top:.75rem"><i data-ic="download"></i><span data-i18n="exportShare"></span></button>
+            <button id="dg-persist" class="btn-block" style="margin-top:.75rem" data-i18n="dgPersistBtn" hidden></button>
+            <button id="dg-offline" class="btn-block btn-accent" style="margin-top:.75rem" data-i18n="dgOfBtn" hidden></button>
+            <button id="dg-reset" class="btn-block" style="margin-top:.75rem" data-i18n="dgReset"></button>
         </details>
 
         <details class="opts gd adv"><summary data-i18n="grpDnd"></summary>
@@ -951,7 +989,7 @@ html.onehand #tab-adhkar { padding-bottom:3.8rem; }
         <div class="field"><label for="snd-goal" data-i18n="sndGoal"></label><select id="snd-goal"><option value="rise" data-i18n="snd_rise"></option><option value="chime" data-i18n="snd_chime"></option><option value="soft" data-i18n="snd_soft"></option><option value="bell" data-i18n="snd_bell"></option><option value="triple" data-i18n="snd_triple"></option><option value="off" data-i18n="snd_off"></option></select></div>
         <details class="opts" style="margin-top:.4rem"><summary data-i18n="sndEach"></summary><div id="snd-each"></div></details>
         </details>
-        <button id="test-btn" class="btn-block ibtn" style="margin-top:.6rem"><i data-ic="flask-conical"></i><span data-i18n="testAlert"></span></button>
+        <button id="test-btn" class="btn-block ibtn" style="margin-top:.75rem"><i data-ic="flask-conical"></i><span data-i18n="testAlert"></span></button>
         <p class="muted small" style="margin:.8rem 0 0" data-i18n="alertNote"></p>
     </div>
 
@@ -981,7 +1019,7 @@ html.onehand #tab-adhkar { padding-bottom:3.8rem; }
             <label for="wird-time" data-i18n="wirdTime"></label>
             <input type="time" id="wird-time">
         </div>
-        <div class="timerow field adv" id="wird-grp" style="margin-top:.6rem">
+        <div class="timerow field adv" id="wird-grp" style="margin-top:.75rem">
             <div><label for="wird-unit" data-i18n="wirdUnit"></label><select id="wird-unit"><option value="page" data-i18n="pageU"></option><option value="juz" data-i18n="juzU"></option></select></div>
             <div><label for="wird-goal" data-i18n="wirdGoal"></label><select id="wird-goal"><option value="0" data-i18n="goalOff"></option><option value="1">1</option><option value="2">2</option><option value="5">5</option><option value="10">10</option><option value="20">20</option></select></div>
         </div>
@@ -1055,7 +1093,7 @@ html.onehand #tab-adhkar { padding-bottom:3.8rem; }
         <h3 class="grp" data-i18n="bakTitle"></h3>
         <div id="bak-list"></div>
         <p class="muted small" style="margin:.5rem 0 .8rem" data-i18n="bakNote"></p>
-        <button id="export-share" class="btn-block ibtn" style="margin-top:.6rem"><i data-ic="download"></i><span data-i18n="exportShare"></span></button>
+        <button id="export-share" class="btn-block ibtn" style="margin-top:.75rem"><i data-ic="download"></i><span data-i18n="exportShare"></span></button>
         <label class="switch" style="margin-top:.8rem"><span class="il"><i data-ic="save"></i><span data-i18n="backupOn"></span></span><input type="checkbox" id="backup-toggle"></label>
         <input type="file" id="import-file" accept=".json,.ptb,.gz,application/json,application/gzip" hidden>
         <p class="muted small" style="margin:.8rem 0 0" data-i18n="dataNote"></p>
@@ -1076,6 +1114,7 @@ html.onehand #tab-adhkar { padding-bottom:3.8rem; }
 <button id="focus-exit" aria-label="exit focus"><i data-ic="x"></i></button>
 
 <!-- شريط التنقل -->
+<div id="mini-cd" aria-hidden="true"><span id="mini-n"></span><span id="mini-t"></span></div>
 <nav id="bottom-nav"><div class="inner">
     <button class="nav-btn" data-tab="times">
         <i data-ic="clock"></i><span data-i18n="navTimes"></span>
@@ -1391,6 +1430,7 @@ ar: {
     dgOfTaf:'ملف التفسير', dgBakRow:'آخر نسخة خارجية', dgBakNever:'لم تُصدَّر نسخة بعد', dgBakOld:'{0} (مضى أكثر من 30 يومًا)',
     skipBtn:'تخطي', skipAria:'تخطي هذا الذكر واعتباره مكتملًا', dupNote:'ورد هذا الذكر بعدد آخر (مئة مرة) في الذكر التالي، وهما روايتان مختلفتان.',
     moreTitle:'المزيد', simpleOn:'الوضع المبسط', simpleNote:'يعرض الأساسيات فقط ويُخفي المميزات الإضافية. أوقفه لإظهار كل شيء.',
+    sLocD:'المدينة وطريقة الحساب وتحديد الموقع', sAlertD:'تنبيهات الصلاة والأصوات', sAdhD:'تذكير الأذكار والورد اليومي', sThemeD:'الثيمات والألوان', sGeneralD:'اللغة وتنسيق الوقت والحركات', sDataD:'النسخ الاحتياطي والاستيراد', sAboutD:'عن التطبيق والمطوّر',
     afterOpen:'فتح الأذكار', afterHide:'إخفاء',
     backupOn:'تذكير أسبوعي بالنسخة الاحتياطية', backupTitle:'مرّ أسبوع على آخر نسخة احتياطية', backupNow:'تصدير الآن', backupLater:'لاحقًا',
     readOpts:'خيارات القراءة', fontFace:'خط الأذكار', ffDefault:'الافتراضي', ffNaskh:'نسخ', ffThuluth:'ثلث / رقعة', fontNote:'يظهر حسب الخطوط المتاحة على جهازك',
@@ -1522,6 +1562,7 @@ en: {
     dgOfTaf:'Tafsir file', dgBakRow:'Last external backup', dgBakNever:'No backup exported yet', dgBakOld:'{0} (over 30 days ago)',
     skipBtn:'Skip', skipAria:'Skip this dhikr and mark it complete', dupNote:'This dhikr is also reported with another count (one hundred times) in the next item; they are two different narrations.',
     moreTitle:'More', simpleOn:'Simple mode', simpleNote:'Shows the essentials only and hides the extra features. Turn it off to show everything.',
+    sLocD:'City, calculation method and location', sAlertD:'Prayer alerts and sounds', sAdhD:'Adhkar reminders and daily wird', sThemeD:'Themes and colours', sGeneralD:'Language, time format and motion', sDataD:'Backup and import', sAboutD:'About the app and developer',
     afterOpen:'Open adhkar', afterHide:'Hide',
     backupOn:'Weekly backup reminder', backupTitle:'It has been a week since your last backup', backupNow:'Export now', backupLater:'Later',
     readOpts:'Reading options', fontFace:'Adhkar font', ffDefault:'Default', ffNaskh:'Naskh', ffThuluth:'Thuluth / Ruqaa', fontNote:'Shown using the fonts available on your device',
@@ -1630,7 +1671,7 @@ const SCHEMA = 3;
         store.set('pt-schema', SCHEMA);
     } catch (e) {}
 })();
-const APP_VER = '2026.11.13-1';
+const APP_VER = '2026.11.13-3';
 function logErr(m) { try { const l = store.get('pt-errs', []); l.push({ at: Date.now(), m: String(m).slice(0, 200) }); store.set('pt-errs', l.slice(-10)); } catch (e) {} }
 window.addEventListener('error', e => logErr((e.message || 'error') + ' @' + String(e.filename || '').split('/').pop() + ':' + (e.lineno || 0)));
 window.addEventListener('unhandledrejection', e => logErr('promise: ' + ((e.reason && e.reason.message) || e.reason)));
@@ -1661,6 +1702,15 @@ try {
 
 let state = { tz:'Africa/Cairo', loc:null, dayIso:'', dk:null, vdk:null, view:0, today:null, tomorrow:null, yesterday:null, shown:null, afterMaghrib:false };
 let lastNextKey = null;
+function markPast(now) {
+    if (!state.today) return;
+    const T = state.today, ends = { Fajr: T.Sunrise, Sunrise: T.Dhuhr, Dhuhr: T.Asr, Asr: T.Maghrib, Maghrib: T.Isha };
+    document.querySelectorAll('.prayer-row').forEach(r => {
+        const k = r.dataset.key, e = ends[k];
+        r.classList.toggle('past-prayer', state.view < 0 || (state.view === 0 && !!e && now >= e));
+        r.classList.toggle('cur-prayer', state.view === 0 && !!T[k] && now >= T[k] && (!e || now < e));
+    });
+}
 const HR_C = 2 * Math.PI * 46;
 let heroPending = true;
 function setHeroRing(p) { const v = (HR_C * (1 - Math.max(0, Math.min(1, p)))).toFixed(1), e = $('hero-ring'); if (e.style.strokeDashoffset !== v) e.style.strokeDashoffset = v; }
@@ -2263,8 +2313,8 @@ function openQuran(goS, goA) { if (typeof closeSheet === 'function') closeSheet(
 function renderQuranTab(goS, goA) {
     const b = $('quran-body');
     if (!goS && b.dataset.r === '1') return;
-    b.dataset.r = '1'; b.textContent = t('qLoading'); b.className = 'card qtab muted center';
-    loadQuran().then(d => { b.className = 'card qtab'; b.innerHTML = ''; if (goS) qSurah(b, d, goS, goA); else qIndex(b, d); })
+    b.dataset.r = '1'; b.textContent = ''; b.className = 'card qtab'; for (let q = 0; q < 8; q++) { const k = document.createElement('div'); k.className = 'sk'; b.appendChild(k); } b.setAttribute('aria-busy', 'true');
+    loadQuran().then(d => { b.className = 'card qtab'; b.removeAttribute('aria-busy'); b.innerHTML = ''; if (goS) qSurah(b, d, goS, goA); else qIndex(b, d); })
         .catch(() => { b.dataset.r = ''; b.className = 'card qtab muted center'; b.textContent = ''; const p = document.createElement('p'); p.textContent = t('qNoData'); const rb = document.createElement('button'); rb.type = 'button'; rb.className = 'btn-accent'; rb.textContent = t('qRetry'); rb.addEventListener('click', () => renderQuranTab(goS, goA)); b.appendChild(p); b.appendChild(rb); });
 }
 function qWords(el, v) {
@@ -3142,6 +3192,7 @@ function tick(force) {
     const mm = Math.floor((diff % 3600000) / 60000);
     const ss = Math.floor((diff % 60000) / 1000);
     setText('countdown', `${pad2(hh)}:${pad2(mm)}:${pad2(ss)}`);
+    setText('mini-n', prayerName(next.k)); setText('mini-t', `${pad2(hh)}:${pad2(mm)}:${pad2(ss)}`);
     setText('next-prayer-time', fmtClock(next.ts));
     { let line = '', ckLog = null;
       if (state.view === 0) {
@@ -3151,6 +3202,7 @@ function tick(force) {
           for (const k of FIVE) if (now >= T[k] && now < ends[k]) { ck = k; ce = ends[k]; }
           ckLog = ck;
           if (!ck && now < T.Fajr) { const ye = Y.Maghrib + (T.Fajr - Y.Maghrib) / 2; if (now < ye) { ck = 'Isha'; ce = ye; } }
+          { const hr = $('hero-ring'), w = !!ck && ce - now <= 900000; hr.classList.toggle('warn', w); $('mini-cd').classList.toggle('warn', w); }
           if (ck) { const mn = Math.max(1, Math.ceil((ce - now) / 60000)); line = t('curLeft', prayerName(ck), mn < 60 ? t('curMin', mn) : t('curHM', Math.floor(mn / 60), mn % 60)); }
       }
       { const lb = $('hero-log'), sh = !!ckLog && !prayedSet(state.dayIso).includes(pLetter(ckLog)); if (lb.hidden === sh) lb.hidden = !sh; if (sh) { lb.dataset.k = ckLog; setText('hero-log-t', t('logNow', prayerName(ckLog))); } }
@@ -3165,6 +3217,7 @@ function tick(force) {
         document.querySelectorAll('.prayer-row').forEach(r =>
             r.classList.toggle('active-prayer', state.view === 0 && r.dataset.key === next.k));
     }
+    markPast(now);
 
     }
     if (slow) {
@@ -3322,7 +3375,7 @@ function maybeHint(id) {
         const c = document.createElement('div'); c.className = 'card tab-hint'; const tx = document.createElement('div'); tx.textContent = t('hint_' + id); c.appendChild(tx);
         const g = document.createElement('div'); g.className = 'th-row';
         const ok = document.createElement('button'); ok.type = 'button'; ok.className = 'btn-accent'; ok.textContent = t('hintOk'); ok.addEventListener('click', () => { hs[id] = 1; store.set('pt-hints', hs); c.remove(); });
-        const off = document.createElement('button'); off.type = 'button'; off.textContent = t('hintOff'); off.addEventListener('click', () => { hs.off = 1; store.set('pt-hints', hs); document.querySelectorAll('.tab-hint').forEach(x => x.remove()); });
+        const off = document.createElement('button'); off.type = 'button'; off.className = 'btn-text'; off.textContent = t('hintOff'); off.addEventListener('click', () => { hs.off = 1; store.set('pt-hints', hs); document.querySelectorAll('.tab-hint').forEach(x => x.remove()); });
         g.append(ok, off); c.appendChild(g); pn.insertBefore(c, pn.firstChild);
     } catch (e) {}
 }
@@ -3479,6 +3532,14 @@ function hifzFill(box, text) {
     });
     box.addEventListener('click', e => { const x = e.target; if (x && x.classList && x.classList.contains('hid')) { x.classList.remove('hid'); e.stopPropagation(); } });
 }
+function doneBurst() {
+    if (!fxOn()) return;
+    try {
+        const d = document.createElement('div'); d.className = 'done-burst'; d.appendChild(iconEl('check')); document.body.appendChild(d);
+        const a = d.animate([{ opacity: 0, transform: 'translate(-50%,-50%) scale(.5)' }, { opacity: 1, transform: 'translate(-50%,-50%) scale(1.12)', offset: .35 }, { opacity: 1, transform: 'translate(-50%,-50%) scale(1)', offset: .7 }, { opacity: 0, transform: 'translate(-50%,-50%) scale(1)' }], { duration: 1100, easing: 'ease-out' });
+        a.onfinish = () => d.remove(); setTimeout(() => d.remove(), 1500);
+    } catch (e) {}
+}
 function buildDhikrList(box, list, rem, onChange, opts) {
     box.innerHTML = '';
     lastFinish = null; updateUndo();
@@ -3490,10 +3551,13 @@ function buildDhikrList(box, list, rem, onChange, opts) {
     list.forEach((item, i) => {
         const el = document.createElement('div');
         el.className = 'dhikr' + (rem[i] === 0 ? ' done' : '') + (rem[i] === 0 && settings.hideDone ? ' gone' : '');
-        els.push(el);
+        els.push(el); el.tabIndex = 0; el.setAttribute('role', 'button');
+        el.addEventListener('keydown', e => { if ((e.key === 'Enter' || e.key === ' ') && e.target === el) { e.preventDefault(); el.click(); } });
+        const tot = Math.max(item.n || 1, rem[i]);
+        const prog = () => { const pc = Math.round((tot - rem[i]) / tot * 100); badge.style.setProperty('--p', pc); el.style.setProperty('--p', pc); };
         const badge = document.createElement('div');
         badge.className = 'badge';
-        setBadge(badge, rem[i]);
+        setBadge(badge, rem[i]); prog();
         const body = document.createElement('div');
         body.setAttribute('lang', 'ar');
         body.setAttribute('dir', 'rtl');
@@ -3540,15 +3604,16 @@ function buildDhikrList(box, list, rem, onChange, opts) {
             if (el.classList.contains('dragging')) return;
             const was = rem[i];
             if (rem[i] > 0) rem[i]--;
-            setBadge(badge, rem[i]);
+            setBadge(badge, rem[i]); prog();
             el.classList.toggle('done', rem[i] === 0);
             if (was > 0) fxPulse(badge, rem[i] === 0 ? 1.3 : 1.15);
             onChange();
             tapVib(15);
+            if (was > 0 && rem[i] === 0 && list.length >= 5 && rem.every(r => r === 0)) doneBurst();
             if (was > 0 && rem[i] === 0) {
                 const hide = settings.hideDone;
                 lastFinish = () => {
-                    rem[i] = 1; setBadge(badge, 1);
+                    rem[i] = 1; setBadge(badge, 1); prog();
                     el.classList.remove('done', 'gone', 'fading');
                     onChange(); checkAll();
                     try { el.scrollIntoView({ behavior: 'auto', block: 'center' }); } catch (e) {}
@@ -5021,11 +5086,14 @@ function onScroll() {
         if (Math.abs(dy) > 10 || y < 60) lastScrollY = y;
     });
 }
+let heroOut = false;
+function miniUpd() { const m = $('mini-cd'); if (m) m.classList.toggle('show', heroOut && !$('tab-times').hidden && innerWidth < 820); }
+function initMini() { try { if (!window.IntersectionObserver) return; new IntersectionObserver(es => { heroOut = !es[0].isIntersecting && es[0].boundingClientRect.top < 0; miniUpd(); }, { threshold: 0 }).observe(document.querySelector('#tab-times .hero')); } catch (e) {} }
 function showTab(id, noFx) {
     if (id === 'times') { heroPending = true; if (state.today) setTimeout(tick, 30); }
     document.querySelectorAll('.panel').forEach(p => { p.hidden = p.id !== 'tab-' + id; });
     document.querySelectorAll('.nav-btn').forEach(b => b.classList.toggle('on', b.dataset.tab === id));
-    settings.tab = id;
+    settings.tab = id; miniUpd();
     if (!wirdBig) { const sb = $('stats-box'); if (sb) sb.classList.remove('bigwird'); }
     wirdBig = false;
     if (id === 'adhkar') {
@@ -5046,8 +5114,14 @@ function showTab(id, noFx) {
     if (!noFx) fxIn(document.querySelectorAll('#tab-' + id + ' > .card, #tab-' + id + ' > .seg'), { y: 12, s: 40, d: 280 });
     if (id === 'sunan') { const y = Number(store.get('pt-sunan-y', 0)) || 0; if (y > 0) setTimeout(() => window.scrollTo(0, y), 60); }
 }
+const SEC_T = { loc:'sLoc', alert:'sAlert', adh:'sAdh', theme:'sTheme', general:'sGeneral', data:'sData', about:'sAbout' };
+function showSetList() {
+    document.querySelectorAll('.sec').forEach(x => { x.hidden = true; });
+    $('set-list').hidden = false; $('set-back').hidden = true; $('tab-settings').classList.remove('in-sec');
+}
 function showSec(id, noFx) {
     if (!document.getElementById('sec-' + id)) id = 'loc';
+    $('set-list').hidden = true; $('set-back').hidden = false; $('tab-settings').classList.add('in-sec'); setText('set-back-t', t(SEC_T[id] || 'sLoc'));
     document.querySelectorAll('.sec').forEach(s => { s.hidden = s.id !== 'sec-' + id; });
     document.querySelectorAll('#settings-seg button').forEach(b => {
         const on = b.dataset.sec === id; b.classList.toggle('on', on);
@@ -5078,7 +5152,8 @@ function refreshAll() {
 
 function bindUI() {
     document.querySelectorAll('.nav-btn').forEach(b => b.addEventListener('click', () => showTab(b.dataset.tab)));
-    document.querySelectorAll('#settings-seg button').forEach(b => b.addEventListener('click', () => showSec(b.dataset.sec)));
+    document.querySelectorAll('.set-row').forEach(b => b.addEventListener('click', () => { showSec(b.dataset.sec); window.scrollTo(0, 0); }));
+    $('set-back-btn').addEventListener('click', () => { showSetList(); window.scrollTo(0, 0); });
     document.querySelectorAll('#adhkar-seg button').forEach(b => b.addEventListener('click', () => {
         if (adhkarSet === b.dataset.set) return;
         adhkarSet = b.dataset.set; renderAdhkar();
@@ -5307,7 +5382,7 @@ buildEditor();
 renderChips();
 bindUI();
 syncControls();
-showSec(settings.sec || 'loc', true);
+showSetList(); initMini();
 try { const q = new URLSearchParams(location.search); if (q.get('quran') === '1') setTimeout(() => openQuran(), 900);
     if (q.get('tab') === 'adhkar') { settings.tab = 'adhkar'; const st = q.get('set'); if (['morning', 'evening', 'library', 'stats', 'tasbih'].includes(st)) adhkarSet = st; } } catch (e) {}
 showTab(firstVisibleTab(settings.tab || 'times'), true);
