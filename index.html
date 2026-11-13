@@ -455,7 +455,7 @@ html.sheet-open body { overflow:hidden; }
 .qada button { width:3rem; height:3rem; border-radius:50%; font-size:1.4rem; padding:0; line-height:1; }
 .qada b { font-size:1.5rem; min-width:4rem; text-align:center; }
 #year-cv { width:100%; display:block; margin-top:.5rem; }
-.linkbtn { background:none; border:none; padding:0 .2rem; min-height:0; color:var(--accent); text-decoration:underline; font-size:inherit; border-radius:.3rem; }
+.linkbtn { background:none; border:none; padding:.55rem .35rem; margin:-.55rem 0; min-height:0; color:var(--accent); text-decoration:underline; font-size:inherit; border-radius:.3rem; }
 #wird-meta { margin:.2rem 0 .4rem; }
 .sec > .grp { margin:1.4rem 0 .7rem; } .sec > .grp:first-child { margin-top:0; }
 .sec > .switch { margin-bottom:.5rem; } .sec > .sub { margin-top:.2rem; margin-bottom:.75rem; }
@@ -1735,7 +1735,7 @@ const SCHEMA = 3;
         store.set('pt-schema', SCHEMA);
     } catch (e) {}
 })();
-const APP_VER = '2026.11.13-6';
+const APP_VER = '2026.11.13-7';
 function logErr(m) { try { const l = store.get('pt-errs', []); l.push({ at: Date.now(), m: String(m).slice(0, 200) }); store.set('pt-errs', l.slice(-10)); } catch (e) {} }
 window.addEventListener('error', e => logErr((e.message || 'error') + ' @' + String(e.filename || '').split('/').pop() + ':' + (e.lineno || 0)));
 window.addEventListener('unhandledrejection', e => logErr('promise: ' + ((e.reason && e.reason.message) || e.reason)));
@@ -4872,7 +4872,7 @@ async function runSelfTest() {
         const must = { 'localStorage': () => !!window.localStorage, 'serviceWorker': () => 'serviceWorker' in nv, 'Cache API': () => 'caches' in window, 'IndexedDB': () => !!window.indexedDB, 'fetch': () => !!window.fetch, 'Intl.DateTimeFormat': () => !!window.Intl, 'Web Animations': () => !!(document.documentElement.animate), 'IntersectionObserver': () => !!window.IntersectionObserver };
         for (const k in must) { let v = false; try { v = must[k](); } catch (e) {} needs(v, 'API ' + k, v ? 'supported' : 'MISSING'); }
         const opt = { 'Notification': () => 'Notification' in window, 'Notification triggers': () => 'TimestampTrigger' in window, 'Vibration': () => !!nv.vibrate, 'Wake Lock': () => !!nv.wakeLock, 'Web Share': () => !!nv.share, 'Clipboard': () => !!(nv.clipboard && nv.clipboard.writeText), 'Geolocation': () => !!nv.geolocation, 'Battery API': () => !!nv.getBattery, 'Storage persist': () => !!(nv.storage && nv.storage.persist), 'Speech recognition': () => !!(window.SpeechRecognition || window.webkitSpeechRecognition), 'CSS color-mix': () => CSS.supports('color', 'color-mix(in srgb, red, blue)'), 'CSS :focus-visible': () => CSS.supports('selector(:focus-visible)') };
-        for (const k in opt) { let v = false; try { v = opt[k](); } catch (e) {} A('Optional ' + k, v ? 'ok' : 'warn', v ? 'supported' : 'not supported'); }
+        for (const k in opt) { let v = false; try { v = opt[k](); } catch (e) {} A('Optional ' + k, v ? 'ok' : (k === 'Notification triggers' ? 'info' : 'warn'), v ? 'supported' : 'not supported' + (k === 'Notification triggers' ? ' (normal: the app uses a different scheduling path)' : '')); }
         try { const b = nv.getBattery && await nv.getBattery(); if (b) A('Battery', 'info', Math.round(b.level * 100) + '% ' + (b.charging ? 'charging' : 'discharging')); } catch (e) {}
         try { const f = new Intl.DateTimeFormat('ar-SA-u-ca-islamic-umalqura-nu-latn', { dateStyle: 'medium' }).format(new Date()); A('Hijri calendar formatting', f ? 'ok' : 'fail', f); } catch (e) { A('Hijri calendar formatting', 'fail', e.message); }
     }],
@@ -4880,7 +4880,7 @@ async function runSelfTest() {
         A('Version / schema', 'info', APP_VER + ' | SCHEMA ' + SCHEMA + ' | stored ' + store.get('pt-schema', '?'));
         needs(Number(store.get('pt-schema', 0)) === SCHEMA, 'Stored schema equals app schema', String(store.get('pt-schema', '?')), 'warn');
         A('Settings summary', 'info', JSON.stringify({ lang: settings.lang, theme: settings.theme, simple: settings.simple, tab: settings.tab, city: settings.cityId, method: settings.method, asr: settings.asr, notify: settings.notify, anim: settings.anim, fontScale: settings.fontScale }));
-        try { const cl = sanitizeSettings(JSON.parse(JSON.stringify(settings))); const diff = Object.keys(cl).filter(k => k in settings && k !== 'tab' && k !== 'sec' && JSON.stringify(cl[k]) !== JSON.stringify(settings[k])); needs(!diff.length, 'Settings already normalized', diff.length ? 'differs: ' + diff.join(',') : 'consistent', 'warn'); } catch (e) { A('Settings sanitize', 'fail', e.message); }
+        try { const cl = sanitizeSettings(JSON.parse(JSON.stringify(settings))); const diff = Object.keys(cl).filter(k => k in settings && k !== 'tab' && k !== 'sec' && k !== 'backupSnooze' && JSON.stringify(cl[k]) !== JSON.stringify(settings[k])); needs(!diff.length, 'Settings already normalized', diff.length ? 'differs: ' + diff.join(',') : 'consistent', 'warn'); } catch (e) { A('Settings sanitize', 'fail', e.message); }
         const sd = state.today; needs(!!sd, 'Prayer times computed for today', sd ? 'yes' : 'state.today is empty');
         if (sd) { const ord = ['Fajr', 'Sunrise', 'Dhuhr', 'Asr', 'Maghrib', 'Isha'].map(k => sd[k]); needs(ord.every((v, i) => Number.isFinite(v) && (i === 0 || v > ord[i - 1])), 'Today times finite and ordered', ord.map(v => new Date(v).toISOString().slice(11, 16)).join(' ')); }
         A('Location', 'info', JSON.stringify(state.loc || {}));
@@ -4904,7 +4904,7 @@ async function runSelfTest() {
             needs(r && r.a === 1, 'IndexedDB write/read/delete', 'ok');
         } catch (e) { A('IndexedDB write test', 'fail', e.message); }
         try { const es = navigator.storage && navigator.storage.estimate && await navigator.storage.estimate(); if (es) { A('Storage quota', 'info', 'used ' + kb(es.usage) + ' of ' + (es.quota / 1048576).toFixed(0) + ' MB'); } } catch (e) {}
-        try { const p = navigator.storage && navigator.storage.persisted && await navigator.storage.persisted(); A('Persistent storage granted', p ? 'ok' : 'warn', String(!!p)); } catch (e) {}
+        try { const p = navigator.storage && navigator.storage.persisted && await navigator.storage.persisted(); A('Persistent storage granted', p ? 'ok' : 'info', String(!!p) + (p ? '' : ' (browsers grant it after installing the app or regular use; the app asks automatically)')); } catch (e) {}
         try { A('IndexedDB weekly snapshots', 'info', (idbCache && idbCache.length != null ? idbCache.length : '?') + ' snapshots cached'); } catch (e) {}
     }],
     ['4. Translations and icons', async () => {
@@ -4937,6 +4937,9 @@ async function runSelfTest() {
         needs(!probs.length, 'Hisn items valid (text, counter 1..1000)', probs.slice(0, 8).join('; '));
         A('Repeated adhkar text inside a group (may be intentional)', 'info', dups.slice(0, 8).join(',') || 'none');
         needs(!cmis.length, 'Counters match "(N times)" in text', cmis.length + ' mismatches: ' + cmis.slice(0, 8).join('; '), 'warn');
+        { const hy = []; HISN.forEach((g, gi) => g[1].forEach(([tx], i) => { if (/<[a-z\/]|&[a-z]+;|\s{3,}|undefined|NaN|\[object/i.test(tx)) hy.push(gi + ':' + i); })); needs(!hy.length, 'Hisn text free of markup residue and stray spaces', hy.slice(0, 8).join(','), 'warn'); }
+        { const lt = []; HISN.forEach((g, gi) => g[1].forEach(([tx], i) => { const body = tx.replace(/[A-Za-z0-9]/g, m => '\u0001'); if (/\u0001/.test(body)) lt.push(gi + ':' + i); })); A('Hisn items containing Latin letters or digits', 'info', lt.length + (lt.length ? ' e.g. ' + lt.slice(0, 6).join(',') : '')); }
+        { const sh = SUNAN.filter(g => !/[؀-ۿ]/.test(g[0]) || !/[A-Za-z]/.test(g[1])).length; needs(!sh, 'Sunan group titles exist in both languages', String(sh)); }
         A('Morning / evening lists', 'info', ADHKAR.morning.length + ' / ' + ADHKAR.evening.length);
         const ids = a => new Set(a.map(x => x.id)).size === a.length; needs(ids(ADHKAR.morning) && ids(ADHKAR.evening), 'Morning/evening ids unique', 'ok');
         let sc = 0, sbad = []; const sid = new Set(); SUNAN.forEach((g, gi) => { if (!g[0] || !g[1]) sbad.push('group ' + gi); g[2].forEach((it, i) => { sc++; if (!it[0] || !it[1]) sbad.push(gi + ':' + i); const id = gi * 100 + i; if (sid.has(id)) sbad.push('dup id ' + id); sid.add(id); }); });
@@ -4970,9 +4973,15 @@ async function runSelfTest() {
         if (state.today && state.view === 0) {
             const now = Date.now(), nx = FIVE.map(k => [k, state.today[k]]).find(x => x[1] > now) || null;
             const cd = ($('countdown').textContent || '').split(':').map(Number);
-            if (nx && cd.length === 3) { const shown = cd[0] * 3600 + cd[1] * 60 + cd[2], real = Math.round((nx[1] - now) / 1000); needs(Math.abs(shown - real) <= 3, 'Countdown matches next prayer', 'shown ' + shown + 's real ' + real + 's (' + nx[0] + ')', 'warn'); }
+            if ($('countdown').offsetParent === null) A('Countdown check', 'info', 'countdown is hidden on this screen; compared only on the Times tab'); else if (nx && cd.length === 3) { const shown = cd[0] * 3600 + cd[1] * 60 + cd[2], real = Math.round((nx[1] - now) / 1000); needs(Math.abs(shown - real) <= 3, 'Countdown matches next prayer', 'shown ' + shown + 's real ' + real + 's (' + nx[0] + ')', 'warn'); }
             else A('Countdown check', 'info', 'next prayer is tomorrow or the view is not today');
         }
+
+        try { const r = await fetch(location.pathname, { method: 'HEAD', cache: 'no-store' }); const sd = r.headers.get('date'); if (sd) { const dr = Math.round((Date.now() - new Date(sd).getTime()) / 1000); needs(Math.abs(dr) < 120, 'Device clock matches server clock (prayer times depend on it)', 'difference ' + dr + ' s', 'warn'); } } catch (e) { A('Clock drift check', 'info', 'offline'); }
+        { let bad = [], prevD = null; for (let i = 0; i < 90; i++) { const p = hijriParts(zonedToUtc(2026, 11, 13 + i, 12, 0, state.tz), state.tz); if (!p) { bad.push(i); continue; } if (prevD) { const ok = (p.d === prevD.d + 1 && p.m === prevD.m) || (p.d === 1 && (prevD.d === 29 || prevD.d === 30)); if (!ok) bad.push(i + ':' + prevD.d + '>' + p.d); } prevD = p; } needs(!bad.length, 'Hijri day sequence continuous for 90 days', bad.slice(0, 5).join(',')); }
+        { const tz = 'Europe/London', a = zonedToUtc(2026, 3, 29, 0, 30, tz), b = zonedToUtc(2026, 3, 29, 3, 0, tz), c = zonedToUtc(2026, 10, 25, 12, 0, tz), d2 = zonedToUtc(2026, 10, 24, 12, 0, tz); needs(Math.abs((b - a) / 3600000 - 1.5) < 0.01 && Math.abs((c - d2) / 3600000 - 25) < 0.01, 'DST transitions handled (London spring and autumn)', ((b - a) / 3600000) + ' h / ' + ((c - d2) / 3600000) + ' h'); }
+        { const tn = settings.tune || {}, nz = Object.keys(tn).filter(k => tn[k]); A('Manual time adjustments', 'info', nz.length ? nz.map(k => k + '=' + tn[k] + 'min').join(', ') : 'none'); }
+        { const cmp = Object.keys(PT_METHODS).map(m => { const r = ptInstants({ y: 2026, m: 11, d: 13, lat: 30.0444, lng: 31.2357, method: Number(m), asr: 1, ramadan: false, tune: {} }); return r ? m + ':' + new Date(r.Fajr + 2 * 3600000).toISOString().slice(11, 16) : m + ':null'; }); A('Cairo Fajr by method (compare with a trusted table)', 'info', cmp.join(' ')); }
         const c1 = $('countdown').textContent; await stSleep(1300); const c2 = $('countdown').textContent; if ($('countdown').offsetParent === null) A('Live clock is ticking', 'info', 'countdown not visible on this screen (checked only on the Times tab)'); else needs(c1 !== c2 || state.view !== 0, 'Live clock is ticking', c1 + ' -> ' + c2, 'warn');
     }],
     ['7. Quran and tafsir', async () => {
@@ -4982,6 +4991,9 @@ async function runSelfTest() {
         needs(!d.slice(1).some((s, i) => i !== 8 && /^بسم الله الرحمن الرحيم/.test(normAr(s[0]).replace(/\s+/g, ' ')) === false && false), 'Basmala handling', 'ok');
         let f = false; try { await document.fonts.load('20px AmiriQ'); f = document.fonts.check('20px AmiriQ'); } catch (e) {} needs(f, 'Quran font loaded', String(f), 'warn');
         const r = await caches.match('tafsir-muyassar.txt').catch(() => null); if (r) { const bl = await r.clone().blob(); needs(bl.size > 1.5 * 1048576, 'Tafsir file cached', (bl.size / 1048576).toFixed(2) + ' MB'); } else A('Tafsir file cached', 'info', 'not cached yet (downloads on first use, then works offline)');
+        try { const q = await caches.match('quran-uthmani.txt'); if (q) { const tx = await q.text(), ln = tx.split('\n').filter(l => /^\d+\|\d+\|/.test(l)).length; needs(ln === 6236, 'Cached Quran file has 6236 verse lines', String(ln)); } } catch (e) {}
+        try { const tf = await caches.match('tafsir-muyassar.txt'); if (tf) { const tx = await tf.text(), ln = tx.split('\n').filter(l => /^\d+\|\d+\|/.test(l)).length; needs(ln === 6236, 'Cached tafsir file has 6236 entries', String(ln), 'warn'); } } catch (e) {}
+        { const t0 = performance.now(); const d2 = await loadQuran(); let c = 0; for (const sr of d2) for (const v of sr) c += v.length; A('Scan of the whole Quran text', performance.now() - t0 < 200 ? 'ok' : 'warn', (performance.now() - t0).toFixed(0) + ' ms, ' + c + ' characters'); }
         try { const m = store.get('pt-qpages', ''); A('Pages marked read', 'info', typeof m === 'string' ? (m.match(/1/g) || []).length : 0); } catch (e) {}
     }],
     ['8. Offline and service worker', async () => {
