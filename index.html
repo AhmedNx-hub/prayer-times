@@ -316,10 +316,6 @@ html:not(.simple) .simple-only { display:none; }
 #upd-bar span { flex:1; font-weight:700; font-size:.9rem; } #upd-bar button { min-height:2.3rem; padding:.4rem .9rem; border-radius:.8rem; font-size:.85rem; }
 .qjz b { cursor:pointer; user-select:none; -webkit-user-select:none; -webkit-touch-callout:none; touch-action:manipulation; } .qjz b.hold { outline:2px solid var(--accent); }
 .q-mem-row { display:block; width:100%; text-align:start; padding:.7rem .8rem; margin-bottom:.5rem; border-radius:.8rem; background:var(--hover); border:0; color:inherit; } .q-mem-row small { display:block; color:var(--muted); margin-top:.2rem; }
-#splash { position:fixed; inset:0; z-index:120; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:.5rem; padding:1.5rem; text-align:center; background:linear-gradient(135deg,var(--bg),var(--bg2)); transition:opacity .25s; } #splash[hidden] { display:none; } #splash.out { opacity:0; }
-#splash .sp-city { color:var(--muted); font-size:1rem; } #splash .sp-lab { color:var(--muted); font-size:1.05rem; margin-top:1rem; } #splash .sp-name { font-size:2.6rem; font-weight:700; color:var(--accent); line-height:1.2; } #splash .sp-time { font-size:3.2rem; font-weight:600; font-variant-numeric:tabular-nums; } #splash .sp-cd { font-size:1.4rem; color:var(--muted); font-variant-numeric:tabular-nums; }
-#splash .sp-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:.5rem; width:100%; max-width:26rem; margin-top:1.6rem; } #splash .sp-grid div { padding:.55rem .3rem; border-radius:.8rem; background:var(--hover); } #splash .sp-grid div.on { background:var(--accent); color:var(--on-accent); } #splash .sp-grid small { display:block; opacity:.8; } #splash .sp-grid b { font-variant-numeric:tabular-nums; }
-#splash .sp-tap { margin-top:1.4rem; color:var(--muted); font-size:.85rem; }
 .prayer-row.has-sheet { cursor:pointer; } .prayer-row.pinned { border-inline-start:3px solid var(--accent); }
 #sheet-body .btn-block.on { background:var(--accent-soft); color:var(--accent); border-color:var(--accent); }
 .sn-g { margin-bottom:.75rem; border-radius:.8rem; background:var(--hover); } .sn-g > summary { padding:.8rem 1rem; font-weight:700; cursor:pointer; } .sn-i { display:flex; gap:.5rem; align-items:flex-start; padding:.7rem 1rem; border-top:1px solid var(--border); } .sn-i .tx { flex:1; line-height:1.9; font-size:calc(1rem * var(--dfs, 1)); } html.lowpower *, html.lowpower *::before, html.lowpower *::after { transition-duration:.01ms !important; animation-duration:.01ms !important; } .flash { outline:2px solid var(--accent); outline-offset:3px; border-radius:.5rem; } .gs-g { font-size:.8rem; color:var(--muted); margin:.7rem 0 .2rem; } .td-r { display:flex; justify-content:space-between; gap:1rem; padding:.6rem 0; border-top:1px solid var(--border); } .td-r span:first-child { color:var(--muted); } .tab-hint { margin-bottom:.8rem; padding:.7rem .9rem; font-size:.85rem; line-height:1.7; } .tab-hint .th-row { display:flex; gap:.5rem; margin-top:.5rem; } .tab-hint .th-row button { min-height:0; padding:.3rem .9rem; font-size:.8rem; }
@@ -1085,8 +1081,6 @@ html.onehand #tab-adhkar { padding-bottom:3.8rem; }
         <label class="switch"><span class="il"><i data-ic="sparkles"></i><span data-i18n="animOn"></span></span><input type="checkbox" id="anim-toggle"></label>
         <p class="muted small" style="margin:0 0 1rem"><span data-i18n="fsNote"></span> <span data-i18n="animNote"></span></p>
         <h3 class="grp adv" data-i18n="grpStart"></h3>
-        <label class="switch adv"><span class="il"><i data-ic="circle-dot"></i><span data-i18n="splashOn"></span></span><input type="checkbox" id="splash-toggle"></label>
-        <p class="muted small adv" style="margin:0 0 .6rem" data-i18n="splashNote"></p>
         <label class="switch adv"><span class="il"><i data-ic="book-open"></i><span data-i18n="adhAutoOn"></span></span><input type="checkbox" id="adhauto-toggle"></label>
         <h3 class="grp adv" data-i18n="grpNav"></h3>
         <label class="switch adv"><span class="il"><i data-ic="clock"></i><span data-i18n="navTimes"></span></span><input type="checkbox" id="navshow-times"></label>
@@ -1175,7 +1169,6 @@ html.onehand #tab-adhkar { padding-bottom:3.8rem; }
 </div></nav>
 <button id="fab-back" type="button" hidden><i data-ic="arrow-right"></i></button>
 <div id="upd-bar" hidden><span id="upd-t"></span><button id="upd-now" class="btn-accent"></button><button id="upd-later"></button></div>
-<div id="splash" hidden role="dialog" aria-modal="true"></div>
 <div id="sheet" hidden><div class="sheet-in"><div class="sheet-head"><h3 id="sheet-title"></h3><button id="sheet-close" aria-label="x"><i data-ic="x"></i></button></div><div id="sheet-body"></div></div></div>
 <div id="toast"></div>
 
@@ -1446,7 +1439,7 @@ ar: {
     dgOfT:'جاهزية العمل بدون إنترنت', dgOfApp:'التطبيق', dgOfQ:'ملف المصحف', dgOfF:'خط المصحف', dgOfIc:'الأيقونات', dgOfSaved:'محفوظ في الجهاز ({0})', dgOfMiss:'غير محفوظ', dgOfNone:'غير مدعوم هنا (يلزم https أو تثبيت التطبيق)', dgOfBtn:'حمّل الآن', dgOfBusy:'جارٍ التحميل...', dgOfDone:'اكتمل التحميل', qBmT:'العلامات', qBmN:'العلامات · {0}', qBmNone:'لا توجد علامات بعد. اضغط على أي آية ثم «علامة».', qBmDel:'حذف العلامة', qMapT:'خريطة الأجزاء', qMapSum:'{0} من 604 صفحة', dailyAyah:'اضغط لفتح الآية في المصحف',
     qMapHint:'ضغطة مطولة على مربع الجزء تعلّمه كمقروء أو تلغيه.', qMapMarked:'تم تعليم الجزء {0} كمقروء', qMapCleared:'تم إلغاء تعليم الجزء {0}',
     qBmSearch:'ابحث في العلامات', qNone2:'لا توجد نتائج', qMemListBtn:'قائمة المحفوظ', qMemT:'المحفوظ', qMemNone:'لا يوجد محفوظ بعد. علّم الآيات من قائمة الآية داخل المصحف.', qMemSearch:'ابحث باسم السورة', qStatShare:'نسخ الإحصائية كصورة', qStatImgT:'إحصائية القراءة', qJuzWord:'الأجزاء المقروءة',
-    splashOn:'شاشة البداية السريعة', splashNote:'تظهر لثوانٍ معدودة عند فتح التطبيق لتعرف الصلاة القادمة بسرعة.', spNext:'الصلاة القادمة', spTap:'اضغط للمتابعة',
+       
     qTaf:'تفسير', qTafLoad:'جارٍ تحميل التفسير…', qTafFail:'تعذّر تحميل التفسير (نحو 2.4 م.ب). يلزم اتصال بالإنترنت مرة واحدة، ثم يعمل دون اتصال.', qTafSrc:'التفسير الميسر · مجمع الملك فهد لطباعة المصحف الشريف · Tanzil.net', qModeL:'وضع القراءة: {0}', qModeN:'الوضع العادي', qModeS:'المبسط',
     navSunan:'سنن', sunanTitle:'السنن النبوية', sunanDone:'طبّقت اليوم: {0}', sunanSearch:'ابحث في السنن', sunanNote:'نصوص مختصرة مع بيان من رواها. عند الاستفسار عن صحة سنة أو حكمها راجع كتب السنة وأهل العلم.', sunanMark:'طبّقتها اليوم',
     adhAutoOn:'فتح أذكار الصباح أو المساء تلقائيًا بحسب الوقت', friOn:'تنبيهات يوم الجمعة', remFriM:'يوم الجمعة: الغسل والتطيّب، وقراءة سورة الكهف، والإكثار من الصلاة على النبي ﷺ، والتبكير إلى المسجد.', remFriG:'اقترب وقت صلاة الجمعة: توجّه إلى المسجد.',
@@ -1591,7 +1584,7 @@ en: {
     dgOfT:'Offline readiness', dgOfApp:'App', dgOfQ:'Quran file', dgOfF:'Quran font', dgOfIc:'Icons', dgOfSaved:'Saved on device ({0})', dgOfMiss:'Not saved', dgOfNone:'Not supported here (needs https or an installed app)', dgOfBtn:'Download now', dgOfBusy:'Downloading...', dgOfDone:'Download complete', qBmT:'Bookmarks', qBmN:'Bookmarks · {0}', qBmNone:'No bookmarks yet. Tap a verse, then “Bookmark”.', qBmDel:'Delete bookmark', qMapT:'Juz map', qMapSum:'{0} of 604 pages', dailyAyah:'Tap to open the verse in the Quran',
     qMapHint:'Long-press a juz square to mark it read or undo it.', qMapMarked:'Juz {0} marked as read', qMapCleared:'Juz {0} unmarked',
     qBmSearch:'Search bookmarks', qNone2:'No results', qMemListBtn:'Memorized list', qMemT:'Memorized', qMemNone:'Nothing memorized yet. Mark verses from the verse menu in the reader.', qMemSearch:'Search by surah name', qStatShare:'Share statistics as image', qStatImgT:'Reading statistics', qJuzWord:'Juz read',
-    splashOn:'Quick start screen', splashNote:'Shows for a few seconds on launch so you can see the next prayer fast.', spNext:'Next prayer', spTap:'Tap to continue',
+       
     qTaf:'Tafsir', qTafLoad:'Loading tafsir…', qTafFail:'Could not load the tafsir (about 2.4 MB). It needs the internet once, then works offline.', qTafSrc:'Al-Tafsir Al-Muyassar · King Fahd Quran Complex · Tanzil.net', qModeL:'Reading mode: {0}', qModeN:'Normal', qModeS:'Simple',
     navSunan:'Sunnah', sunanTitle:'Prophetic Sunnah', sunanDone:'Practised today: {0}', sunanSearch:'Search the Sunnah', sunanNote:'Short texts with the narrator source (Arabic only). For the authenticity or ruling of a Sunnah, consult the books of Sunnah and people of knowledge.', sunanMark:'Practised today',
     adhAutoOn:'Open morning or evening adhkar automatically by time', friOn:'Friday alerts', remFriM:'Friday: ghusl and perfume, reading Surat al-Kahf, sending blessings upon the Prophet ﷺ, and going early to the mosque.', remFriG:'Jumu’ah time is near: head to the mosque.',
@@ -1735,7 +1728,7 @@ const SCHEMA = 3;
         store.set('pt-schema', SCHEMA);
     } catch (e) {}
 })();
-const APP_VER = '2026.11.13-7';
+const APP_VER = '2026.11.13-8';
 function logErr(m) { try { const l = store.get('pt-errs', []); l.push({ at: Date.now(), m: String(m).slice(0, 200) }); store.set('pt-errs', l.slice(-10)); } catch (e) {} }
 window.addEventListener('error', e => logErr((e.message || 'error') + ' @' + String(e.filename || '').split('/').pop() + ':' + (e.lineno || 0)));
 window.addEventListener('unhandledrejection', e => logErr('promise: ' + ((e.reason && e.reason.message) || e.reason)));
@@ -1745,7 +1738,7 @@ const FIRST_RUN = (() => { try { return localStorage.getItem('pt-settings') === 
 const DEFAULTS = {
     cityId:'cairo', method:5, asr:1, hijriAdj:0, notify:false, sound:true, h24:false,
     gps:null, theme:'dark', customThemes:[], draft:null, tab:'times', sec:'loc',
-    lang:'ar', preAlert:0, fullscreen:true, anim:true, splash:true, pinPrayer:'', adhkarAuto:true, friRemind:true, tasbihPhrase:'ph_sub', tasbihTarget:33, fontScale:1, autoNext:true, hideDone:false, vibTarget:'double', vibTap:true, keepAwake:false, adhkarRemind:false, sndPrayers:{ Fajr:'default', Dhuhr:'default', Asr:'default', Maghrib:'default', Isha:'default' }, weeklyGoal:0, monthGoal:0, wirdUnit:'page', wirdGoal:0, dndFri:false, dndFriFrom:'23:00', dndFriTo:'08:00', sndPrayer:'rise', sndAdhkar:'chime', sndWird:'soft', sndGoal:'triple', hiddenTabs:[], onboarded:false, oneHand:false, wirdRemind:false, wirdTime:'21:00', dnd:false, dndFrom:'23:00', dndTo:'05:00', dndPrayer:true, remindDelay:20, sleepDelay:60, afterDelay:5, afterCard:true, backupRemind:true, backupAt:0, backupSnooze:0, endAlert:0, logRemind:false, occRemind:false, qDark:false, qAwake:false, khRemind:false, khTime:'20:00', nightAuto:true, nawRemind:false, nawCard:true, hifz:0, fontFace:'default', remindSleep:false, remindWake:false, remindAfter:false, readDark:false,
+    lang:'ar', preAlert:0, fullscreen:true, anim:true, pinPrayer:'', adhkarAuto:true, friRemind:true, tasbihPhrase:'ph_sub', tasbihTarget:33, fontScale:1, autoNext:true, hideDone:false, vibTarget:'double', vibTap:true, keepAwake:false, adhkarRemind:false, sndPrayers:{ Fajr:'default', Dhuhr:'default', Asr:'default', Maghrib:'default', Isha:'default' }, weeklyGoal:0, monthGoal:0, wirdUnit:'page', wirdGoal:0, dndFri:false, dndFriFrom:'23:00', dndFriTo:'08:00', sndPrayer:'rise', sndAdhkar:'chime', sndWird:'soft', sndGoal:'triple', hiddenTabs:[], onboarded:false, oneHand:false, wirdRemind:false, wirdTime:'21:00', dnd:false, dndFrom:'23:00', dndTo:'05:00', dndPrayer:true, remindDelay:20, sleepDelay:60, afterDelay:5, afterCard:true, backupRemind:true, backupAt:0, backupSnooze:0, endAlert:0, logRemind:false, occRemind:false, qDark:false, qAwake:false, khRemind:false, khTime:'20:00', nightAuto:true, nawRemind:false, nawCard:true, hifz:0, fontFace:'default', remindSleep:false, remindWake:false, remindAfter:false, readDark:false,
     tune:{ Fajr:0, Sunrise:0, Dhuhr:0, Asr:0, Maghrib:0, Isha:0 }
 };
 let settings = Object.assign({}, DEFAULTS, store.get('pt-settings', {}));
@@ -2665,39 +2658,6 @@ function qStatsBox(redo) {
     return box;
 }
 let qStatOpen = false;
-/* ===== شاشة البداية السريعة ===== */
-let splashDone = false, splashTm = 0, splashIv = 0;
-function splashNext(now) {
-    const CD = ['Fajr', 'Sunrise', 'Dhuhr', 'Asr', 'Maghrib', 'Isha'];
-    for (const k of CD) if (state.today[k] > now) return { k, ts: state.today[k] };
-    return { k: 'Fajr', ts: state.tomorrow.Fajr };
-}
-function closeSplash() {
-    const el = $('splash'); if (!el || el.hidden) return;
-    clearTimeout(splashTm); clearInterval(splashIv); el.classList.add('out'); setTimeout(() => { el.hidden = true; el.classList.remove('out'); el.innerHTML = ''; }, 260);
-}
-function showSplash() {
-    if (splashDone || !state.today || !state.tomorrow) return; splashDone = true;
-    try {
-        if (settings.splash === false || !settings.onboarded || !$('onb').hidden || /[?&](quran|tab|set|lib|wird)=/.test(location.search)) return;
-        const el = $('splash'); if (!el) return;
-        const mk = (tag, cls, txt) => { const n = document.createElement(tag); if (cls) n.className = cls; if (txt != null) n.textContent = txt; return n; };
-        const nx = splashNext(Date.now());
-        el.innerHTML = '';
-        el.appendChild(mk('div', 'sp-city', $('city-title').textContent));
-        el.appendChild(mk('div', 'sp-lab', t('spNext')));
-        el.appendChild(mk('div', 'sp-name', prayerName(nx.k)));
-        el.appendChild(mk('div', 'sp-time', fmtClock(nx.ts)));
-        const cd = mk('div', 'sp-cd', ''); el.appendChild(cd);
-        const gr = mk('div', 'sp-grid');
-        ['Fajr', 'Sunrise', 'Dhuhr', 'Asr', 'Maghrib', 'Isha'].forEach(k => { const c = mk('div', k === nx.k ? 'on' : ''); c.appendChild(mk('small', '', prayerName(k))); c.appendChild(mk('b', '', fmtClock(state.today[k]))); gr.appendChild(c); });
-        el.appendChild(gr); el.appendChild(mk('div', 'sp-tap', t('spTap')));
-        const upd = () => { const df = Math.max(0, nx.ts - Date.now()); cd.textContent = pad2(Math.floor(df / 3600000)) + ':' + pad2(Math.floor(df % 3600000 / 60000)) + ':' + pad2(Math.floor(df % 60000 / 1000)); };
-        upd(); splashIv = setInterval(upd, 1000);
-        el.hidden = false; el.onclick = closeSplash; splashTm = setTimeout(closeSplash, 4000);
-        if (fxOn()) fxIn([el.querySelector('.sp-name'), el.querySelector('.sp-time')], { y: 10, s: 0.96, d: 350 });
-    } catch (e) {}
-}
 async function askPersist(force) {
     try {
         if (!navigator.storage || !navigator.storage.persist) return null;
@@ -2712,7 +2672,6 @@ function maybeWhatsNew() {
     try {
         const WN = '2026.11.13', seen = store.get('pt-wnver', '');
         if (seen === WN) return;
-        if (!$('splash').hidden) { setTimeout(maybeWhatsNew, 2500); return; }
         store.set('pt-wnver', WN);
         if (!settings.onboarded || !$('onb').hidden || !$('sheet').hidden) return;
         openSheet(t('wnTitle'), b => {
@@ -3230,7 +3189,6 @@ const setText = (id, v) => { const e = $(id); if (e.textContent !== v) e.textCon
 /* العدّاد المرئي كل ثانية (فقط والتطبيق ظاهر في تبويب المواقيت)، أما الفحوص الثقيلة (تغيّر اليوم، التنبيهات، البطاقات) فكل 5 ثوانٍ */
 function tick(force) {
     if (!state.today) return;
-    if (!splashDone) showSplash();
     if (!PERF.first) PERF.first = Math.round(perfNow());
     const now = Date.now();
     const slow = force === true || !lastSlow || now - lastSlow >= 5000 || now < lastSlow;
@@ -5171,7 +5129,7 @@ function syncControls() {
     $('remsleep-toggle').checked = !!settings.remindSleep; $('remwake-toggle').checked = !!settings.remindWake; $('remafter-toggle').checked = !!settings.remindAfter;
     $('h24-toggle').checked = settings.h24;
     $('fs-toggle').checked = settings.fullscreen;
-    $('simple-toggle').checked = settings.simple !== false; $('anim-toggle').checked = settings.anim !== false; $('splash-toggle').checked = settings.splash !== false; $('adhauto-toggle').checked = settings.adhkarAuto !== false; $('frirem-toggle').checked = settings.friRemind !== false;
+    $('simple-toggle').checked = settings.simple !== false; $('anim-toggle').checked = settings.anim !== false; $('adhauto-toggle').checked = settings.adhkarAuto !== false; $('frirem-toggle').checked = settings.friRemind !== false;
     $('city-select').value = settings.cityId;
     $('method-select').value = settings.method;
 }
@@ -5194,7 +5152,7 @@ function sanitizeSettings(s) {
     if (PT_METHODS[s.method]) out.method = Number(s.method);
     out.asr = Number(s.asr) === 2 ? 2 : 1;
     out.hijriAdj = clampInt(s.hijriAdj, 0, -2, 2);
-    out.notify = !!s.notify; out.sound = s.sound !== false; out.h24 = !!s.h24; out.fullscreen = s.fullscreen !== false; out.anim = s.anim !== false; out.splash = s.splash !== false; out.pinPrayer = FIVE.includes(s.pinPrayer) ? s.pinPrayer : ''; out.adhkarAuto = s.adhkarAuto !== false; out.friRemind = s.friRemind !== false;
+    out.notify = !!s.notify; out.sound = s.sound !== false; out.h24 = !!s.h24; out.fullscreen = s.fullscreen !== false; out.anim = s.anim !== false; out.pinPrayer = FIVE.includes(s.pinPrayer) ? s.pinPrayer : ''; out.adhkarAuto = s.adhkarAuto !== false; out.friRemind = s.friRemind !== false;
     out.simple = s.simple !== false;
     out.lang = I18N[s.lang] ? s.lang : 'ar';
     out.preAlert = [0, 10, 15].includes(Number(s.preAlert)) ? Number(s.preAlert) : 0;
@@ -5585,7 +5543,7 @@ function bindUI() {
     $('tool-zakat').addEventListener('click', openZakat);
     $('wird-quran').addEventListener('click', () => openQuran());
     $('sheet-close').addEventListener('click', closeSheet);
-    document.addEventListener('keydown', e => { if (e.key === 'Escape') { if (!$('splash').hidden) closeSplash(); else if (!$('sheet').hidden) closeSheet(); } });
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') { if (!$('sheet').hidden) closeSheet(); } });
     $('mig-go').addEventListener('click', () => { $('mig-card').hidden = true; store.set('pt-migdone', 1); showTab('settings'); showSec('data', true); setTimeout(() => $('mig-title').scrollIntoView({ block: 'start' }), 60); });
     $('mig-no').addEventListener('click', () => { store.set('pt-migdone', 1); $('mig-card').hidden = true; });
     $('bak-list').addEventListener('click', e => { const b = e.target.closest && e.target.closest('button'); if (!b) return; const x = bakAllList().find(y => String(y.at) === b.dataset.at); if (x && importText(x.d)) toast(t('bakDone')); });
@@ -5600,7 +5558,6 @@ function bindUI() {
         if (state.today) { renderHeader(); renderList(); lastNextKey = null; tick(); }
     });
     $('lang-select').addEventListener('change', e => { settings.lang = e.target.value; saveSettings(); refreshAll(); });
-    $('splash-toggle').addEventListener('change', e => { settings.splash = e.target.checked; saveSettings(); });
     $('adhauto-toggle').addEventListener('change', e => { settings.adhkarAuto = e.target.checked; saveSettings(); });
     $('frirem-toggle').addEventListener('change', e => { settings.friRemind = e.target.checked; saveSettings(); });
     $('simple-toggle').addEventListener('change', e => { settings.simple = e.target.checked; saveSettings(); applySimple(); if (!settings.simple) { try { if (state.today) tick(); } catch (x) {} } else if (['sunan', 'tools'].includes(settings.tab)) showTab('times'); });
