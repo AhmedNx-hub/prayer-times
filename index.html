@@ -1475,6 +1475,8 @@ ar: {
     stOk:'سليم',
     stWarn:'تنبيه',
     stFail:'خطأ',
+    stAgain:'أعد الفحص وقارنه بالسابق',
+    stDiff:'تغييرات عن المرة السابقة: {0}',
     afterOpen:'فتح الأذكار', afterHide:'إخفاء',
     backupOn:'تذكير أسبوعي بالنسخة الاحتياطية', backupTitle:'مرّ أسبوع على آخر نسخة احتياطية', backupNow:'تصدير الآن', backupLater:'لاحقًا',
     readOpts:'خيارات القراءة', fontFace:'خط الأذكار', ffDefault:'الافتراضي', ffNaskh:'نسخ', ffThuluth:'ثلث / رقعة', fontNote:'يظهر حسب الخطوط المتاحة على جهازك',
@@ -1620,6 +1622,8 @@ en: {
     stOk:'OK',
     stWarn:'Warning',
     stFail:'Failure',
+    stAgain:'Run again and compare',
+    stDiff:'Changes since last run: {0}',
     afterOpen:'Open adhkar', afterHide:'Hide',
     backupOn:'Weekly backup reminder', backupTitle:'It has been a week since your last backup', backupNow:'Export now', backupLater:'Later',
     readOpts:'Reading options', fontFace:'Adhkar font', ffDefault:'Default', ffNaskh:'Naskh', ffThuluth:'Thuluth / Ruqaa', fontNote:'Shown using the fonts available on your device',
@@ -1728,7 +1732,7 @@ const SCHEMA = 3;
         store.set('pt-schema', SCHEMA);
     } catch (e) {}
 })();
-const APP_VER = '2026.11.13-8';
+const APP_VER = '2026.11.13-9';
 function logErr(m) { try { const l = store.get('pt-errs', []); l.push({ at: Date.now(), m: String(m).slice(0, 200) }); store.set('pt-errs', l.slice(-10)); } catch (e) {} }
 window.addEventListener('error', e => logErr((e.message || 'error') + ' @' + String(e.filename || '').split('/').pop() + ':' + (e.lineno || 0)));
 window.addEventListener('unhandledrejection', e => logErr('promise: ' + ((e.reason && e.reason.message) || e.reason)));
@@ -4964,6 +4968,17 @@ async function runSelfTest() {
         if (ks.includes('pt-v2')) { const c = await caches.open('pt-v2'), rq = await c.keys(); let tot = 0; for (const q of rq) { const r = await c.match(q); try { tot += (await r.clone().blob()).size; } catch (e) {} } A('Cached files', 'info', rq.length + ' files, ' + (tot / 1048576).toFixed(2) + ' MB: ' + rq.map(q => new URL(q.url).pathname.split('/').pop() || './').join(', ')); }
         for (const [, u] of OFF_FILES) { const r = (await caches.match(u)) || (u === './' ? await caches.match(location.pathname) : null); needs(!!r, 'Offline copy: ' + u, r ? 'cached' : 'missing', u === 'tafsir-muyassar.txt' ? 'info' : 'fail'); }
         if (navigator.onLine) {
+            const sha = async b => [...new Uint8Array(await crypto.subtle.digest('SHA-256', b))].map(x => x.toString(16).padStart(2, '0')).join('');
+            for (const [nm, url] of [['index.html', location.pathname], ['sw.js', 'sw.js']]) {
+                try {
+                    const f = await fetch(url, { cache: 'no-store' }); if (!f.ok) { A('Server copy of ' + nm, 'fail', 'HTTP ' + f.status); continue; }
+                    const fb = await f.arrayBuffer(), fh = await sha(fb);
+                    A('Server copy of ' + nm, 'info', fb.byteLength + ' bytes | sha256 ' + fh.slice(0, 16));
+                    const c = await caches.match(url); if (!c) { A('Cached copy of ' + nm, 'info', 'not in cache (served fresh from network)'); continue; }
+                    const cb = await c.arrayBuffer(), ch = await sha(cb); needs(ch === fh, 'Cached ' + nm + ' equals the server copy (no stale file)', ch === fh ? 'identical' : 'STALE: cache ' + cb.byteLength + ' bytes vs server ' + fb.byteLength, 'warn');
+                } catch (e) { A('Server copy of ' + nm, 'warn', e.message); }
+            }
+            try { const sw = await (await fetch('sw.js', { cache: 'no-store' })).text(), m = /CACHE\s*=\s*'([^']+)'/.exec(sw); A('Service worker cache name on server', m ? 'ok' : 'warn', m ? m[1] : 'not found'); } catch (e) {}
             try { const r = await fetch(location.pathname, { cache: 'no-store' }), tx = await r.text(), m = /const APP_VER = '([^']+)'/.exec(tx); needs(!!m && m[1] === APP_VER, 'Running version equals the version on the server', 'server ' + (m ? m[1] : '?') + ' | running ' + APP_VER, 'warn'); } catch (e) { A('Server reachability', 'warn', e.message); }
             try { const r = await fetch('manifest.json', { cache: 'no-store' }); const mj = await r.json(); needs(r.ok && mj.name && Array.isArray(mj.icons) && mj.icons.length, 'Manifest valid', mj.name + ' | ' + (mj.icons || []).length + ' icons | display ' + mj.display + ' | shortcuts ' + (mj.shortcuts || []).length);
                 for (const ic of (mj.icons || [])) { try { const ri = await fetch(ic.src, { method: 'HEAD' }); needs(ri.ok, 'Icon ' + ic.src, ic.sizes + ' ' + (ic.purpose || ''), 'warn'); } catch (e) { A('Icon ' + ic.src, 'warn', e.message); } } } catch (e) { A('Manifest', 'fail', e.message); }
@@ -4980,8 +4995,8 @@ async function runSelfTest() {
     ['10. Screens layout audit', async () => {
         const tabs = ['times', 'adhkar', 'quran', 'settings'].concat(settings.simple === false ? ['sunan', 'tools'] : []);
         const lum = c => { const m = c.match(/[\d.]+/g); if (!m) return 0; const a = m.slice(0, 3).map(Number).map(v => { v /= 255; return v <= .03928 ? v / 12.92 : Math.pow((v + .055) / 1.055, 2.4); }); return .2126 * a[0] + .7152 * a[1] + .0722 * a[2]; };
-        const bgOf = e => { while (e) { const c = getComputedStyle(e).backgroundColor, m = c.match(/[\d.]+/g); if (m && (m.length < 4 || +m[3] > .5)) return c; e = e.parentElement; } return 'rgb(0,0,0)'; };
-        const audit = (label) => {
+        const bgOf = e => { while (e) { const cs0 = getComputedStyle(e), c = cs0.backgroundColor, m = c.match(/[\d.]+/g); if (m && (m.length < 4 || +m[3] > .5)) return c; if (cs0.backgroundImage !== 'none') return null; e = e.parentElement; } return null; };
+        const audit = (label, light) => {
             const root = document.documentElement, over = [], nm = [], small = [], low = [], tiny = [];
             const sw = root.scrollWidth; if (sw > innerWidth + 1) over.push('page scrollWidth ' + sw + ' > ' + innerWidth);
             const panel = document.querySelector('.panel:not([hidden])'); if (!panel) return;
@@ -4990,9 +5005,10 @@ async function runSelfTest() {
                 if (e.offsetParent === null || seen > 900) return; seen++;
                 const r = e.getBoundingClientRect(); if (r.width > 0 && (r.right > innerWidth + 1 || r.left < -1) && !e.closest('.seg.scroll, .q-jz, details:not([open]), .no-ov')) over.push(e.tagName + '.' + String(e.className).slice(0, 30) + ' [' + Math.round(r.left) + ',' + Math.round(r.right) + ']');
                 if (/^(BUTTON|INPUT|SELECT|A)$/.test(e.tagName)) { const n = (e.getAttribute('aria-label') || e.textContent || e.title || '').trim() || (e.labels && e.labels[0] && e.labels[0].textContent.trim()); if (!n && e.type !== 'range' && e.type !== 'hidden') nm.push(e.id || e.className || e.tagName); if (e.tagName === 'BUTTON' && (r.height < 30 || r.width < 30) && !e.closest('.pchk, .grip')) tiny.push((e.id || e.className || '').toString().slice(0, 24) + ' ' + Math.round(r.width) + 'x' + Math.round(r.height)); }
-                const own = [...e.childNodes].some(n => n.nodeType === 3 && n.textContent.trim()); if (own) { const cs = getComputedStyle(e), fs = parseFloat(cs.fontSize); if (fs < 11) small.push(e.tagName + ' ' + fs + 'px'); const f = lum(cs.color), g = lum(bgOf(e)), cr = (Math.max(f, g) + .05) / (Math.min(f, g) + .05); if (cr < 3 && !e.closest('[disabled]') && getComputedStyle(e).opacity > .6) low.push(e.tagName + '.' + String(e.className).slice(0, 20) + ' ' + cr.toFixed(1) + ' "' + e.textContent.trim().slice(0, 14) + '"'); }
+                const own = [...e.childNodes].some(n => n.nodeType === 3 && n.textContent.trim()); if (own) { const cs = getComputedStyle(e), fs = parseFloat(cs.fontSize); if (fs < 11) small.push(e.tagName + ' ' + fs + 'px'); const bgc = bgOf(e); if (!bgc) return; const f = lum(cs.color), g = lum(bgc), cr = (Math.max(f, g) + .05) / (Math.min(f, g) + .05); if (cr < 3 && !e.closest('[disabled]') && getComputedStyle(e).opacity > .6) low.push(e.tagName + '.' + String(e.className).slice(0, 20) + ' ' + cr.toFixed(1) + ' "' + e.textContent.trim().slice(0, 14) + '"'); }
             });
             const uniq = a => [...new Set(a)].slice(0, 5).join(' | ');
+            if (light) { A(label + ' overflow and contrast', over.length || low.length ? 'warn' : 'ok', (over.length ? 'overflow: ' + uniq(over) + ' ' : '') + (low.length ? low.length + ' low-contrast: ' + uniq(low) : 'none')); return; }
             A(label + ' horizontal overflow', over.length ? 'fail' : 'ok', over.length ? uniq(over) : 'none');
             A(label + ' controls without accessible name', nm.length ? 'warn' : 'ok', nm.length ? uniq(nm) : 'none');
             A(label + ' tap targets under 30px', tiny.length > 3 ? 'warn' : 'ok', tiny.length ? tiny.length + ': ' + uniq(tiny) : 'none');
@@ -5004,6 +5020,8 @@ async function runSelfTest() {
         showTab('settings', true); const rows = [...document.querySelectorAll('.set-row')].map(b => b.dataset.sec);
         for (const sec of rows) { showSec(sec, true); await stSleep(200); audit('[settings/' + sec + ']'); }
         showSetList();
+        const keepTheme = settings.theme;
+        try { for (const th of Object.keys(PRESETS)) { settings.theme = th; applyTheme(); await stSleep(120); for (const id of ['times', 'adhkar', 'quran', 'settings']) { showTab(id, true); if (id === 'settings') showSetList(); await stSleep(180); audit('[theme ' + th + ' / ' + id + ']', true); } } } finally { settings.theme = keepTheme; applyTheme(); }
         const ids = {}; document.querySelectorAll('[id]').forEach(e => { ids[e.id] = (ids[e.id] || 0) + 1; }); const dup = Object.keys(ids).filter(k => ids[k] > 1); needs(!dup.length, 'No duplicate element ids', dup.join(','));
         showTab(['times', 'adhkar', 'quran', 'sunan', 'tools', 'settings'].includes(keepTab) ? keepTab : 'times', true); window.scrollTo(0, keepY);
     }],
@@ -5044,9 +5062,18 @@ async function runSelfTest() {
     const prob = R.filter(r => r.s === 'fail' || r.s === 'warn');
     lines.push('== PROBLEMS (' + prob.length + ') =='); prob.forEach(r => lines.push('[' + r.s.toUpperCase() + '] ' + r.g + ' / ' + r.n + ' :: ' + r.d)); if (!prob.length) lines.push('none'); lines.push('');
     let cur = ''; R.forEach(r => { if (r.g !== cur) { cur = r.g; lines.push('== ' + cur + ' =='); } lines.push('[' + r.s.toUpperCase() + '] ' + r.n + (r.d ? ' :: ' + r.d : '')); });
+    const curM = {}; R.forEach(x => { curM[x.g + '|' + x.n] = x.s; });
+    let prev = null; try { prev = store.get('pt-st-last', null); } catch (e) {}
+    const chg = [];
+    if (prev && prev.map) { for (const k in curM) { const p0 = prev.map[k]; if (p0 === undefined) { if (curM[k] !== 'ok' && curM[k] !== 'info') chg.push('NEW ' + curM[k].toUpperCase() + ': ' + k.replace('|', ' / ')); } else if (p0 !== curM[k] && curM[k] !== 'info' && p0 !== 'info') chg.push((rank(curM[k]) > rank(p0) ? 'WORSE ' : 'BETTER ') + p0 + ' -> ' + curM[k] + ': ' + k.replace('|', ' / ')); } for (const k in prev.map) if (!(k in curM) && prev.map[k] !== 'info' && prev.map[k] !== 'ok') chg.push('GONE ' + prev.map[k] + ': ' + k.replace('|', ' / ')); }
+    function rank(x) { return { ok: 0, info: 0, warn: 1, fail: 2 }[x] || 0; }
+    const cmpHead = prev ? '== CHANGES SINCE PREVIOUS RUN (' + prev.v + ', ' + new Date(prev.at).toISOString().slice(0, 16) + ') ==' : '== FIRST RUN: nothing to compare ==';
+    lines.splice(4, 0, cmpHead, ...(prev ? (chg.length ? chg : ['no differences in warnings or failures']) : []), '');
+    try { store.set('pt-st-last', { v: APP_VER, at: Date.now(), map: curM }); } catch (e) {}
     ST.text = lines.join('\n'); ST.running = false; btn.disabled = false;
-    sumEl.textContent = t('stDone', cnt.ok, cnt.warn, cnt.fail); sumEl.className = 'st-sum ' + (cnt.fail ? 'bad' : cnt.warn ? 'warn' : 'ok'); stat.textContent = '';
+    sumEl.textContent = t('stDone', cnt.ok, cnt.warn, cnt.fail) + (prev ? ' · ' + t('stDiff', chg.length) : ''); $('st-run').querySelector('span').textContent = t('stAgain'); sumEl.className = 'st-sum ' + (cnt.fail ? 'bad' : cnt.warn ? 'warn' : 'ok'); stat.textContent = '';
     $('st-prog').hidden = true; $('st-tools').hidden = false;
+    try { showTab('settings', true); showSec('test', true); window.scrollTo(0, 0); } catch (e) {}
     let curG = ''; R.forEach(r => { if (r.g !== curG) { curG = r.g; const h = document.createElement('div'); h.className = 'small muted'; h.style.margin = '.8rem 0 .3rem'; h.textContent = curG.replace(/^\d+\.\s*/, ''); out.appendChild(h); } if (r.s === 'info') return; const row = document.createElement('div'); row.className = 'naw-row st-row'; const a = document.createElement('span'); a.textContent = r.n; const b = document.createElement('span'); b.className = 'v ' + (r.s === 'ok' ? 'ok' : r.s === 'fail' ? 'bad' : 'warn'); b.textContent = r.s === 'ok' ? t('stOk') : r.s === 'warn' ? t('stWarn') : t('stFail'); row.append(a, b); if (r.s !== 'ok' && r.d) { const dd = document.createElement('div'); dd.className = 'st-d'; dd.textContent = r.d; row.appendChild(dd); } out.appendChild(row); });
 }
 
