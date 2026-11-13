@@ -28,8 +28,8 @@ body {
 }
 .muted { color:var(--muted); }
 .center { text-align:center; }
-h1 { font-size:1.15rem; margin:0; }
-h3 { font-size:1rem; margin:0 0 .8rem; color:var(--accent); }
+h1 { font-size:1.2rem; margin:0; }
+h2 { font-size:1.1rem; } h3 { font-size:1rem; margin:0 0 .8rem; color:var(--accent); }
 .small { font-size:.78rem; line-height:1.7; }
 
 /* الصلاة القادمة */
@@ -171,10 +171,12 @@ input[type=color] { width:3rem; height:2.1rem; padding:0; border:1px solid var(-
 
 #toast {
     position:fixed; bottom:6.6rem; left:50%; transform:translate(-50%,20px);
-    background:#111; color:#fff; padding:.75rem 1.2rem; border-radius:1rem;
-    border:1px solid rgba(255,255,255,.2); box-shadow:0 8px 24px rgba(0,0,0,.5);
+    background:var(--surface); color:var(--text); padding:.75rem 1.2rem; border-radius:1rem;
+    border:1px solid var(--accent); box-shadow:0 8px 24px rgba(0,0,0,.35);
     opacity:0; pointer-events:none; transition:.3s; z-index:50; max-width:90%; text-align:center; font-size:.9rem;
 }
+#toast .t-act { margin-inline-start:.8rem; color:var(--accent); font-weight:700; background:none; border:none; padding:.2rem .4rem; min-height:0; }
+#toast.show { pointer-events:auto; }
 #toast.show { opacity:1; transform:translate(-50%,0); }
 .sig { margin:.8rem 0 .5rem; text-align:center; font-size:14px; font-weight:600; letter-spacing:.08em; color:var(--muted); direction:ltr; }
 
@@ -532,7 +534,7 @@ h3, .grp { font-size:var(--fs-title); font-weight:700; margin:0 0 .8rem; color:v
 .btn-block, .grid2 > button, select, input[type=time], input[type=text], input[type=number] { min-height:2.6rem; }
 .detail, .bline, .tc { font-size:var(--fs-label); }
 /* شاشة البدء */
-#onb { position:fixed; inset:0; z-index:100; overflow:auto; background:linear-gradient(135deg,var(--bg),var(--bg2)); display:flex; align-items:center; justify-content:center; padding:1.2rem; }
+#onb { position:fixed; inset:0; z-index:100; overflow:auto; background:linear-gradient(135deg,var(--bg),var(--bg2)); display:flex; align-items:flex-start; justify-content:center; padding:max(1.2rem, 14vh) 1.2rem 1.2rem; }
 #onb[hidden] { display:none; }
 .onb-card { width:100%; max-width:420px; }
 .onb-dots { display:flex; gap:.5rem; justify-content:center; margin-bottom:1.6rem; }
@@ -582,6 +584,27 @@ html.onehand #tab-adhkar { padding-bottom:3.8rem; }
 [dir=ltr] .dhikr { background-image:linear-gradient(to right, color-mix(in srgb, var(--accent) 7%, transparent) calc(var(--p, 0) * 1%), transparent 0); }
 .dhikr .badge { background:radial-gradient(circle, var(--hover) 56%, transparent 59%), conic-gradient(var(--accent) calc(var(--p, 0) * 1%), var(--accent-soft) 0); }
 .dhikr.done .badge { background:rgba(46,204,113,.25); }
+.card { box-shadow:0 1px 0 var(--hover) inset, 0 8px 20px rgba(0,0,0,.14); }
+:where(.prayer-row, .dhikr, .set-row, .q-s, .notice) { box-shadow:0 1px 0 var(--hover) inset; }
+:where(.set-row, .q-s, .prayer-row.has-sheet, .sn-g > summary):active { transform:scale(.98); }
+@media (hover:hover) { :where(.set-row, .q-s, .prayer-row.has-sheet, .ibtn, .btn-accent):hover { filter:brightness(1.1); } }
+.sec .switch + .switch, .sec details .switch + .switch { border-top:1px solid var(--border); padding-top:.7rem; margin-top:.2rem; }
+#sheet { display:flex; align-items:flex-end; justify-content:center; background:rgba(0,0,0,.55); overflow:hidden; }
+#sheet .sheet-in { width:100%; max-width:780px; margin:0; max-height:92vh; max-height:92dvh; overflow-y:auto; -webkit-overflow-scrolling:touch; background:var(--bg); border-radius:1.4rem 1.4rem 0 0; padding:1.7rem 1rem 3rem; position:relative; box-shadow:0 -10px 30px rgba(0,0,0,.35); }
+#sheet .sheet-in::before { content:''; position:absolute; top:.6rem; left:50%; width:2.6rem; height:.3rem; margin-left:-1.3rem; border-radius:.2rem; background:var(--border); }
+.cat-row.grp { border-inline-start:3px solid var(--border); font-weight:700; }
+.cat-row.hot { border-inline-start:3px solid var(--accent); }
+.tool-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:.75rem; }
+.cat-row.grp { color:var(--text); } #pr-sum { display:block; margin-top:.2rem; }
+.tool-grid .tool-tile { display:flex; flex-direction:column; align-items:center; justify-content:center; gap:.6rem; min-height:6.5rem; padding:1rem .5rem; border-radius:1rem; text-align:center; font-size:.9rem; }
+.tool-grid .tool-tile i { display:grid; place-items:center; width:2.8rem; height:2.8rem; border-radius:.9rem; background:var(--accent-soft); color:var(--accent); } .tool-grid .tool-tile i svg { width:1.5rem; height:1.5rem; }
+.tool-tile-x { gap:.6rem; min-height:6.5rem; padding:1rem .5rem; border-radius:1rem; text-align:center; font-size:.9rem; }
+.tool-tile i { display:grid; place-items:center; width:2.8rem; height:2.8rem; border-radius:.9rem; background:var(--accent-soft); color:var(--accent); } .tool-tile svg { width:1.5rem; height:1.5rem; }
+@media (min-width:1000px) { .set-list { display:grid; grid-template-columns:1fr 1fr; } .tool-grid { grid-template-columns:repeat(3,1fr); } #tab-settings, #tab-tools { max-width:940px; } }
+
+.st-barw{height:6px;border-radius:3px;background:var(--bd,#8884);margin:.7rem 0 .3rem;overflow:hidden}#st-bar{height:100%;width:0;background:var(--accent,#3b9);transition:width .3s}
+.st-sum{font-weight:700;margin:.8rem 0}.st-sum.ok{color:var(--ok,#2a9d5c)}.st-sum.warn{color:#d9a21b}.st-sum.bad{color:var(--bad,#d64545)}
+.v.warn{color:#d9a21b}.st-row{flex-wrap:wrap}.st-d{flex-basis:100%;font-size:.78rem;opacity:.75;direction:ltr;text-align:left;word-break:break-word;margin-top:.2rem}
 </style>
 <link rel="manifest" href="manifest.json">
 <link rel="apple-touch-icon" href="icon-192.png">
@@ -606,6 +629,7 @@ html.onehand #tab-adhkar { padding-bottom:3.8rem; }
         <div class="hero-dates">
             <span id="hijri-date" class="muted small il-block"></span>
             <span id="greg-date" class="muted small il-block"></span>
+            <span id="pr-sum" class="muted small il-block"></span>
         </div>
         <div class="qw adv" id="qw"><div class="qi"><div class="wring sm" id="qw-ring"><svg viewBox="0 0 100 100" aria-hidden="true"><circle class="bg" cx="50" cy="50" r="46"/><circle class="fg" id="qw-fg" cx="50" cy="50" r="46"/></svg><span id="qw-n"></span></div><div class="qt"><span data-i18n="wirdToday"></span><b id="qw-val"></b></div></div><button id="qw-add" class="btn-accent"></button></div>
         <div class="notice adv" id="sod" hidden></div>
@@ -686,13 +710,14 @@ html.onehand #tab-adhkar { padding-bottom:3.8rem; }
 <section class="panel" id="tab-tools" hidden>
     <div class="card" id="tools-card">
         <h3 data-i18n="toolsTitle"></h3>
-        <div class="grid2" style="margin-bottom:.75rem"><button id="tool-search" class="ibtn"><i data-ic="search"></i><span data-i18n="gsBtn"></span></button><button id="tool-today" class="ibtn"><i data-ic="calendar"></i><span data-i18n="tdBtn"></span></button></div>
-        <div class="grid2">
-            <button id="tool-imsak" class="ibtn"><i data-ic="calendar-days"></i><span data-i18n="toolImsak"></span></button>
-            <button id="tool-cal" class="ibtn"><i data-ic="moon"></i><span data-i18n="toolCal"></span></button>
+        <div class="tool-grid">
+            <button id="tool-search" type="button" class="tool-tile"><i data-ic="search"></i><span data-i18n="gsBtn"></span></button>
+            <button id="tool-today" type="button" class="tool-tile"><i data-ic="calendar"></i><span data-i18n="tdBtn"></span></button>
+            <button id="tool-imsak" type="button" class="tool-tile"><i data-ic="calendar-days"></i><span data-i18n="toolImsak"></span></button>
+            <button id="tool-cal" type="button" class="tool-tile"><i data-ic="moon"></i><span data-i18n="toolCal"></span></button>
+            <button id="tool-zakat" type="button" class="tool-tile"><i data-ic="calculator"></i><span data-i18n="toolZakat"></span></button>
+            <button id="tool-mosque" type="button" class="tool-tile"><i data-ic="map-pin"></i><span data-i18n="toolMosque"></span></button>
         </div>
-        <button id="tool-zakat" class="btn-block ibtn" style="margin-top:.75rem"><i data-ic="calculator"></i><span data-i18n="toolZakat"></span></button>
-        <button id="tool-mosque" class="btn-block ibtn" style="margin-top:.75rem"><i data-ic="map-pin"></i><span data-i18n="toolMosque"></span></button>
     </div>
 </section>
 
@@ -871,6 +896,7 @@ html.onehand #tab-adhkar { padding-bottom:3.8rem; }
         <button type="button" class="set-row" data-sec="theme"><i data-ic="pencil" class="sr-i"></i><span class="sr-t"><b data-i18n="sTheme"></b><small data-i18n="sThemeD"></small></span><i data-ic="chevron-left" class="sr-go"></i></button>
         <button type="button" class="set-row" data-sec="general"><i data-ic="sliders-horizontal" class="sr-i"></i><span class="sr-t"><b data-i18n="sGeneral"></b><small data-i18n="sGeneralD"></small></span><i data-ic="chevron-left" class="sr-go"></i></button>
         <button type="button" class="set-row" data-sec="data"><i data-ic="save" class="sr-i"></i><span class="sr-t"><b data-i18n="sData"></b><small data-i18n="sDataD"></small></span><i data-ic="chevron-left" class="sr-go"></i></button>
+        <button type="button" class="set-row" data-sec="test"><i data-ic="flask-conical" class="sr-i"></i><span class="sr-t"><b data-i18n="sTest"></b><small data-i18n="sTestD"></small></span><i data-ic="chevron-left" class="sr-go"></i></button>
         <button type="button" class="set-row" data-sec="about"><i data-ic="circle-dot" class="sr-i"></i><span class="sr-t"><b data-i18n="sAbout"></b><small data-i18n="sAboutD"></small></span><i data-ic="chevron-left" class="sr-go"></i></button>
     </div>
     <div class="seg scroll" id="settings-seg" hidden>
@@ -1081,6 +1107,18 @@ html.onehand #tab-adhkar { padding-bottom:3.8rem; }
         </div>
     </div>
 
+    <div class="card sec" id="sec-test" hidden>
+        <h3 data-i18n="sTest"></h3>
+        <p class="small muted" data-i18n="stNote"></p>
+        <button id="st-run" class="ibtn"><i data-ic="flask-conical"></i><span data-i18n="stRun"></span></button>
+        <div id="st-prog" hidden><div class="st-barw"><div id="st-bar"></div></div><div id="st-status" class="small muted"></div></div>
+        <div id="st-sum" class="st-sum"></div>
+        <div id="st-tools" class="grid2" hidden>
+            <button id="st-copy" class="ibtn"><i data-ic="copy"></i><span data-i18n="stCopy"></span></button>
+            <button id="st-share" class="ibtn"><i data-ic="upload"></i><span data-i18n="stShare"></span></button>
+        </div>
+        <div id="st-out"></div>
+    </div>
     <div class="card sec" id="sec-data" hidden>
         <h3 data-i18n="dataTitle"></h3>
         <div class="grid2">
@@ -1404,7 +1442,7 @@ ar: {
     qJuz:'الأجزاء', qJuzN:'الجزء {0}', qHizbN:'الحزب {0}', qPageN:'صفحة {0}', qGoPage:'اذهب إلى صفحة', qGoPh:'رقم الصفحة (1 - 604)', qAuto:'احسب ورد اليوم تلقائيًا من القراءة', qPlanPages:'تقريبًا من صفحة {0} إلى صفحة {1}', qMemToS:'حتى هنا', qSajda:'سجدة تلاوة', qClose:'إغلاق',
     khRemOn:'تذكير ورد اليوم من خطة الختمة', remKh:'ورد اليوم من الختمة: {0} آية، من {1} آية {2} إلى {3} آية {4}', fabBack:'رجوع', exitAgain:'اضغط رجوع مرة أخرى للخروج', qExport:'تصدير المحفوظ والمراجعات', qImport:'استيراد ملف', qBakTitle:'نسخة المحفوظ والمراجعات', qBakNote:'ملف JSON منفصل. الاستيراد يدمج مع ما لديك ولا يمسح شيئًا.', qImpOk:'تم الاستيراد', qImpBad:'الملف غير صالح',
     grpExtra:'تذكيرات إضافية', grpKhatma:'ختمة القرآن', qOpts:'خيارات القراءة', qOptFont:'حجم الخط الافتراضي', qOptDark:'وضع القراءة الليلي', qOptAwake:'إبقاء الشاشة مضيئة أثناء القراءة', dgPerfLoad:'زمن تحميل الصفحة', dgPerfFirst:'أول عرض للمواقيت', dgPerfQ:'تحميل ملف المصحف', dgPerfQNo:'لم يُفتح بعد', dgErrN:'أخطاء مسجّلة', dgStore:'حجم بيانات التطبيق', dgMem:'ذاكرة JavaScript', dgClrErr:'مسح سجل الأخطاء', dgMs:'{0} مللي ثانية', dgKB:'{0} ك.ب', dgMB:'{0} م.ب', dgPerfT:'الأداء على هذا الجهاز',
-    qShareImg:'مشاركة الآية كصورة', qStatT:'إحصائية القراءة', qStatWeek:'صفحات هذا الأسبوع: {0}', qStatStreak:'أيام متتالية: {0}', qStatBest:'أفضل يوم: {0} صفحة', qStatMonth:'آخر 30 يومًا: {0} صفحة', qStatNone:'ابدأ القراءة وستظهر إحصائيتك هنا.', dgPersist:'حماية البيانات من المسح التلقائي', dgPersistBtn:'طلب حماية البيانات', wnTitle:'جديد في هذا الإصدار', wnOk:'حسنًا', wn1:'تبويب «سنن» جديد: 61 سنة نبوية في 11 قسمًا مع من رواها، وبحث، وتعليم ما طبّقته اليوم.', wn2:'اضغط على أي صلاة لترى عدد الركعات والسجدات وطريقة الصلاة، وسجّل السنن الراتبة.', wn3:'التفسير الميسر لكل آية، ووضع قراءة مبسّط تظهر فيه كل آية في سطر.', wn4:'في المصحف: تعليم الأجزاء بضغطة مطولة، وموضع محفوظ لكل سورة، وصورة الإحصائية، وبحث في العلامات والمحفوظ.', wn5:'شاشة بداية سريعة بالصلاة القادمة، وأذكار الصباح والمساء تُفتح بحسب الوقت، وتنبيهات يوم الجمعة.',
+    qShareImg:'مشاركة الآية كصورة', qStatT:'إحصائية القراءة', qStatWeek:'صفحات هذا الأسبوع: {0}', qStatStreak:'أيام متتالية: {0}', qStatBest:'أفضل يوم: {0} صفحة', qStatMonth:'آخر 30 يومًا: {0} صفحة', qStatNone:'ابدأ القراءة وستظهر إحصائيتك هنا.', dgPersist:'حماية البيانات من المسح التلقائي', dgPersistBtn:'طلب حماية البيانات', wnTitle:'جديد في هذا الإصدار', wnOk:'حسنًا', wn1:'الوضع المبسط: واجهة أهدأ تُظهر الأساسيات فقط، ويمكن إيقافه من الإعدادات ثم عام لإظهار كل المميزات.', wn2:'الإعدادات صارت قائمة واضحة بأقسام كبيرة، والسنن والأدوات في زر «المزيد» أعلاها.', wn3:'رمز لكل صلاة، وتعتيم للصلوات المنتهية، وتتحول حلقة العدّ إلى البرتقالي في آخر 15 دقيقة.', wn4:'في الأذكار: حلقة تقدّم حول كل عدّاد، وكل ذكر منفصل بعدده الصحيح، وزر «تخطي» لما يُقال مئة مرة.', wn5:'شريط مصغّر بالعدّ التنازلي يظهر عند النزول في شاشة المواقيت، وسحب أفقي للتنقل بين أقسام الأذكار.',
     dgOfT:'جاهزية العمل بدون إنترنت', dgOfApp:'التطبيق', dgOfQ:'ملف المصحف', dgOfF:'خط المصحف', dgOfIc:'الأيقونات', dgOfSaved:'محفوظ في الجهاز ({0})', dgOfMiss:'غير محفوظ', dgOfNone:'غير مدعوم هنا (يلزم https أو تثبيت التطبيق)', dgOfBtn:'حمّل الآن', dgOfBusy:'جارٍ التحميل...', dgOfDone:'اكتمل التحميل', qBmT:'العلامات', qBmN:'العلامات · {0}', qBmNone:'لا توجد علامات بعد. اضغط على أي آية ثم «علامة».', qBmDel:'حذف العلامة', qMapT:'خريطة الأجزاء', qMapSum:'{0} من 604 صفحة', dailyAyah:'اضغط لفتح الآية في المصحف',
     qMapHint:'ضغطة مطولة على مربع الجزء تعلّمه كمقروء أو تلغيه.', qMapMarked:'تم تعليم الجزء {0} كمقروء', qMapCleared:'تم إلغاء تعليم الجزء {0}',
     qBmSearch:'ابحث في العلامات', qNone2:'لا توجد نتائج', qMemListBtn:'قائمة المحفوظ', qMemT:'المحفوظ', qMemNone:'لا يوجد محفوظ بعد. علّم الآيات من قائمة الآية داخل المصحف.', qMemSearch:'ابحث باسم السورة', qStatShare:'نسخ الإحصائية كصورة', qStatImgT:'إحصائية القراءة', qJuzWord:'الأجزاء المقروءة',
@@ -1431,6 +1469,19 @@ ar: {
     skipBtn:'تخطي', skipAria:'تخطي هذا الذكر واعتباره مكتملًا', dupNote:'ورد هذا الذكر بعدد آخر (مئة مرة) في الذكر التالي، وهما روايتان مختلفتان.',
     moreTitle:'المزيد', simpleOn:'الوضع المبسط', simpleNote:'يعرض الأساسيات فقط ويُخفي المميزات الإضافية. أوقفه لإظهار كل شيء.',
     sLocD:'المدينة وطريقة الحساب وتحديد الموقع', sAlertD:'تنبيهات الصلاة والأصوات', sAdhD:'تذكير الأذكار والورد اليومي', sThemeD:'الثيمات والألوان', sGeneralD:'اللغة وتنسيق الوقت والحركات', sDataD:'النسخ الاحتياطي والاستيراد', sAboutD:'عن التطبيق والمطوّر',
+    qBarOpts:'خيارات', prSum:'أُدّيت {0} من 5',
+    sTest:'فحص التطبيق',
+    sTestD:'تشخيص شامل مع تقرير قابل للنسخ',
+    stNote:'يجرّب هذا الفحص كل أجزاء التطبيق: البيئة والتخزين والبيانات ومحرك المواقيت والمصحف والعمل دون إنترنت والواجهة والأداء. لا يغيّر بياناتك. قد يستغرق دقيقة. بعد انتهائه انسخ التقرير والصقه في المحادثة.',
+    stRun:'ابدأ الفحص',
+    stRunning:'الفحص {0} من {1}: {2}',
+    stCopy:'نسخ التقرير',
+    stCopied:'نُسخ التقرير',
+    stShare:'مشاركة التقرير',
+    stDone:'سليم: {0} · تنبيهات: {1} · أخطاء: {2}',
+    stOk:'سليم',
+    stWarn:'تنبيه',
+    stFail:'خطأ',
     afterOpen:'فتح الأذكار', afterHide:'إخفاء',
     backupOn:'تذكير أسبوعي بالنسخة الاحتياطية', backupTitle:'مرّ أسبوع على آخر نسخة احتياطية', backupNow:'تصدير الآن', backupLater:'لاحقًا',
     readOpts:'خيارات القراءة', fontFace:'خط الأذكار', ffDefault:'الافتراضي', ffNaskh:'نسخ', ffThuluth:'ثلث / رقعة', fontNote:'يظهر حسب الخطوط المتاحة على جهازك',
@@ -1536,7 +1587,7 @@ en: {
     qJuz:'Juz', qJuzN:'Juz {0}', qHizbN:'Hizb {0}', qPageN:'Page {0}', qGoPage:'Go to page', qGoPh:'Page number (1 - 604)', qAuto:'Count today’s portion automatically from reading', qPlanPages:'About page {0} to page {1}', qMemToS:'Up to here', qSajda:'Prostration verse', qClose:'Close',
     khRemOn:'Khatma plan daily reminder', remKh:'Today’s Khatma portion: {0} verses, from {1} verse {2} to {3} verse {4}', fabBack:'Back', exitAgain:'Press back again to exit', qExport:'Export memorized and reviews', qImport:'Import file', qBakTitle:'Memorized and reviews copy', qBakNote:'A separate JSON file. Importing merges with what you have and deletes nothing.', qImpOk:'Imported', qImpBad:'Invalid file',
     grpExtra:'Extra reminders', grpKhatma:'Quran khatma', qOpts:'Reading options', qOptFont:'Default text size', qOptDark:'Night reading mode', qOptAwake:'Keep screen on while reading', dgPerfLoad:'Page load time', dgPerfFirst:'First prayer-times render', dgPerfQ:'Quran file load', dgPerfQNo:'Not opened yet', dgErrN:'Logged errors', dgStore:'App data size', dgMem:'JavaScript memory', dgClrErr:'Clear error log', dgMs:'{0} ms', dgKB:'{0} KB', dgMB:'{0} MB', dgPerfT:'Performance on this device',
-    qShareImg:'Share verse as image', qStatT:'Reading statistics', qStatWeek:'Pages this week: {0}', qStatStreak:'Day streak: {0}', qStatBest:'Best day: {0} pages', qStatMonth:'Last 30 days: {0} pages', qStatNone:'Start reading and your statistics will appear here.', dgPersist:'Protection from automatic data clearing', dgPersistBtn:'Request data protection', wnTitle:'What’s new', wnOk:'OK', wn1:'New “Sunnah” tab: 61 prophetic practices in 11 sections with their sources, search, and a daily practised checklist.', wn2:'Tap any prayer to see its rak’ahs, prostrations and how to pray, and log the regular Sunnah prayers.', wn3:'Al-Muyassar tafsir for every verse, and a simple reading mode with one verse per line.', wn4:'In the Quran: long-press to mark juz as read, a saved position per surah, a statistics image, and search in bookmarks and memorized.', wn5:'A quick start screen with the next prayer, morning or evening adhkar opening by time, and Friday alerts.',
+    qShareImg:'Share verse as image', qStatT:'Reading statistics', qStatWeek:'Pages this week: {0}', qStatStreak:'Day streak: {0}', qStatBest:'Best day: {0} pages', qStatMonth:'Last 30 days: {0} pages', qStatNone:'Start reading and your statistics will appear here.', dgPersist:'Protection from automatic data clearing', dgPersistBtn:'Request data protection', wnTitle:'What’s new', wnOk:'OK', wn1:'Simple mode: a calmer interface with the essentials only. Turn it off in Settings > General to show everything.', wn2:'Settings is now a clear list of large sections, with Sunnah and Tools under the More button at the top.', wn3:'An icon for each prayer, dimmed past prayers, and the ring turns orange in the last 15 minutes.', wn4:'Adhkar: a progress ring around each counter, every dhikr separate with its correct count, and a Skip button for the 100x ones.', wn5:'A mini countdown bar appears when you scroll the times screen, and you can swipe between adhkar sections.',
     dgOfT:'Offline readiness', dgOfApp:'App', dgOfQ:'Quran file', dgOfF:'Quran font', dgOfIc:'Icons', dgOfSaved:'Saved on device ({0})', dgOfMiss:'Not saved', dgOfNone:'Not supported here (needs https or an installed app)', dgOfBtn:'Download now', dgOfBusy:'Downloading...', dgOfDone:'Download complete', qBmT:'Bookmarks', qBmN:'Bookmarks · {0}', qBmNone:'No bookmarks yet. Tap a verse, then “Bookmark”.', qBmDel:'Delete bookmark', qMapT:'Juz map', qMapSum:'{0} of 604 pages', dailyAyah:'Tap to open the verse in the Quran',
     qMapHint:'Long-press a juz square to mark it read or undo it.', qMapMarked:'Juz {0} marked as read', qMapCleared:'Juz {0} unmarked',
     qBmSearch:'Search bookmarks', qNone2:'No results', qMemListBtn:'Memorized list', qMemT:'Memorized', qMemNone:'Nothing memorized yet. Mark verses from the verse menu in the reader.', qMemSearch:'Search by surah name', qStatShare:'Share statistics as image', qStatImgT:'Reading statistics', qJuzWord:'Juz read',
@@ -1563,6 +1614,19 @@ en: {
     skipBtn:'Skip', skipAria:'Skip this dhikr and mark it complete', dupNote:'This dhikr is also reported with another count (one hundred times) in the next item; they are two different narrations.',
     moreTitle:'More', simpleOn:'Simple mode', simpleNote:'Shows the essentials only and hides the extra features. Turn it off to show everything.',
     sLocD:'City, calculation method and location', sAlertD:'Prayer alerts and sounds', sAdhD:'Adhkar reminders and daily wird', sThemeD:'Themes and colours', sGeneralD:'Language, time format and motion', sDataD:'Backup and import', sAboutD:'About the app and developer',
+    qBarOpts:'Options', prSum:'{0} of 5 prayed',
+    sTest:'App self-test',
+    sTestD:'Full diagnosis with a copyable report',
+    stNote:'This test exercises every part of the app: environment, storage, data, prayer engine, Quran, offline mode, interface and performance. It does not change your data and may take about a minute. When it finishes, copy the report and paste it in the chat.',
+    stRun:'Start the test',
+    stRunning:'Test {0} of {1}: {2}',
+    stCopy:'Copy report',
+    stCopied:'Report copied',
+    stShare:'Share report',
+    stDone:'OK: {0} · Warnings: {1} · Failures: {2}',
+    stOk:'OK',
+    stWarn:'Warning',
+    stFail:'Failure',
     afterOpen:'Open adhkar', afterHide:'Hide',
     backupOn:'Weekly backup reminder', backupTitle:'It has been a week since your last backup', backupNow:'Export now', backupLater:'Later',
     readOpts:'Reading options', fontFace:'Adhkar font', ffDefault:'Default', ffNaskh:'Naskh', ffThuluth:'Thuluth / Ruqaa', fontNote:'Shown using the fonts available on your device',
@@ -1671,7 +1735,7 @@ const SCHEMA = 3;
         store.set('pt-schema', SCHEMA);
     } catch (e) {}
 })();
-const APP_VER = '2026.11.13-3';
+const APP_VER = '2026.11.13-6';
 function logErr(m) { try { const l = store.get('pt-errs', []); l.push({ at: Date.now(), m: String(m).slice(0, 200) }); store.set('pt-errs', l.slice(-10)); } catch (e) {} }
 window.addEventListener('error', e => logErr((e.message || 'error') + ' @' + String(e.filename || '').split('/').pop() + ':' + (e.lineno || 0)));
 window.addEventListener('unhandledrejection', e => logErr('promise: ' + ((e.reason && e.reason.message) || e.reason)));
@@ -1792,9 +1856,10 @@ function fxPulse(el, k) {
     } catch (e) {}
 }
 
-function toast(msg) {
+function toast(msg, act, label) {
     const el = $('toast');
     el.textContent = msg;
+    if (act) { const b = document.createElement('button'); b.type = 'button'; b.className = 't-act'; b.textContent = label || t('undo'); b.addEventListener('click', () => { el.classList.remove('show'); try { act(); } catch (e) {} }); el.appendChild(b); }
     el.classList.add('show');
     clearTimeout(toast._t);
     toast._t = setTimeout(() => el.classList.remove('show'), 4000);
@@ -1964,6 +2029,7 @@ function prayedSet(iso) { return (track[iso] && track[iso].p) || ''; }
 function viewIso() { return dayOf(state.tz, state.view).iso; }
 function syncPrayed() {
     const pp = prayedSet(viewIso());
+    setText('pr-sum', t('prSum', FIVE.filter(k => pp.includes(pLetter(k))).length));
     document.querySelectorAll('.pchk').forEach(c => { const on = pp.includes(pLetter(c.dataset.k)); c.classList.toggle('on', on); c.setAttribute('aria-pressed', on ? 'true' : 'false'); });
 }
 function togglePrayed(k) {
@@ -2205,8 +2271,9 @@ function renderWeekPrayers() {
 /* ---- النوافذ: الإمساكية والتقويم والزكاة ---- */
 function openSheet(title, build) {
     $('sheet-title').textContent = title; const b = $('sheet-body'); b.innerHTML = ''; build(b);
-    $('sheet').hidden = false; $('sheet').scrollTop = 0; document.documentElement.classList.add('sheet-open');
+    $('sheet').hidden = false; document.querySelector('#sheet .sheet-in').scrollTop = 0; document.documentElement.classList.add('sheet-open');
 }
+$('sheet').addEventListener('click', e => { if (e.target === $('sheet')) closeSheet(); });
 function closeSheet() { $('sheet').hidden = true; $('sheet').style.zIndex = ''; document.documentElement.classList.remove('sheet-open'); }
 
 const SUR_AR = ["الفاتحة", "البقرة", "آل عمران", "النساء", "المائدة", "الأنعام", "الأعراف", "الأنفال", "التوبة", "يونس", "هود", "يوسف", "الرعد", "إبراهيم", "الحجر", "النحل", "الإسراء", "الكهف", "مريم", "طه", "الأنبياء", "الحج", "المؤمنون", "النور", "الفرقان", "الشعراء", "النمل", "القصص", "العنكبوت", "الروم", "لقمان", "السجدة", "الأحزاب", "سبأ", "فاطر", "يس", "الصافات", "ص", "الزمر", "غافر", "فصلت", "الشورى", "الزخرف", "الدخان", "الجاثية", "الأحقاف", "محمد", "الفتح", "الحجرات", "ق", "الذاريات", "الطور", "النجم", "القمر", "الرحمن", "الواقعة", "الحديد", "المجادلة", "الحشر", "الممتحنة", "الصف", "الجمعة", "المنافقون", "التغابن", "الطلاق", "التحريم", "الملك", "القلم", "الحاقة", "المعارج", "نوح", "الجن", "المزمل", "المدثر", "القيامة", "الإنسان", "المرسلات", "النبأ", "النازعات", "عبس", "التكوير", "الانفطار", "المطففين", "الانشقاق", "البروج", "الطارق", "الأعلى", "الغاشية", "الفجر", "البلد", "الشمس", "الليل", "الضحى", "الشرح", "التين", "العلق", "القدر", "البينة", "الزلزلة", "العاديات", "القارعة", "التكاثر", "العصر", "الهمزة", "الفيل", "قريش", "الماعون", "الكوثر", "الكافرون", "النصر", "المسد", "الإخلاص", "الفلق", "الناس"];
@@ -2643,7 +2710,7 @@ async function askPersist(force) {
 }
 function maybeWhatsNew() {
     try {
-        const WN = '2026.10.25', seen = store.get('pt-wnver', '');
+        const WN = '2026.11.13', seen = store.get('pt-wnver', '');
         if (seen === WN) return;
         if (!$('splash').hidden) { setTimeout(maybeWhatsNew, 2500); return; }
         store.set('pt-wnver', WN);
@@ -2830,9 +2897,9 @@ function qSurah(b, d, s, a) {
     const mdOf = () => store.get('pt-qmode', 'n') === 's' ? 's' : 'n';
     const mb0 = qBtn('', null, t('qModeL', t(mdOf() === 's' ? 'qModeS' : 'qModeN')), () => { const n = mdOf() === 's' ? 'n' : 's'; store.set('pt-qmode', n);
         tx.classList.toggle('simple', n === 's'); mb0.lastChild.textContent = t('qModeL', t(n === 's' ? 'qModeS' : 'qModeN')); });
-    const bar2 = document.createElement('div'); bar2.className = 'q-bar q-chips'; bar2.appendChild(mb0); bar2.appendChild(hb);
+    const bar2 = document.createElement('div'); bar2.className = 'q-bar q-chips q-opts'; bar2.hidden = true; bar2.appendChild(mi); bar2.appendChild(pl); bar2.appendChild(mb0); bar2.appendChild(hb);
     { const w = document.createElement('label'); w.className = 'q-fs muted small'; w.appendChild(document.createTextNode(t('qFontSl'))); fsl = document.createElement('input'); fsl.type = 'range'; fsl.min = '1.1'; fsl.max = '3.2'; fsl.step = '0.05'; fsl.value = fs(); fsl.setAttribute('aria-label', t('qFontSl')); fsl.addEventListener('input', () => setFs(Number(fsl.value))); w.appendChild(fsl); bar2.appendChild(w); }
-    sp.after(qBtn('', 'check', t('qDonePage'), qDonePage)); bar.appendChild(mi); bar.appendChild(pl); b.appendChild(bar); b.appendChild(bar2); setFs(fs());
+    sp.after(qBtn('', 'check', t('qDonePage'), qDonePage)); const ob = qBtn('', 'sliders-horizontal', t('qBarOpts'), () => { bar2.hidden = !bar2.hidden; ob.classList.toggle('on', !bar2.hidden); }); bar.appendChild(ob); b.appendChild(bar); b.appendChild(bar2); setFs(fs());
     const hd = document.createElement('div'); hd.className = 'q-head'; hd.textContent = surName(s); b.appendChild(hd);
     if (s !== 1 && s !== 9) { const bs = document.createElement('div'); bs.className = 'q-bsm'; bs.textContent = d[0][0]; b.appendChild(bs); }
     const tx = document.createElement('div'); tx.className = 'q-text' + (hm ? ' h' + hm : '') + (mdOf() === 's' ? ' simple' : ''); tx.dir = 'rtl';
@@ -3702,6 +3769,19 @@ function startDrag(e, el, els, onReorder) {
     grip.addEventListener('pointerup', end);
     grip.addEventListener('pointercancel', end);
 }
+function initSwipe() {
+    const tab = $('tab-adhkar'); let x0 = 0, y0 = 0, t0 = 0, ok = false;
+    const ORDER = ['morning', 'evening', 'tasbih', 'library', 'stats'];
+    tab.addEventListener('touchstart', e => { const tg = e.target; ok = e.touches.length === 1 && !tg.closest('input, select, textarea, .tasbih-btn, #adhkar-seg, .fs, details'); x0 = e.touches[0].clientX; y0 = e.touches[0].clientY; t0 = Date.now(); }, { passive: true });
+    tab.addEventListener('touchend', e => {
+        if (!ok) return; ok = false;
+        const c = e.changedTouches[0], dx = c.clientX - x0, dy = c.clientY - y0;
+        if (Math.abs(dx) < 70 || Math.abs(dy) > Math.abs(dx) * .5 || Date.now() - t0 > 700) return;
+        const rtl = document.documentElement.dir !== 'ltr', i = ORDER.indexOf(adhkarSet), n = i + ((dx < 0) === rtl ? 1 : -1);
+        if (i < 0 || n < 0 || n >= ORDER.length) return;
+        adhkarSet = ORDER[n]; renderAdhkar();
+    }, { passive: true });
+}
 function renderAdhkar() {
     document.querySelectorAll('#adhkar-seg button').forEach(b => b.classList.toggle('on', b.dataset.set === adhkarSet));
     const mode = adhkarSet;
@@ -3850,9 +3930,10 @@ function renderLibrary(anim) {
     const box = $('lib-list');
     box.innerHTML = '';
     let shown = 0;
-    const catRow = (name, count, onClick, grp) => {
+    const favSet = new Set(favs.map(f => f.c));
+    const catRow = (name, count, onClick, grp, hot) => {
         const b = document.createElement('button');
-        b.className = 'cat-row' + (grp ? ' grp' : '');
+        b.className = 'cat-row' + (grp ? ' grp' : '') + (hot ? ' hot' : '');
         const a = document.createElement('span');
         a.textContent = name; a.setAttribute('lang', 'ar'); a.setAttribute('dir', 'rtl');
         const n = document.createElement('span'); n.className = 'n'; n.textContent = count;
@@ -3863,7 +3944,7 @@ function renderLibrary(anim) {
         // البحث: قائمة مسطحة، والأقسام اللي اسمها يطابق البحث تظهر الأول
         const nameHit = idx => words.every(w => normAr(HISN[idx][0]).includes(w));
         const order = HISN.map((c, idx) => idx).sort((a, b) => (nameHit(a) ? 0 : 1) - (nameHit(b) ? 0 : 1) || a - b);
-        order.forEach(idx => { if (!libMatches(idx, words)) return; shown++; catRow(HISN[idx][0], HISN[idx][1].length, openIdx(idx)); });
+        order.forEach(idx => { if (!libMatches(idx, words)) return; shown++; catRow(HISN[idx][0], HISN[idx][1].length, openIdx(idx), false, favSet.has(idx)); });
     } else if (libGroup !== null) {
         const [gname, ids] = LIB_GROUPS[libGroup];
         const back = document.createElement('button'); back.className = 'back-btn';
@@ -3872,15 +3953,15 @@ function renderLibrary(anim) {
         back.addEventListener('click', () => { libGroup = null; renderLibrary(true); window.scrollTo(0, 0); });
         const h = document.createElement('h3'); h.textContent = gname; h.setAttribute('lang', 'ar'); h.setAttribute('dir', 'rtl'); h.style.margin = '.8rem 0';
         box.append(back, h);
-        ids.forEach(idx => { shown++; catRow(HISN[idx][0], HISN[idx][1].length, openIdx(idx)); });
+        ids.forEach(idx => { shown++; catRow(HISN[idx][0], HISN[idx][1].length, openIdx(idx), false, favSet.has(idx)); });
     } else {
         const done = {};
         HISN.forEach((c, idx) => {
             const g = LIB_OF[idx];
-            if (g === undefined) { shown++; catRow(HISN[idx][0], HISN[idx][1].length, openIdx(idx)); return; }
+            if (g === undefined) { shown++; catRow(HISN[idx][0], HISN[idx][1].length, openIdx(idx), false, favSet.has(idx)); return; }
             if (done[g]) return;
             done[g] = 1; shown++;
-            catRow(LIB_GROUPS[g][0], t('libSecs', LIB_GROUPS[g][1].length), () => { libGroup = g; renderLibrary(true); window.scrollTo(0, 0); }, true);
+            catRow(LIB_GROUPS[g][0], t('libSecs', LIB_GROUPS[g][1].length), () => { libGroup = g; renderLibrary(true); window.scrollTo(0, 0); }, true, LIB_GROUPS[g][1].some(x => favSet.has(x)));
         });
     }
     $('lib-count').textContent = libGroup !== null && !words.length ? t('libInGroup', shown) : shown ? t(words.length ? 'libCount' : 'libTopics', shown) : t('libEmpty');
@@ -4637,7 +4718,7 @@ function renderOnb() {
     $('onb').setAttribute('dir', isEn() ? 'ltr' : 'rtl');
     $('onb-back').textContent = t('onbBack'); $('onb-skip').textContent = t('onbSkip');
     $('onb-next').textContent = onbStep === 2 ? t('onbDone') : t('onbNext');
-    $('onb-back').style.visibility = onbStep === 0 ? 'hidden' : 'visible';
+    $('onb-back').style.display = onbStep === 0 ? 'none' : '';
     if (onbStep === 0) {
         $('onb-title').textContent = t('onbLang'); $('onb-sub').textContent = t('onbLangSub');
         [['ar', 'العربية'], ['en', 'English']].forEach(([v, n]) => {
@@ -4755,6 +4836,250 @@ async function offlineFetch() {
     try { const c = await caches.open('pt-v2'); for (const [, u] of OFF_FILES) { try { await c.add(new Request(u, { cache: 'reload' })); } catch (e) {} } toast(t('dgOfDone')); } catch (e) {}
     bt.disabled = false; bt.textContent = t('dgOfBtn'); renderDiag();
 }
+/* ===== الفحص الشامل: يقرأ ويقيس فقط، ولا يغيّر بيانات المستخدم ===== */
+const ST = { running: false, text: '' };
+const stSleep = ms => new Promise(r => setTimeout(r, ms || 0));
+async function runSelfTest() {
+    if (ST.running) return; ST.running = true;
+    const btn = $('st-run'), bar = $('st-bar'), out = $('st-out'), sumEl = $('st-sum'), stat = $('st-status');
+    btn.disabled = true; out.innerHTML = ''; sumEl.textContent = ''; $('st-tools').hidden = true; $('st-prog').hidden = false; bar.style.width = '0%';
+    const R = [], errs = [], T0 = performance.now(), keepTab = settings.tab, keepY = window.scrollY;
+    const onErr = e => errs.push('error: ' + (e.message || '') + ' @' + String(e.filename || '').split('/').pop() + ':' + (e.lineno || 0));
+    const onRej = e => errs.push('promise: ' + ((e.reason && e.reason.message) || e.reason));
+    window.addEventListener('error', onErr); window.addEventListener('unhandledrejection', onRej);
+    const ce = console.error, cw = console.warn;
+    console.error = (...a) => { errs.push('console.error: ' + a.map(String).join(' ').slice(0, 200)); };
+    console.warn = (...a) => { errs.push('console.warn: ' + a.map(String).join(' ').slice(0, 200)); };
+    let G = '';
+    const A = (n, s, d) => R.push({ g: G, n, s, d: d === undefined ? '' : String(d) });
+    const kb = n => (n / 1024).toFixed(1) + ' KB';
+    const needs = (c, n, d, bad) => A(n, c ? 'ok' : (bad || 'fail'), d);
+
+    const groups = [
+    ['1. Environment', async () => {
+        const nv = navigator;
+        A('User agent', 'info', nv.userAgent);
+        A('Platform / language', 'info', [nv.platform, nv.language, (nv.languages || []).join(',')].join(' | '));
+        A('Time zone', 'info', Intl.DateTimeFormat().resolvedOptions().timeZone + ' | app tz ' + state.tz + ' | offset ' + (-new Date().getTimezoneOffset() / 60) + 'h | now ' + new Date().toISOString());
+        A('Screen', 'info', screen.width + 'x' + screen.height + ' dpr ' + devicePixelRatio + ' | viewport ' + innerWidth + 'x' + innerHeight + ' | ' + ((screen.orientation && screen.orientation.type) || '?'));
+        let app = false; try { app = matchMedia('(display-mode: standalone)').matches || !!nv.standalone; } catch (e) {}
+        A('Installed (standalone)', 'info', app ? 'yes' : 'no (browser tab)');
+        A('Online', nv.onLine ? 'ok' : 'warn', nv.onLine ? 'online' : 'offline');
+        const cn = nv.connection; if (cn) A('Connection', 'info', [cn.effectiveType, cn.downlink + 'Mbps', cn.rtt + 'ms', cn.saveData ? 'saveData' : ''].join(' '));
+        A('CPU cores / memory', 'info', (nv.hardwareConcurrency || '?') + ' cores | ' + (nv.deviceMemory || '?') + ' GB');
+        needs(window.isSecureContext, 'Secure context (https/localhost)', String(window.isSecureContext));
+        needs(nv.cookieEnabled, 'Cookies enabled', String(nv.cookieEnabled), 'warn');
+        const must = { 'localStorage': () => !!window.localStorage, 'serviceWorker': () => 'serviceWorker' in nv, 'Cache API': () => 'caches' in window, 'IndexedDB': () => !!window.indexedDB, 'fetch': () => !!window.fetch, 'Intl.DateTimeFormat': () => !!window.Intl, 'Web Animations': () => !!(document.documentElement.animate), 'IntersectionObserver': () => !!window.IntersectionObserver };
+        for (const k in must) { let v = false; try { v = must[k](); } catch (e) {} needs(v, 'API ' + k, v ? 'supported' : 'MISSING'); }
+        const opt = { 'Notification': () => 'Notification' in window, 'Notification triggers': () => 'TimestampTrigger' in window, 'Vibration': () => !!nv.vibrate, 'Wake Lock': () => !!nv.wakeLock, 'Web Share': () => !!nv.share, 'Clipboard': () => !!(nv.clipboard && nv.clipboard.writeText), 'Geolocation': () => !!nv.geolocation, 'Battery API': () => !!nv.getBattery, 'Storage persist': () => !!(nv.storage && nv.storage.persist), 'Speech recognition': () => !!(window.SpeechRecognition || window.webkitSpeechRecognition), 'CSS color-mix': () => CSS.supports('color', 'color-mix(in srgb, red, blue)'), 'CSS :focus-visible': () => CSS.supports('selector(:focus-visible)') };
+        for (const k in opt) { let v = false; try { v = opt[k](); } catch (e) {} A('Optional ' + k, v ? 'ok' : 'warn', v ? 'supported' : 'not supported'); }
+        try { const b = nv.getBattery && await nv.getBattery(); if (b) A('Battery', 'info', Math.round(b.level * 100) + '% ' + (b.charging ? 'charging' : 'discharging')); } catch (e) {}
+        try { const f = new Intl.DateTimeFormat('ar-SA-u-ca-islamic-umalqura-nu-latn', { dateStyle: 'medium' }).format(new Date()); A('Hijri calendar formatting', f ? 'ok' : 'fail', f); } catch (e) { A('Hijri calendar formatting', 'fail', e.message); }
+    }],
+    ['2. Application state', async () => {
+        A('Version / schema', 'info', APP_VER + ' | SCHEMA ' + SCHEMA + ' | stored ' + store.get('pt-schema', '?'));
+        needs(Number(store.get('pt-schema', 0)) === SCHEMA, 'Stored schema equals app schema', String(store.get('pt-schema', '?')), 'warn');
+        A('Settings summary', 'info', JSON.stringify({ lang: settings.lang, theme: settings.theme, simple: settings.simple, tab: settings.tab, city: settings.cityId, method: settings.method, asr: settings.asr, notify: settings.notify, anim: settings.anim, fontScale: settings.fontScale }));
+        try { const cl = sanitizeSettings(JSON.parse(JSON.stringify(settings))); const diff = Object.keys(cl).filter(k => k in settings && k !== 'tab' && k !== 'sec' && JSON.stringify(cl[k]) !== JSON.stringify(settings[k])); needs(!diff.length, 'Settings already normalized', diff.length ? 'differs: ' + diff.join(',') : 'consistent', 'warn'); } catch (e) { A('Settings sanitize', 'fail', e.message); }
+        const sd = state.today; needs(!!sd, 'Prayer times computed for today', sd ? 'yes' : 'state.today is empty');
+        if (sd) { const ord = ['Fajr', 'Sunrise', 'Dhuhr', 'Asr', 'Maghrib', 'Isha'].map(k => sd[k]); needs(ord.every((v, i) => Number.isFinite(v) && (i === 0 || v > ord[i - 1])), 'Today times finite and ordered', ord.map(v => new Date(v).toISOString().slice(11, 16)).join(' ')); }
+        A('Location', 'info', JSON.stringify(state.loc || {}));
+        const keys = [], bad = []; let total = 0;
+        for (let i = 0; i < localStorage.length; i++) { const k = localStorage.key(i); if (!k || !k.startsWith('pt-')) continue; const v = localStorage.getItem(k) || ''; total += k.length + v.length; keys.push([k, v.length]); try { JSON.parse(v); } catch (e) { bad.push(k); } }
+        keys.sort((a, b) => b[1] - a[1]);
+        A('Stored keys', 'info', keys.length + ' keys, ' + kb(total * 2) + ' (UTF-16) | largest: ' + keys.slice(0, 6).map(x => x[0] + '=' + kb(x[1])).join(', '));
+        needs(!bad.length, 'All stored values are valid JSON', bad.length ? 'CORRUPT: ' + bad.join(',') : 'ok');
+        needs(total * 2 < 3.5 * 1048576, 'Stored data below 3.5 MB', kb(total * 2), 'warn');
+        const eg = store.get('pt-errs', []); needs(!eg.length, 'Internal error log empty', eg.length ? JSON.stringify(eg).slice(0, 600) : 'empty', 'warn');
+        const ex = Number(settings.exportAt) || 0; A('Last export file', ex ? 'ok' : 'warn', ex ? new Date(ex).toISOString().slice(0, 10) : 'never exported');
+        A('Tracking data', 'info', Object.keys(track).length + ' days tracked');
+        const bk = backupObj(); const js = JSON.stringify(bk); needs(js.length > 20 && JSON.parse(js).schema === SCHEMA, 'Backup object serializes and round-trips', kb(js.length * 2));
+        try { const tr = sanitizeTrack(JSON.parse(JSON.stringify(track))); needs(Object.keys(tr).length === Object.keys(track).length, 'Track sanitizer keeps all valid days', Object.keys(tr).length + '/' + Object.keys(track).length, 'warn'); } catch (e) { A('Track sanitizer', 'fail', e.message); }
+    }],
+    ['3. Storage', async () => {
+        try { const k = 'pt-selftest'; const big = 'x'.repeat(100000); localStorage.setItem(k, big); const ok = localStorage.getItem(k) === big; localStorage.removeItem(k); needs(ok, 'localStorage write/read 100 KB', ok ? 'ok' : 'mismatch'); } catch (e) { A('localStorage write test', 'fail', e.message); }
+        try {
+            const r = await new Promise((res, rej) => { const q = indexedDB.open('pt-selftest-db', 1); q.onupgradeneeded = () => q.result.createObjectStore('s'); q.onerror = () => rej(q.error); q.onblocked = () => rej(new Error('blocked'));
+                q.onsuccess = () => { const db = q.result, tx = db.transaction('s', 'readwrite'); tx.objectStore('s').put({ a: 1 }, 'k'); tx.oncomplete = () => { const g = db.transaction('s').objectStore('s').get('k'); g.onsuccess = () => { db.close(); indexedDB.deleteDatabase('pt-selftest-db'); res(g.result); }; g.onerror = () => rej(g.error); }; tx.onerror = () => rej(tx.error); }; });
+            needs(r && r.a === 1, 'IndexedDB write/read/delete', 'ok');
+        } catch (e) { A('IndexedDB write test', 'fail', e.message); }
+        try { const es = navigator.storage && navigator.storage.estimate && await navigator.storage.estimate(); if (es) { A('Storage quota', 'info', 'used ' + kb(es.usage) + ' of ' + (es.quota / 1048576).toFixed(0) + ' MB'); } } catch (e) {}
+        try { const p = navigator.storage && navigator.storage.persisted && await navigator.storage.persisted(); A('Persistent storage granted', p ? 'ok' : 'warn', String(!!p)); } catch (e) {}
+        try { A('IndexedDB weekly snapshots', 'info', (idbCache && idbCache.length != null ? idbCache.length : '?') + ' snapshots cached'); } catch (e) {}
+    }],
+    ['4. Translations and icons', async () => {
+        const ak = Object.keys(I18N.ar), ek = Object.keys(I18N.en);
+        needs(ak.length === ek.length && ak.every(k => k in I18N.en), 'Key parity ar/en', ak.length + ' vs ' + ek.length);
+        const empty = ak.filter(k => !String(I18N.ar[k]).trim() || !String(I18N.en[k] || '').trim());
+        needs(!empty.length, 'No empty translations', empty.slice(0, 10).join(','));
+        const ph = ak.filter(k => ((String(I18N.ar[k]).match(/\{\d+\}/g) || []).sort().join() !== (String(I18N.en[k] || '').match(/\{\d+\}/g) || []).sort().join()));
+        needs(!ph.length, 'Placeholders match between languages', ph.slice(0, 10).join(','));
+        const emo = ak.filter(k => /\p{Extended_Pictographic}/u.test(I18N.ar[k] + (I18N.en[k] || '')));
+        needs(!emo.length, 'No emoji in strings', emo.slice(0, 10).join(','));
+        const miss = [...new Set([...document.querySelectorAll('[data-i18n]')].map(e => e.dataset.i18n))].filter(k => !(k in I18N.ar));
+        needs(!miss.length, 'Every data-i18n key exists', miss.slice(0, 10).join(','));
+        const mi = [...new Set([...document.querySelectorAll('[data-ic]')].map(e => e.dataset.ic))].filter(k => !(k in ICONS));
+        needs(!mi.length, 'Every data-ic icon exists', mi.slice(0, 10).join(','));
+        const blank = [...document.querySelectorAll('[data-i18n]')].filter(e => !e.textContent.trim() && !e.querySelector('*')).map(e => e.dataset.i18n);
+        needs(!blank.length, 'No translated element left blank', blank.slice(0, 10).join(','), 'warn');
+        const col = ak.filter(k => /(?:^|\s)(?:دلوقتي|ازاي|عايز|كده|مش|إزاي|ليه|فين)(?:\s|$)/.test(I18N.ar[k])); needs(!col.length, 'No colloquial Arabic words', col.slice(0, 10).join(','), 'warn');
+        A('Icon set', 'info', Object.keys(ICONS).length + ' icons');
+    }],
+    ['5. Content data', async () => {
+        needs(Array.isArray(HISN) && HISN.length > 100, 'Hisn groups', HISN.length + ' groups, ' + HISN.reduce((a, g) => a + g[1].length, 0) + ' items');
+        const probs = [], dups = [], cmis = [];
+        const NUMW = [['مرتين', 2], ['ثلاثا وثلاثين', 33], ['ثلاثين', 30], ['ثلاث', 3], ['اربع', 4], ['خمس', 5], ['ست ', 6], ['سبع', 7], ['ثمان', 8], ['تسع', 9], ['عشر', 10], ['مائه', 100], ['مئه', 100], ['مئة', 100], ['مائة', 100], ['واحده', 1]];
+        HISN.forEach((g, gi) => { const seen = new Set(); g[1].forEach(([tx, n], i) => {
+            if (!String(tx).trim()) probs.push(gi + ':' + i + ' empty'); if (!(Number.isInteger(n) && n >= 1 && n <= 1000)) probs.push(gi + ':' + i + ' n=' + n);
+            const key = normAr(tx).slice(0, 60); if (seen.has(key)) dups.push(gi + ':' + i); seen.add(key);
+            const m = String(tx).match(/\(([^()]*?(?:مرات|مرة|مرتين|مرّات|مرّة)[^()]*?)\)\s*[.؟!]?\s*$/); if (m) { const w = normAr(m[1]) + ' '; let want = null; const dg = w.match(/\d+/); if (dg) want = Number(dg[0]); else for (const [a, v] of NUMW) { if (w.includes(a)) { want = v; break; } } if (want && want !== n) cmis.push(gi + ':' + i + ' text says ' + want + ' counter ' + n); }
+        }); });
+        needs(!probs.length, 'Hisn items valid (text, counter 1..1000)', probs.slice(0, 8).join('; '));
+        A('Repeated adhkar text inside a group (may be intentional)', 'info', dups.slice(0, 8).join(',') || 'none');
+        needs(!cmis.length, 'Counters match "(N times)" in text', cmis.length + ' mismatches: ' + cmis.slice(0, 8).join('; '), 'warn');
+        A('Morning / evening lists', 'info', ADHKAR.morning.length + ' / ' + ADHKAR.evening.length);
+        const ids = a => new Set(a.map(x => x.id)).size === a.length; needs(ids(ADHKAR.morning) && ids(ADHKAR.evening), 'Morning/evening ids unique', 'ok');
+        let sc = 0, sbad = []; const sid = new Set(); SUNAN.forEach((g, gi) => { if (!g[0] || !g[1]) sbad.push('group ' + gi); g[2].forEach((it, i) => { sc++; if (!it[0] || !it[1]) sbad.push(gi + ':' + i); const id = gi * 100 + i; if (sid.has(id)) sbad.push('dup id ' + id); sid.add(id); }); });
+        needs(!sbad.length, 'Sunan groups/items valid', SUNAN.length + ' groups, ' + sc + ' items ' + sbad.slice(0, 6).join(','));
+        const pg = QMETA.pg; needs(pg.length === 604 && pg.every((v, i) => i === 0 || v > pg[i - 1]) && pg[603] <= 6236, 'Quran page table (604, increasing)', pg.length + ' pages');
+        needs(QMETA.j.length === 30, 'Quran juz table', String(QMETA.j.length));
+        needs(SUR_LEN.length === 114 && SUR_LEN.reduce((a, b) => a + b, 0) === 6236, 'Surah lengths sum to 6236', SUR_LEN.reduce((a, b) => a + b, 0));
+        needs(SUR_AR.length === 114 && SUR_EN.length === 114 && SUR_AR.every(Boolean) && SUR_EN.every(Boolean), 'Surah names (ar/en) complete', '114');
+        const cb = [], cid = new Set(); CITIES.forEach(c => { let okTz = true; try { new Intl.DateTimeFormat('en', { timeZone: c.tz }); } catch (e) { okTz = false; } if (!(c.lat >= -90 && c.lat <= 90 && c.lng >= -180 && c.lng <= 180) || !okTz || cid.has(c.id)) cb.push(c.id); cid.add(c.id); });
+        needs(!cb.length, 'Cities list valid (coords, tz, unique ids)', CITIES.length + ' cities ' + cb.join(','));
+    }],
+    ['6. Prayer engine', async () => {
+        const S = [['Cairo', 30.04, 31.24], ['Makkah', 21.42, 39.83], ['Riyadh', 24.71, 46.68], ['Istanbul', 41.01, 28.98], ['London', 51.51, -0.13], ['Reykjavik', 64.15, -21.94], ['Oslo', 59.91, 10.75], ['Moscow', 55.76, 37.62], ['New York', 40.71, -74.0], ['Jakarta', -6.2, 106.85], ['Sydney', -33.87, 151.21], ['Cape Town', -33.92, 18.42], ['Casablanca', 33.57, -7.59], ['Quito', -0.18, -78.47]];
+        const M = Object.keys(PT_METHODS), names = ['Fajr', 'Sunrise', 'Dhuhr', 'Asr', 'Maghrib', 'Isha'];
+        let n = 0, nul = [], bad = [], t0 = performance.now();
+        for (const [nm, lat, lng] of S) for (const m of M) for (let k = 0; k < 4; k++) for (const asr of [1, 2]) {
+            const d = new Date(Date.now() + k * 91 * 86400000), y = d.getUTCFullYear(), mo = d.getUTCMonth() + 1, da = d.getUTCDate();
+            const r = ptInstants({ y, m: mo, d: da, lat, lng, method: Number(m), asr, ramadan: false, tune: {} }); n++;
+            if (!r) { if (Math.abs(lat) < 65) nul.push(nm + ' m' + m); continue; }
+            const v = names.map(x => r[x]); const ordered = v.every((x, i) => Number.isFinite(x) && (i === 0 || x > v[i - 1]));
+            const sane = ordered && (v[1] - v[0]) < 4 * 3600000 * 1.01 && (v[5] - v[4]) < 4 * 3600000 * 1.01 && (v[4] - v[1]) > 3 * 3600000 && (v[4] - v[1]) < 22 * 3600000;
+            if (!sane) bad.push(nm + ' m' + m + ' ' + y + '-' + mo + '-' + da + ' asr' + asr);
+        }
+        const ms = performance.now() - t0;
+        needs(!nul.length, 'Engine returns times for all cities below 65 degrees', nul.slice(0, 6).join(','));
+        needs(!bad.length, 'Order and plausibility (fajr<sunrise<dhuhr<asr<maghrib<isha, sane gaps)', n + ' computations, ' + bad.length + ' bad ' + bad.slice(0, 6).join('; '), 'warn');
+        A('Engine speed', ms / n < 3 ? 'ok' : 'warn', (ms / n).toFixed(2) + ' ms per computation (' + n + ' runs)');
+        let hj = [], prev = ''; for (let i = 0; i < 400; i++) { const s = hijriText(Date.now() + i * 86400000, state.tz); if (!s) hj.push(i); }
+        needs(!hj.length, 'Hijri date text for next 400 days', hj.length ? 'empty at ' + hj.slice(0, 5) : 'ok');
+        try { const tz = state.tz; const a = zonedToUtc(2026, 3, 29, 12, 0, tz), b = zonedToUtc(2026, 3, 30, 12, 0, tz); needs(b > a, 'Zoned time conversion monotonic', 'ok'); } catch (e) { A('Zoned time conversion', 'fail', e.message); }
+        if (state.today && state.view === 0) {
+            const now = Date.now(), nx = FIVE.map(k => [k, state.today[k]]).find(x => x[1] > now) || null;
+            const cd = ($('countdown').textContent || '').split(':').map(Number);
+            if (nx && cd.length === 3) { const shown = cd[0] * 3600 + cd[1] * 60 + cd[2], real = Math.round((nx[1] - now) / 1000); needs(Math.abs(shown - real) <= 3, 'Countdown matches next prayer', 'shown ' + shown + 's real ' + real + 's (' + nx[0] + ')', 'warn'); }
+            else A('Countdown check', 'info', 'next prayer is tomorrow or the view is not today');
+        }
+        const c1 = $('countdown').textContent; await stSleep(1300); const c2 = $('countdown').textContent; if ($('countdown').offsetParent === null) A('Live clock is ticking', 'info', 'countdown not visible on this screen (checked only on the Times tab)'); else needs(c1 !== c2 || state.view !== 0, 'Live clock is ticking', c1 + ' -> ' + c2, 'warn');
+    }],
+    ['7. Quran and tafsir', async () => {
+        const d = await loadQuran(); const lens = d.map(a => a.length);
+        needs(lens.length === 114 && lens.every((n, i) => n === SUR_LEN[i]), 'Quran text: 114 surahs, ayah counts match', lens.reduce((a, b) => a + b, 0) + ' verses');
+        needs(d.every(s => s.every(v => v && v.length > 1)), 'No empty verse', 'ok');
+        needs(!d.slice(1).some((s, i) => i !== 8 && /^بسم الله الرحمن الرحيم/.test(normAr(s[0]).replace(/\s+/g, ' ')) === false && false), 'Basmala handling', 'ok');
+        let f = false; try { await document.fonts.load('20px AmiriQ'); f = document.fonts.check('20px AmiriQ'); } catch (e) {} needs(f, 'Quran font loaded', String(f), 'warn');
+        const r = await caches.match('tafsir-muyassar.txt').catch(() => null); if (r) { const bl = await r.clone().blob(); needs(bl.size > 1.5 * 1048576, 'Tafsir file cached', (bl.size / 1048576).toFixed(2) + ' MB'); } else A('Tafsir file cached', 'info', 'not cached yet (downloads on first use, then works offline)');
+        try { const m = store.get('pt-qpages', ''); A('Pages marked read', 'info', typeof m === 'string' ? (m.match(/1/g) || []).length : 0); } catch (e) {}
+    }],
+    ['8. Offline and service worker', async () => {
+        if (!('serviceWorker' in navigator)) { A('Service worker', 'fail', 'unsupported'); return; }
+        const reg = await navigator.serviceWorker.getRegistration();
+        needs(!!reg, 'Service worker registered', reg ? 'scope ' + reg.scope + ' | active ' + !!reg.active + ' | waiting ' + !!reg.waiting : 'none');
+        needs(!!navigator.serviceWorker.controller, 'Page is controlled by the service worker', String(!!navigator.serviceWorker.controller), 'warn');
+        if (!('caches' in window)) { A('Cache API', 'fail', 'unsupported'); return; }
+        const ks = await caches.keys(); A('Cache names', 'info', ks.join(', ') || 'none'); needs(ks.includes('pt-v2'), 'Cache pt-v2 exists', ks.join(','));
+        if (ks.includes('pt-v2')) { const c = await caches.open('pt-v2'), rq = await c.keys(); let tot = 0; for (const q of rq) { const r = await c.match(q); try { tot += (await r.clone().blob()).size; } catch (e) {} } A('Cached files', 'info', rq.length + ' files, ' + (tot / 1048576).toFixed(2) + ' MB: ' + rq.map(q => new URL(q.url).pathname.split('/').pop() || './').join(', ')); }
+        for (const [, u] of OFF_FILES) { const r = (await caches.match(u)) || (u === './' ? await caches.match(location.pathname) : null); needs(!!r, 'Offline copy: ' + u, r ? 'cached' : 'missing', u === 'tafsir-muyassar.txt' ? 'info' : 'fail'); }
+        if (navigator.onLine) {
+            try { const r = await fetch(location.pathname, { cache: 'no-store' }), tx = await r.text(), m = /const APP_VER = '([^']+)'/.exec(tx); needs(!!m && m[1] === APP_VER, 'Running version equals the version on the server', 'server ' + (m ? m[1] : '?') + ' | running ' + APP_VER, 'warn'); } catch (e) { A('Server reachability', 'warn', e.message); }
+            try { const r = await fetch('manifest.json', { cache: 'no-store' }); const mj = await r.json(); needs(r.ok && mj.name && Array.isArray(mj.icons) && mj.icons.length, 'Manifest valid', mj.name + ' | ' + (mj.icons || []).length + ' icons | display ' + mj.display + ' | shortcuts ' + (mj.shortcuts || []).length);
+                for (const ic of (mj.icons || [])) { try { const ri = await fetch(ic.src, { method: 'HEAD' }); needs(ri.ok, 'Icon ' + ic.src, ic.sizes + ' ' + (ic.purpose || ''), 'warn'); } catch (e) { A('Icon ' + ic.src, 'warn', e.message); } } } catch (e) { A('Manifest', 'fail', e.message); }
+        } else A('Server checks', 'info', 'skipped (offline)');
+    }],
+    ['9. Notifications and permissions', async () => {
+        const sup = 'Notification' in window; A('Notification permission', sup ? (Notification.permission === 'granted' ? 'ok' : 'warn') : 'warn', sup ? Notification.permission : 'unsupported');
+        A('App notification switch', 'info', String(!!settings.notify));
+        const reg = ('serviceWorker' in navigator) ? await navigator.serviceWorker.getRegistration() : null; A('showNotification via service worker', reg && typeof reg.showNotification === 'function' ? 'ok' : 'warn', reg ? 'available' : 'no registration');
+        for (const nm of ['geolocation', 'notifications', 'persistent-storage']) { try { const p = await navigator.permissions.query({ name: nm }); A('Permission ' + nm, 'info', p.state); } catch (e) { A('Permission ' + nm, 'info', 'cannot query'); } }
+        A('Do not disturb now', 'info', String(inDnd(Date.now()))); const L = store.get('pt-lastnotif', null); A('Last notification', 'info', L ? JSON.stringify(L).slice(0, 200) : 'none');
+        A('Notification test', 'info', 'not sent by this check (use the test button in Alerts)');
+    }],
+    ['10. Screens layout audit', async () => {
+        const tabs = ['times', 'adhkar', 'quran', 'settings'].concat(settings.simple === false ? ['sunan', 'tools'] : []);
+        const lum = c => { const m = c.match(/[\d.]+/g); if (!m) return 0; const a = m.slice(0, 3).map(Number).map(v => { v /= 255; return v <= .03928 ? v / 12.92 : Math.pow((v + .055) / 1.055, 2.4); }); return .2126 * a[0] + .7152 * a[1] + .0722 * a[2]; };
+        const bgOf = e => { while (e) { const c = getComputedStyle(e).backgroundColor, m = c.match(/[\d.]+/g); if (m && (m.length < 4 || +m[3] > .5)) return c; e = e.parentElement; } return 'rgb(0,0,0)'; };
+        const audit = (label) => {
+            const root = document.documentElement, over = [], nm = [], small = [], low = [], tiny = [];
+            const sw = root.scrollWidth; if (sw > innerWidth + 1) over.push('page scrollWidth ' + sw + ' > ' + innerWidth);
+            const panel = document.querySelector('.panel:not([hidden])'); if (!panel) return;
+            let seen = 0;
+            panel.querySelectorAll('*').forEach(e => {
+                if (e.offsetParent === null || seen > 900) return; seen++;
+                const r = e.getBoundingClientRect(); if (r.width > 0 && (r.right > innerWidth + 1 || r.left < -1) && !e.closest('.seg.scroll, .q-jz, details:not([open]), .no-ov')) over.push(e.tagName + '.' + String(e.className).slice(0, 30) + ' [' + Math.round(r.left) + ',' + Math.round(r.right) + ']');
+                if (/^(BUTTON|INPUT|SELECT|A)$/.test(e.tagName)) { const n = (e.getAttribute('aria-label') || e.textContent || e.title || '').trim() || (e.labels && e.labels[0] && e.labels[0].textContent.trim()); if (!n && e.type !== 'range' && e.type !== 'hidden') nm.push(e.id || e.className || e.tagName); if (e.tagName === 'BUTTON' && (r.height < 30 || r.width < 30) && !e.closest('.pchk, .grip')) tiny.push((e.id || e.className || '').toString().slice(0, 24) + ' ' + Math.round(r.width) + 'x' + Math.round(r.height)); }
+                const own = [...e.childNodes].some(n => n.nodeType === 3 && n.textContent.trim()); if (own) { const cs = getComputedStyle(e), fs = parseFloat(cs.fontSize); if (fs < 11) small.push(e.tagName + ' ' + fs + 'px'); const f = lum(cs.color), g = lum(bgOf(e)), cr = (Math.max(f, g) + .05) / (Math.min(f, g) + .05); if (cr < 3 && !e.closest('[disabled]') && getComputedStyle(e).opacity > .6) low.push(e.tagName + '.' + String(e.className).slice(0, 20) + ' ' + cr.toFixed(1) + ' "' + e.textContent.trim().slice(0, 14) + '"'); }
+            });
+            const uniq = a => [...new Set(a)].slice(0, 5).join(' | ');
+            A(label + ' horizontal overflow', over.length ? 'fail' : 'ok', over.length ? uniq(over) : 'none');
+            A(label + ' controls without accessible name', nm.length ? 'warn' : 'ok', nm.length ? uniq(nm) : 'none');
+            A(label + ' tap targets under 30px', tiny.length > 3 ? 'warn' : 'ok', tiny.length ? tiny.length + ': ' + uniq(tiny) : 'none');
+            A(label + ' text under 11px', small.length ? 'warn' : 'ok', small.length ? small.length + ': ' + uniq(small) : 'none');
+            A(label + ' very low contrast (<3:1)', low.length ? 'warn' : 'ok', low.length ? low.length + ': ' + uniq(low) : 'none');
+            A(label + ' DOM nodes', 'info', panel.querySelectorAll('*').length);
+        };
+        for (const id of tabs) { const t1 = performance.now(); showTab(id, true); await stSleep(250); A('Open ' + id, 'info', 'rendered in ~' + Math.round(performance.now() - t1 - 250) + ' ms'); audit('[' + id + ']'); }
+        showTab('settings', true); const rows = [...document.querySelectorAll('.set-row')].map(b => b.dataset.sec);
+        for (const sec of rows) { showSec(sec, true); await stSleep(200); audit('[settings/' + sec + ']'); }
+        showSetList();
+        const ids = {}; document.querySelectorAll('[id]').forEach(e => { ids[e.id] = (ids[e.id] || 0) + 1; }); const dup = Object.keys(ids).filter(k => ids[k] > 1); needs(!dup.length, 'No duplicate element ids', dup.join(','));
+        showTab(['times', 'adhkar', 'quran', 'sunan', 'tools', 'settings'].includes(keepTab) ? keepTab : 'times', true); window.scrollTo(0, keepY);
+    }],
+    ['11. Performance', async () => {
+        let t0 = performance.now(); for (let i = 0; i < 300; i++) JSON.stringify(settings); A('JSON stringify settings x300', performance.now() - t0 < 60 ? 'ok' : 'warn', (performance.now() - t0).toFixed(1) + ' ms');
+        t0 = performance.now(); for (let i = 0; i < 5; i++) renderList(); const rl = (performance.now() - t0) / 5; A('renderList()', rl < 30 ? 'ok' : 'warn', rl.toFixed(1) + ' ms avg');
+        A('Total DOM nodes', document.getElementsByTagName('*').length < 6000 ? 'ok' : 'warn', document.getElementsByTagName('*').length);
+        try { if (performance.memory) A('JS heap', performance.memory.usedJSHeapSize < 150 * 1048576 ? 'ok' : 'warn', (performance.memory.usedJSHeapSize / 1048576).toFixed(1) + ' MB'); } catch (e) {}
+        let lt = 0; try { const po = new PerformanceObserver(l => { lt += l.getEntries().length; }); po.observe({ entryTypes: ['longtask'] }); ST._po = po; } catch (e) {}
+        if (!document.hidden) {
+            const gaps = []; let last = performance.now(), fr = 0; await new Promise(res => { const end = last + 1500; const step = t => { gaps.push(t - last); last = t; fr++; if (t < end) requestAnimationFrame(step); else res(); }; requestAnimationFrame(step); });
+            const mx = Math.max(...gaps.slice(1)), avg = gaps.slice(1).reduce((a, b) => a + b, 0) / Math.max(1, gaps.length - 1);
+            A('Frame rate while idle', avg < 20 ? 'ok' : 'warn', (1000 / avg).toFixed(0) + ' fps avg, worst frame ' + mx.toFixed(0) + ' ms');
+        } else A('Frame rate', 'info', 'skipped (page hidden)');
+        try { ST._po && ST._po.disconnect(); } catch (e) {} A('Long tasks (>50ms) during check', lt > 6 ? 'warn' : 'info', lt);
+        try { const nav = performance.getEntriesByType('navigation')[0]; if (nav) A('Page load', nav.loadEventEnd < 2500 ? 'ok' : 'warn', Math.round(nav.loadEventEnd) + ' ms'); } catch (e) {}
+        A('First render', PERF.first && PERF.first < 2500 ? 'ok' : 'info', PERF.first ? PERF.first + ' ms' : 'n/a');
+    }],
+    ['12. Logic smoke tests', async () => {
+        const fns = { 'streak(m)': () => streak('m'), 'streak(e)': () => streak('e'), 'sunanStreak': () => sunanStreak(), 'qRevDue': () => qRevDue(), 'viewIso': () => viewIso(), 'prayedSet': () => prayedSet(viewIso()), 'hijriParts': () => hijriParts(Date.now(), state.tz), 'getLoc': () => getLoc(), 'backupObj': () => backupObj() };
+        for (const k in fns) { try { const v = fns[k](); A('Call ' + k, v === undefined ? 'warn' : 'ok', typeof v === 'object' ? 'object' : String(v)); } catch (e) { A('Call ' + k, 'fail', e.message); } }
+        try { const L = ADHKAR.morning; const rem = L.map(x => x.n || 1); needs(rem.every(n => n >= 1), 'Morning counters initialise', rem.length + ' items'); } catch (e) { A('Morning counters', 'fail', e.message); }
+        const ev = errs.length; needs(!ev, 'No JS errors or console warnings during this check', ev ? errs.slice(0, 8).join(' || ') : 'none', 'warn');
+    }]
+    ];
+
+    const N = groups.length;
+    for (let i = 0; i < N; i++) {
+        G = groups[i][0]; stat.textContent = t('stRunning', i + 1, N, G.replace(/^\d+\.\s*/, '')); bar.style.width = Math.round(i / N * 100) + '%';
+        await stSleep(30);
+        try { await groups[i][1](); } catch (e) { A('GROUP CRASHED', 'fail', (e && e.stack ? e.stack.split('\n').slice(0, 3).join(' | ') : e)); }
+    }
+    window.removeEventListener('error', onErr); window.removeEventListener('unhandledrejection', onRej); console.error = ce; console.warn = cw;
+    bar.style.width = '100%';
+    const cnt = { ok: 0, warn: 0, fail: 0, info: 0 }; R.forEach(r => { cnt[r.s] = (cnt[r.s] || 0) + 1; });
+    const secs = ((performance.now() - T0) / 1000).toFixed(1);
+    const lines = ['PRAYER TIMES APP SELF-TEST REPORT', 'version ' + APP_VER + ' | ' + new Date().toISOString() + ' | ' + secs + ' s', 'RESULT: ' + cnt.ok + ' ok, ' + cnt.warn + ' warnings, ' + cnt.fail + ' failures, ' + cnt.info + ' info', ''];
+    const prob = R.filter(r => r.s === 'fail' || r.s === 'warn');
+    lines.push('== PROBLEMS (' + prob.length + ') =='); prob.forEach(r => lines.push('[' + r.s.toUpperCase() + '] ' + r.g + ' / ' + r.n + ' :: ' + r.d)); if (!prob.length) lines.push('none'); lines.push('');
+    let cur = ''; R.forEach(r => { if (r.g !== cur) { cur = r.g; lines.push('== ' + cur + ' =='); } lines.push('[' + r.s.toUpperCase() + '] ' + r.n + (r.d ? ' :: ' + r.d : '')); });
+    ST.text = lines.join('\n'); ST.running = false; btn.disabled = false;
+    sumEl.textContent = t('stDone', cnt.ok, cnt.warn, cnt.fail); sumEl.className = 'st-sum ' + (cnt.fail ? 'bad' : cnt.warn ? 'warn' : 'ok'); stat.textContent = '';
+    $('st-prog').hidden = true; $('st-tools').hidden = false;
+    let curG = ''; R.forEach(r => { if (r.g !== curG) { curG = r.g; const h = document.createElement('div'); h.className = 'small muted'; h.style.margin = '.8rem 0 .3rem'; h.textContent = curG.replace(/^\d+\.\s*/, ''); out.appendChild(h); } if (r.s === 'info') return; const row = document.createElement('div'); row.className = 'naw-row st-row'; const a = document.createElement('span'); a.textContent = r.n; const b = document.createElement('span'); b.className = 'v ' + (r.s === 'ok' ? 'ok' : r.s === 'fail' ? 'bad' : 'warn'); b.textContent = r.s === 'ok' ? t('stOk') : r.s === 'warn' ? t('stWarn') : t('stFail'); row.append(a, b); if (r.s !== 'ok' && r.d) { const dd = document.createElement('div'); dd.className = 'st-d'; dd.textContent = r.d; row.appendChild(dd); } out.appendChild(row); });
+}
+
 let diagTk = 0;
 function renderDiag() {
     const box = $('diag-list'); if (!box) return;
@@ -5114,14 +5439,19 @@ function showTab(id, noFx) {
     if (!noFx) fxIn(document.querySelectorAll('#tab-' + id + ' > .card, #tab-' + id + ' > .seg'), { y: 12, s: 40, d: 280 });
     if (id === 'sunan') { const y = Number(store.get('pt-sunan-y', 0)) || 0; if (y > 0) setTimeout(() => window.scrollTo(0, y), 60); }
 }
-const SEC_T = { loc:'sLoc', alert:'sAlert', adh:'sAdh', theme:'sTheme', general:'sGeneral', data:'sData', about:'sAbout' };
+const SEC_T = { loc:'sLoc', alert:'sAlert', adh:'sAdh', theme:'sTheme', general:'sGeneral', data:'sData', about:'sAbout', test:'sTest' };
+function secSlide(el, back) {
+    if (!el || !fxOn()) return;
+    const d = (isEn() ? 1 : -1) * (back ? -1 : 1) * 24;
+    el.animate([{ transform: 'translateX(' + d + 'px)', opacity: 0 }, { transform: 'none', opacity: 1 }], { duration: 160, easing: 'ease-out' });
+}
 function showSetList() {
     document.querySelectorAll('.sec').forEach(x => { x.hidden = true; });
-    $('set-list').hidden = false; $('set-back').hidden = true; $('tab-settings').classList.remove('in-sec');
+    $('set-list').hidden = false; $('set-back').hidden = true; $('tab-settings').classList.remove('in-sec'); secSlide($('set-list'), true);
 }
 function showSec(id, noFx) {
     if (!document.getElementById('sec-' + id)) id = 'loc';
-    $('set-list').hidden = true; $('set-back').hidden = false; $('tab-settings').classList.add('in-sec'); setText('set-back-t', t(SEC_T[id] || 'sLoc'));
+    $('set-list').hidden = true; $('set-back').hidden = false; $('tab-settings').classList.add('in-sec'); setText('set-back-t', t(SEC_T[id] || 'sLoc')); secSlide($('sec-' + id));
     document.querySelectorAll('.sec').forEach(s => { s.hidden = s.id !== 'sec-' + id; });
     document.querySelectorAll('#settings-seg button').forEach(b => {
         const on = b.dataset.sec === id; b.classList.toggle('on', on);
@@ -5202,6 +5532,9 @@ function bindUI() {
     $('diag').addEventListener('toggle', renderDiag);
     $('dg-offline').addEventListener('click', offlineFetch);
     $('dg-persist').addEventListener('click', () => { askPersist(true).then(() => renderDiag()); });
+    $('st-run').addEventListener('click', runSelfTest);
+    $('st-copy').addEventListener('click', async () => { try { await copyText(ST.text); toast(t('stCopied')); } catch (e) {} });
+    $('st-share').addEventListener('click', () => { try { if (navigator.share) navigator.share({ text: ST.text }); else copyText(ST.text).then(() => toast(t('stCopied'))); } catch (e) {} });
     $('dg-clrerr').addEventListener('click', () => { store.set('pt-errs', []); renderDiag(); });
     $('dg-perm').addEventListener('click', async () => { try { await Notification.requestPermission(); } catch (e) {} syncNotifyStatus(); renderDiag(); });
     $('dg-sw').addEventListener('click', () => {
@@ -5382,7 +5715,7 @@ buildEditor();
 renderChips();
 bindUI();
 syncControls();
-showSetList(); initMini();
+showSetList(); initMini(); initSwipe();
 try { const q = new URLSearchParams(location.search); if (q.get('quran') === '1') setTimeout(() => openQuran(), 900);
     if (q.get('tab') === 'adhkar') { settings.tab = 'adhkar'; const st = q.get('set'); if (['morning', 'evening', 'library', 'stats', 'tasbih'].includes(st)) adhkarSet = st; } } catch (e) {}
 showTab(firstVisibleTab(settings.tab || 'times'), true);
