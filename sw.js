@@ -15,8 +15,14 @@ self.addEventListener('fetch', e => {
   const nav = e.request.mode === 'navigate';
   const cached = () => caches.match(e.request).then(m => m || caches.match(e.request, { ignoreSearch: true }));
   const fromCache = () => cached().then(m => m || (nav ? caches.match('./') : undefined));
+  // الصفحة الرئيسية: لا نعتمد نسخة ناقصة أو تالفة (رفع غير مكتمل)، بل نبقي على النسخة السليمة المخزّنة
+  const isDoc = nav || u.pathname.endsWith('/') || u.pathname.endsWith('/index.html');
+  const sane = r => !isDoc ? Promise.resolve(true) : r.clone().text().then(tx => tx.length > 200000 && tx.includes('</html>') && tx.includes('const APP_VER')).catch(() => false);
   const net = fetch(e.request).then(r => {
-    if (r && r.ok) { const cp = r.clone(); caches.open(CACHE).then(c => c.put(e.request, cp)); return r; }
+    if (r && r.ok) return sane(r).then(ok => {
+      if (!ok) return fromCache().then(m => m || r);
+      const cp = r.clone(); caches.open(CACHE).then(c => c.put(e.request, cp)); return r;
+    });
     // الموقع محذوف أو الخادم يعطي خطأ (404/5xx): نفتح النسخة المخزّنة بدل صفحة الخطأ
     return fromCache().then(m => m || r);
   }).catch(() => fromCache().then(m => m || Response.error()));

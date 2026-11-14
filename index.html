@@ -601,6 +601,31 @@ html.onehand #tab-adhkar { padding-bottom:3.8rem; }
 .st-barw{height:6px;border-radius:3px;background:var(--bd,#8884);margin:.7rem 0 .3rem;overflow:hidden}#st-bar{height:100%;width:0;background:var(--accent,#3b9);transition:width .3s}
 .st-sum{font-weight:700;margin:.8rem 0}.st-sum.ok{color:var(--ok,#2a9d5c)}.st-sum.warn{color:#d9a21b}.st-sum.bad{color:var(--bad,#d64545)}
 .v.warn{color:#d9a21b}.st-row{flex-wrap:wrap}.st-d{flex-basis:100%;font-size:.78rem;opacity:.75;direction:ltr;text-align:left;word-break:break-word;margin-top:.2rem}
+
+.apbar{height:4px;border-radius:2px;background:rgba(128,128,128,.25);overflow:hidden;margin:.4rem 0 .6rem}
+.apbar i{display:block;height:100%;width:100%;background:var(--accent);transform-origin:right;transform:scaleX(0);transition:transform .25s}
+html[dir=ltr] .apbar i{transform-origin:left}
+.dhikr.lg{border-inline-start:3px solid var(--accent)}
+.lgtag{font-size:.72rem;color:var(--accent);margin-bottom:.25rem;font-weight:700}
+html.comfy .dhikr{padding:1.25rem 1.1rem;line-height:2.35}
+html.comfy .dhikr .star,html.comfy .dhikr .grip{display:none}
+.nav-btn{position:relative}
+.nav-dot{position:absolute;top:.3rem;inset-inline-end:calc(50% - 1.5rem);width:.6rem;height:.6rem;border-radius:50%;background:var(--accent);box-shadow:0 0 0 2px var(--bg)}
+.lchips{display:flex;gap:.45rem;overflow-x:auto;padding:.2rem 0 .7rem;scrollbar-width:none}.lchips::-webkit-scrollbar{display:none}
+.lchip{flex:none;white-space:nowrap;padding:.45rem .95rem;border-radius:999px;border:1px solid rgba(128,128,128,.4);background:var(--surface);color:var(--text);min-height:38px}
+.wk{display:grid;grid-template-columns:1.35fr repeat(6,1fr);gap:.15rem;font-size:.78rem;text-align:center;direction:rtl}
+html[dir=ltr] .wk{direction:ltr}
+.wk b{font-weight:700;color:var(--muted);font-size:.72rem;padding:.3rem 0}
+.wk span{padding:.45rem 0;border-top:1px solid rgba(128,128,128,.2);font-variant-numeric:tabular-nums}
+.wk .d{text-align:start;font-weight:700;padding-inline-start:.2rem}
+.wk .t{color:var(--accent)}
+.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+#fix-bar{position:fixed;inset-inline:.8rem;bottom:.8rem;z-index:9999;background:var(--surface);color:var(--text);border:2px solid var(--accent);border-radius:14px;padding:.8rem;box-shadow:0 8px 28px rgba(0,0,0,.45)}
+#fix-bar .grid2{margin-top:.6rem}
+html.hc .card,html.hc .dhikr,html.hc .set-row,html.hc .cat-row,html.hc .q-s,html.hc .notice,html.hc .lchip{border:2px solid #fff!important}
+html.hc :focus-visible{outline:3px solid #ffe600;outline-offset:2px}
+.star{padding:.6rem;margin:-.35rem}
+.skipbtn{min-height:34px}
 </style>
 <link rel="manifest" href="manifest.json">
 <link rel="apple-touch-icon" href="icon-192.png">
@@ -616,7 +641,8 @@ html.onehand #tab-adhkar { padding-bottom:3.8rem; }
             <svg viewBox="0 0 100 100" aria-hidden="true"><circle class="hr-bg" cx="50" cy="50" r="46"/><circle class="hr-pg" id="hero-ring" cx="50" cy="50" r="46"/></svg>
             <div class="hero-in">
                 <h2 id="next-prayer-name" style="margin:0">--</h2>
-                <div id="countdown">00:00:00</div>
+                <div id="countdown" aria-hidden="true">00:00:00</div>
+                <span id="sr-cd" class="sr-only"></span><div id="sr-live" class="sr-only" role="status" aria-live="polite"></div>
                 <div id="next-prayer-time"></div>
             </div>
         </div>
@@ -626,9 +652,14 @@ html.onehand #tab-adhkar { padding-bottom:3.8rem; }
             <span id="hijri-date" class="muted small il-block"></span>
             <span id="greg-date" class="muted small il-block"></span>
             <span id="pr-sum" class="muted small il-block"></span>
+            <button id="wk-open" class="linkbtn il-block" type="button" data-i18n="wkOpen"></button>
         </div>
         <div class="qw adv" id="qw"><div class="qi"><div class="wring sm" id="qw-ring"><svg viewBox="0 0 100 100" aria-hidden="true"><circle class="bg" cx="50" cy="50" r="46"/><circle class="fg" id="qw-fg" cx="50" cy="50" r="46"/></svg><span id="qw-n"></span></div><div class="qt"><span data-i18n="wirdToday"></span><b id="qw-val"></b></div></div><button id="qw-add" class="btn-accent"></button></div>
         <div class="notice adv" id="sod" hidden></div>
+        <div class="notice" id="dst-card" hidden>
+            <div style="font-weight:700" id="dst-text"></div>
+            <div class="grid2" style="margin-top:.75rem"><button id="dst-ok" class="btn-accent" data-i18n="dstOk"></button></div>
+        </div>
         <div class="notice" id="loc-card" hidden>
             <div style="font-weight:700" id="loc-text"></div>
             <div class="grid2" style="margin-top:.75rem">
@@ -737,6 +768,7 @@ html.onehand #tab-adhkar { padding-bottom:3.8rem; }
             <div class="fs"><button id="fs-minus" aria-label="-">A−</button><span id="fs-val"></span><button id="fs-plus" aria-label="+">A+</button></div>
             <button id="undo-fin" hidden><i data-ic="undo-2"></i> <span data-i18n="undoFin"></span></button>
         </div>
+        <div class="apbar" id="apbar" aria-hidden="true"><i id="apbar-i"></i></div>
         <details class="opts adv" id="opts">
             <summary data-i18n="readOpts"></summary>
             <div class="abar">
@@ -746,6 +778,8 @@ html.onehand #tab-adhkar { padding-bottom:3.8rem; }
                 <button id="opt-vibtap" data-i18n="vibTap"></button>
                 <button id="opt-night" data-i18n="nightMode"></button>
                 <button id="opt-focus" data-i18n="focusMode"></button>
+                <button id="opt-comfy" data-i18n="comfyMode"></button>
+                <button id="opt-order"></button>
                 <button id="opt-onehand" data-i18n="oneHand"></button>
                 <button id="opt-hifz"></button>
             </div>
@@ -1110,7 +1144,9 @@ html.onehand #tab-adhkar { padding-bottom:3.8rem; }
         <div id="st-tools" class="grid2" hidden>
             <button id="st-copy" class="ibtn"><i data-ic="copy"></i><span data-i18n="stCopy"></span></button>
             <button id="st-share" class="ibtn"><i data-ic="upload"></i><span data-i18n="stShare"></span></button>
+            <button id="st-file" class="ibtn" style="grid-column:1/-1"><i data-ic="save"></i><span data-i18n="stFile"></span></button>
         </div>
+        <p id="st-filenote" class="small muted" data-i18n="stFileNote" hidden></p>
         <div id="st-out"></div>
     </div>
     <div class="card sec" id="sec-data" hidden>
@@ -1152,7 +1188,7 @@ html.onehand #tab-adhkar { padding-bottom:3.8rem; }
         <i data-ic="clock"></i><span data-i18n="navTimes"></span>
     </button>
     <button class="nav-btn" data-tab="adhkar">
-        <i data-ic="book-open"></i><span data-i18n="navAdhkar"></span>
+        <i class="nav-dot" id="adh-dot" hidden aria-hidden="true"></i><i data-ic="book-open"></i><span data-i18n="navAdhkar"></span>
     </button>
     <button class="nav-btn" data-tab="quran">
         <i data-ic="library"></i><span data-i18n="navQuran"></span>
@@ -1432,7 +1468,7 @@ ar: {
     navQuran:'المصحف', navTools:'أدوات', qStop:'وقفت هنا', qMem:'حفظت', qMemOff:'إلغاء الحفظ', qMemTo:'حفظت حتى هنا', qStopFrom:'علامة الوقوف: {0} · آية {1}', qMemSum:'المحفوظ: {0} آية من {1} ({2}٪)', qMemN:'حفظ {0}/{1}', qStopSaved:'تم وضع علامة الوقوف', qMemSaved:'تم تسجيل الحفظ', qMemSurah:'المحفوظ من السورة: {0}/{1}',
     qPlanT:'خطة الختمة', qPlanNone:'لم تبدأ خطة بعد. اختر مدة الختمة ليحسب لك التطبيق ورد كل يوم.', qPlanStart:'ابدأ الخطة', qPlan30:'30 يومًا', qPlanRam:'شهر رمضان (30 يومًا)', qPlanCust:'مدة أخرى', qPlanDays:'عدد الأيام', qPlanFrom:'البداية من', qPlanFromStart:'أول المصحف', qPlanFromPos:'موضعي الحالي', qPlanDay:'اليوم {0} من {1}', qPlanToday:'ورد اليوم: {0} آية، من {1} آية {2} إلى {3} آية {4}', qPlanLeft:'المتبقي لإتمام ورد اليوم: {0} آية', qPlanDoneToday:'أتممت ورد اليوم', qPlanAhead:'أنت متقدم بـ {0} آية', qPlanBehind:'أنت متأخر بـ {0} آية', qPlanOn:'أنت على الجدول', qPlanRead:'اقرأ الآن', qPlanSync:'اعتبر قراءتي حتى موضعي الحالي', qPlanResched:'أعد توزيع المتبقي', qPlanDelete:'حذف الخطة', qPlanSoon:'تبدأ الخطة بعد {0} يوم', qPlanFin:'ما شاء الله، ختمت القرآن', qPlanOver:'انتهت مدة الخطة ويتبقى {0} آية', qPlanProg:'{0} من {1} آية ({2}٪)', qPlanCancel:'إلغاء', qPlanNote:'التقدم يُحسب من القراءة داخل التطبيق (تمرير الصفحة). إن قرأت من مصحف ورقي استخدم زر «اعتبر قراءتي حتى موضعي الحالي».',
     qRevBtn:'مراجعة المحفوظ', qRevInfo:'{0} آية محفوظة', qRevHead:'{0}: آية {1} إلى {2}', qRevLast:'آخر مراجعة: قبل {0} يوم', qRevNever:'لم تُراجع من قبل', qRevToday:'روجعت اليوم', qRevShow:'اكشف', qRevHide:'أخفِ', qRevDone:'راجعتها', qRevSkip:'تخطي', qRevNone:'لا يوجد محفوظ بعد. علّم الآيات بزر «حفظت» أثناء القراءة.', qRevCnt:'راجعت اليوم {0} مقطعًا', qHideL:'الإخفاء: {0}', qHide0:'متوقف', qHide1:'جزئي', qHide2:'كامل',
-    qJuz:'الأجزاء', qJuzN:'الجزء {0}', qHizbN:'الحزب {0}', qPageN:'صفحة {0}', qGoPage:'اذهب إلى صفحة', qGoPh:'رقم الصفحة (1 - 604)', qAuto:'احسب ورد اليوم تلقائيًا من القراءة', qPlanPages:'تقريبًا من صفحة {0} إلى صفحة {1}', qMemToS:'حتى هنا', qSajda:'سجدة تلاوة', qClose:'إغلاق',
+    qJuz:'الأجزاء', qJuzN:'الجزء {0}', qHizbN:'الحزب {0}', qPageN:'صفحة {0}', qGoPage:'اذهب إلى صفحة', qGoPh:'صفحة، أو سورة:آية (2:255)', qAuto:'احسب ورد اليوم تلقائيًا من القراءة', qPlanPages:'تقريبًا من صفحة {0} إلى صفحة {1}', qMemToS:'حتى هنا', qSajda:'سجدة تلاوة', qClose:'إغلاق',
     khRemOn:'تذكير ورد اليوم من خطة الختمة', remKh:'ورد اليوم من الختمة: {0} آية، من {1} آية {2} إلى {3} آية {4}', fabBack:'رجوع', exitAgain:'اضغط رجوع مرة أخرى للخروج', qExport:'تصدير المحفوظ والمراجعات', qImport:'استيراد ملف', qBakTitle:'نسخة المحفوظ والمراجعات', qBakNote:'ملف JSON منفصل. الاستيراد يدمج مع ما لديك ولا يمسح شيئًا.', qImpOk:'تم الاستيراد', qImpBad:'الملف غير صالح',
     grpExtra:'تذكيرات إضافية', grpKhatma:'ختمة القرآن', qOpts:'خيارات القراءة', qOptFont:'حجم الخط الافتراضي', qOptDark:'وضع القراءة الليلي', qOptAwake:'إبقاء الشاشة مضيئة أثناء القراءة', dgPerfLoad:'زمن تحميل الصفحة', dgPerfFirst:'أول عرض للمواقيت', dgPerfQ:'تحميل ملف المصحف', dgPerfQNo:'لم يُفتح بعد', dgErrN:'أخطاء مسجّلة', dgStore:'حجم بيانات التطبيق', dgMem:'ذاكرة JavaScript', dgClrErr:'مسح سجل الأخطاء', dgMs:'{0} مللي ثانية', dgKB:'{0} ك.ب', dgMB:'{0} م.ب', dgPerfT:'الأداء على هذا الجهاز',
     qShareImg:'مشاركة الآية كصورة', qStatT:'إحصائية القراءة', qStatWeek:'صفحات هذا الأسبوع: {0}', qStatStreak:'أيام متتالية: {0}', qStatBest:'أفضل يوم: {0} صفحة', qStatMonth:'آخر 30 يومًا: {0} صفحة', qStatNone:'ابدأ القراءة وستظهر إحصائيتك هنا.', dgPersist:'حماية البيانات من المسح التلقائي', dgPersistBtn:'طلب حماية البيانات', wnTitle:'جديد في هذا الإصدار', wnOk:'حسنًا', wn1:'الوضع المبسط: واجهة أهدأ تُظهر الأساسيات فقط، ويمكن إيقافه من الإعدادات ثم عام لإظهار كل المميزات.', wn2:'الإعدادات صارت قائمة واضحة بأقسام كبيرة، والسنن والأدوات في زر «المزيد» أعلاها.', wn3:'رمز لكل صلاة، وتعتيم للصلوات المنتهية، وتتحول حلقة العدّ إلى البرتقالي في آخر 15 دقيقة.', wn4:'في الأذكار: حلقة تقدّم حول كل عدّاد، وكل ذكر منفصل بعدده الصحيح، وزر «تخطي» لما يُقال مئة مرة.', wn5:'شريط مصغّر بالعدّ التنازلي يظهر عند النزول في شاشة المواقيت، وسحب أفقي للتنقل بين أقسام الأذكار.',
@@ -1477,6 +1513,39 @@ ar: {
     stFail:'خطأ',
     stAgain:'أعد الفحص وقارنه بالسابق',
     stDiff:'تغييرات عن المرة السابقة: {0}',
+    adhLong:'ذكر طويل',
+    adhKursi:'آية الكرسي',
+    comfyMode:'القراءة المريحة',
+    adhOrderN:'الترتيب: الأصلي',
+    adhOrderS:'الترتيب: الأقصر أولًا',
+    adhOrderL:'الترتيب: غير المكتمل أولًا',
+    shareDhikr:'مشاركة الذكر',
+    shareN:'{0} مرات',
+    shareCopied:'نُسخ الذكر',
+    adhDot:'أذكار لم تكتمل',
+    lqSleep:'عند النوم',
+    lqHome:'عند الخروج',
+    lqTravel:'في السفر',
+    lqPrayer:'في الصلاة',
+    lqAfter:'بعد الصلاة',
+    lqFood:'الطعام',
+    lqSick:'المريض',
+    lqWorry:'الكرب',
+    wkOpen:'مواقيت الأسبوع',
+    wkTitle:'مواقيت الأيام السبعة القادمة',
+    wkToday:'اليوم',
+    dstFwd:'تتقدّم الساعة في {0} خلال الساعات القادمة، فراجع مواقيتك بعد التغيير.',
+    dstBack:'تتأخّر الساعة في {0} خلال الساعات القادمة، فراجع مواقيتك بعد التغيير.',
+    dstOk:'فهمت',
+    qGoBad:'تحقق من رقم السورة والآية، مثل 2:255',
+    stFile:'تنزيل ملف التشخيص',
+    stFileNote:'يتضمن الملف التقرير والإعدادات والأخطاء، مع تقريب إحداثيات الموقع.',
+    fixTitle:'تكررت أخطاء في التطبيق. اضغط «إصلاح» لإعادة تحميل الملفات من الخادم، وبياناتك لا تُمسّ.',
+    fixBtn:'إصلاح',
+    fixLater:'لاحقًا',
+    fixNeedNet:'يحتاج الإصلاح إلى اتصال بالإنترنت',
+    srCd:'بقي {0} على {1}',
+    th_contrast:'تباين عالٍ',
     afterOpen:'فتح الأذكار', afterHide:'إخفاء',
     backupOn:'تذكير أسبوعي بالنسخة الاحتياطية', backupTitle:'مرّ أسبوع على آخر نسخة احتياطية', backupNow:'تصدير الآن', backupLater:'لاحقًا',
     readOpts:'خيارات القراءة', fontFace:'خط الأذكار', ffDefault:'الافتراضي', ffNaskh:'نسخ', ffThuluth:'ثلث / رقعة', fontNote:'يظهر حسب الخطوط المتاحة على جهازك',
@@ -1579,7 +1648,7 @@ en: {
     navQuran:'Mushaf', navTools:'Tools', qStop:'I stopped here', qMem:'Memorized', qMemOff:'Unmark memorized', qMemTo:'Memorized up to here', qStopFrom:'Stop mark: {0} · verse {1}', qMemSum:'Memorized: {0} of {1} verses ({2}%)', qMemN:'Memorized {0}/{1}', qStopSaved:'Stop mark set', qMemSaved:'Memorization saved', qMemSurah:'Memorized in this surah: {0}/{1}',
     qPlanT:'Khatma plan', qPlanNone:'No plan yet. Choose a duration and the app works out each day’s portion.', qPlanStart:'Start plan', qPlan30:'30 days', qPlanRam:'Ramadan (30 days)', qPlanCust:'Other duration', qPlanDays:'Number of days', qPlanFrom:'Start from', qPlanFromStart:'Beginning', qPlanFromPos:'My current position', qPlanDay:'Day {0} of {1}', qPlanToday:'Today’s portion: {0} verses, from {1} verse {2} to {3} verse {4}', qPlanLeft:'Left to finish today’s portion: {0} verses', qPlanDoneToday:'Today’s portion complete', qPlanAhead:'You are {0} verses ahead', qPlanBehind:'You are {0} verses behind', qPlanOn:'You are on schedule', qPlanRead:'Read now', qPlanSync:'Count my reading up to my current position', qPlanResched:'Redistribute the rest', qPlanDelete:'Delete plan', qPlanSoon:'Plan starts in {0} day(s)', qPlanFin:'Well done, you completed the Quran', qPlanOver:'Plan period is over; {0} verses remain', qPlanProg:'{0} of {1} verses ({2}%)', qPlanCancel:'Cancel', qPlanNote:'Progress is counted from reading inside the app (scrolling). If you read from a printed copy, use “Count my reading up to my current position”.',
     qRevBtn:'Review memorized', qRevInfo:'{0} memorized verses', qRevHead:'{0}: verses {1} to {2}', qRevLast:'Last reviewed {0} day(s) ago', qRevNever:'Never reviewed', qRevToday:'Reviewed today', qRevShow:'Reveal', qRevHide:'Hide', qRevDone:'Reviewed', qRevSkip:'Skip', qRevNone:'Nothing memorized yet. Mark verses with “Memorized” while reading.', qRevCnt:'Reviewed {0} passages today', qHideL:'Hiding: {0}', qHide0:'Off', qHide1:'Partial', qHide2:'Full',
-    qJuz:'Juz', qJuzN:'Juz {0}', qHizbN:'Hizb {0}', qPageN:'Page {0}', qGoPage:'Go to page', qGoPh:'Page number (1 - 604)', qAuto:'Count today’s portion automatically from reading', qPlanPages:'About page {0} to page {1}', qMemToS:'Up to here', qSajda:'Prostration verse', qClose:'Close',
+    qJuz:'Juz', qJuzN:'Juz {0}', qHizbN:'Hizb {0}', qPageN:'Page {0}', qGoPage:'Go to page', qGoPh:'Page, or surah:ayah (2:255)', qAuto:'Count today’s portion automatically from reading', qPlanPages:'About page {0} to page {1}', qMemToS:'Up to here', qSajda:'Prostration verse', qClose:'Close',
     khRemOn:'Khatma plan daily reminder', remKh:'Today’s Khatma portion: {0} verses, from {1} verse {2} to {3} verse {4}', fabBack:'Back', exitAgain:'Press back again to exit', qExport:'Export memorized and reviews', qImport:'Import file', qBakTitle:'Memorized and reviews copy', qBakNote:'A separate JSON file. Importing merges with what you have and deletes nothing.', qImpOk:'Imported', qImpBad:'Invalid file',
     grpExtra:'Extra reminders', grpKhatma:'Quran khatma', qOpts:'Reading options', qOptFont:'Default text size', qOptDark:'Night reading mode', qOptAwake:'Keep screen on while reading', dgPerfLoad:'Page load time', dgPerfFirst:'First prayer-times render', dgPerfQ:'Quran file load', dgPerfQNo:'Not opened yet', dgErrN:'Logged errors', dgStore:'App data size', dgMem:'JavaScript memory', dgClrErr:'Clear error log', dgMs:'{0} ms', dgKB:'{0} KB', dgMB:'{0} MB', dgPerfT:'Performance on this device',
     qShareImg:'Share verse as image', qStatT:'Reading statistics', qStatWeek:'Pages this week: {0}', qStatStreak:'Day streak: {0}', qStatBest:'Best day: {0} pages', qStatMonth:'Last 30 days: {0} pages', qStatNone:'Start reading and your statistics will appear here.', dgPersist:'Protection from automatic data clearing', dgPersistBtn:'Request data protection', wnTitle:'What’s new', wnOk:'OK', wn1:'Simple mode: a calmer interface with the essentials only. Turn it off in Settings > General to show everything.', wn2:'Settings is now a clear list of large sections, with Sunnah and Tools under the More button at the top.', wn3:'An icon for each prayer, dimmed past prayers, and the ring turns orange in the last 15 minutes.', wn4:'Adhkar: a progress ring around each counter, every dhikr separate with its correct count, and a Skip button for the 100x ones.', wn5:'A mini countdown bar appears when you scroll the times screen, and you can swipe between adhkar sections.',
@@ -1624,6 +1693,39 @@ en: {
     stFail:'Failure',
     stAgain:'Run again and compare',
     stDiff:'Changes since last run: {0}',
+    adhLong:'Long dhikr',
+    adhKursi:'Ayat al-Kursi',
+    comfyMode:'Comfort reading',
+    adhOrderN:'Order: original',
+    adhOrderS:'Order: shortest first',
+    adhOrderL:'Order: unfinished first',
+    shareDhikr:'Share dhikr',
+    shareN:'{0} times',
+    shareCopied:'Dhikr copied',
+    adhDot:'Adhkar not completed',
+    lqSleep:'Before sleep',
+    lqHome:'Leaving home',
+    lqTravel:'Travel',
+    lqPrayer:'In prayer',
+    lqAfter:'After prayer',
+    lqFood:'Food',
+    lqSick:'Illness',
+    lqWorry:'Distress',
+    wkOpen:'Week times',
+    wkTitle:'Prayer times for the next 7 days',
+    wkToday:'Today',
+    dstFwd:'Clocks go forward in {0} within the next hours. Check your times after the change.',
+    dstBack:'Clocks go back in {0} within the next hours. Check your times after the change.',
+    dstOk:'Got it',
+    qGoBad:'Check the surah and ayah numbers, e.g. 2:255',
+    stFile:'Download diagnostic file',
+    stFileNote:'The file holds the report, settings and errors, with location coordinates rounded.',
+    fixTitle:'The app hit repeated errors. Press Repair to reload the files from the server; your data is untouched.',
+    fixBtn:'Repair',
+    fixLater:'Later',
+    fixNeedNet:'Repair needs an internet connection',
+    srCd:'{0} left until {1}',
+    th_contrast:'High contrast',
     afterOpen:'Open adhkar', afterHide:'Hide',
     backupOn:'Weekly backup reminder', backupTitle:'It has been a week since your last backup', backupNow:'Export now', backupLater:'Later',
     readOpts:'Reading options', fontFace:'Adhkar font', ffDefault:'Default', ffNaskh:'Naskh', ffThuluth:'Thuluth / Ruqaa', fontNote:'Shown using the fonts available on your device',
@@ -1697,7 +1799,8 @@ const TASBIH_PHRASES = ['ph_sub','ph_hamd','ph_akbar','ph_tahlil','ph_istighfar'
 const PRESETS = {
     dark:  { bg:'#1e1e2f', bg2:'#2d3436', text:'#ffffff', surface:'#292b3c', accent:'#f1c40f', muted:'#9aa0a6' },
     light: { bg:'#f4f6f8', bg2:'#e9edf1', text:'#1f2933', surface:'#ffffff', accent:'#b7791f', muted:'#6b7280' },
-    neon:  { bg:'#000000', bg2:'#000000', text:'#00ff66', surface:'#0b0b12', accent:'#ff2bd6', muted:'#2fbf71' }
+    neon:  { bg:'#000000', bg2:'#000000', text:'#00ff66', surface:'#0b0b12', accent:'#ff2bd6', muted:'#2fbf71' },
+    contrast: { bg:'#000000', bg2:'#000000', text:'#ffffff', surface:'#000000', accent:'#ffe600', muted:'#e0e0e0' }
 };
 const COLOR_FIELDS = [['bg'], ['text'], ['surface'], ['accent'], ['muted']];
 
@@ -1732,8 +1835,28 @@ const SCHEMA = 3;
         store.set('pt-schema', SCHEMA);
     } catch (e) {}
 })();
-const APP_VER = '2026.11.13-9';
-function logErr(m) { try { const l = store.get('pt-errs', []); l.push({ at: Date.now(), m: String(m).slice(0, 200) }); store.set('pt-errs', l.slice(-10)); } catch (e) {} }
+const APP_VER = '2026.11.14-1';
+function repairBar() {
+    try {
+        if (document.getElementById('fix-bar') || sessionStorage.getItem('pt-fixno')) return;
+        const b = document.createElement('div'); b.id = 'fix-bar'; b.setAttribute('role', 'alert');
+        const p = document.createElement('div'); p.style.fontWeight = '700'; p.textContent = t('fixTitle');
+        const g = document.createElement('div'); g.className = 'grid2';
+        const ok = document.createElement('button'); ok.className = 'btn-accent'; ok.textContent = t('fixBtn'); ok.addEventListener('click', repairApp);
+        const no = document.createElement('button'); no.className = 'btn-text'; no.textContent = t('fixLater'); no.addEventListener('click', () => { try { sessionStorage.setItem('pt-fixno', '1'); } catch (e) {} b.remove(); });
+        g.append(ok, no); b.append(p, g); document.body.appendChild(b);
+    } catch (e) {}
+}
+async function repairApp() {
+    if (!navigator.onLine) { toast(t('fixNeedNet')); return; }
+    try { const rs = await navigator.serviceWorker.getRegistrations(); await Promise.all(rs.map(x => x.unregister())); } catch (e) {}
+    try { const ks = await caches.keys(); await Promise.all(ks.filter(k => k.startsWith('pt-')).map(k => caches.delete(k))); } catch (e) {}
+    try { store.set('pt-errs', []); } catch (e) {}
+    location.reload();
+}
+function logErr(m) { try {
+    if (/ResizeObserver|Script error/i.test(String(m))) return; const l = store.get('pt-errs', []); l.push({ at: Date.now(), m: String(m).slice(0, 200) }); store.set('pt-errs', l.slice(-10));
+    if (l.filter(x => Date.now() - x.at < 600000).length >= 3) repairBar(); } catch (e) {} }
 window.addEventListener('error', e => logErr((e.message || 'error') + ' @' + String(e.filename || '').split('/').pop() + ':' + (e.lineno || 0)));
 window.addEventListener('unhandledrejection', e => logErr('promise: ' + ((e.reason && e.reason.message) || e.reason)));
 const SOUNDS = ['rise', 'chime', 'soft', 'bell', 'triple', 'off'];
@@ -1742,7 +1865,7 @@ const FIRST_RUN = (() => { try { return localStorage.getItem('pt-settings') === 
 const DEFAULTS = {
     cityId:'cairo', method:5, asr:1, hijriAdj:0, notify:false, sound:true, h24:false,
     gps:null, theme:'dark', customThemes:[], draft:null, tab:'times', sec:'loc',
-    lang:'ar', preAlert:0, fullscreen:true, anim:true, pinPrayer:'', adhkarAuto:true, friRemind:true, tasbihPhrase:'ph_sub', tasbihTarget:33, fontScale:1, autoNext:true, hideDone:false, vibTarget:'double', vibTap:true, keepAwake:false, adhkarRemind:false, sndPrayers:{ Fajr:'default', Dhuhr:'default', Asr:'default', Maghrib:'default', Isha:'default' }, weeklyGoal:0, monthGoal:0, wirdUnit:'page', wirdGoal:0, dndFri:false, dndFriFrom:'23:00', dndFriTo:'08:00', sndPrayer:'rise', sndAdhkar:'chime', sndWird:'soft', sndGoal:'triple', hiddenTabs:[], onboarded:false, oneHand:false, wirdRemind:false, wirdTime:'21:00', dnd:false, dndFrom:'23:00', dndTo:'05:00', dndPrayer:true, remindDelay:20, sleepDelay:60, afterDelay:5, afterCard:true, backupRemind:true, backupAt:0, backupSnooze:0, endAlert:0, logRemind:false, occRemind:false, qDark:false, qAwake:false, khRemind:false, khTime:'20:00', nightAuto:true, nawRemind:false, nawCard:true, hifz:0, fontFace:'default', remindSleep:false, remindWake:false, remindAfter:false, readDark:false,
+    lang:'ar', preAlert:0, fullscreen:true, anim:true, pinPrayer:'', adhkarAuto:true, friRemind:true, tasbihPhrase:'ph_sub', tasbihTarget:33, fontScale:1, comfy:false, adhOrder:'n', autoNext:true, hideDone:false, vibTarget:'double', vibTap:true, keepAwake:false, adhkarRemind:false, sndPrayers:{ Fajr:'default', Dhuhr:'default', Asr:'default', Maghrib:'default', Isha:'default' }, weeklyGoal:0, monthGoal:0, wirdUnit:'page', wirdGoal:0, dndFri:false, dndFriFrom:'23:00', dndFriTo:'08:00', sndPrayer:'rise', sndAdhkar:'chime', sndWird:'soft', sndGoal:'triple', hiddenTabs:[], onboarded:false, oneHand:false, wirdRemind:false, wirdTime:'21:00', dnd:false, dndFrom:'23:00', dndTo:'05:00', dndPrayer:true, remindDelay:20, sleepDelay:60, afterDelay:5, afterCard:true, backupRemind:true, backupAt:0, backupSnooze:0, endAlert:0, logRemind:false, occRemind:false, qDark:false, qAwake:false, khRemind:false, khTime:'20:00', nightAuto:true, nawRemind:false, nawCard:true, hifz:0, fontFace:'default', remindSleep:false, remindWake:false, remindAfter:false, readDark:false,
     tune:{ Fajr:0, Sunrise:0, Dhuhr:0, Asr:0, Maghrib:0, Isha:0 }
 };
 let settings = Object.assign({}, DEFAULTS, store.get('pt-settings', {}));
@@ -1949,6 +2072,40 @@ function showError() {
     $('error-text').textContent = t('errCalc');
     $('error-box').hidden = false;
 }
+function openWeek() {
+    openSheet(t('wkTitle'), box => {
+        const tz = state.tz, loc = state.loc, K = ['Fajr', 'Sunrise', 'Dhuhr', 'Asr', 'Maghrib', 'Isha'];
+        const g = document.createElement('div'); g.className = 'wk';
+        const cell = (tx, cls) => { const e = document.createElement(cls === 'h' ? 'b' : 'span'); if (cls && cls !== 'h') e.className = cls; e.textContent = tx; g.appendChild(e); };
+        cell('', 'h'); K.forEach(k => cell(prayerName(k), 'h'));
+        const fm = ts => { const p = parts(ts, tz); return settings.h24 ? pad2(p.h) + ':' + pad2(p.mi) : ((p.h % 12) || 12) + ':' + pad2(p.mi); };
+        for (let i = 0; i < 7; i++) {
+            const dk = dayOf(tz, i), d = calcDay(dk, loc, tz); if (!d) continue;
+            const lbl = new Date(zonedToUtc(dk.y, dk.m, dk.d, 12, 0, tz)).toLocaleDateString(isEn() ? 'en-US' : 'ar-u-nu-latn', { weekday: 'short', day: 'numeric', timeZone: tz });
+            cell(i === 0 ? t('wkToday') : lbl, 'd'); K.forEach(k => cell(fm(d[k]), i === 0 ? 't' : ''));
+        }
+        box.appendChild(g);
+    });
+}
+function renderDst() {
+    try {
+        const c = $('dst-card'), now = Date.now(), tz = state.tz;
+        const d = (tzOffset(now + 36 * 3600000, tz) - tzOffset(now, tz)) / 3600000;
+        const key = tz + '|' + state.dayIso;
+        if (!d || store.get('pt-dst', '') === key) { c.hidden = true; return; }
+        $('dst-text').textContent = t(d > 0 ? 'dstFwd' : 'dstBack', state.loc.name || tz);
+        c.hidden = false; c.dataset.k = key;
+    } catch (e) {}
+}
+let srLast = -1;
+function srDur(h, m) {
+    if (isEn()) return (h ? h + ' h ' : '') + m + ' min';
+    const pl = (n, a, b, c, d) => n === 1 ? a : n === 2 ? b : n <= 10 ? n + ' ' + c : n + ' ' + d;
+    const p = [];
+    if (h) p.push(pl(h, 'ساعة', 'ساعتان', 'ساعات', 'ساعة'));
+    if (m || !h) p.push(pl(m, 'دقيقة', 'دقيقتان', 'دقائق', 'دقيقة'));
+    return p.join(' و');
+}
 function recalc() {
     const loc = getLoc();
     const tz = validTz(loc.tz);
@@ -1974,6 +2131,7 @@ function recalc() {
     renderList();
     initAdhkarSet();
     renderDaily(vdk);
+    renderDst();
     tick();
 }
 
@@ -2774,8 +2932,8 @@ function qIndex(b, d) {
     const jz = document.createElement('div'); jz.className = 'q-jz'; jz.setAttribute('aria-label', t('qJuz'));
     for (let n = 1; n <= 30; n++) jz.appendChild(qBtn('', null, String(n), () => { const [s2, a2] = qLoc(QMETA.j[n - 1]); qSurah(b, d, s2, a2); }));
     const jh = document.createElement('h3'); jh.className = 'grp'; jh.textContent = t('qJuz'); b.appendChild(jh); b.appendChild(jz);
-    const go = document.createElement('div'); go.className = 'q-go'; const pgI = document.createElement('input'); pgI.type = 'number'; pgI.min = 1; pgI.max = 604; pgI.placeholder = t('qGoPh'); pgI.setAttribute('aria-label', t('qGoPage'));
-    const goNow = () => { const n = Math.round(Number(pgI.value)); if (!(n >= 1 && n <= 604)) return; const [s2, a2] = qLoc(QMETA.pg[n - 1]); qSurah(b, d, s2, a2); };
+    const go = document.createElement('div'); go.className = 'q-go'; const pgI = document.createElement('input'); pgI.type = 'text'; pgI.setAttribute('inputmode', 'text'); pgI.placeholder = t('qGoPh'); pgI.setAttribute('aria-label', t('qGoPage'));
+    const goNow = () => { const mv = String(pgI.value).trim().match(/^(\d{1,3})\s*[:\/.\-،]\s*(\d{1,3})$/); if (mv) { const s3 = +mv[1], a3 = +mv[2]; if (s3 >= 1 && s3 <= 114 && a3 >= 1 && a3 <= d[s3 - 1].length) qSurah(b, d, s3, a3); else toast(t('qGoBad')); return; } const n = Math.round(Number(pgI.value)); if (!(n >= 1 && n <= 604)) return; const [s2, a2] = qLoc(QMETA.pg[n - 1]); qSurah(b, d, s2, a2); };
     pgI.addEventListener('keydown', e => { if (e.key === 'Enter') goNow(); });
     go.appendChild(pgI); go.appendChild(qBtn('ibtn', 'arrow-right', t('qGoPage'), goNow)); b.appendChild(go);
     const inp = document.createElement('input'); inp.type = 'text'; inp.className = 'q-search'; inp.placeholder = t('qSearchPh'); inp.setAttribute('aria-label', t('qSearchPh'));
@@ -3221,6 +3379,8 @@ function tick(force) {
     const mm = Math.floor((diff % 3600000) / 60000);
     const ss = Math.floor((diff % 60000) / 1000);
     setText('countdown', `${pad2(hh)}:${pad2(mm)}:${pad2(ss)}`);
+    { const tm = Math.ceil(diff / 60000); if (tm !== srLast) { srLast = tm; const tx = t('srCd', srDur(Math.floor(tm / 60), tm % 60), prayerName(next.k)); setText('sr-cd', tx); if ([30, 10, 5, 1].includes(tm) && state.view === 0) setText('sr-live', tx); } }
+    updAdhDot(now);
     setText('mini-n', prayerName(next.k)); setText('mini-t', `${pad2(hh)}:${pad2(mm)}:${pad2(ss)}`);
     setText('next-prayer-time', fmtClock(next.ts));
     { let line = '', ckLog = null;
@@ -3523,7 +3683,10 @@ function applyFont() {
     $('opt-awake').setAttribute('aria-pressed', !!settings.keepAwake);
     $('opt-vibtap').setAttribute('aria-pressed', settings.vibTap !== false);
     const s = Math.min(1.8, Math.max(0.8, Number(settings.fontScale) || 1));
-    document.documentElement.style.setProperty('--dfs', s);
+    document.documentElement.style.setProperty('--dfs', s * (settings.comfy ? 1.2 : 1));
+    document.documentElement.classList.toggle('comfy', !!settings.comfy);
+    $('opt-comfy').classList.toggle('on', !!settings.comfy); $('opt-comfy').setAttribute('aria-pressed', !!settings.comfy);
+    $('opt-order').textContent = t('adhOrder' + (settings.adhOrder || 'n').toUpperCase()); $('opt-order').classList.toggle('on', (settings.adhOrder || 'n') !== 'n');
     $('fs-val').textContent = Math.round(s * 100) + '%';
     $('opt-next').classList.toggle('on', !!settings.autoNext);
     $('opt-hide').classList.toggle('on', !!settings.hideDone);
@@ -3569,6 +3732,21 @@ function doneBurst() {
         a.onfinish = () => d.remove(); setTimeout(() => d.remove(), 1500);
     } catch (e) {}
 }
+function shareDhikr(item) {
+    const txt = item.t + (item.h ? '\n\n' + item.h : '') + (item.n > 1 ? ' (' + t('shareN', item.n) + ')' : '');
+    try { if (navigator.share) { navigator.share({ text: txt }).catch(() => {}); return; } } catch (e) {}
+    copyText(txt).then(() => toast(t('shareCopied'))).catch(() => {});
+}
+let adhDotT = 0;
+function updAdhDot(now, force) {
+    if (!force && now - adhDotT < 20000) return;
+    try {
+        const T = state.today, dot = $('adh-dot'); if (!T || !dot) return; adhDotT = now;
+        const r = track[state.dayIso] || {};
+        const need = state.view === 0 && ((now >= T.Fajr && now < T.Dhuhr && !r.m) || (now >= T.Asr && now < state.tomorrow.Fajr && !r.e));
+        dot.hidden = !(need && settings.tab !== 'adhkar'); dot.setAttribute('aria-label', t('adhDot'));
+    } catch (e) {}
+}
 function buildDhikrList(box, list, rem, onChange, opts) {
     box.innerHTML = '';
     lastFinish = null; updateUndo();
@@ -3590,6 +3768,8 @@ function buildDhikrList(box, list, rem, onChange, opts) {
         const body = document.createElement('div');
         body.setAttribute('lang', 'ar');
         body.setAttribute('dir', 'rtl');
+        { const nm = item.t.replace(/[\u064B-\u0670\u0640]/g, '').replace(/[أإآٱ]/g, 'ا'), isK = nm.slice(0, 60).includes('الله لا اله الا هو الحي القيوم'), isL = item.t.length > 320;
+          if (isK || isL) { el.classList.add('lg'); const tg = document.createElement('div'); tg.className = 'lgtag'; tg.textContent = t(isK ? 'adhKursi' : 'adhLong'); body.appendChild(tg); } }
         if (item.h) {
             const hd = document.createElement('div');
             hd.className = 'h';
@@ -3624,6 +3804,7 @@ function buildDhikrList(box, list, rem, onChange, opts) {
             });
             el.appendChild(star);
         }
+        { const sh = document.createElement('button'); sh.type = 'button'; sh.className = 'star shr'; sh.setAttribute('aria-label', t('shareDhikr')); sh.appendChild(iconEl('upload')); sh.addEventListener('click', e => { e.stopPropagation(); shareDhikr(item); }); el.appendChild(sh); }
         if ((item.n || rem[i]) >= 100) {
             const sk = document.createElement('button'); sk.type = 'button'; sk.className = 'skipbtn'; sk.textContent = t('skipBtn'); sk.setAttribute('aria-label', t('skipAria'));
             sk.addEventListener('click', e => { e.stopPropagation(); if (rem[i] > 0) { rem[i] = 1; el.click(); } });
@@ -3637,7 +3818,7 @@ function buildDhikrList(box, list, rem, onChange, opts) {
             el.classList.toggle('done', rem[i] === 0);
             if (was > 0) fxPulse(badge, rem[i] === 0 ? 1.3 : 1.15);
             onChange();
-            tapVib(15);
+            if (was > 0 && rem[i] === 0) { try { if (settings.vibTap !== false && navigator.vibrate) navigator.vibrate([18, 40, 28]); } catch (e) {} } else tapVib(15);
             if (was > 0 && rem[i] === 0 && list.length >= 5 && rem.every(r => r === 0)) doneBurst();
             if (was > 0 && rem[i] === 0) {
                 const hide = settings.hideDone;
@@ -3748,7 +3929,7 @@ function renderAdhkar() {
     document.querySelectorAll('#adhkar-seg button').forEach(b => b.classList.toggle('on', b.dataset.set === adhkarSet));
     const mode = adhkarSet;
     const reading = mode === 'morning' || mode === 'evening' || mode === 'library';
-    $('abar').hidden = !reading;
+    $('abar').hidden = !reading; $('apbar').hidden = !(mode === 'morning' || mode === 'evening');
     $('opts').hidden = mode === 'stats';
     $('adhkar-box').hidden = !(mode === 'morning' || mode === 'evening');
     $('tasbih-box').hidden = mode !== 'tasbih';
@@ -3763,13 +3944,20 @@ function renderAdhkar() {
     const updateProgress = () => {
         const done = rem.filter(r => r === 0).length;
         $('adhkar-progress').textContent = t('progress', done, list.length);
+        $('apbar-i').style.transform = 'scaleX(' + (list.length ? done / list.length : 0).toFixed(3) + ')';
+        updAdhDot(Date.now(), true);
         if (done === list.length && state.dayIso) {
             if (!trackDay(state.dayIso)[kind]) { trackDay(state.dayIso)[kind] = 1; saveTrack(); renderTrack(); checkBadges(); }
         }
     };
-    buildDhikrList($('adhkar-list'), list, rem, () => { store.set('pt-adhkar', adhState); updateProgress(); });
+    const ord = list.map((_, i) => i), om = settings.adhOrder || 'n';
+    if (om === 's') ord.sort((a, b) => list[a].t.length - list[b].t.length || a - b);
+    else if (om === 'l') ord.sort((a, b) => (rem[a] === 0 ? 1 : 0) - (rem[b] === 0 ? 1 : 0) || a - b);
+    const list2 = ord.map(i => list[i]), rem2 = ord.map(i => rem[i]);
+    buildDhikrList($('adhkar-list'), list2, rem2, () => { ord.forEach((o, k) => { rem[o] = rem2[k]; }); store.set('pt-adhkar', adhState); updateProgress(); });
     const done = rem.filter(r => r === 0).length;
     $('adhkar-progress').textContent = t('progress', done, list.length);
+    $('apbar-i').style.transform = 'scaleX(' + (list.length ? done / list.length : 0).toFixed(3) + ')';
 }
 function resetAdhkar() {
     if (adhkarSet === 'tasbih') return;
@@ -3868,8 +4056,18 @@ function renderFavs(anim) {
           onReorder: order => { favs = order.map(k => favs[k]); store.set('pt-favs', favs); renderFavs(); } });
     if (anim) fxIn($('fav-items').children, { y: 8, s: 25, d: 240 });
 }
+const LIB_QUICK = [['lqSleep', 0], ['lqHome', 2], ['lqTravel', 23], ['lqPrayer', 5], ['lqAfter', 6], ['lqFood', 15], ['lqSick', 12], ['lqWorry', 7]];
+function renderLibChips(show) {
+    let c = $('lib-chips');
+    if (!c) {
+        c = document.createElement('div'); c.id = 'lib-chips'; c.className = 'lchips'; $('lib-list').parentNode.insertBefore(c, $('lib-list'));
+        LIB_QUICK.forEach(([k, g]) => { const b = document.createElement('button'); b.type = 'button'; b.className = 'lchip'; b.addEventListener('click', () => { libGroup = g; renderLibrary(true); window.scrollTo(0, 0); }); c.appendChild(b); });
+    }
+    [...c.children].forEach((b, k) => { b.textContent = t(LIB_QUICK[k][0]); });
+    c.hidden = !show;
+}
 function renderLibrary(anim) {
-    libDay();
+    libDay(); renderLibChips(false);
     const inItem = libOpen !== null;
     $('lib-filter').hidden = inItem;
     document.querySelectorAll('#lib-filter button').forEach(b => b.classList.toggle('on', b.dataset.f === libMode));
@@ -3889,6 +4087,7 @@ function renderLibrary(anim) {
     renderContinue();
     const q = normAr($('lib-search').value || '');
     const words = q ? q.split(' ') : [];
+    renderLibChips(!words.length && libGroup === null);
     const box = $('lib-list');
     box.innerHTML = '';
     let shown = 0;
@@ -4460,6 +4659,7 @@ function applyTheme(mode) {
         if (mode === 'fade') themeFade(old);
     }
     curThemeColors = c;
+    document.documentElement.classList.toggle('hc', settings.theme === 'contrast');
     const st = document.documentElement.style;
     st.setProperty('--bg', c.bg);
     st.setProperty('--bg2', c.bg2 || c.bg);
@@ -5072,7 +5272,7 @@ async function runSelfTest() {
     try { store.set('pt-st-last', { v: APP_VER, at: Date.now(), map: curM }); } catch (e) {}
     ST.text = lines.join('\n'); ST.running = false; btn.disabled = false;
     sumEl.textContent = t('stDone', cnt.ok, cnt.warn, cnt.fail) + (prev ? ' · ' + t('stDiff', chg.length) : ''); $('st-run').querySelector('span').textContent = t('stAgain'); sumEl.className = 'st-sum ' + (cnt.fail ? 'bad' : cnt.warn ? 'warn' : 'ok'); stat.textContent = '';
-    $('st-prog').hidden = true; $('st-tools').hidden = false;
+    $('st-prog').hidden = true; $('st-tools').hidden = false; $('st-filenote').hidden = false;
     try { showTab('settings', true); showSec('test', true); window.scrollTo(0, 0); } catch (e) {}
     let curG = ''; R.forEach(r => { if (r.g !== curG) { curG = r.g; const h = document.createElement('div'); h.className = 'small muted'; h.style.margin = '.8rem 0 .3rem'; h.textContent = curG.replace(/^\d+\.\s*/, ''); out.appendChild(h); } if (r.s === 'info') return; const row = document.createElement('div'); row.className = 'naw-row st-row'; const a = document.createElement('span'); a.textContent = r.n; const b = document.createElement('span'); b.className = 'v ' + (r.s === 'ok' ? 'ok' : r.s === 'fail' ? 'bad' : 'warn'); b.textContent = r.s === 'ok' ? t('stOk') : r.s === 'warn' ? t('stWarn') : t('stFail'); row.append(a, b); if (r.s !== 'ok' && r.d) { const dd = document.createElement('div'); dd.className = 'st-d'; dd.textContent = r.d; row.appendChild(dd); } out.appendChild(row); });
 }
@@ -5188,6 +5388,7 @@ function sanitizeSettings(s) {
     const fsv = Math.round(Number(s.fontScale) * 10) / 10;
     out.fontScale = Number.isFinite(fsv) ? Math.min(1.8, Math.max(0.8, fsv)) : 1;
     out.autoNext = s.autoNext !== false; out.hideDone = !!s.hideDone;
+    out.comfy = !!s.comfy; out.adhOrder = ['n', 's', 'l'].includes(s.adhOrder) ? s.adhOrder : 'n';
     out.remindDelay = [10, 20, 30].includes(Number(s.remindDelay)) ? Number(s.remindDelay) : 20;
     const tm = (v, d) => /^([01]\d|2[0-3]):[0-5]\d$/.test(String(v)) ? String(v) : d;
     out.weeklyGoal = [0, 300, 500, 1000, 2000, 3000, 5000].includes(Number(s.weeklyGoal)) ? Number(s.weeklyGoal) : 0;
@@ -5428,7 +5629,7 @@ function showTab(id, noFx) {
     if (id === 'sunan') renderSunan();
     if (id === 'quran') renderQuranTab();
     maybeHint(id);
-    saveSettings();
+    saveSettings(); updAdhDot(Date.now(), true);
     window.scrollTo(0, 0);
     lastScrollY = 0; setNav(true);
     syncWake();
@@ -5478,7 +5679,8 @@ function refreshAll() {
 }
 
 function bindUI() {
-    document.querySelectorAll('.nav-btn').forEach(b => b.addEventListener('click', () => showTab(b.dataset.tab)));
+    const tabY = {};
+    document.querySelectorAll('.nav-btn').forEach(b => b.addEventListener('click', () => { const prev = settings.tab, id = b.dataset.tab; tabY[prev] = window.scrollY || 0; showTab(id); if (id !== prev && tabY[id] > 0 && id !== 'sunan') setTimeout(() => window.scrollTo(0, tabY[id]), 60); }));
     document.querySelectorAll('.set-row').forEach(b => b.addEventListener('click', () => { showSec(b.dataset.sec); window.scrollTo(0, 0); }));
     $('set-back-btn').addEventListener('click', () => { showSetList(); window.scrollTo(0, 0); });
     document.querySelectorAll('#adhkar-seg button').forEach(b => b.addEventListener('click', () => {
@@ -5530,6 +5732,16 @@ function bindUI() {
     $('dg-offline').addEventListener('click', offlineFetch);
     $('dg-persist').addEventListener('click', () => { askPersist(true).then(() => renderDiag()); });
     $('st-run').addEventListener('click', runSelfTest);
+    $('st-file').addEventListener('click', () => {
+        try {
+            const s2 = JSON.parse(JSON.stringify(settings)); delete s2.draft;
+            const rd = o => { if (o && typeof o === 'object') for (const k in o) { if (typeof o[k] === 'number' && /^(lat|lng|lon|latitude|longitude)$/i.test(k)) o[k] = Math.round(o[k] * 10) / 10; else rd(o[k]); } };
+            rd(s2);
+            const o = { app: APP_VER, at: new Date().toISOString(), report: ST.text, settings: s2, errors: store.get('pt-errs', []) };
+            const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([JSON.stringify(o, null, 1)], { type: 'application/json' })); a.download = 'prayer-diagnostic-' + APP_VER + '.json';
+            document.body.appendChild(a); a.click(); a.remove(); setTimeout(() => URL.revokeObjectURL(a.href), 4000);
+        } catch (e) {}
+    });
     $('st-copy').addEventListener('click', async () => { try { await copyText(ST.text); toast(t('stCopied')); } catch (e) {} });
     $('st-share').addEventListener('click', () => { try { if (navigator.share) navigator.share({ text: ST.text }); else copyText(ST.text).then(() => toast(t('stCopied'))); } catch (e) {} });
     $('dg-clrerr').addEventListener('click', () => { store.set('pt-errs', []); renderDiag(); });
@@ -5675,6 +5887,10 @@ function bindUI() {
     $('fs-minus').addEventListener('click', () => setFont(-0.1));
     $('fs-plus').addEventListener('click', () => setFont(0.1));
     $('opt-hifz').addEventListener('click', () => { settings.hifz = ((settings.hifz || 0) + 1) % 3; saveSettings(); applyFont(); renderAdhkar(); });
+    $('wk-open').addEventListener('click', openWeek);
+    $('dst-ok').addEventListener('click', () => { store.set('pt-dst', $('dst-card').dataset.k || ''); $('dst-card').hidden = true; });
+    $('opt-comfy').addEventListener('click', () => { settings.comfy = !settings.comfy; saveSettings(); applyFont(); });
+    $('opt-order').addEventListener('click', () => { const o = ['n', 's', 'l']; settings.adhOrder = o[(o.indexOf(settings.adhOrder || 'n') + 1) % 3]; saveSettings(); applyFont(); renderAdhkar(); });
     $('opt-next').addEventListener('click', () => { settings.autoNext = !settings.autoNext; saveSettings(); applyFont(); });
     $('opt-hide').addEventListener('click', () => { settings.hideDone = !settings.hideDone; saveSettings(); applyFont(); renderAdhkar(); });
     $('tasbih-vib').addEventListener('change', e => {
