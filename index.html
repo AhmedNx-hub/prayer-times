@@ -695,7 +695,7 @@ html.onehand .adh-head #abar { position:fixed; }
             </div>
         </div>
         <div class="notice" id="backup-card" hidden>
-            <div style="font-weight:700" data-i18n="backupTitle"></div>
+            <div style="font-weight:700" id="backup-title" data-i18n="backupTitle"></div>
             <div class="grid2" style="margin-top:.75rem">
                 <button id="backup-now" class="btn-accent" data-i18n="backupNow"></button>
                 <button class="btn-text" id="backup-later" data-i18n="backupLater"></button>
@@ -833,6 +833,7 @@ html.onehand .adh-head #abar { position:fixed; }
             </div>
             <div id="lib-fav-view" hidden>
                 <div id="fav-empty" class="muted small center" style="padding:1rem 0" data-i18n="favEmpty"></div>
+                <button id="fav-go" class="ibtn" type="button" hidden style="margin:0 auto .8rem"><i data-ic="library"></i><span data-i18n="emBrowse"></span></button>
                 <div id="fav-items"></div>
                 <button id="fav-reset" class="btn-block" style="margin-top:.4rem" data-i18n="resetCount"></button>
             </div>
@@ -913,6 +914,7 @@ html.onehand .adh-head #abar { position:fixed; }
         <div class="center"><button id="qada-calc" class="linkbtn" type="button" data-i18n="qcOpen"></button></div>
         <h3 data-i18n="weekPrayTitle" style="margin-top:1.2rem"></h3>
         <div id="wp-line" class="muted small"></div>
+        <button id="wp-go" class="ibtn" type="button" hidden style="margin-top:.6rem"><i data-ic="clock"></i><span data-i18n="emGoTimes"></span></button>
         <div class="wbar"><i id="wp-bar"></i></div>
         <div id="wp-worst" class="muted small" style="margin-top:.4rem"></div>
         <div id="wp-raw" class="muted small" style="margin-top:.3rem"></div>
@@ -1130,6 +1132,10 @@ html.onehand .adh-head #abar { position:fixed; }
                 <option value="ar">العربية</option>
                 <option value="en">English</option>
             </select>
+        </div>
+        <div class="field">
+            <label for="fz-select" data-i18n="fzLabel"></label>
+            <select id="fz-select"></select>
         </div>
         <label class="switch"><span class="il"><i data-ic="layout-grid"></i><span data-i18n="simpleOn"></span></span><input type="checkbox" id="simple-toggle"></label>
         <p class="muted small" style="margin:0 0 1rem" data-i18n="simpleNote"></p>
@@ -1614,6 +1620,10 @@ ar: {
     qTafSearch:'بحث في التفسير',
     qTafRes:'نتائج في التفسير: {0}',
     qTabS:'السور', qPlanS:'الخطة', qStatS:'الإحصاء', rpS:'التكرار',
+    fzLabel:'حجم الخط', fzS:'صغير', fzM:'متوسط', fzL:'كبير', fzXL:'كبير جدًا', fzOther:'مخصّص ({0}%)',
+    backupTitleNew:'لم تحفظ نسخة احتياطية من تقدّمك بعد، وقد يضيع إن مُسحت بيانات المتصفح',
+    sumSimple:'الوضع المبسّط', sumFull:'الوضع الكامل', sumBak:'آخر نسخة: {0}', sumNoBak:'لا توجد نسخة احتياطية بعد',
+    emGoTimes:'افتح قائمة المواقيت', emBrowse:'تصفّح المكتبة',
     afterOpen:'فتح الأذكار', afterHide:'إخفاء',
     backupOn:'تذكير أسبوعي بالنسخة الاحتياطية', backupTitle:'مرّ أسبوع على آخر نسخة احتياطية', backupNow:'تصدير الآن', backupLater:'لاحقًا',
     readOpts:'خيارات القراءة', fontFace:'خط الأذكار', ffDefault:'الافتراضي', ffNaskh:'نسخ', ffThuluth:'ثلث / رقعة', fontNote:'يظهر حسب الخطوط المتاحة على جهازك',
@@ -1838,6 +1848,10 @@ en: {
     qTafSearch:'Search tafsir',
     qTafRes:'Tafsir results: {0}',
     qTabS:'Surahs', qPlanS:'Plan', qStatS:'Stats', rpS:'Repeat',
+    fzLabel:'Text size', fzS:'Small', fzM:'Medium', fzL:'Large', fzXL:'Extra large', fzOther:'Custom ({0}%)',
+    backupTitleNew:'You have not saved a backup of your progress yet; it can be lost if browser data is cleared',
+    sumSimple:'Simple mode', sumFull:'Full mode', sumBak:'Last backup: {0}', sumNoBak:'No backup yet',
+    emGoTimes:'Open prayer times', emBrowse:'Browse the library',
     afterOpen:'Open adhkar', afterHide:'Hide',
     backupOn:'Weekly backup reminder', backupTitle:'It has been a week since your last backup', backupNow:'Export now', backupLater:'Later',
     readOpts:'Reading options', fontFace:'Adhkar font', ffDefault:'Default', ffNaskh:'Naskh', ffThuluth:'Thuluth / Ruqaa', fontNote:'Shown using the fonts available on your device',
@@ -1947,7 +1961,7 @@ const SCHEMA = 3;
         store.set('pt-schema', SCHEMA);
     } catch (e) {}
 })();
-const APP_VER = '2026.11.14-4';
+const APP_VER = '2026.11.14-5';
 function repairBar() {
     try {
         if (document.getElementById('fix-bar') || sessionStorage.getItem('pt-fixno')) return;
@@ -2531,6 +2545,7 @@ function renderWeekPrayers() {
       for (let i = 0; i < 7; i++) { const r = (track[dayOf(state.tz, -i).iso] || {}).r || ''; 'fdDmi'.split('').forEach(g => { if (i > 0 || now >= state.today[GM[g]]) { rp++; if (r.includes(g)) rl++; } }); }
       if ($('wp-raw')) $('wp-raw').textContent = rl ? t('weekRaw', rl, rp) : ''; }
     const L = logged.reduce((a, b) => a + b, 0), P = poss.reduce((a, b) => a + b, 0);
+    $('wp-go').hidden = !!(any && P);
     if (!any || !P) { $('wp-line').textContent = t('weekPrayNone'); $('wp-bar').style.transform = 'scaleX(0)'; $('wp-worst').textContent = ''; return; }
     $('wp-line').textContent = t('weekPrayLine', L, P, Math.round(L / P * 100));
     $('wp-bar').style.transform = 'scaleX(' + (L / P).toFixed(3) + ')';
@@ -3684,8 +3699,15 @@ function updateCards(now) {
     }
     if (key) { const mn = Math.max(1, Math.ceil((state.today[key] + 3600000 - now) / 60000)), lt = t('afterLeft', mn); if ($('after-left').textContent !== lt) $('after-left').textContent = lt; }
     if (key) $('after-bar').style.transform = 'scaleX(' + Math.max(0, Math.min(1, 1 - (now - state.today[key]) / 3600000)).toFixed(3) + ')';
-    const due = !!settings.backupRemind && settings.backupAt > 0 && now - settings.backupAt > 7 * 86400000 && now > (settings.backupSnooze || 0);
-    if (due !== backupShown) { backupShown = due; $('backup-card').hidden = !due; }
+    const base = !!settings.backupRemind && settings.backupAt > 0 && now - settings.backupAt > 7 * 86400000 && now > (settings.backupSnooze || 0);
+    const nev = base && !settings.exportAt, due = base && (!!settings.exportAt || bkNever(now)), show = due;
+    if (show !== backupShown || nev !== backupNever) { backupShown = show; backupNever = nev; $('backup-title').textContent = t(nev ? 'backupTitleNew' : 'backupTitle'); $('backup-card').hidden = !show; }
+}
+let backupNever = false, bkNT = 0, bkNV = false;
+function bkNever(now) {
+    if (now - bkNT < 600000) return bkNV; bkNT = now;
+    try { const ks = Object.keys(track || {}).filter(k => /^\d{4}-\d{2}-\d{2}$/.test(k)).sort(); bkNV = ks.length >= 7 && (now - Date.parse(ks[0] + 'T00:00:00Z')) > 14 * 86400000; } catch (e) { bkNV = false; }
+    return bkNV;
 }
 function dismissAfter() { if (afterKey) store.set('pt-afterdis', state.dayIso + '-' + afterKey); updateCards(Date.now()); }
 function syncSubs() {
@@ -3849,6 +3871,10 @@ function applyFont() {
     $('opt-comfy').classList.toggle('on', !!settings.comfy); $('opt-comfy').setAttribute('aria-pressed', !!settings.comfy);
     $('opt-order').textContent = t('adhOrder' + (settings.adhOrder || 'n').toUpperCase()); $('opt-order').classList.toggle('on', (settings.adhOrder || 'n') !== 'n');
     $('fs-val').textContent = Math.round(s * 100) + '%';
+    { const sel = $('fz-select'), L = [[0.9, 'fzS'], [1, 'fzM'], [1.2, 'fzL'], [1.4, 'fzXL']], hit = L.find(x => Math.abs(x[0] - s) < 0.05);
+      sel.innerHTML = ''; L.forEach(([v, k]) => { const o = document.createElement('option'); o.value = String(v); o.textContent = t(k); sel.appendChild(o); });
+      if (!hit) { const o = document.createElement('option'); o.value = String(s); o.textContent = t('fzOther', Math.round(s * 100)); sel.appendChild(o); }
+      sel.value = String(hit ? hit[0] : s); }
     $('opt-next').classList.toggle('on', !!settings.autoNext);
     $('opt-hide').classList.toggle('on', !!settings.hideDone);
     $('opt-next').setAttribute('aria-pressed', !!settings.autoNext);
@@ -4286,7 +4312,7 @@ function favItems() {
 }
 function renderFavs(anim) {
     const list = favItems();
-    $('fav-empty').hidden = list.length > 0;
+    $('fav-empty').hidden = list.length > 0; $('fav-go').hidden = list.length > 0;
     $('fav-reset').hidden = list.length === 0;
     const rem = list.map(it => { const v = favRem[it.c + ':' + it.i]; return v === undefined ? it.n : v; });
     buildDhikrList($('fav-items'), list, rem, () => { list.forEach((it, k) => { favRem[it.c + ':' + it.i] = rem[k]; }); saveLibCnt(); },
@@ -5582,7 +5608,44 @@ async function runSelfTest() {
         { const hi = [], nl = []; for (const [la, ln] of [[60, 10], [65, 25], [68, 18], [-55, -68]]) for (let mo = 1; mo <= 12; mo++) { const r = ptInstants({ y: 2026, m: mo, d: 15, lat: la, lng: ln, method: 5, asr: 1, ramadan: false, tune: {} }); if (!r) { nl.push(la + '/' + mo); continue; } if (!nm.every(k => Number.isFinite(r[k]))) hi.push(la + '/' + mo); } needs(!hi.length, 'High latitudes never return NaN', hi.slice(0, 6).join(',') || 'ok'); A('High latitudes with no result (handled by the app)', 'info', nl.length + ' ' + nl.slice(0, 8).join(',')); }
         { const mp = new Map(); let badM = [], pv = null; for (let i = 0; i < 800; i++) { const p = hijriParts(zonedToUtc(2026, 11, 14 + i, 12, 0, state.tz), state.tz); if (!p) { badM.push(i); continue; } const key = p.y + '-' + p.m; mp.set(key, Math.max(mp.get(key) || 0, p.d)); if (pv && !((p.d === pv.d + 1 && p.m === pv.m && p.y === pv.y) || (p.d === 1 && (pv.d === 29 || pv.d === 30)))) badM.push(i); pv = p; } const lens = [...mp.entries()].slice(1, -1).filter(([k, v]) => v < 29 || v > 30); needs(!badM.length && !lens.length, 'Hijri calendar continuous for 800 days, months 29-30 days', (badM.slice(0, 4).join(',') || 'continuous') + ' | ' + lens.map(x => x.join('=')).join(',')); }
     }],
-    ['18. Logic smoke tests', async () => {
+    ['18. Export and print', async () => {
+        const keepL = settings.lang, keepT = settings.theme, e0 = errs.length;
+        const distinct = cv => { try { const g = cv.getContext('2d'), w = cv.width, h = cv.height, set = new Set(); for (let i = 0; i < 40; i++) { const d = g.getImageData(Math.floor(w * (i % 8 + .5) / 8), Math.floor(h * (Math.floor(i / 8) + .5) / 5), 1, 1).data; set.add(d[0] + ',' + d[1] + ',' + d[2]); } return set.size; } catch (e) { return -1; } };
+        const dk = dayOf(state.tz, 0), rm = typeof nextRamadan === 'function' ? nextRamadan() : null, opts = [{ y: dk.y, m: dk.m, d: 1, days: new Date(Date.UTC(dk.y, dk.m, 0)).getUTCDate(), ramadan: false }]; if (rm) opts.push({ y: rm.y, m: rm.m, d: rm.d, days: 30, ramadan: true }); opts.push({ y: dk.y, m: 2, d: 1, days: 28, ramadan: false });
+        for (const L of ['ar', 'en']) { settings.lang = L;
+            for (const o of opts) { try { const cv = drawMonthTable(o); const ok = cv.width === 1240 && cv.height > 800 && cv.height < 2600; const dc = distinct(cv); needs(ok && dc > 2, 'Month table image [' + L + (o.ramadan ? ', Ramadan' : ', ' + o.m + '/' + o.y) + ']', cv.width + 'x' + cv.height + ', ' + dc + ' colours'); try { const url = cv.toDataURL('image/png'); needs(url.length > 20000, 'Month table PNG encodes [' + L + ']', Math.round(url.length / 1024) + ' KB'); } catch (e) { A('Month table PNG encoding [' + L + ']', 'fail', e.message); } } catch (e) { A('Month table image [' + L + ']', 'fail', e.message); } }
+            const sel = $('report-month'); const key = sel && sel.options.length ? sel.options[0].value : '';
+            if (key) for (const st of ['light', 'dark']) for (const th of Object.keys(PRESETS)) { if (st === 'light' && th !== Object.keys(PRESETS)[0]) continue; settings.theme = th; try { const cv = drawReport(key, st, 1); const dc = distinct(cv); needs(cv.width === 1080 && cv.height > 1000 && dc >= 2, 'Month report image [' + L + ', ' + st + (st === 'dark' ? ', ' + th : '') + ']', cv.width + 'x' + cv.height + ', ' + dc + ' colours'); } catch (e) { A('Month report image [' + L + ', ' + st + ', ' + th + ']', 'fail', e.message); } }
+            else A('Month report image', 'info', 'report month list is empty'); }
+        settings.lang = keepL; settings.theme = keepT;
+        { const css = [...document.styleSheets].map(ss => { try { return [...ss.cssRules].map(r => r.cssText).join(' '); } catch (e) { return ''; } }).join(' '); needs(/@media print/.test(css) && /printing/.test(css), 'Print stylesheet exists (@media print + .printing)', 'ok'); }
+        needs(!!$('print-sheet'), 'Print sheet element exists', 'ok');
+        try { const blob = await new Promise(r => { const c = document.createElement('canvas'); c.width = c.height = 8; c.toBlob(r, 'image/png'); }); needs(blob && blob.size > 0, 'Canvas to PNG blob works (image export)', blob ? blob.size + ' B' : 'null'); } catch (e) { A('Canvas toBlob', 'fail', e.message); }
+        try { const j = new Blob([JSON.stringify(backupObj())], { type: 'application/json' }); needs(j.size > 100, 'Backup file blob builds', kb(j.size)); } catch (e) { A('Backup blob', 'fail', e.message); }
+        A('Web Share with files', navigator.canShare ? 'ok' : 'info', navigator.canShare ? (navigator.canShare({ files: [new File(['x'], 'a.png', { type: 'image/png' })] }) ? 'supported' : 'not for files') : 'unsupported (falls back to download)');
+        try { applyLang(); applyTheme(); } catch (e) {}
+        needs(errs.length === e0, 'No errors during export checks', errs.slice(e0, e0 + 4).join(' || ') || 'none');
+    }],
+    ['19. Full restore round trip', async () => {
+        const keepAB = store.get('pt-autobak', null), keepTab2 = settings.tab; let snap = null, e0 = errs.length;
+        try {
+            snap = JSON.stringify(backupObj());
+            const strip = o => { const c = JSON.parse(JSON.stringify(o)); delete c.exportedAt; if (c.settings) { c.settings = sanitizeSettings(c.settings) || c.settings; ['backupAt', 'exportAt', 'backupSnooze', 'draft', 'tab', 'sec'].forEach(k => delete c.settings[k]); } return c; };
+            const a = strip(JSON.parse(snap)); const ok = importText(snap); needs(ok === true, 'Importing the app\'s own backup succeeds', String(ok));
+            const b = strip(backupObj()); const diff = [];
+            for (const k of new Set([...Object.keys(a), ...Object.keys(b)])) { if (JSON.stringify(a[k]) !== JSON.stringify(b[k])) { if (k === 'settings') { const sd = Object.keys({ ...a.settings, ...b.settings }).filter(x => JSON.stringify(a.settings[x]) !== JSON.stringify(b.settings[x])); diff.push('settings(' + sd.slice(0, 6).join('/') + ')'); } else diff.push(k); } }
+            needs(!diff.length, 'Every section is identical after restore', diff.join(', ') || Object.keys(a).length + ' sections compared');
+            const ok2 = importText(JSON.stringify(backupObj())); const c = strip(backupObj()); needs(ok2 === true && JSON.stringify(c) === JSON.stringify(b), 'Second restore changes nothing (stable)', 'ok');
+            const bad = JSON.parse(snap); bad.app = 'other-app'; const before = JSON.stringify(strip(backupObj())); let rej = false; try { rej = importText(JSON.stringify(bad)) === false; } catch (e) {} needs(rej && JSON.stringify(strip(backupObj())) === before, 'A foreign file is rejected without touching data', 'ok');
+            const fut = JSON.parse(snap); fut.schema = SCHEMA + 5; rej = false; try { rej = importText(JSON.stringify(fut)) === false; } catch (e) {} needs(rej && JSON.stringify(strip(backupObj())) === before, 'A newer-version backup is rejected without touching data', 'ok');
+            rej = false; try { rej = importText('{"app":"' + APP_ID + '","settings":') === false; } catch (e) {} needs(rej, 'A truncated file is rejected', 'ok');
+        } catch (e) { A('Restore round trip', 'fail', e.message); }
+        try { if (keepAB === null) localStorage.removeItem('pt-autobak'); else store.set('pt-autobak', keepAB); } catch (e) {}
+        try { settings.tab = keepTab2; saveSettings(); } catch (e) {}
+        needs(errs.length === e0, 'No errors during the restore test', errs.slice(e0, e0 + 3).join(' || ') || 'none');
+        A('Note', 'info', 'the test restores the app\'s own backup, so your data is unchanged; the automatic backup list was put back as it was');
+    }],
+    ['20. Logic smoke tests', async () => {
         const fns = { 'streak(m)': () => streak('m'), 'streak(e)': () => streak('e'), 'sunanStreak': () => sunanStreak(), 'qRevDue': () => qRevDue(), 'viewIso': () => viewIso(), 'prayedSet': () => prayedSet(viewIso()), 'hijriParts': () => hijriParts(Date.now(), state.tz), 'getLoc': () => getLoc(), 'backupObj': () => backupObj() };
         for (const k in fns) { try { const v = fns[k](); A('Call ' + k, v === undefined ? 'warn' : 'ok', typeof v === 'object' ? 'object' : String(v)); } catch (e) { A('Call ' + k, 'fail', e.message); } }
         try { const L = ADHKAR.morning; const rem = L.map(x => x.n || 1); needs(rem.every(n => n >= 1), 'Morning counters initialise', rem.length + ' items'); } catch (e) { A('Morning counters', 'fail', e.message); }
@@ -5958,7 +6021,7 @@ function showTab(id, noFx) {
     if (id === 'times') { heroPending = true; if (state.today) setTimeout(tick, 30); }
     document.querySelectorAll('.panel').forEach(p => { p.hidden = p.id !== 'tab-' + id; });
     document.querySelectorAll('.nav-btn').forEach(b => b.classList.toggle('on', b.dataset.tab === id));
-    settings.tab = id; miniUpd();
+    settings.tab = id; miniUpd(); if (id === 'settings') updSetSums();
     if (!wirdBig) { const sb = $('stats-box'); if (sb) sb.classList.remove('bigwird'); }
     wirdBig = false;
     if (id === 'adhkar') {
@@ -5985,7 +6048,17 @@ function secSlide(el, back) {
     const d = (isEn() ? 1 : -1) * (back ? -1 : 1) * 24;
     el.animate([{ transform: 'translateX(' + d + 'px)', opacity: 0 }, { transform: 'none', opacity: 1 }], { duration: 160, easing: 'ease-out' });
 }
+function updSetSums() {
+    try {
+        const set = (sec, tx) => { const e = document.querySelector('.set-row[data-sec="' + sec + '"] small'); if (e && tx) e.textContent = tx; };
+        if (state.loc) set('loc', cityName(state.loc));
+        const th = String(settings.theme || 'dark'); set('theme', th.startsWith('c:') ? th.slice(2) : (I18N.ar['th_' + th] ? t('th_' + th) : ''));
+        set('general', (isEn() ? 'English' : 'العربية') + ' · ' + t(settings.simple !== false ? 'sumSimple' : 'sumFull'));
+        set('data', settings.exportAt > 0 ? t('sumBak', new Date(settings.exportAt).toLocaleDateString(isEn() ? 'en-GB' : 'ar-EG-u-nu-latn', { day: 'numeric', month: 'short', timeZone: state.tz })) : t('sumNoBak'));
+    } catch (e) {}
+}
 function showSetList() {
+    updSetSums();
     document.querySelectorAll('.sec').forEach(x => { x.hidden = true; });
     $('set-list').hidden = false; $('set-back').hidden = true; $('tab-settings').classList.remove('in-sec'); secSlide($('set-list'), true);
 }
@@ -6190,6 +6263,9 @@ function bindUI() {
     $('wird-edit').addEventListener('click', () => { showTab('settings'); showSec('adh', true); setTimeout(() => $('wird-grp').scrollIntoView({ block: 'center' }), 40); });
     $('qw-add').addEventListener('click', () => wirdAdd(1));
     $('oh-try').addEventListener('click', () => { settings.oneHand = true; saveSettings(); applyFont(); hideOhHint(); });
+    $('wp-go').addEventListener('click', () => { showTab('times', true); window.scrollTo(0, 0); });
+    $('fav-go').addEventListener('click', () => { const b0 = document.querySelector('#lib-filter button[data-f="all"]') || document.querySelector('#lib-filter button'); if (b0) b0.click(); });
+    $('fz-select').addEventListener('change', e => { const v = Number(e.target.value); if (v >= 0.8 && v <= 1.8) { settings.fontScale = v; saveSettings(); applyFont(); } });
     $('oh-later').setAttribute('aria-label', t('ohLater')); $('oh-later').addEventListener('click', hideOhHint);
     $('wird-unit').addEventListener('change', e => { settings.wirdUnit = e.target.value; saveSettings(); renderWird(); });
     $('wird-goal').addEventListener('change', e => { settings.wirdGoal = Number(e.target.value); saveSettings(); renderWird(); });
@@ -6220,7 +6296,7 @@ function bindUI() {
     $('after-open').addEventListener('click', () => { dismissAfter(); openTarget({ lib: 26 }); });
     $('after-hide').addEventListener('click', dismissAfter);
     $('backup-now').addEventListener('click', exportData);
-    $('backup-later').addEventListener('click', () => { settings.backupSnooze = Date.now() + 86400000; saveSettings(); updateCards(Date.now()); });
+    $('backup-later').addEventListener('click', () => { settings.backupSnooze = Date.now() + (settings.backupAt ? 86400000 : 3 * 86400000); saveSettings(); updateCards(Date.now()); });
     if (!settings.backupAt) { settings.backupAt = Date.now(); saveSettings(); }
     $('opt-awake').addEventListener('click', () => { settings.keepAwake = !settings.keepAwake; saveSettings(); applyFont(); syncWake(); });
     $('opt-vibtap').addEventListener('click', () => { settings.vibTap = settings.vibTap === false; saveSettings(); applyFont(); tapVib(30); });
