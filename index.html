@@ -626,6 +626,21 @@ html.hc .card,html.hc .dhikr,html.hc .set-row,html.hc .cat-row,html.hc .q-s,html
 html.hc :focus-visible{outline:3px solid #ffe600;outline-offset:2px}
 .star{padding:.6rem;margin:-.35rem}
 .skipbtn{min-height:34px}
+
+#quick-adh{position:fixed;inset-inline:1rem;bottom:calc(5rem + env(safe-area-inset-bottom,0px));margin-inline:auto;max-width:22rem;z-index:40;display:flex;align-items:center;gap:.4rem;background:var(--surface);color:var(--text);border:1px solid var(--accent);border-radius:999px;padding:.25rem .35rem .25rem .9rem;box-shadow:0 6px 20px rgba(0,0,0,.4)}
+#quick-adh[hidden]{display:none}
+#quick-adh .go{flex:1;background:none;border:none;color:inherit;text-align:start;font-weight:700;min-height:42px;display:flex;align-items:center;gap:.5rem}
+#quick-adh .x{background:none;border:none;color:var(--muted);width:42px;height:42px;padding:0}
+html.focus #quick-adh,html.sheet-open #quick-adh{display:none}
+.lchip.on{border-color:var(--accent);color:var(--accent)}
+.q-rp{font-family:AmiriQ,serif;font-size:1.7rem;line-height:2.5;text-align:center;margin:1rem 0;padding:.5rem}
+.q-rp .rw.hid{color:transparent;border-bottom:2px dotted var(--muted);user-select:none}
+.q-rp.peek .rw.hid{color:inherit;border-bottom-color:transparent}
+.rp-n{text-align:center;font-weight:700;margin:.4rem 0}
+.td-row{display:flex;align-items:center;justify-content:space-between;gap:.6rem;padding:.7rem 0;border-top:1px solid rgba(128,128,128,.2)}
+.td-pr{display:flex;flex-wrap:wrap;gap:.45rem;margin:.4rem 0 .8rem}
+.td-pr .lchip{display:flex;align-items:center;gap:.35rem}
+#dhk-day .sod-t{margin:.35rem 0 .7rem;line-height:1.9}
 </style>
 <link rel="manifest" href="manifest.json">
 <link rel="apple-touch-icon" href="icon-192.png">
@@ -653,6 +668,7 @@ html.hc :focus-visible{outline:3px solid #ffe600;outline-offset:2px}
             <span id="greg-date" class="muted small il-block"></span>
             <span id="pr-sum" class="muted small il-block"></span>
             <button id="wk-open" class="linkbtn il-block" type="button" data-i18n="wkOpen"></button>
+            <button id="td-open" class="linkbtn il-block" type="button" data-i18n="tdOpen"></button>
         </div>
         <div class="qw adv" id="qw"><div class="qi"><div class="wring sm" id="qw-ring"><svg viewBox="0 0 100 100" aria-hidden="true"><circle class="bg" cx="50" cy="50" r="46"/><circle class="fg" id="qw-fg" cx="50" cy="50" r="46"/></svg><span id="qw-n"></span></div><div class="qt"><span data-i18n="wirdToday"></span><b id="qw-val"></b></div></div><button id="qw-add" class="btn-accent"></button></div>
         <div class="notice adv" id="sod" hidden></div>
@@ -763,6 +779,7 @@ html.hc :focus-visible{outline:3px solid #ffe600;outline-offset:2px}
             <div style="font-weight:700" data-i18n="ohHint"></div>
             <div class="grid2" style="margin-top:.75rem"><button id="oh-try" class="btn-accent" data-i18n="ohTry"></button><button class="btn-text" id="oh-later" data-i18n="ohLater"></button></div>
         </div>
+        <div class="notice" id="dhk-day" hidden></div>
         <div class="abar" id="abar">
             <span id="adhkar-progress" class="small"></span>
             <div class="fs"><button id="fs-minus" aria-label="-">A−</button><span id="fs-val"></span><button id="fs-plus" aria-label="+">A+</button></div>
@@ -889,6 +906,7 @@ html.hc :focus-visible{outline:3px solid #ffe600;outline-offset:2px}
         <div class="qada"><button id="qada-minus" aria-label="-">−</button><b id="qada-n"></b><button id="qada-plus" aria-label="+">+</button></div>
         <div id="qada-pend" class="center muted small" hidden></div>
         <div class="center" style="margin-top:.5rem"><button id="qada-add" class="linkbtn" hidden data-i18n="qadaAdd"></button></div>
+        <div class="center"><button id="qada-calc" class="linkbtn" type="button" data-i18n="qcOpen"></button></div>
         <h3 data-i18n="weekPrayTitle" style="margin-top:1.2rem"></h3>
         <div id="wp-line" class="muted small"></div>
         <div class="wbar"><i id="wp-bar"></i></div>
@@ -1051,6 +1069,7 @@ html.hc :focus-visible{outline:3px solid #ffe600;outline-offset:2px}
 
     <div class="card sec" id="sec-adh" hidden>
         <h3 class="grp" data-i18n="grpAdhkar"></h3>
+        <label class="switch"><span class="il"><i data-ic="moon"></i><span data-i18n="quickAdhOpt"></span></span><input type="checkbox" id="qa-toggle"></label>
         <label class="switch"><span class="il"><i data-ic="sun"></i><span data-i18n="adhkarRemind"></span></span><input type="checkbox" id="remind-toggle"></label>
         <div class="field sub" id="sub-remind">
             <label for="remind-delay" data-i18n="remDelay"></label>
@@ -1183,6 +1202,7 @@ html.hc :focus-visible{outline:3px solid #ffe600;outline-offset:2px}
 
 <!-- شريط التنقل -->
 <div id="mini-cd" aria-hidden="true"><span id="mini-n"></span><span id="mini-t"></span></div>
+<div id="quick-adh" hidden><button type="button" class="go" id="qa-go"><i data-ic="moon"></i><span id="qa-t"></span></button><button type="button" class="x" id="qa-x" data-aria="qaClose"><i data-ic="x"></i></button></div>
 <nav id="bottom-nav"><div class="inner">
     <button class="nav-btn" data-tab="times">
         <i data-ic="clock"></i><span data-i18n="navTimes"></span>
@@ -1419,14 +1439,14 @@ ar: {
     adhkarTitle:'الأذكار', morning:'الصباح', evening:'المساء', tasbih:'المسبحة', library:'المكتبة',
     progress:'تم {0} من {1}', resetCount:'إعادة العدّ',
     adhkarNote:'اضغط على الذكر لتنقيص العدّاد. النصوص من «حصن المسلم»، وبعض الأذكار فيها صيغتا الصباح والمساء معًا بين أقواس [ ].',
-    libSearchPh:'ابحث في الأذكار والأدعية...', libAll:'الكل', libFav:'المفضلة', favEmpty:'لا توجد أذكار مفضلة بعد. افتح أي قسم واضغط على النجمة بجانب الذكر لإضافته.', libBack:'رجوع للأقسام', libNote:'«حصن المسلم»: 132 قسمًا. تُحفظ عدّادات المكتبة والمفضلة لليوم الحالي، وتبدأ من جديد في اليوم التالي.', libCount:'{0} قسم', libEmpty:'لا توجد نتائج',
+    libSearchPh:'ابحث في الأذكار والأدعية…', libAll:'الكل', libFav:'المفضلة', favEmpty:'لا توجد أذكار مفضلة بعد. افتح أي قسم واضغط على النجمة بجانب الذكر لإضافته.', libBack:'رجوع للأقسام', libNote:'«حصن المسلم»: 132 قسمًا. تُحفظ عدّادات المكتبة والمفضلة لليوم الحالي، وتبدأ من جديد في اليوم التالي.', libCount:'{0|قسم|قسمان|أقسام|قسمًا}', libEmpty:'لا توجد نتائج',
     remS:'حان وقت أذكار النوم', remW:'أذكار الاستيقاظ من النوم', remA:'أذكار بعد الصلاة', nightMode:'وضع الليل', weekStat:'آخر 7 أيام: الصباح {0}/7 · المساء {1}/7 · التسبيح {2} (بمتوسط {3} يوميًا)',
     sAdh:'الأذكار', sData:'البيانات', statsTab:'السجل', tasbihSet:'إعدادات المسبحة', goalLabel:'هدف التسبيح الأسبوعي', goalOff:'بدون هدف', goalLine:'هدف الأسبوع: {0} / {1}', goalDone:'ما شاء الله، حققت هدف التسبيح الأسبوعي ({0})',
-    dayDetail:'{0} — الصباح: {1} · المساء: {2} · التسبيح: {3} · الورد: {4} صفحة',
+    dayDetail:'{0} — الصباح: {1} · المساء: {2} · التسبيح: {3} · الورد: {4|صفحة|صفحتان|صفحات|صفحة}',
     sndEach:'صوت لكل صلاة', sndDefault:'مثل الصوت العام', focusMode:'وضع التركيز', badgesTitle:'الشارات', badgeA:'أذكار الصباح والمساء', badgeW:'ورد القرآن', badgeBest:'الحالية: {0} · الأفضل: {1}',
     badgeMsgA:'ما شاء الله! واظبت على أذكار الصباح والمساء {0} {1} على التوالي', badgeMsgW:'ما شاء الله! واظبت على ورد القرآن {0} {1} على التوالي',
-    reportTitle:'تقرير الشهر', reportMonth:'الشهر', reportImg:'حفظ كصورة', reportCsv:'حفظ كملف CSV', reportHead:'تقرير المواظبة', legendQ:'الورد', reportAvg:'بمتوسط {0} يوميًا', reportJuz:'{0} جزء', reportFoot:'مواقيت الصلاة · Ahmed Nx', reportDays:'{0} من {1}', reportStreak:'أطول سلسلة: {0} {1}',
-    wirdToday:'ورد اليوم', wirdUnit:'الوحدة', wirdGoal:'الهدف اليومي', pageN:'{0} صفحة', juzN:'{0} جزء', pageU:'صفحة', juzU:'جزء', wirdGoalLine:'الهدف اليومي: {0} {1}', wirdDone:'ما شاء الله، أتممت ورد اليوم',
+    reportTitle:'تقرير الشهر', reportMonth:'الشهر', reportImg:'حفظ كصورة', reportCsv:'حفظ كملف CSV', reportHead:'تقرير المواظبة', legendQ:'الورد', reportAvg:'بمتوسط {0} يوميًا', reportJuz:'{0|جزء|جزءان|أجزاء|جزءًا}', reportFoot:'مواقيت الصلاة · Ahmed Nx', reportDays:'{0} من {1}', reportStreak:'أطول سلسلة: {0} {1}',
+    wirdToday:'ورد اليوم', wirdUnit:'الوحدة', wirdGoal:'الهدف اليومي', pageN:'{0|صفحة|صفحتان|صفحات|صفحة}', juzN:'{0|جزء|جزءان|أجزاء|جزءًا}', pageU:'صفحة', juzU:'جزء', wirdGoalLine:'الهدف اليومي: {0} {1}', wirdDone:'ما شاء الله، أتممت ورد اليوم',
     monthGoalLabel:'هدف التسبيح الشهري', monthGoalLine:'هدف الشهر: {0} / {1}', monthGoalDone:'ما شاء الله، حققت هدف التسبيح الشهري ({0})',
     dndFri:'جدول مختلف يوم الجمعة', grpSounds:'الأصوات', sndPrayer:'صوت تنبيه الصلاة', sndAdhkar:'صوت تذكير الأذكار', sndWird:'صوت تذكير الورد', sndGoal:'صوت تحقيق الهدف',
     snd_rise:'تصاعدي', snd_chime:'جرس خفيف', snd_soft:'هادئ', snd_bell:'جرس', snd_triple:'ثلاثي', snd_off:'بدون صوت',
@@ -1438,10 +1458,10 @@ ar: {
     nawTitle:'النوافل والصيام', nawDuha:'صلاة الضحى', nawQiyam:'قيام الليل (الثلث الأخير)', nawImsak:'الإمساك', nawIftar:'الإفطار', nawFastMT:'صيام الاثنين والخميس', nawWhite:'صيام الأيام البيض', nawArafa:'صيام يوم عرفة', nawAshura:'صيام عاشوراء', nawSunnah:'مستحب اليوم', nawNoFast:'يحرم صيام هذا اليوم',
     remDuha:'دخل وقت صلاة الضحى', remQiyam:'بدأ الثلث الأخير من الليل — وقت القيام والدعاء', remImsak:'تبقّى 15 دقيقة على أذان الفجر — وقت الإمساك', remFast:'اليوم يُستحب صيامه — جدّد نيتك',
     nawOn:'تذكير الضحى والقيام والصيام', nawCardOn:'عرض النوافل والصيام في الرئيسية',
-    endLabel:'تنبيه قبل خروج وقت الصلاة', endOff:'بدون', end10:'قبل 10 دقائق', end20:'قبل 20 دقيقة', end30:'قبل 30 دقيقة', endMsg:'تبقّى {1} دقيقة على خروج وقت {0}',
+    endLabel:'تنبيه قبل خروج وقت الصلاة', endOff:'بدون', end10:'قبل 10 دقائق', end20:'قبل 20 دقيقة', end30:'قبل 30 دقيقة', endMsg:'تبقّى {1|دقيقة|دقيقتان|دقائق|دقيقة} على خروج وقت {0}',
     prayedLbl:'تسجيل صلاة {0}', notYet:'لم يحن وقت هذه الصلاة بعد', legendP:'الصلوات',
-    qadaTitle:'قضاء الصلوات', qadaPend:'فاتتك {0} صلاة في أيام سابقة مسجّلة', qadaAdd:'أضفها للقضاء', qadaHint:'عدّاد الصلوات المطلوب قضاؤها',
-    yearTitle:'السنة الأخيرة', yearStat:'{0} يومًا نشطًا · أنشط شهر: {1}',
+    qadaTitle:'قضاء الصلوات', qadaPend:'فاتتك {0|صلاة|صلاتان|صلوات|صلاة} في أيام سابقة مسجّلة', qadaAdd:'أضفها للقضاء', qadaHint:'عدّاد الصلوات المطلوب قضاؤها',
+    yearTitle:'السنة الأخيرة', yearStat:'{0|يوم|يومان|أيام|يومًا} نشطًا · أنشط شهر: {1}',
     shareTimes:'مشاركة المواقيت', sharedBy:'مواقيت الصلاة',
     exportShare:'تصدير مضغوط ومشاركة',
     weekPrayTitle:'صلواتك هذا الأسبوع', weekPrayLine:'سجّلت {0} من {1} صلاة ({2}%)', weekPrayWorst:'أكثر صلاة فاتتك: {0} ({1} مرات)', weekPrayAll:'ما فاتتك أي صلاة مسجّلة هذا الأسبوع', weekPrayNone:'سجّل صلواتك من قائمة المواقيت لتظهر الإحصائية هنا',
@@ -1454,7 +1474,7 @@ ar: {
     dgReqPerm:'طلب الإذن', dgReSW:'إعادة تسجيل الخدمة', dgReset:'إعادة ضبط إعدادات الإشعارات', dgResetSure:'اضغط مرة أخرى للتأكيد', dgResetDone:'تمت إعادة ضبط إعدادات الإشعارات',
     migTitle:'نقل بياناتك من النسخة القديمة', migSteps:'1) افتح النسخة القديمة (الملف المحلي) على نفس الهاتف.\n2) من الإعدادات، ثم البيانات، اضغط «تصدير الإعدادات».\n3) عد إلى هنا واضغط الزر التالي واختر الملف الذي حُفظ على هاتفك.', migPick:'اختيار ملف النسخة الاحتياطية',
     migCard:'هل لديك بيانات في النسخة القديمة؟ يمكنك نقلها بملف واحد.', migGo:'انقل بياناتي', migNo:'لا شكرًا',
-    libSecs:'{0} أقسام', libTopics:'{0} موضوعًا', libInGroup:'{0} أقسام في هذا الموضوع', sAbout:'عنا', aboutCreated:'تاريخ الإنشاء 2026', aboutRights:'جميع الحقوق محفوظة', updTitle:'تحديث جديد متاح', updNow:'تحديث الآن', updLater:'لاحقًا',
+    libSecs:'{0|قسم|قسمان|أقسام|قسمًا}', libTopics:'{0|موضوع|موضوعان|مواضيع|موضوعًا}', libInGroup:'{0|قسم|قسمان|أقسام|قسمًا} في هذا الموضوع', sAbout:'عنا', aboutCreated:'تاريخ الإنشاء 2026', aboutRights:'جميع الحقوق محفوظة', updTitle:'تحديث جديد متاح', updNow:'تحديث الآن', updLater:'لاحقًا',
     reportBtn:'نسخ تقرير المشكلة', reportDone:'تم نسخ التقرير. ألصقه في المحادثة',
     logRemindOn:'تذكير مسائي بتسجيل الصلوات', remLog:'هل سجّلت صلواتك اليوم؟ سجّلها من قائمة المواقيت',
     occRemindOn:'تنبيه قبل المناسبات الإسلامية', remOcc:'غدًا: {0}',
@@ -1464,15 +1484,15 @@ ar: {
     occNewYear:'رأس السنة الهجرية', occAshura:'تاسوعاء وعاشوراء', occRamStart:'بداية رمضان', occLast10:'العشر الأواخر', occEidFitr:'عيد الفطر', occFirst10:'العشر الأوائل من ذي الحجة', occArafa:'يوم عرفة', occEidAdha:'عيد الأضحى', occTashreeq:'أيام التشريق', occWhite:'الأيام البيض',
     zkTitle:'حاسبة الزكاة', zkCash:'النقود والمدخرات', zkGoldG:'الذهب الذي تملكه (جرام)', zkGoldP:'سعر جرام الذهب عيار 24', zkSilverG:'الفضة التي تملكها (جرام)', zkSilverP:'سعر جرام الفضة', zkTrade:'عروض التجارة', zkDebt:'الديون المستحقة عليك', zkBasis:'النصاب بحسب', zkGold85:'الذهب (85 جرامًا)', zkSilver595:'الفضة (595 جرامًا)',
     zkTotal:'إجمالي المال الزكوي', zkNisab:'قيمة النصاب', zkDue:'الزكاة الواجبة (2.5%)', zkBelow:'المال أقل من النصاب: لا زكاة عليك الآن', zkNeedPrice:'أدخل سعر الجرام لحساب النصاب', zkNote:'للاسترشاد فقط، ويشترط مرور الحول على المال. استفتِ أهل العلم في حالتك.',
-    toolQuran:'المصحف', qTitle:'المصحف الشريف', qSearchPh:'ابحث في القرآن أو اكتب اسم سورة', qContinue:'متابعة القراءة: {0} · آية {1}', qAyahs:'{0} آية', qBm:'العلامات', qNoData:'تعذّر تحميل ملف المصحف (نحو 1.4 م.ب). تأكد من اتصالك بالإنترنت ثم أعد المحاولة. بعد أول تحميل يعمل دون اتصال.', qHere:'واصل من هنا', qMark:'علامة', qCopy:'نسخ', qCopied:'تم النسخ', qSaved:'تم حفظ الموضع', qLog:'سجّل {0} في ورد اليوم', qLogged:'تمت إضافة {0} إلى ورد اليوم', qNoRes:'لا نتائج. جرّب كلمة أخرى (البحث يتجاهل التشكيل).', qRes:'{0} نتيجة', qResMore:'{0} نتيجة (أول 50)', qPrev:'السورة السابقة', qNext:'السورة التالية', qIndex:'الفهرس', qFontP:'تكبير الخط', qFontM:'تصغير الخط', qCredit:'نص القرآن: مشروع Tanzil (CC BY 3.0) · الخط: Amiri Quran (OFL)', qLoading:'جارٍ التحميل...',
-    navQuran:'المصحف', navTools:'أدوات', qStop:'وقفت هنا', qMem:'حفظت', qMemOff:'إلغاء الحفظ', qMemTo:'حفظت حتى هنا', qStopFrom:'علامة الوقوف: {0} · آية {1}', qMemSum:'المحفوظ: {0} آية من {1} ({2}٪)', qMemN:'حفظ {0}/{1}', qStopSaved:'تم وضع علامة الوقوف', qMemSaved:'تم تسجيل الحفظ', qMemSurah:'المحفوظ من السورة: {0}/{1}',
-    qPlanT:'خطة الختمة', qPlanNone:'لم تبدأ خطة بعد. اختر مدة الختمة ليحسب لك التطبيق ورد كل يوم.', qPlanStart:'ابدأ الخطة', qPlan30:'30 يومًا', qPlanRam:'شهر رمضان (30 يومًا)', qPlanCust:'مدة أخرى', qPlanDays:'عدد الأيام', qPlanFrom:'البداية من', qPlanFromStart:'أول المصحف', qPlanFromPos:'موضعي الحالي', qPlanDay:'اليوم {0} من {1}', qPlanToday:'ورد اليوم: {0} آية، من {1} آية {2} إلى {3} آية {4}', qPlanLeft:'المتبقي لإتمام ورد اليوم: {0} آية', qPlanDoneToday:'أتممت ورد اليوم', qPlanAhead:'أنت متقدم بـ {0} آية', qPlanBehind:'أنت متأخر بـ {0} آية', qPlanOn:'أنت على الجدول', qPlanRead:'اقرأ الآن', qPlanSync:'اعتبر قراءتي حتى موضعي الحالي', qPlanResched:'أعد توزيع المتبقي', qPlanDelete:'حذف الخطة', qPlanSoon:'تبدأ الخطة بعد {0} يوم', qPlanFin:'ما شاء الله، ختمت القرآن', qPlanOver:'انتهت مدة الخطة ويتبقى {0} آية', qPlanProg:'{0} من {1} آية ({2}٪)', qPlanCancel:'إلغاء', qPlanNote:'التقدم يُحسب من القراءة داخل التطبيق (تمرير الصفحة). إن قرأت من مصحف ورقي استخدم زر «اعتبر قراءتي حتى موضعي الحالي».',
-    qRevBtn:'مراجعة المحفوظ', qRevInfo:'{0} آية محفوظة', qRevHead:'{0}: آية {1} إلى {2}', qRevLast:'آخر مراجعة: قبل {0} يوم', qRevNever:'لم تُراجع من قبل', qRevToday:'روجعت اليوم', qRevShow:'اكشف', qRevHide:'أخفِ', qRevDone:'راجعتها', qRevSkip:'تخطي', qRevNone:'لا يوجد محفوظ بعد. علّم الآيات بزر «حفظت» أثناء القراءة.', qRevCnt:'راجعت اليوم {0} مقطعًا', qHideL:'الإخفاء: {0}', qHide0:'متوقف', qHide1:'جزئي', qHide2:'كامل',
+    toolQuran:'المصحف', qTitle:'المصحف الشريف', qSearchPh:'ابحث في القرآن أو اكتب اسم سورة', qContinue:'متابعة القراءة: {0} · آية {1}', qAyahs:'{0|آية|آيتان|آيات|آية}', qBm:'العلامات', qNoData:'تعذّر تحميل ملف المصحف (نحو 1.4 م.ب). تأكد من اتصالك بالإنترنت ثم أعد المحاولة. بعد أول تحميل يعمل دون اتصال.', qHere:'واصل من هنا', qMark:'علامة', qCopy:'نسخ', qCopied:'تم النسخ', qSaved:'تم حفظ الموضع', qLog:'سجّل {0} في ورد اليوم', qLogged:'تمت إضافة {0} إلى ورد اليوم', qNoRes:'لا نتائج. جرّب كلمة أخرى (البحث يتجاهل التشكيل).', qRes:'{0|نتيجة|نتيجتان|نتائج|نتيجة}', qResMore:'{0|نتيجة|نتيجتان|نتائج|نتيجة} (أول 50)', qPrev:'السورة السابقة', qNext:'السورة التالية', qIndex:'الفهرس', qFontP:'تكبير الخط', qFontM:'تصغير الخط', qCredit:'نص القرآن: مشروع Tanzil (CC BY 3.0) · الخط: Amiri Quran (OFL)', qLoading:'جارٍ التحميل…',
+    navQuran:'المصحف', navTools:'أدوات', qStop:'وقفت هنا', qMem:'حفظت', qMemOff:'إلغاء الحفظ', qMemTo:'حفظت حتى هنا', qStopFrom:'علامة الوقوف: {0} · آية {1}', qMemSum:'المحفوظ: {0|آية|آيتان|آيات|آية} من {1} ({2}٪)', qMemN:'حفظ {0}/{1}', qStopSaved:'تم وضع علامة الوقوف', qMemSaved:'تم تسجيل الحفظ', qMemSurah:'المحفوظ من السورة: {0}/{1}',
+    qPlanT:'خطة الختمة', qPlanNone:'لم تبدأ خطة بعد. اختر مدة الختمة ليحسب لك التطبيق ورد كل يوم.', qPlanStart:'ابدأ الخطة', qPlan30:'30 يومًا', qPlanRam:'شهر رمضان (30 يومًا)', qPlanCust:'مدة أخرى', qPlanDays:'عدد الأيام', qPlanFrom:'البداية من', qPlanFromStart:'أول المصحف', qPlanFromPos:'موضعي الحالي', qPlanDay:'اليوم {0} من {1}', qPlanToday:'ورد اليوم: {0} آية، من {1} آية {2} إلى {3} آية {4}', qPlanLeft:'المتبقي لإتمام ورد اليوم: {0|آية|آيتان|آيات|آية}', qPlanDoneToday:'أتممت ورد اليوم', qPlanAhead:'أنت متقدم بـ {0} آية', qPlanBehind:'أنت متأخر بـ {0} آية', qPlanOn:'أنت على الجدول', qPlanRead:'اقرأ الآن', qPlanSync:'اعتبر قراءتي حتى موضعي الحالي', qPlanResched:'أعد توزيع المتبقي', qPlanDelete:'حذف الخطة', qPlanSoon:'تبدأ الخطة بعد {0|يوم|يومين|أيام|يومًا}', qPlanFin:'ما شاء الله، ختمت القرآن', qPlanOver:'انتهت مدة الخطة ويتبقى {0} آية', qPlanProg:'{0} من {1} آية ({2}٪)', qPlanCancel:'إلغاء', qPlanNote:'التقدم يُحسب من القراءة داخل التطبيق (تمرير الصفحة). إن قرأت من مصحف ورقي استخدم زر «اعتبر قراءتي حتى موضعي الحالي».',
+    qRevBtn:'مراجعة المحفوظ', qRevInfo:'{0} آية محفوظة', qRevHead:'{0}: آية {1} إلى {2}', qRevLast:'آخر مراجعة: قبل {0|يوم|يومين|أيام|يومًا}', qRevNever:'لم تُراجع من قبل', qRevToday:'روجعت اليوم', qRevShow:'اكشف', qRevHide:'أخفِ', qRevDone:'راجعتها', qRevSkip:'تخطي', qRevNone:'لا يوجد محفوظ بعد. علّم الآيات بزر «حفظت» أثناء القراءة.', qRevCnt:'راجعت اليوم {0|مقطعًا واحدًا|مقطعين|مقاطع|مقطعًا}', qHideL:'الإخفاء: {0}', qHide0:'متوقف', qHide1:'جزئي', qHide2:'كامل',
     qJuz:'الأجزاء', qJuzN:'الجزء {0}', qHizbN:'الحزب {0}', qPageN:'صفحة {0}', qGoPage:'اذهب إلى صفحة', qGoPh:'صفحة، أو سورة:آية (2:255)', qAuto:'احسب ورد اليوم تلقائيًا من القراءة', qPlanPages:'تقريبًا من صفحة {0} إلى صفحة {1}', qMemToS:'حتى هنا', qSajda:'سجدة تلاوة', qClose:'إغلاق',
     khRemOn:'تذكير ورد اليوم من خطة الختمة', remKh:'ورد اليوم من الختمة: {0} آية، من {1} آية {2} إلى {3} آية {4}', fabBack:'رجوع', exitAgain:'اضغط رجوع مرة أخرى للخروج', qExport:'تصدير المحفوظ والمراجعات', qImport:'استيراد ملف', qBakTitle:'نسخة المحفوظ والمراجعات', qBakNote:'ملف JSON منفصل. الاستيراد يدمج مع ما لديك ولا يمسح شيئًا.', qImpOk:'تم الاستيراد', qImpBad:'الملف غير صالح',
     grpExtra:'تذكيرات إضافية', grpKhatma:'ختمة القرآن', qOpts:'خيارات القراءة', qOptFont:'حجم الخط الافتراضي', qOptDark:'وضع القراءة الليلي', qOptAwake:'إبقاء الشاشة مضيئة أثناء القراءة', dgPerfLoad:'زمن تحميل الصفحة', dgPerfFirst:'أول عرض للمواقيت', dgPerfQ:'تحميل ملف المصحف', dgPerfQNo:'لم يُفتح بعد', dgErrN:'أخطاء مسجّلة', dgStore:'حجم بيانات التطبيق', dgMem:'ذاكرة JavaScript', dgClrErr:'مسح سجل الأخطاء', dgMs:'{0} مللي ثانية', dgKB:'{0} ك.ب', dgMB:'{0} م.ب', dgPerfT:'الأداء على هذا الجهاز',
-    qShareImg:'مشاركة الآية كصورة', qStatT:'إحصائية القراءة', qStatWeek:'صفحات هذا الأسبوع: {0}', qStatStreak:'أيام متتالية: {0}', qStatBest:'أفضل يوم: {0} صفحة', qStatMonth:'آخر 30 يومًا: {0} صفحة', qStatNone:'ابدأ القراءة وستظهر إحصائيتك هنا.', dgPersist:'حماية البيانات من المسح التلقائي', dgPersistBtn:'طلب حماية البيانات', wnTitle:'جديد في هذا الإصدار', wnOk:'حسنًا', wn1:'الوضع المبسط: واجهة أهدأ تُظهر الأساسيات فقط، ويمكن إيقافه من الإعدادات ثم عام لإظهار كل المميزات.', wn2:'الإعدادات صارت قائمة واضحة بأقسام كبيرة، والسنن والأدوات في زر «المزيد» أعلاها.', wn3:'رمز لكل صلاة، وتعتيم للصلوات المنتهية، وتتحول حلقة العدّ إلى البرتقالي في آخر 15 دقيقة.', wn4:'في الأذكار: حلقة تقدّم حول كل عدّاد، وكل ذكر منفصل بعدده الصحيح، وزر «تخطي» لما يُقال مئة مرة.', wn5:'شريط مصغّر بالعدّ التنازلي يظهر عند النزول في شاشة المواقيت، وسحب أفقي للتنقل بين أقسام الأذكار.',
-    dgOfT:'جاهزية العمل بدون إنترنت', dgOfApp:'التطبيق', dgOfQ:'ملف المصحف', dgOfF:'خط المصحف', dgOfIc:'الأيقونات', dgOfSaved:'محفوظ في الجهاز ({0})', dgOfMiss:'غير محفوظ', dgOfNone:'غير مدعوم هنا (يلزم https أو تثبيت التطبيق)', dgOfBtn:'حمّل الآن', dgOfBusy:'جارٍ التحميل...', dgOfDone:'اكتمل التحميل', qBmT:'العلامات', qBmN:'العلامات · {0}', qBmNone:'لا توجد علامات بعد. اضغط على أي آية ثم «علامة».', qBmDel:'حذف العلامة', qMapT:'خريطة الأجزاء', qMapSum:'{0} من 604 صفحة', dailyAyah:'اضغط لفتح الآية في المصحف',
+    qShareImg:'مشاركة الآية كصورة', qStatT:'إحصائية القراءة', qStatWeek:'صفحات هذا الأسبوع: {0}', qStatStreak:'أيام متتالية: {0}', qStatBest:'أفضل يوم: {0|صفحة|صفحتان|صفحات|صفحة}', qStatMonth:'آخر 30 يومًا: {0|صفحة|صفحتان|صفحات|صفحة}', qStatNone:'ابدأ القراءة وستظهر إحصائيتك هنا.', dgPersist:'حماية البيانات من المسح التلقائي', dgPersistBtn:'طلب حماية البيانات', wnTitle:'جديد في هذا الإصدار', wnOk:'حسنًا', wn1:'الوضع المبسط: واجهة أهدأ تُظهر الأساسيات فقط، ويمكن إيقافه من الإعدادات ثم عام لإظهار كل المميزات.', wn2:'الإعدادات صارت قائمة واضحة بأقسام كبيرة، والسنن والأدوات في زر «المزيد» أعلاها.', wn3:'رمز لكل صلاة، وتعتيم للصلوات المنتهية، وتتحول حلقة العدّ إلى البرتقالي في آخر 15 دقيقة.', wn4:'في الأذكار: حلقة تقدّم حول كل عدّاد، وكل ذكر منفصل بعدده الصحيح، وزر «تخطي» لما يُقال مئة مرة.', wn5:'شريط مصغّر بالعدّ التنازلي يظهر عند النزول في شاشة المواقيت، وسحب أفقي للتنقل بين أقسام الأذكار.',
+    dgOfT:'جاهزية العمل بدون إنترنت', dgOfApp:'التطبيق', dgOfQ:'ملف المصحف', dgOfF:'خط المصحف', dgOfIc:'الأيقونات', dgOfSaved:'محفوظ في الجهاز ({0})', dgOfMiss:'غير محفوظ', dgOfNone:'غير مدعوم هنا (يلزم https أو تثبيت التطبيق)', dgOfBtn:'حمّل الآن', dgOfBusy:'جارٍ التحميل…', dgOfDone:'اكتمل التحميل', qBmT:'العلامات', qBmN:'العلامات · {0}', qBmNone:'لا توجد علامات بعد. اضغط على أي آية ثم «علامة».', qBmDel:'حذف العلامة', qMapT:'خريطة الأجزاء', qMapSum:'{0} من 604 صفحة', dailyAyah:'اضغط لفتح الآية في المصحف',
     qMapHint:'ضغطة مطولة على مربع الجزء تعلّمه كمقروء أو تلغيه.', qMapMarked:'تم تعليم الجزء {0} كمقروء', qMapCleared:'تم إلغاء تعليم الجزء {0}',
     qBmSearch:'ابحث في العلامات', qNone2:'لا توجد نتائج', qMemListBtn:'قائمة المحفوظ', qMemT:'المحفوظ', qMemNone:'لا يوجد محفوظ بعد. علّم الآيات من قائمة الآية داخل المصحف.', qMemSearch:'ابحث باسم السورة', qStatShare:'نسخ الإحصائية كصورة', qStatImgT:'إحصائية القراءة', qJuzWord:'الأجزاء المقروءة',
        
@@ -1492,8 +1512,8 @@ ar: {
     sunanWeekBtn:'نسخ ملخص الأسبوع كصورة', sunanWeekT:'سنن هذا الأسبوع', sunanWeekNone:'لا توجد سنن مسجّلة هذا الأسبوع', sunanWeekTot:'مجموع ما طبّقته: {0}', sunanWeekDays:'أيام المواظبة: {0} من 7', sunanWeekTop:'أكثر المجالات مواظبة: {0}',
     curLeft:'الصلاة الحالية: {0} · يتبقى على خروج وقتها {1}', curMin:'{0} د', curHM:'{0} س و{1} د', prPin:'تثبيت في أعلى القائمة', prUnpin:'إلغاء التثبيت',
     sunanFavG:'سنني المفضلة', sunanFav:'إضافة إلى المفضلة', sunanUnfav:'إزالة من المفضلة', sunanRemT:'تذكير بسنة', sunanRemTime:'وقت التذكير اليومي', sunanRemSave:'حفظ التذكير', sunanRemDel:'حذف التذكير', sunanRemBell:'ضبط تذكير', sunanRemOk:'سيصلك التذكير يوميًا عند {0}', remSunan:'تذكير بسنة: {0}', sod:'سنة اليوم', sodDo:'طبّقتها', sodDone:'طُبّقت اليوم', qFontSl:'حجم الخط',
-    sunanStreak:'أيام متتالية: {0}', sunanPresBtn:'مجموعات تذكير جاهزة', sunanPresT:'مجموعات التذكير', sunanPresOk:'ضُبطت {0} تذكيرات', sunanPresClr:'حذف جميع تذكيرات السنن', sunanPresNone:'لا توجد تذكيرات للحذف.', spJum:'سنن يوم الجمعة', spSleep:'سنن النوم والاستيقاظ', spNaf:'صلاة التطوع', spFast:'صيام الاثنين والخميس', sunanNoteBtn:'ملاحظة', sunanNoteT:'ملاحظتي على السنة', sunanNotePh:'اكتب ملاحظتك هنا', sunanNoteSave:'حفظ الملاحظة', sunanNoteDel:'حذف الملاحظة', revRemOn:'تذكير بمراجعة المحفوظ', revRemSub:'ينبّهك عند مرور سبعة أيام أو أكثر على آخر مراجعة لسورة محفوظة', remRev:'حان وقت مراجعة سورة {0}: {1}', remRevNever:'لم تراجعها بعد', remRevDays:'مضى {0} يومًا على آخر مراجعة',
-    bakNewer:'هذه النسخة أحدث من إصدار التطبيق. حدّث التطبيق أولًا ثم أعد المحاولة.', bakIdb:'نسخة المتصفح', bakFoundT:'عُثر على نسخة احتياطية', bakFoundB:'عُثر على نسخة محفوظة في المتصفح بتاريخ {0}. هل تريد استعادتها؟', bakFoundYes:'استعادة النسخة', bakFoundNo:'تجاهل', gsBtn:'بحث شامل', gsPh:'ابحث في الأذكار والسنن والسور والإعدادات', gsAdhkar:'الأذكار', gsQuran:'القرآن', gsSunan:'السنن', gsSet:'الإعدادات', gsSurah:'سورة {0}', gsNone:'لا توجد نتائج مطابقة.', tdBtn:'ملخص اليوم', tdMissed:'ما فاتك من الصلوات', tdNoMiss:'لا شيء فاتك', tdWirdP:'المقروء اليوم: {0} صفحة', tdAdhkar:'أذكار اليوم', tdMor:'الصباح', tdEve:'المساء', tdDone:'تم', tdNot:'لم يتم', logNow:'سجّلتُ صلاة {0}', hintOk:'فهمت', hintOff:'إخفاء التلميحات', hint_adhkar:'تنقّل بين الأذكار من الأعلى، واضغط على الذكر لعدّه، وبالنجمة تضيفه إلى المفضلة.', hint_quran:'اختر سورة من الفهرس، واضغط على آية لتظهر أدواتها، ويُحفظ موضع قراءتك تلقائيًا.', hint_sunan:'اضغط العلامة لتسجيل ما طبّقته اليوم، والنجمة للمفضلة، والجرس لضبط تذكير.', hint_tools:'تجد هنا البحث الشامل وملخص اليوم وأدوات الإمساكية والتقويم والزكاة.',
+    sunanStreak:'أيام متتالية: {0}', sunanPresBtn:'مجموعات تذكير جاهزة', sunanPresT:'مجموعات التذكير', sunanPresOk:'عدد التذكيرات المضبوطة: {0}', sunanPresClr:'حذف جميع تذكيرات السنن', sunanPresNone:'لا توجد تذكيرات للحذف.', spJum:'سنن يوم الجمعة', spSleep:'سنن النوم والاستيقاظ', spNaf:'صلاة التطوع', spFast:'صيام الاثنين والخميس', sunanNoteBtn:'ملاحظة', sunanNoteT:'ملاحظتي على السنة', sunanNotePh:'اكتب ملاحظتك هنا', sunanNoteSave:'حفظ الملاحظة', sunanNoteDel:'حذف الملاحظة', revRemOn:'تذكير بمراجعة المحفوظ', revRemSub:'ينبّهك عند مرور سبعة أيام أو أكثر على آخر مراجعة لسورة محفوظة', remRev:'حان وقت مراجعة سورة {0}: {1}', remRevNever:'لم تراجعها بعد', remRevDays:'مضى {0|يوم|يومان|أيام|يومًا} على آخر مراجعة',
+    bakNewer:'هذه النسخة أحدث من إصدار التطبيق. حدّث التطبيق أولًا ثم أعد المحاولة.', bakIdb:'نسخة المتصفح', bakFoundT:'عُثر على نسخة احتياطية', bakFoundB:'عُثر على نسخة محفوظة في المتصفح بتاريخ {0}. هل تريد استعادتها؟', bakFoundYes:'استعادة النسخة', bakFoundNo:'تجاهل', gsBtn:'بحث شامل', gsPh:'ابحث في الأذكار والسنن والسور والإعدادات', gsAdhkar:'الأذكار', gsQuran:'القرآن', gsSunan:'السنن', gsSet:'الإعدادات', gsSurah:'سورة {0}', gsNone:'لا توجد نتائج مطابقة.', tdBtn:'ملخص اليوم', tdMissed:'ما فاتك من الصلوات', tdNoMiss:'لا شيء فاتك', tdWirdP:'المقروء اليوم: {0|صفحة|صفحتان|صفحات|صفحة}', tdAdhkar:'أذكار اليوم', tdMor:'الصباح', tdEve:'المساء', tdDone:'تم', tdNot:'لم يتم', logNow:'سجّلتُ صلاة {0}', hintOk:'فهمت', hintOff:'إخفاء التلميحات', hint_adhkar:'تنقّل بين الأذكار من الأعلى، واضغط على الذكر لعدّه، وبالنجمة تضيفه إلى المفضلة.', hint_quran:'اختر سورة من الفهرس، واضغط على آية لتظهر أدواتها، ويُحفظ موضع قراءتك تلقائيًا.', hint_sunan:'اضغط العلامة لتسجيل ما طبّقته اليوم، والنجمة للمفضلة، والجرس لضبط تذكير.', hint_tools:'تجد هنا البحث الشامل وملخص اليوم وأدوات الإمساكية والتقويم والزكاة.',
     dgOfTaf:'ملف التفسير', dgBakRow:'آخر نسخة خارجية', dgBakNever:'لم تُصدَّر نسخة بعد', dgBakOld:'{0} (مضى أكثر من 30 يومًا)',
     skipBtn:'تخطي', skipAria:'تخطي هذا الذكر واعتباره مكتملًا', dupNote:'ورد هذا الذكر بعدد آخر (مئة مرة) في الذكر التالي، وهما روايتان مختلفتان.',
     moreTitle:'المزيد', simpleOn:'الوضع المبسط', simpleNote:'يعرض الأساسيات فقط ويُخفي المميزات الإضافية. أوقفه لإظهار كل شيء.',
@@ -1520,7 +1540,7 @@ ar: {
     adhOrderS:'الترتيب: الأقصر أولًا',
     adhOrderL:'الترتيب: غير المكتمل أولًا',
     shareDhikr:'مشاركة الذكر',
-    shareN:'{0} مرات',
+    shareN:'{0|مرة|مرتان|مرات|مرة}',
     shareCopied:'نُسخ الذكر',
     adhDot:'أذكار لم تكتمل',
     lqSleep:'عند النوم',
@@ -1546,6 +1566,49 @@ ar: {
     fixNeedNet:'يحتاج الإصلاح إلى اتصال بالإنترنت',
     srCd:'بقي {0} على {1}',
     th_contrast:'تباين عالٍ',
+    qaSleep:'أذكار النوم',
+    qaWake:'أذكار الاستيقاظ',
+    quickAdhOpt:'زر أذكار النوم والاستيقاظ السريع',
+    qaClose:'إخفاء',
+    tdOpen:'ورد اليوم',
+    tdTitle:'ورد اليوم',
+    tdPrayers:'الصلوات',
+    tdMorning:'أذكار الصباح',
+    tdEvening:'أذكار المساء',
+    tdOpenBtn:'افتح',
+    tdWird:'ورد القرآن',
+    tdWirdLine:'{0} من {1}',
+    tdNoGoal:'لم تحدد هدفًا بعد',
+    tdAll:'المنجز اليوم: {0} من {1}',
+    tdLeft:'بقي {0}',
+    ddTitle:'ذكر اليوم',
+    qcOpen:'احسب الفوائت',
+    qcTitle:'حساب الفوائت',
+    qcFrom:'بداية الانقطاع',
+    qcTo:'نهاية الانقطاع (اليوم افتراضيًا)',
+    qcRes:'عدد الأيام: {0}، فيكون القضاء {1} لكل صلاة، والمجموع {2} صلاة.',
+    qcSet:'اعتمد المجموع',
+    qcAdd:'أضفه إلى العدّاد',
+    qcBad:'تحقق من التاريخين',
+    qcDone:'حُدّث عدّاد القضاء',
+    rpOpen:'الحفظ بالتكرار',
+    rpTitle:'الحفظ بالتكرار',
+    rpNote:'اختر آيات (حتى 15) وعدد التكرار، ثم اقرأها بصوتك وتُخفى كلماتها تدريجيًا مع كل تكرار حتى تتلوها من حفظك.',
+    rpSurah:'السورة',
+    rpFrom:'من الآية',
+    rpTo:'إلى الآية',
+    rpReps:'عدد التكرار',
+    rpStart:'ابدأ',
+    rpBad:'تحقق من أرقام الآيات (الحد الأقصى 15 آية)',
+    rpCount:'التكرار {0} من {1}',
+    rpDo:'كرّرت',
+    rpPeek:'إظهار النص',
+    rpAgain:'من جديد',
+    rpDone:'أتممت التكرار. اقرأ الآيات من حفظك ثم تحقق منها',
+    rpSave:'اعتمدها محفوظة',
+    rpSaved:'أُضيفت إلى المحفوظ',
+    qTafSearch:'بحث في التفسير',
+    qTafRes:'نتائج في التفسير: {0}',
     afterOpen:'فتح الأذكار', afterHide:'إخفاء',
     backupOn:'تذكير أسبوعي بالنسخة الاحتياطية', backupTitle:'مرّ أسبوع على آخر نسخة احتياطية', backupNow:'تصدير الآن', backupLater:'لاحقًا',
     readOpts:'خيارات القراءة', fontFace:'خط الأذكار', ffDefault:'الافتراضي', ffNaskh:'نسخ', ffThuluth:'ثلث / رقعة', fontNote:'يظهر حسب الخطوط المتاحة على جهازك',
@@ -1565,13 +1628,13 @@ ar: {
     adjM2:'يومان للخلف', adjM1:'يوم للخلف', adj0:'بدون تعديل', adjP1:'يوم للأمام', adjP2:'يومان للأمام',
     tuneLabel:'ضبط دقيق لكل صلاة (بالدقائق)', tuneReset:'تصفير الضبط',
     calcNote:'تُحسب المواقيت فلكيًا من خط العرض والطول على جهازك، لذا تعمل بدون إنترنت في أي يوم. قد تختلف دقيقة أو دقيقتين عن التقويم الرسمي أو مسجدك، وعندها استخدم الضبط الدقيق.',
-    gpsWait:'جارٍ تحديد موقعك...', gpsOk:'تم تحديد موقعك وحفظه على الجهاز',
+    gpsWait:'جارٍ تحديد موقعك…', gpsOk:'تم تحديد موقعك وحفظه على الجهاز',
     gpsDenied:'تم رفض إذن الموقع', gpsFail:'تعذّر تحديد الموقع (يحتاج https أو تطبيق على الجهاز)', gpsNone:'المتصفح لا يدعم تحديد الموقع',
     notifyOn:'تنبيه عند دخول وقت الصلاة', soundOn:'صوت التنبيه', preLabel:'تنبيه قبل الصلاة',
     preOff:'بدون', pre10:'قبل 10 دقائق', pre15:'قبل 15 دقيقة', testAlert:'تجربة التنبيه',
     alertNote:'تعمل التنبيهات ما دامت الصفحة مفتوحة (حتى في الخلفية)، لكن قد يوقفها المتصفح إذا أُقفل الهاتف أو أُغلقت الصفحة.',
     notifyEnabled:'تم تفعيل التنبيه', notifyBlocked:'الإشعارات محظورة من المتصفح، وسيعمل الصوت والتنبيه داخل الصفحة فقط',
-    nowMsg:'حان الآن موعد صلاة {0}', preMsg:'تبقّى {0} دقيقة على صلاة {1}', testMsg:'هذا تنبيه تجريبي', notifTitle:'مواقيت الصلاة',
+    nowMsg:'حان الآن موعد صلاة {0}', preMsg:'تبقّى {0|دقيقة|دقيقتان|دقائق|دقيقة} على صلاة {1}', testMsg:'هذا تنبيه تجريبي', notifTitle:'مواقيت الصلاة',
     themes:'الثيمات', customTheme:'ثيمة خاصة', themeName:'اسم الثيمة', themeNamePh:'مثال: ثيمتي الزرقاء',
     saveAs:'حفظ باسم', resetDark:'رجوع للداكن',
     themeNote:'تظهر تغييرات الألوان فورًا. اضغط «حفظ باسم» لتحتفظ بالثيمة وتعود إليه من القائمة أعلاه.',
@@ -1726,6 +1789,49 @@ en: {
     fixNeedNet:'Repair needs an internet connection',
     srCd:'{0} left until {1}',
     th_contrast:'High contrast',
+    qaSleep:'Bedtime adhkar',
+    qaWake:'Waking adhkar',
+    quickAdhOpt:'Quick bedtime and waking adhkar button',
+    qaClose:'Hide',
+    tdOpen:'Today\'s checklist',
+    tdTitle:'Today\'s checklist',
+    tdPrayers:'Prayers',
+    tdMorning:'Morning adhkar',
+    tdEvening:'Evening adhkar',
+    tdOpenBtn:'Open',
+    tdWird:'Quran portion',
+    tdWirdLine:'{0} of {1}',
+    tdNoGoal:'No goal set yet',
+    tdAll:'Done today: {0} of {1}',
+    tdLeft:'{0} left',
+    ddTitle:'Dhikr of the day',
+    qcOpen:'Calculate missed prayers',
+    qcTitle:'Missed prayers calculator',
+    qcFrom:'Start of the gap',
+    qcTo:'End of the gap (today by default)',
+    qcRes:'Days: {0}. That is {1} to make up for each prayer, {2} prayers in total.',
+    qcSet:'Set this total',
+    qcAdd:'Add to the counter',
+    qcBad:'Check the two dates',
+    qcDone:'Qada counter updated',
+    rpOpen:'Memorize by repetition',
+    rpTitle:'Memorize by repetition',
+    rpNote:'Pick up to 15 ayahs and a repeat count, then recite aloud. Words are hidden gradually with each repetition until you recite from memory.',
+    rpSurah:'Surah',
+    rpFrom:'From ayah',
+    rpTo:'To ayah',
+    rpReps:'Repetitions',
+    rpStart:'Start',
+    rpBad:'Check the ayah numbers (15 ayahs at most)',
+    rpCount:'Repetition {0} of {1}',
+    rpDo:'Repeated',
+    rpPeek:'Show text',
+    rpAgain:'Restart',
+    rpDone:'Repetitions finished. Recite from memory, then check',
+    rpSave:'Mark as memorized',
+    rpSaved:'Added to memorized',
+    qTafSearch:'Search tafsir',
+    qTafRes:'Tafsir results: {0}',
     afterOpen:'Open adhkar', afterHide:'Hide',
     backupOn:'Weekly backup reminder', backupTitle:'It has been a week since your last backup', backupNow:'Export now', backupLater:'Later',
     readOpts:'Reading options', fontFace:'Adhkar font', ffDefault:'Default', ffNaskh:'Naskh', ffThuluth:'Thuluth / Ruqaa', fontNote:'Shown using the fonts available on your device',
@@ -1835,7 +1941,7 @@ const SCHEMA = 3;
         store.set('pt-schema', SCHEMA);
     } catch (e) {}
 })();
-const APP_VER = '2026.11.14-1';
+const APP_VER = '2026.11.14-2';
 function repairBar() {
     try {
         if (document.getElementById('fix-bar') || sessionStorage.getItem('pt-fixno')) return;
@@ -1865,7 +1971,7 @@ const FIRST_RUN = (() => { try { return localStorage.getItem('pt-settings') === 
 const DEFAULTS = {
     cityId:'cairo', method:5, asr:1, hijriAdj:0, notify:false, sound:true, h24:false,
     gps:null, theme:'dark', customThemes:[], draft:null, tab:'times', sec:'loc',
-    lang:'ar', preAlert:0, fullscreen:true, anim:true, pinPrayer:'', adhkarAuto:true, friRemind:true, tasbihPhrase:'ph_sub', tasbihTarget:33, fontScale:1, comfy:false, adhOrder:'n', autoNext:true, hideDone:false, vibTarget:'double', vibTap:true, keepAwake:false, adhkarRemind:false, sndPrayers:{ Fajr:'default', Dhuhr:'default', Asr:'default', Maghrib:'default', Isha:'default' }, weeklyGoal:0, monthGoal:0, wirdUnit:'page', wirdGoal:0, dndFri:false, dndFriFrom:'23:00', dndFriTo:'08:00', sndPrayer:'rise', sndAdhkar:'chime', sndWird:'soft', sndGoal:'triple', hiddenTabs:[], onboarded:false, oneHand:false, wirdRemind:false, wirdTime:'21:00', dnd:false, dndFrom:'23:00', dndTo:'05:00', dndPrayer:true, remindDelay:20, sleepDelay:60, afterDelay:5, afterCard:true, backupRemind:true, backupAt:0, backupSnooze:0, endAlert:0, logRemind:false, occRemind:false, qDark:false, qAwake:false, khRemind:false, khTime:'20:00', nightAuto:true, nawRemind:false, nawCard:true, hifz:0, fontFace:'default', remindSleep:false, remindWake:false, remindAfter:false, readDark:false,
+    lang:'ar', preAlert:0, fullscreen:true, anim:true, pinPrayer:'', adhkarAuto:true, friRemind:true, tasbihPhrase:'ph_sub', tasbihTarget:33, fontScale:1, comfy:false, adhOrder:'n', quickAdh:true, autoNext:true, hideDone:false, vibTarget:'double', vibTap:true, keepAwake:false, adhkarRemind:false, sndPrayers:{ Fajr:'default', Dhuhr:'default', Asr:'default', Maghrib:'default', Isha:'default' }, weeklyGoal:0, monthGoal:0, wirdUnit:'page', wirdGoal:0, dndFri:false, dndFriFrom:'23:00', dndFriTo:'08:00', sndPrayer:'rise', sndAdhkar:'chime', sndWird:'soft', sndGoal:'triple', hiddenTabs:[], onboarded:false, oneHand:false, wirdRemind:false, wirdTime:'21:00', dnd:false, dndFrom:'23:00', dndTo:'05:00', dndPrayer:true, remindDelay:20, sleepDelay:60, afterDelay:5, afterCard:true, backupRemind:true, backupAt:0, backupSnooze:0, endAlert:0, logRemind:false, occRemind:false, qDark:false, qAwake:false, khRemind:false, khTime:'20:00', nightAuto:true, nawRemind:false, nawCard:true, hifz:0, fontFace:'default', remindSleep:false, remindWake:false, remindAfter:false, readDark:false,
     tune:{ Fajr:0, Sunrise:0, Dhuhr:0, Asr:0, Maghrib:0, Isha:0 }
 };
 let settings = Object.assign({}, DEFAULTS, store.get('pt-settings', {}));
@@ -1913,6 +2019,8 @@ function t(k) {
     let s = d[k] !== undefined ? d[k] : I18N.ar[k];
     if (typeof s === 'string') {
         const args = arguments;
+        // صيغة الجمع العربية: {0|مفرد|مثنى|جمع قلة|تمييز} فيُكتب المفرد والمثنى بلا رقم
+        s = s.replace(/\{(\d+)\|([^|}]*)\|([^|}]*)\|([^|}]*)\|([^|}]*)\}/g, (m, i, a1, a2, a3, a4) => { const n = Number(args[+i + 1]); if (!Number.isFinite(n)) return (args[+i + 1] !== undefined ? args[+i + 1] + ' ' + a4 : m); return n === 1 ? a1 : n === 2 ? a2 : n + ' ' + (n >= 3 && n <= 10 ? a3 : a4); });
         s = s.replace(/\{(\d+)\}/g, (m, i) => (args[+i + 1] !== undefined ? args[+i + 1] : m));
     }
     return s;
@@ -2874,6 +2982,57 @@ function qRanges(arr) {
     while (i < a.length) { let j = i; while (j + 1 < a.length && a[j + 1] === a[j] + 1) j++; out.push(i === j ? qNum(a[i]) : qNum(a[i]) + '-' + qNum(a[j])); i = j + 1; }
     return out.join('، ');
 }
+let qTafTok = 0, TAFN = null;
+function qTafSearch(q, resBox, b, d) {
+    const tok = ++qTafTok, h = document.createElement('h3'); h.className = 'grp'; h.textContent = t('qTafLoad'); resBox.appendChild(h);
+    loadTafsir().then(arr => {
+        if (tok !== qTafTok) return;
+        if (!TAFN) TAFN = arr.map(x => qNorm(x || ''));
+        const out = []; let total = 0;
+        for (let g = 0; g < 6236; g++) if (TAFN[g].includes(q)) { total++; if (out.length < 40) out.push(g); }
+        resBox.innerHTML = '';
+        const h2 = document.createElement('h3'); h2.className = 'grp'; h2.textContent = total ? t('qTafRes', total) : t('qNoRes'); resBox.appendChild(h2);
+        out.forEach(g => { const [s, a] = qLoc(g + 1), r2 = qBtn('q-res', null, null, () => qSurah(b, d, s, a));
+            r2.innerHTML = '<small></small><span></span>'; r2.firstChild.textContent = surName(s) + ' · ' + a; r2.lastChild.textContent = arr[g].slice(0, 160); resBox.appendChild(r2); });
+    }).catch(() => { if (tok === qTafTok) { resBox.innerHTML = ''; const e = document.createElement('p'); e.className = 'muted'; e.textContent = t('qNoData'); resBox.appendChild(e); } });
+}
+function qRepeat(b, d) {
+    qCur = 0; b.innerHTML = '';
+    b.appendChild(qBtn('ibtn q-back', 'arrow-right', t('qIndex'), () => qIndex(b, d)));
+    const h = document.createElement('h3'); h.textContent = t('rpTitle'); h.style.marginTop = '.8rem'; b.appendChild(h);
+    const p = document.createElement('p'); p.className = 'muted small'; p.textContent = t('rpNote'); b.appendChild(p);
+    const fld = (lab, el) => { const f = document.createElement('div'); f.className = 'field'; const l = document.createElement('label'); l.textContent = lab; l.htmlFor = el.id = 'rp-' + Math.random().toString(36).slice(2, 6); f.append(l, el); b.appendChild(f); return el; };
+    const ss = document.createElement('select'); for (let n = 1; n <= 114; n++) { const o = document.createElement('option'); o.value = n; o.textContent = n + '. ' + surName(n); ss.appendChild(o); }
+    const pos = qPos(); ss.value = String(pos && d[pos.s - 1] ? pos.s : 1);
+    const mkN = v => { const i = document.createElement('input'); i.type = 'number'; i.min = 1; i.value = v; return i; };
+    const a1 = mkN(1), a2 = mkN(3), rs = document.createElement('select'); [5, 10, 20, 33].forEach(n => { const o = document.createElement('option'); o.value = n; o.textContent = n; rs.appendChild(o); }); rs.value = '10';
+    fld(t('rpSurah'), ss); fld(t('rpFrom'), a1); fld(t('rpTo'), a2); fld(t('rpReps'), rs);
+    b.appendChild(qBtn('btn-accent btn-block', null, t('rpStart'), () => {
+        const s = +ss.value, x = Math.round(+a1.value), y = Math.round(+a2.value), L = d[s - 1].length;
+        if (!(x >= 1 && y >= x && y <= L && y - x <= 14)) { toast(t('rpBad')); return; }
+        qRunRepeat(b, d, s, x, y, +rs.value);
+    }));
+    qTop();
+}
+function qRunRepeat(b, d, s, x, y, N) {
+    qCur = 0; b.innerHTML = '';
+    b.appendChild(qBtn('ibtn q-back', 'arrow-right', t('rpTitle'), () => qRepeat(b, d)));
+    const h = document.createElement('h3'); h.style.marginTop = '.8rem'; h.textContent = surName(s) + ' · ' + x + (y > x ? '-' + y : ''); b.appendChild(h);
+    const box = document.createElement('div'); box.className = 'q-rp'; box.dir = 'rtl'; box.lang = 'ar'; b.appendChild(box);
+    const words = [];
+    for (let a = x; a <= y; a++) d[s - 1][a - 1].split(' ').forEach(w => { const e = document.createElement('span'); e.className = 'rw'; e.textContent = w; if (words.length) box.appendChild(document.createTextNode(' ')); box.appendChild(e); words.push(e); });
+    let seed = (s * 1000 + x) >>> 0; const rnd = () => { seed = (seed + 0x6D2B79F5) >>> 0; let z = seed; z = Math.imul(z ^ (z >>> 15), z | 1); z ^= z + Math.imul(z ^ (z >>> 7), z | 61); return ((z ^ (z >>> 14)) >>> 0) / 4294967296; };
+    const order = words.map((_, i) => i); for (let i = order.length - 1; i > 0; i--) { const j = Math.floor(rnd() * (i + 1)); [order[i], order[j]] = [order[j], order[i]]; }
+    let rep = 0; const cnt = document.createElement('div'); cnt.className = 'rp-n'; b.appendChild(cnt);
+    const save = qBtn('ibtn q-cont', 'check', t('rpSave'), () => { const all = qMemAll(), set = new Set(all[s] || []); for (let a = x; a <= y; a++) set.add(a); all[s] = [...set].sort((u, v) => u - v); store.set('pt-qmem', all); toast(t('rpSaved')); save.hidden = true; });
+    const upd = () => { const hn = Math.round(words.length * rep / N), hs = new Set(order.slice(0, hn)); words.forEach((e, i) => e.classList.toggle('hid', hs.has(i))); cnt.textContent = t('rpCount', rep, N); save.hidden = rep < N; };
+    const row = document.createElement('div'); row.className = 'grid2';
+    row.appendChild(qBtn('btn-accent', null, t('rpDo'), () => { if (rep < N) { rep++; tapVib(12); upd(); if (rep === N) toast(t('rpDone')); } }));
+    const pk = qBtn('', null, t('rpPeek'), () => { box.classList.toggle('peek'); pk.setAttribute('aria-pressed', box.classList.contains('peek')); });
+    row.appendChild(pk); b.appendChild(row);
+    const ag = qBtn('btn-text', null, t('rpAgain'), () => { rep = 0; box.classList.remove('peek'); upd(); }); ag.style.marginTop = '.5rem'; b.appendChild(ag);
+    b.appendChild(save); upd(); qTop();
+}
 function qMemList(b, d) {
     qCur = 0; b.innerHTML = '';
     b.appendChild(qBtn('ibtn q-back', 'arrow-right', t('qIndex'), () => qIndex(b, d)));
@@ -2928,6 +3087,7 @@ function qIndex(b, d) {
       let cur = null; const mkSb = () => { const n = qStatsBox(() => { const m = mkSb(); cur.replaceWith(m); cur = m; }); n.hidden = !qStatOpen; n.classList.add('adv'); return n; }; cur = mkSb(); const sb = cur;
       const st = qBtn('q-cont ibtn', qStatOpen ? 'chevron-left' : 'chevron-right', t('qStatT'), () => { qStatOpen = !qStatOpen; qIndex(b, d); });
       st.classList.add('adv'); sb.classList.add('adv'); st.style.justifyContent = 'center'; st.setAttribute('aria-expanded', String(qStatOpen)); b.appendChild(st); b.appendChild(sb); }
+    { const rb = qBtn('q-cont ibtn adv', 'refresh-cw', t('rpOpen'), () => qRepeat(b, d)); b.appendChild(rb); }
     { const qo = qOptions(); qo.classList.add('adv'); b.appendChild(qo); }
     const jz = document.createElement('div'); jz.className = 'q-jz'; jz.setAttribute('aria-label', t('qJuz'));
     for (let n = 1; n <= 30; n++) jz.appendChild(qBtn('', null, String(n), () => { const [s2, a2] = qLoc(QMETA.j[n - 1]); qSurah(b, d, s2, a2); }));
@@ -2938,6 +3098,7 @@ function qIndex(b, d) {
     go.appendChild(pgI); go.appendChild(qBtn('ibtn', 'arrow-right', t('qGoPage'), goNow)); b.appendChild(go);
     const inp = document.createElement('input'); inp.type = 'text'; inp.className = 'q-search'; inp.placeholder = t('qSearchPh'); inp.setAttribute('aria-label', t('qSearchPh'));
     b.appendChild(inp);
+    let tafS = false; const tb = qBtn('lchip', null, t('qTafSearch'), () => { tafS = !tafS; tb.classList.toggle('on', tafS); tb.setAttribute('aria-pressed', tafS); inp.dispatchEvent(new Event('input')); }); tb.style.marginBottom = '.7rem'; tb.setAttribute('aria-pressed', 'false'); b.appendChild(tb);
     const bms = qBms();
     const bmBox = document.createElement('div');
     if (bms.length) { const bb = qBtn('q-cont ibtn', 'star', t('qBmN', bms.length), () => qBookmarks(b, d)); bb.style.marginTop = '.6rem'; bmBox.appendChild(bb); }
@@ -2968,7 +3129,9 @@ function qIndex(b, d) {
         const isSearch = q.length >= 3;
         grid.querySelectorAll('.q-s').forEach(x => { x.hidden = !!q && !x.dataset.q.includes(q.replace(/[^a-z\u0600-\u06ff0-9 ]/g, '')); });
         bmBox.hidden = !!q; resBox.hidden = !isSearch; resBox.innerHTML = '';
-        if (!isSearch) return;
+        if (!isSearch) { qTafTok++; return; }
+        if (tafS) { qTafSearch(q, resBox, b, d); return; }
+        qTafTok++;
         if (!QNORM) QNORM = d.map(a => a.map(qNorm));
         let out = [], total = 0;
         for (let s = 0; s < 114; s++) for (let a = 0; a < QNORM[s].length; a++) if (QNORM[s][a].includes(q)) { total++; if (out.length < 50) out.push([s + 1, a + 1]); }
@@ -3025,14 +3188,18 @@ function qSurah(b, d, s, a) {
     if (s !== 1 && s !== 9) { const bs = document.createElement('div'); bs.className = 'q-bsm'; bs.textContent = d[0][0]; b.appendChild(bs); }
     const tx = document.createElement('div'); tx.className = 'q-text' + (hm ? ' h' + hm : '') + (mdOf() === 's' ? ' simple' : ''); tx.dir = 'rtl';
     const bms = new Set(qBms()), memAll = qMemAll(), memS = new Set(memAll[s] || []), stp = store.get('pt-qstop', null);
-    d[s - 1].forEach((v, i) => {
+    const addV = (v, i) => {
         const gI = QOFF[s - 1] + i + 1;
         if (QPGMAP.has(gI)) { const dv = document.createElement('span'); dv.className = 'q-pg'; dv.textContent = (QJZMAP.has(gI) ? t('qJuzN', QJZMAP.get(gI)) + '  ' : '') + '\u00AB ' + qNum(QPGMAP.get(gI)) + ' \u00BB'; tx.appendChild(dv); }
         const sp2 = document.createElement('span'); sp2.className = (QSJ.has(gI) ? 'q-v sj' : 'q-v') + (bms.has(s + ':' + (i + 1)) ? ' bm' : '') + (memS.has(i + 1) ? ' mem' : '') + (stp && stp.s === s && stp.a === i + 1 ? ' stop' : ''); sp2.dataset.a = i + 1;
         qWords(sp2, v);
         const n = document.createElement('span'); n.className = 'q-n'; n.textContent = '\uFD3F' + qNum(i + 1) + '\uFD3E'; sp2.appendChild(n);
         tx.appendChild(sp2); tx.appendChild(document.createTextNode(' '));
-    });
+    };
+    // السور الطويلة تُبنى على دفعات كي لا يتجمد الهاتف: نعرض أول الآيات وموضع القراءة فورًا ثم نكمل في الخلفية
+    const verses = d[s - 1], firstN = Math.min(verses.length, Math.max(40, (a || 1) + 15));
+    for (let i = 0; i < firstN; i++) addV(verses[i], i);
+    if (firstN < verses.length) { let nx = firstN; const more = () => { if (qCur !== s || tx.isConnected === false) return; const end = Math.min(verses.length, nx + 40); for (; nx < end; nx++) addV(verses[nx], nx); if (nx < verses.length) setTimeout(more, 24); }; setTimeout(more, 60); }
     b.appendChild(tx);
     const act = document.createElement('div'); act.className = 'q-act'; act.hidden = true;
     const mh = document.createElement('div'); mh.className = 'q-mh'; const mt = document.createElement('div'); const mb1 = document.createElement('b'), ms = document.createElement('small'); mt.appendChild(mb1); mt.appendChild(ms); mh.appendChild(mt);
@@ -3380,7 +3547,7 @@ function tick(force) {
     const ss = Math.floor((diff % 60000) / 1000);
     setText('countdown', `${pad2(hh)}:${pad2(mm)}:${pad2(ss)}`);
     { const tm = Math.ceil(diff / 60000); if (tm !== srLast) { srLast = tm; const tx = t('srCd', srDur(Math.floor(tm / 60), tm % 60), prayerName(next.k)); setText('sr-cd', tx); if ([30, 10, 5, 1].includes(tm) && state.view === 0) setText('sr-live', tx); } }
-    updAdhDot(now);
+    updAdhDot(now); quickAdh(now);
     setText('mini-n', prayerName(next.k)); setText('mini-t', `${pad2(hh)}:${pad2(mm)}:${pad2(ss)}`);
     setText('next-prayer-time', fmtClock(next.ts));
     { let line = '', ckLog = null;
@@ -3737,6 +3904,74 @@ function shareDhikr(item) {
     try { if (navigator.share) { navigator.share({ text: txt }).catch(() => {}); return; } } catch (e) {}
     copyText(txt).then(() => toast(t('shareCopied'))).catch(() => {});
 }
+function quickAdh(now) {
+    const el = $('quick-adh'); if (!el) return;
+    try {
+        const T = state.today; let kind = '';
+        if (T && state.view === 0 && settings.tab === 'times' && settings.quickAdh !== false) {
+            if (now >= T.Isha || now < T.Fajr) kind = 's'; else if (now >= T.Fajr && now < T.Sunrise) kind = 'w';
+        }
+        if (kind && store.get('pt-qa', '') === state.dayIso + kind) kind = '';
+        if (kind) { el.dataset.k = kind; setText('qa-t', t(kind === 's' ? 'qaSleep' : 'qaWake')); }
+        if (el.hidden === !!kind) el.hidden = !kind;
+    } catch (e) {}
+}
+function openDaily() {
+    if (!state.today) return;
+    openSheet(t('tdTitle'), box => {
+        const iso = state.dayIso, pd = prayedSet(iso), T = state.today, add = (tag, cls, tx) => { const e = document.createElement(tag); if (cls) e.className = cls; if (tx !== undefined) e.textContent = tx; return e; };
+        let done = 0, total = 0;
+        box.appendChild(add('h3', 'grp', t('tdPrayers')));
+        const pr = add('div', 'td-pr');
+        FIVE.forEach(k => { const on = pd.includes(pLetter(k)); total++; if (on) done++;
+            const b = add('button', 'lchip' + (on ? ' on' : '')); b.type = 'button'; b.setAttribute('aria-pressed', on);
+            if (on) b.appendChild(iconEl('check')); b.appendChild(add('span', '', prayerName(k)));
+            b.addEventListener('click', () => { if (state.view !== 0) return; togglePrayed(k); const y = document.querySelector('#sheet .sheet-in').scrollTop; openDaily(); document.querySelector('#sheet .sheet-in').scrollTop = y; });
+            pr.appendChild(b); });
+        box.appendChild(pr);
+        box.appendChild(add('h3', 'grp', t('tdAdhkar')));
+        [['morning', 'tdMorning'], ['evening', 'tdEvening']].forEach(([m, key]) => {
+            const rem = remainingFor(m), dn = rem.filter(x => x === 0).length, ok = dn === rem.length; total++; if (ok) done++;
+            const row = add('div', 'td-row'); row.appendChild(add('span', '', t(key) + ' · ' + (ok ? t('tdDone') : t('progress', dn, rem.length))));
+            const go = add('button', 'lchip', t('tdOpenBtn')); go.type = 'button'; go.addEventListener('click', () => { closeSheet(); showTab('adhkar', true); adhkarSet = m; renderAdhkar(); window.scrollTo(0, 0); });
+            row.appendChild(go); box.appendChild(row); });
+        box.appendChild(add('h3', 'grp', t('tdWird')));
+        { const goal = Number(settings.wirdGoal) || 0, q = wirdToday(), juz = settings.wirdUnit === 'juz', gp = goal * wirdStep(), row = add('div', 'td-row');
+          const unit = t(juz ? 'juzU' : 'pageU');
+          if (goal > 0) { const ok = q >= gp; total++; if (ok) done++; row.appendChild(add('span', '', t('tdWirdLine', juz ? fmtJuz(q) : q, goal) + ' ' + unit)); }
+          else row.appendChild(add('span', 'muted', t('tdNoGoal')));
+          const go = add('button', 'lchip', t('tdOpenBtn')); go.type = 'button'; go.addEventListener('click', () => { closeSheet(); showTab('quran', true); });
+          row.appendChild(go); box.appendChild(row); }
+        const sum = add('div', 'rp-n', t('tdAll', done, total)); sum.style.marginTop = '.8rem'; box.appendChild(sum);
+    });
+}
+function openQadaCalc() {
+    openSheet(t('qcTitle'), box => {
+        const today = dayOf(state.tz, 0).iso, mk = (lab, val) => { const f = document.createElement('div'); f.className = 'field'; const l = document.createElement('label'); l.textContent = lab; const i = document.createElement('input'); i.type = 'date'; i.max = today; i.value = val; l.htmlFor = i.id = 'qc-' + Math.random().toString(36).slice(2, 6); f.append(l, i); box.appendChild(f); return i; };
+        const a = mk(t('qcFrom'), ''), z = mk(t('qcTo'), today), res = document.createElement('p'); res.className = 'center'; res.style.fontWeight = '700'; box.appendChild(res);
+        let total = 0;
+        const calc = () => { total = 0; if (!a.value || !z.value) { res.textContent = ''; return; } const n = qDay(z.value) - qDay(a.value) + 1;
+            if (!(n >= 1 && n * 5 <= 99999)) { res.textContent = t('qcBad'); return; } total = n * 5; res.textContent = t('qcRes', n, n, total); };
+        a.addEventListener('input', calc); z.addEventListener('input', calc);
+        const row = document.createElement('div'); row.className = 'grid2';
+        const bs = qBtn('btn-accent', null, t('qcSet'), () => { if (!total) { toast(t('qcBad')); return; } qadaSet(total); toast(t('qcDone')); closeSheet(); });
+        const ba = qBtn('', null, t('qcAdd'), () => { if (!total) { toast(t('qcBad')); return; } qadaSet(qadaGet() + total); toast(t('qcDone')); closeSheet(); });
+        row.append(bs, ba); box.appendChild(row);
+    });
+}
+function renderDhkDay(mode) {
+    const box = $('dhk-day'); if (!box) return;
+    if ((mode !== 'morning' && mode !== 'evening') || !state.dayIso) { box.hidden = true; return; }
+    const list = ADHKAR[mode], cand = list.map((x, i) => i).filter(i => list[i].t.length <= 120);
+    if (!cand.length) { box.hidden = true; return; }
+    let h = 7; for (const ch of state.dayIso + mode) h = (h * 31 + ch.charCodeAt(0)) >>> 0;
+    const it = list[cand[h % cand.length]];
+    box.innerHTML = '';
+    const hd = document.createElement('div'); hd.style.fontWeight = '700'; hd.textContent = t('ddTitle'); box.appendChild(hd);
+    const tx = document.createElement('div'); tx.className = 'sod-t'; tx.dir = 'rtl'; tx.lang = 'ar'; tx.textContent = it.t; box.appendChild(tx);
+    box.appendChild(qBtn('ibtn', 'upload', t('shareDhikr'), () => shareDhikr(it)));
+    box.hidden = false;
+}
 let adhDotT = 0;
 function updAdhDot(now, force) {
     if (!force && now - adhDotT < 20000) return;
@@ -3927,7 +4162,7 @@ function initSwipe() {
 }
 function renderAdhkar() {
     document.querySelectorAll('#adhkar-seg button').forEach(b => b.classList.toggle('on', b.dataset.set === adhkarSet));
-    const mode = adhkarSet;
+    const mode = adhkarSet; renderDhkDay(mode);
     const reading = mode === 'morning' || mode === 'evening' || mode === 'library';
     $('abar').hidden = !reading; $('apbar').hidden = !(mode === 'morning' || mode === 'evening');
     $('opts').hidden = mode === 'stats';
@@ -5074,7 +5309,7 @@ async function runSelfTest() {
         needs(ak.length === ek.length && ak.every(k => k in I18N.en), 'Key parity ar/en', ak.length + ' vs ' + ek.length);
         const empty = ak.filter(k => !String(I18N.ar[k]).trim() || !String(I18N.en[k] || '').trim());
         needs(!empty.length, 'No empty translations', empty.slice(0, 10).join(','));
-        const ph = ak.filter(k => ((String(I18N.ar[k]).match(/\{\d+\}/g) || []).sort().join() !== (String(I18N.en[k] || '').match(/\{\d+\}/g) || []).sort().join()));
+        const ph = ak.filter(k => ((String(I18N.ar[k]).match(/\{\d+(?=[|}])/g) || []).sort().join() !== (String(I18N.en[k] || '').match(/\{\d+(?=[|}])/g) || []).sort().join()));
         needs(!ph.length, 'Placeholders match between languages', ph.slice(0, 10).join(','));
         const emo = ak.filter(k => /\p{Extended_Pictographic}/u.test(I18N.ar[k] + (I18N.en[k] || '')));
         needs(!emo.length, 'No emoji in strings', emo.slice(0, 10).join(','));
@@ -5338,7 +5573,7 @@ function syncControls() {
     $('asr-select').value = String(settings.asr);
     $('hijri-adj').value = String(settings.hijriAdj);
     $('pre-select').value = String(settings.preAlert);
-    $('end-select').value = String(settings.endAlert || 0); $('naw-toggle').checked = !!settings.nawRemind; $('nightauto-toggle').checked = settings.nightAuto !== false; $('logrem-toggle').checked = !!settings.logRemind; $('occrem-toggle').checked = !!settings.occRemind; $('nawcard-toggle').checked = settings.nawCard !== false;
+    $('end-select').value = String(settings.endAlert || 0); $('qa-toggle').checked = settings.quickAdh !== false; $('naw-toggle').checked = !!settings.nawRemind; $('nightauto-toggle').checked = settings.nightAuto !== false; $('logrem-toggle').checked = !!settings.logRemind; $('occrem-toggle').checked = !!settings.occRemind; $('nawcard-toggle').checked = settings.nawCard !== false;
     $('lang-select').value = settings.lang;
     $('sound-toggle').checked = settings.sound;
     $('notify-toggle').checked = settings.notify;
@@ -5388,7 +5623,7 @@ function sanitizeSettings(s) {
     const fsv = Math.round(Number(s.fontScale) * 10) / 10;
     out.fontScale = Number.isFinite(fsv) ? Math.min(1.8, Math.max(0.8, fsv)) : 1;
     out.autoNext = s.autoNext !== false; out.hideDone = !!s.hideDone;
-    out.comfy = !!s.comfy; out.adhOrder = ['n', 's', 'l'].includes(s.adhOrder) ? s.adhOrder : 'n';
+    out.quickAdh = s.quickAdh !== false; out.comfy = !!s.comfy; out.adhOrder = ['n', 's', 'l'].includes(s.adhOrder) ? s.adhOrder : 'n';
     out.remindDelay = [10, 20, 30].includes(Number(s.remindDelay)) ? Number(s.remindDelay) : 20;
     const tm = (v, d) => /^([01]\d|2[0-3]):[0-5]\d$/.test(String(v)) ? String(v) : d;
     out.weeklyGoal = [0, 300, 500, 1000, 2000, 3000, 5000].includes(Number(s.weeklyGoal)) ? Number(s.weeklyGoal) : 0;
@@ -5629,7 +5864,7 @@ function showTab(id, noFx) {
     if (id === 'sunan') renderSunan();
     if (id === 'quran') renderQuranTab();
     maybeHint(id);
-    saveSettings(); updAdhDot(Date.now(), true);
+    saveSettings(); updAdhDot(Date.now(), true); quickAdh(Date.now());
     window.scrollTo(0, 0);
     lastScrollY = 0; setNav(true);
     syncWake();
@@ -5888,6 +6123,12 @@ function bindUI() {
     $('fs-plus').addEventListener('click', () => setFont(0.1));
     $('opt-hifz').addEventListener('click', () => { settings.hifz = ((settings.hifz || 0) + 1) % 3; saveSettings(); applyFont(); renderAdhkar(); });
     $('wk-open').addEventListener('click', openWeek);
+    $('td-open').addEventListener('click', openDaily);
+    $('qada-calc').addEventListener('click', openQadaCalc);
+    $('qa-toggle').addEventListener('change', e => { settings.quickAdh = e.target.checked; saveSettings(); quickAdh(Date.now()); });
+    $('qa-x').setAttribute('aria-label', t('qaClose'));
+    $('qa-go').addEventListener('click', () => { const k = $('quick-adh').dataset.k; showTab('adhkar', true); adhkarSet = 'library'; libMode = 'all'; renderAdhkar(); libGo(k === 's' ? 1 : 2); });
+    $('qa-x').addEventListener('click', () => { store.set('pt-qa', state.dayIso + ($('quick-adh').dataset.k || '')); quickAdh(Date.now()); });
     $('dst-ok').addEventListener('click', () => { store.set('pt-dst', $('dst-card').dataset.k || ''); $('dst-card').hidden = true; });
     $('opt-comfy').addEventListener('click', () => { settings.comfy = !settings.comfy; saveSettings(); applyFont(); });
     $('opt-order').addEventListener('click', () => { const o = ['n', 's', 'l']; settings.adhOrder = o[(o.indexOf(settings.adhOrder || 'n') + 1) % 3]; saveSettings(); applyFont(); renderAdhkar(); });
