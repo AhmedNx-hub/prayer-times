@@ -48,8 +48,8 @@
       ]
     },
     {
-      "name": "سجل المواظبة",
-      "url": "./?tab=adhkar&set=stats",
+      "name": "أذكار المساء",
+      "url": "./?tab=adhkar&set=evening",
       "icons": [
         {
           "src": "icon-192.png",
