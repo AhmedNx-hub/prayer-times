@@ -159,6 +159,7 @@ input[type=color] { width:3rem; height:2.1rem; padding:0; border:1px solid var(-
 .verse { font-size:1.15rem; line-height:2.1; }
 
 /* التنقل السفلي */
+.fs-fab { position:fixed; top:max(.15rem, env(safe-area-inset-top)); inset-inline-start:.4rem; z-index:25; width:1.9rem; height:1.9rem; display:flex; align-items:center; justify-content:center; padding:0; border-radius:50%; border:1px solid rgba(128,128,128,.35); background:color-mix(in srgb, var(--surface) 88%, transparent); color:var(--text); opacity:.75; cursor:pointer; } .fs-fab[hidden] { display:none; } .fs-fab svg { width:1rem; height:1rem; }
 #bottom-nav {
     position:fixed; bottom:0; left:0; right:0; z-index:20;
     background:var(--surface); border-top:1px solid var(--border);
@@ -1197,9 +1198,8 @@ html.onehand .adh-head { position:static; }
         <label class="switch"><span class="il"><i data-ic="layout-grid"></i><span data-i18n="simpleOn"></span></span><input type="checkbox" id="simple-toggle"></label>
         <p class="muted small" style="margin:0 0 1rem" data-i18n="simpleNote"></p>
         <label class="switch"><span class="il"><i data-ic="clock"></i><span data-i18n="h24"></span></span><input type="checkbox" id="h24-toggle"></label>
-        <label class="switch"><span class="il"><i data-ic="maximize"></i><span data-i18n="fsOn"></span></span><input type="checkbox" id="fs-toggle"></label>
         <label class="switch"><span class="il"><i data-ic="sparkles"></i><span data-i18n="animOn"></span></span><input type="checkbox" id="anim-toggle"></label>
-        <p class="muted small" style="margin:0 0 1rem"><span data-i18n="fsNote"></span> <span data-i18n="animNote"></span></p>
+        <p class="muted small" style="margin:0 0 1rem"><span data-i18n="animNote"></span></p>
         <h3 class="grp adv" data-i18n="grpStart"></h3>
         <label class="switch adv"><span class="il"><i data-ic="book-open"></i><span data-i18n="adhAutoOn"></span></span><input type="checkbox" id="adhauto-toggle"></label>
         <h3 class="grp adv" data-i18n="grpNav"></h3>
@@ -1300,6 +1300,7 @@ html.onehand .adh-head { position:static; }
 <div id="sheet" hidden><div class="sheet-in"><div class="sheet-head"><h3 id="sheet-title"></h3><button id="sheet-close" aria-label="x"><i data-ic="x"></i></button></div><div id="sheet-body"></div></div></div>
 <div id="toast"></div>
 
+<button type="button" id="fs-fab" class="fs-fab" hidden><i data-ic="maximize"></i></button>
 <script>
 /* ENGINE START */
 /* ===== محرك حساب المواقيت (فلكي، بدون إنترنت) ===== */
@@ -1718,6 +1719,7 @@ ar: {
     instApp:'تثبيت التطبيق', instDone:'تم تثبيت التطبيق', instAlready:'التطبيق مثبّت بالفعل على هذا الجهاز', instAnd:'افتح قائمة المتصفح ⋮ ثم اختر «تثبيت التطبيق» أو «إضافة إلى الشاشة الرئيسية». يعمل التطبيق بعدها كتطبيق مستقل ودون اتصال.', instIos:'اضغط زر المشاركة في سفاري ثم اختر «إضافة إلى الشاشة الرئيسية».',
     saveCopy:'حفظ نسخة من التطبيق', saveDone:'حُفظت نسخة من التطبيق (ملف يعمل دون اتصال)', saveFail:'تعذّر حفظ النسخة، تأكد من اتصالك بالإنترنت',
     rdZoomIn:'تكبير الخط', rdZoomOut:'تصغير الخط',
+    fsEnter:'ملء الشاشة',
     afterOpen:'فتح الأذكار', afterHide:'إخفاء',
     backupOn:'تذكير أسبوعي بالنسخة الاحتياطية', backupTitle:'مرّ أسبوع على آخر نسخة احتياطية', backupNow:'تصدير الآن', backupLater:'لاحقًا',
     readOpts:'خيارات القراءة', fontFace:'خط الأذكار', ffDefault:'الافتراضي', ffNaskh:'نسخ', ffThuluth:'ثلث / رقعة', fontNote:'يظهر حسب الخطوط المتاحة على جهازك',
@@ -1960,6 +1962,7 @@ en: {
     instApp:'Install the app', instDone:'The app was installed', instAlready:'The app is already installed on this device', instAnd:'Open the browser menu ⋮ and choose "Install app" or "Add to Home screen". It then runs as a standalone app, offline.', instIos:'Tap the Share button in Safari, then choose "Add to Home Screen".',
     saveCopy:'Save a copy of the app', saveDone:'A copy of the app was saved (an offline file)', saveFail:'Could not save a copy, please check your connection',
     rdZoomIn:'Larger text', rdZoomOut:'Smaller text',
+    fsEnter:'Full screen',
     afterOpen:'Open adhkar', afterHide:'Hide',
     backupOn:'Weekly backup reminder', backupTitle:'It has been a week since your last backup', backupNow:'Export now', backupLater:'Later',
     readOpts:'Reading options', fontFace:'Adhkar font', ffDefault:'Default', ffNaskh:'Naskh', ffThuluth:'Thuluth / Ruqaa', fontNote:'Shown using the fonts available on your device',
@@ -2078,7 +2081,7 @@ const SCHEMA = 3;
         store.set('pt-schema', SCHEMA);
     } catch (e) {}
 })();
-const APP_VER = '2026.11.17-1';
+const APP_VER = '2026.11.17-3';
 function repairBar() {
     try {
         if (document.getElementById('fix-bar') || sessionStorage.getItem('pt-fixno')) return;
@@ -2109,7 +2112,7 @@ const FIRST_RUN = (() => { try { return localStorage.getItem('pt-settings') === 
 const DEFAULTS = {
     cityId:'cairo', method:5, asr:1, hijriAdj:0, notify:false, sound:true, h24:false,
     gps:null, theme:'sepia', customThemes:[], draft:null, tab:'times', sec:'loc',
-    lang:'ar', preAlert:0, fullscreen:true, anim:true, pinPrayer:'', adhkarAuto:true, friRemind:true, tasbihPhrase:'ph_sub', tasbihTarget:33, fontScale:1, comfy:false, adhOrder:'n', quickAdh:true, autoNext:true, hideDone:false, vibTarget:'double', vibTap:true, keepAwake:false, adhkarRemind:false, sndPrayers:{ Fajr:'default', Dhuhr:'default', Asr:'default', Maghrib:'default', Isha:'default' }, weeklyGoal:0, monthGoal:0, wirdUnit:'page', wirdGoal:0, dndFri:false, dndFriFrom:'23:00', dndFriTo:'08:00', sndPrayer:'rise', sndAdhkar:'chime', sndWird:'soft', sndGoal:'triple', hiddenTabs:[], onboarded:false, oneHand:false, wirdRemind:false, wirdTime:'21:00', dnd:false, dndFrom:'23:00', dndTo:'05:00', dndPrayer:true, remindDelay:20, sleepDelay:60, afterDelay:5, afterCard:true, backupRemind:true, backupAt:0, backupSnooze:0, endAlert:0, logRemind:false, occRemind:false, qDark:false, qAwake:false, khRemind:false, khTime:'20:00', nightAuto:true, nawRemind:false, nawCard:true, hifz:0, fontFace:'default', remindSleep:false, remindWake:false, remindAfter:false, readDark:false,
+    lang:'ar', preAlert:0, fullscreen:false, anim:true, pinPrayer:'', adhkarAuto:true, friRemind:true, tasbihPhrase:'ph_sub', tasbihTarget:33, fontScale:1, comfy:false, adhOrder:'n', quickAdh:true, autoNext:true, hideDone:false, vibTarget:'double', vibTap:true, keepAwake:false, adhkarRemind:false, sndPrayers:{ Fajr:'default', Dhuhr:'default', Asr:'default', Maghrib:'default', Isha:'default' }, weeklyGoal:0, monthGoal:0, wirdUnit:'page', wirdGoal:0, dndFri:false, dndFriFrom:'23:00', dndFriTo:'08:00', sndPrayer:'rise', sndAdhkar:'chime', sndWird:'soft', sndGoal:'triple', hiddenTabs:[], onboarded:false, oneHand:false, wirdRemind:false, wirdTime:'21:00', dnd:false, dndFrom:'23:00', dndTo:'05:00', dndPrayer:true, remindDelay:20, sleepDelay:60, afterDelay:5, afterCard:true, backupRemind:true, backupAt:0, backupSnooze:0, endAlert:0, logRemind:false, occRemind:false, qDark:false, qAwake:false, khRemind:false, khTime:'20:00', nightAuto:true, nawRemind:false, nawCard:true, hifz:0, fontFace:'default', remindSleep:false, remindWake:false, remindAfter:false, readDark:false,
     adhHide:{ morning:[], evening:[] }, adhAdd:{ morning:[], evening:[] },
     tune:{ Fajr:0, Sunrise:0, Dhuhr:0, Asr:0, Maghrib:0, Isha:0 }
 };
@@ -2913,6 +2916,7 @@ function qReview(b, d) {
     qTop();
 }
 /* زر الرجوع في الهاتف: يتراجع داخل التطبيق خطوة خطوة، وفي الرئيسية يطلب ضغطتين للخروج */
+let tabHist = [], navBack = false;
 function backStep() {
     { const rd = document.querySelector('.rd'); if (rd && rd._close) { rd._close(); return true; } }
     if (!$('sheet').hidden) { closeSheet(); return true; }
@@ -2924,7 +2928,10 @@ function backStep() {
         const bk = $('quran-body').querySelector('.q-back'); if (bk) { bk.click(); window.scrollTo(0, 0); return true; }
     }
     if (tab === 'adhkar') { const bk = [...document.querySelectorAll('#tab-adhkar .back-btn')].find(x => x.offsetParent); if (bk) { bk.click(); window.scrollTo(0, 0); return true; } }
-    if (tab !== 'times') { showTab(firstVisibleTab('times')); return true; }
+    if (tab !== 'times' || tabHist.length) {
+        let to = null; while (tabHist.length && !to) { const c = tabHist.pop(); if (c !== tab && !settings.hiddenTabs.includes(c)) to = c; }
+        navBack = true; try { showTab(to || firstVisibleTab('times')); } finally { navBack = false; } return tab !== 'times' || !!to;
+    }
     return false;
 }
 document.addEventListener('contextmenu', e => { if (!(e.target.closest && e.target.closest('input,textarea,select,[contenteditable="true"]'))) e.preventDefault(); });
@@ -3940,7 +3947,8 @@ let swReg = null;
     } catch (e) {}
 })();
 /* ============ الأذكار + المواظبة ============ */
-let instEvt = null, adhkarSet = null, adhkarAutoPart = null, curAdh = null;
+let instEvt = null; window.addEventListener('beforeinstallprompt', e => { e.preventDefault(); instEvt = e; });
+let adhkarSet = null, adhkarAutoPart = null, curAdh = null;
 let adhState = store.get('pt-adhkar', {});
 let track = store.get('pt-track', {});          // { 'YYYY-MM-DD': { m:1, e:1, t:عدد } }
 function saveTrack() {
@@ -6068,7 +6076,6 @@ function syncControls() {
     $('remind-delay').value = String(settings.remindDelay || 20);
     $('remsleep-toggle').checked = !!settings.remindSleep; $('remwake-toggle').checked = !!settings.remindWake; $('remafter-toggle').checked = !!settings.remindAfter;
     $('h24-toggle').checked = settings.h24;
-    $('fs-toggle').checked = settings.fullscreen;
     $('simple-toggle').checked = settings.simple !== false; $('anim-toggle').checked = settings.anim !== false; $('adhauto-toggle').checked = settings.adhkarAuto !== false; $('frirem-toggle').checked = settings.friRemind !== false;
     $('city-select').value = settings.cityId;
     $('method-select').value = settings.method;
@@ -6092,7 +6099,7 @@ function sanitizeSettings(s) {
     if (PT_METHODS[s.method]) out.method = Number(s.method);
     out.asr = Number(s.asr) === 2 ? 2 : 1;
     out.hijriAdj = clampInt(s.hijriAdj, 0, -2, 2);
-    out.notify = !!s.notify; out.sound = s.sound !== false; out.h24 = !!s.h24; out.fullscreen = s.fullscreen !== false; out.anim = s.anim !== false; out.pinPrayer = FIVE.includes(s.pinPrayer) ? s.pinPrayer : ''; out.adhkarAuto = s.adhkarAuto !== false; out.friRemind = s.friRemind !== false;
+    out.notify = !!s.notify; out.sound = s.sound !== false; out.h24 = !!s.h24; out.fullscreen = false; out.anim = s.anim !== false; out.pinPrayer = FIVE.includes(s.pinPrayer) ? s.pinPrayer : ''; out.adhkarAuto = s.adhkarAuto !== false; out.friRemind = s.friRemind !== false;
     out.simple = s.simple !== false;
     { const ids = a => Array.isArray(a) ? [...new Set(a.filter(x => Number.isInteger(x) && x > 0 && x < 1000))].slice(0, 80) : [];
       const prs = a => { const seen = new Set(); return Array.isArray(a) ? a.filter(p => Array.isArray(p) && Number.isInteger(p[0]) && Number.isInteger(p[1]) && p[0] >= 0 && p[0] < 500 && p[1] >= 0 && p[1] < 500 && !seen.has(p[0] + '_' + p[1]) && seen.add(p[0] + '_' + p[1])).map(p => [p[0], p[1]]).slice(0, 40) : []; };
@@ -6287,8 +6294,11 @@ function importFile(file) {
 }
 
 /* ============ ملء الشاشة ============ */
+function syncFs() {
+    const d = document, el = d.documentElement, can = !!(el.requestFullscreen || el.webkitRequestFullscreen), inFs = !!(d.fullscreenElement || d.webkitFullscreenElement);
+    $('fs-fab').setAttribute('aria-label', t('fsEnter')); $('fs-fab').hidden = !can || inFs;
+}
 function tryFullscreen() {
-    if (!settings.fullscreen) return;
     const d = document;
     if (d.fullscreenElement || d.webkitFullscreenElement) return;
     const el = d.documentElement;
@@ -6331,6 +6341,7 @@ function miniUpd() { const m = $('mini-cd'); if (m) m.classList.toggle('show', h
 function initMini() { try { if (!window.IntersectionObserver) return; new IntersectionObserver(es => { heroOut = !es[0].isIntersecting && es[0].boundingClientRect.top < 0; miniUpd(); }, { threshold: 0 }).observe(document.querySelector('#tab-times .hero')); } catch (e) {} }
 function showTab(id, noFx) {
     const prevTab = settings.tab;
+    if (!noFx && !navBack && prevTab !== id && prevTab) { if (tabHist[tabHist.length - 1] !== prevTab) tabHist.push(prevTab); if (tabHist.length > 20) tabHist.shift(); }
     if (id === 'times') { heroPending = true; if (state.today) setTimeout(tick, 30); }
     document.querySelectorAll('.panel').forEach(p => { p.hidden = p.id !== 'tab-' + id; });
     document.querySelectorAll('.nav-btn').forEach(b => b.classList.toggle('on', b.dataset.tab === id));
@@ -6426,7 +6437,6 @@ function refreshAll() {
     renderChips();
     syncControls();
     $('tasbih-phrase').innerHTML = '';
-    if (!settings.fullscreen) exitFullscreen();
     recalc();
 }
 
@@ -6533,12 +6543,12 @@ function bindUI() {
         if (r === 'new') { toast(t('updFound')); setTimeout(() => { try { location.reload(); } catch (e) {} }, 700); }
         else toast(t(r === 'same' ? 'updLatest' : 'updFail'));
     });
-    window.addEventListener('beforeinstallprompt', e => { e.preventDefault(); instEvt = e; });
     window.addEventListener('appinstalled', () => { instEvt = null; toast(t('instDone')); });
     $('inst-btn').addEventListener('click', async () => {
         let app = false; try { app = !!(window.matchMedia && matchMedia('(display-mode: standalone)').matches) || !!navigator.standalone; } catch (e) {}
         if (app) { toast(t('instAlready')); return; }
-        if (instEvt) { try { instEvt.prompt(); await instEvt.userChoice; } catch (e) {} instEvt = null; return; }
+        if (!instEvt && !/iphone|ipad|ipod/i.test(navigator.userAgent)) { for (let k = 0; k < 10 && !instEvt; k++) await new Promise(r => setTimeout(r, 150)); }
+        if (instEvt) { const ev = instEvt; instEvt = null; try { ev.prompt(); await ev.userChoice; } catch (e) {} return; }
         openSheet(t('instApp'), b => { const p = document.createElement('p'); p.className = 'small'; p.style.lineHeight = '2'; p.textContent = /iphone|ipad|ipod/i.test(navigator.userAgent) ? t('instIos') : t('instAnd'); b.appendChild(p); });
     });
     $('save-btn').addEventListener('click', async () => {
@@ -6576,10 +6586,9 @@ function bindUI() {
     $('more-sunan').addEventListener('click', () => showTab('sunan'));
     $('more-tools').addEventListener('click', () => showTab('tools'));
     $('anim-toggle').addEventListener('change', e => { settings.anim = e.target.checked; saveSettings(); applyFxClass(); });
-    $('fs-toggle').addEventListener('change', e => {
-        settings.fullscreen = e.target.checked; saveSettings();
-        if (settings.fullscreen) tryFullscreen(); else exitFullscreen();
-    });
+    $('fs-fab').addEventListener('click', () => { tryFullscreen(); setTimeout(syncFs, 150); });
+    ['fullscreenchange', 'webkitfullscreenchange'].forEach(ev => document.addEventListener(ev, syncFs));
+    syncFs();
 
     $('theme-save').addEventListener('click', saveCustomTheme);
     $('theme-reset').addEventListener('click', () => {
@@ -6699,9 +6708,6 @@ function bindUI() {
     $('import-btn').addEventListener('click', () => $('import-file').click());
     $('import-file').addEventListener('change', e => { importFile(e.target.files && e.target.files[0]); e.target.value = ''; });
 
-    // ملء الشاشة عند أول لمسة على أي مكان (حتى الأزرار)
-    document.addEventListener('touchend', tryFullscreen, { capture:true, passive:true });
-    document.addEventListener('click', tryFullscreen, true);
     document.addEventListener('click', unlockAudio, { passive:true });
     window.addEventListener('scroll', onScroll, { passive: true });
     window.addEventListener('scroll', () => { clearTimeout(libSaveT); libSaveT = setTimeout(saveLibPos, 400); }, { passive: true });
