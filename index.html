@@ -687,7 +687,7 @@ html.onehand .adh-head #abar { position:fixed; }
 #sheet .sheet-in { overscroll-behavior:contain; }
 .ibtn:not(:disabled):active, .btn-accent:not(:disabled):active { background-image:radial-gradient(circle at 50% 50%, rgba(255,255,255,.22) 0, rgba(255,255,255,0) 72%); }
 @media (orientation:landscape) and (min-width:640px) { #adhkar-list { column-count:2; column-gap:.8rem; } #adhkar-list .dhikr { break-inside:avoid; } #adhkar-list .alldone { column-span:all; } }
-.rd-top { display:flex; align-items:center; justify-content:space-between; gap:.5rem; } .rd-top b { font-size:.95rem; }
+.rd-top { display:flex; align-items:center; justify-content:space-between; gap:.5rem; } .rd-top b { font-size:.95rem; white-space:nowrap; direction:ltr; unicode-bidi:isolate; } .rd-zg { display:flex; gap:.4rem; } .rd-z { min-width:2.75rem; min-height:2.75rem; padding:0 .5rem; }
 .rd-mid { flex:1; overflow:auto; display:flex; flex-direction:column; justify-content:center; padding:1rem .2rem; }
 .rd-t { font-size:calc(1.7rem * var(--dfs, 1)); line-height:2.3; text-align:center; font-family:var(--dff, inherit); } .rd-h { text-align:center; color:var(--muted); margin-bottom:.6rem; font-size:.95rem; }
 .rd-bot { display:grid; grid-template-columns:1fr 2fr 1fr; gap:.6rem; align-items:stretch; } .rd-bot .ibtn { min-height:3.4rem; } .rd-cnt { font-size:1.4rem; font-weight:700; }
@@ -1219,7 +1219,10 @@ html.onehand .adh-head { position:static; }
             <div class="ab-line"><i data-ic="badge-check"></i><span data-i18n="aboutRights"></span></div>
             <div class="ab-ver" id="ab-ver" dir="ltr"></div>
             <div class="ab-ver" id="ab-bak" style="margin-top:.3rem"></div>
-            <button id="report-btn" class="btn-block ibtn" style="margin-top:1.4rem"><i data-ic="copy"></i><span data-i18n="reportBtn"></span></button>
+            <button id="upd-check" class="btn-block ibtn" style="margin-top:1.4rem"><i data-ic="refresh-cw"></i><span data-i18n="updCheck"></span></button>
+            <button id="inst-btn" class="btn-block ibtn" style="margin-top:.6rem"><i data-ic="download"></i><span data-i18n="instApp"></span></button>
+            <button id="save-btn" class="btn-block ibtn" style="margin-top:.6rem"><i data-ic="save"></i><span data-i18n="saveCopy"></span></button>
+            <button id="report-btn" class="btn-block ibtn" style="margin-top:.6rem"><i data-ic="copy"></i><span data-i18n="reportBtn"></span></button>
         </div>
     </div>
 
@@ -1497,7 +1500,7 @@ const ADHKAR = (() => {
 })();
 
 /* ===== أيقونات Lucide (ISC license) - المستخدم منها فقط ===== */
-const ICONS = {"pencil":"<path d=\"M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z\"/><path d=\"m15 5 4 4\"/>","layout-grid":"<rect width=\"7\" height=\"7\" x=\"3\" y=\"3\" rx=\"1\"/><rect width=\"7\" height=\"7\" x=\"14\" y=\"3\" rx=\"1\"/><rect width=\"7\" height=\"7\" x=\"14\" y=\"14\" rx=\"1\"/><rect width=\"7\" height=\"7\" x=\"3\" y=\"14\" rx=\"1\"/>","calculator":"<rect width=\"16\" height=\"20\" x=\"4\" y=\"2\" rx=\"2\"/><line x1=\"8\" x2=\"16\" y1=\"6\" y2=\"6\"/><line x1=\"16\" x2=\"16\" y1=\"14\" y2=\"18\"/><path d=\"M16 10h.01\"/><path d=\"M12 10h.01\"/><path d=\"M8 10h.01\"/><path d=\"M12 14h.01\"/><path d=\"M8 14h.01\"/><path d=\"M12 18h.01\"/><path d=\"M8 18h.01\"/>","calendar-days":"<path d=\"M8 2v3\"/><path d=\"M16 2v3\"/><rect x=\"3\" y=\"3\" width=\"18\" height=\"18\" rx=\"2\"/><path d=\"M3 9h18\"/><path d=\"M8 13h.01\"/><path d=\"M12 13h.01\"/><path d=\"M16 13h.01\"/><path d=\"M8 17h.01\"/><path d=\"M12 17h.01\"/><path d=\"M16 17h.01\"/>","chevron-right":"<path d=\"m9 18 6-6-6-6\"/>","chevron-left":"<path d=\"m15 18-6-6 6-6\"/>","copy":"<rect width=\"14\" height=\"14\" x=\"8\" y=\"8\" rx=\"2\" ry=\"2\"/><path d=\"M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2\"/>","badge-check":"<path d=\"M3.85 8.62a4 4 0 0 1 4.78-4.77 4 4 0 0 1 6.74 0 4 4 0 0 1 4.78 4.78 4 4 0 0 1 0 6.74 4 4 0 0 1-4.77 4.78 4 4 0 0 1-6.75 0 4 4 0 0 1-4.78-4.77 4 4 0 0 1 0-6.76Z\"/><path d=\"m16 9-5.5 5.5L8 12\"/>","clock":"<circle cx=\"12\" cy=\"12\" r=\"10\"/><path d=\"M12 6v6l4 2\"/>","book-open":"<path d=\"M12 5v16\"/><path d=\"M20.001 19A2 2 0 0022 17V5a2 2 0 00-1.999-2L16 3.002A5 5 0 0012 5a5 5 0 00-4-2H4a2 2 0 00-2 2v12a2 2 0 001.999 2H8a5 5 0 014 2 5 5 0 014-2z\"/>","sliders-horizontal":"<path d=\"M10 5H3\"/><path d=\"M12 19H3\"/><path d=\"M14 3v4\"/><path d=\"M16 17v4\"/><path d=\"M21 12h-9\"/><path d=\"M21 19h-5\"/><path d=\"M21 5h-7\"/><path d=\"M8 10v4\"/><path d=\"M8 12H3\"/>","sun":"<circle cx=\"12\" cy=\"12\" r=\"4\"/><path d=\"M12 2v2\"/><path d=\"M12 20v2\"/><path d=\"m4.93 4.93 1.41 1.41\"/><path d=\"m17.66 17.66 1.41 1.41\"/><path d=\"M2 12h2\"/><path d=\"M20 12h2\"/><path d=\"m6.34 17.66-1.41 1.41\"/><path d=\"m19.07 4.93-1.41 1.41\"/>","moon":"<path d=\"M20.985 12.486a9 9 0 1 1-9.473-9.472c.405-.022.617.46.402.803a6 6 0 0 0 8.268 8.268c.344-.215.825-.004.803.401\"/>","circle-dot":"<circle cx=\"12\" cy=\"12\" r=\"1\"/><circle cx=\"12\" cy=\"12\" r=\"10\"/>","library":"<path d=\"m16 6 4 14\"/><path d=\"M12 6v14\"/><path d=\"M8 8v12\"/><path d=\"M4 4v16\"/>","search":"<path d=\"m21 21-4.34-4.34\"/><circle cx=\"11\" cy=\"11\" r=\"8\"/>","arrow-right":"<path d=\"M5 12h14\"/><path d=\"m12 5 7 7-7 7\"/>","undo-2":"<path d=\"M9 14 4 9l5-5\"/><path d=\"M4 9h10.5a5.5 5.5 0 0 1 5.5 5.5a5.5 5.5 0 0 1-5.5 5.5H11\"/>","rotate-ccw":"<path d=\"M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8\"/><path d=\"M3 3v5h5\"/>","refresh-cw":"<path d=\"M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8\"/><path d=\"M21 3v5h-5\"/><path d=\"M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16\"/><path d=\"M8 16H3v5\"/>","smartphone":"<rect width=\"14\" height=\"20\" x=\"5\" y=\"2\" rx=\"2\" ry=\"2\"/><path d=\"M12 18h.01\"/>","square":"<rect width=\"18\" height=\"18\" x=\"3\" y=\"3\" rx=\"2\"/>","flame":"<path d=\"M12 3q1 4 4 6.5t3 5.5a1 1 0 0 1-14 0 5 5 0 0 1 1-3 1 1 0 0 0 5 0c0-2-1.5-3-1.5-5q0-2 2.5-4\"/>","map-pin":"<path d=\"M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0\"/><circle cx=\"12\" cy=\"10\" r=\"3\"/>","bell":"<path d=\"M10.268 21a2 2 0 0 0 3.464 0\"/><path d=\"M3.262 15.326A1 1 0 0 0 4 17h16a1 1 0 0 0 .74-1.673C19.41 13.956 18 12.499 18 8A6 6 0 0 0 6 8c0 4.499-1.411 5.956-2.738 7.326\"/>","volume-2":"<path d=\"M11 4.702a.705.705 0 0 0-1.203-.498L6.413 7.587A1.4 1.4 0 0 1 5.416 8H3a1 1 0 0 0-1 1v6a1 1 0 0 0 1 1h2.416a1.4 1.4 0 0 1 .997.413l3.383 3.384A.705.705 0 0 0 11 19.298z\"/><path d=\"M16 9a5 5 0 0 1 0 6\"/><path d=\"M19.364 18.364a9 9 0 0 0 0-12.728\"/>","alarm-clock":"<circle cx=\"12\" cy=\"13\" r=\"8\"/><path d=\"M12 9v4l2 2\"/><path d=\"M5 3 2 6\"/><path d=\"m22 6-3-3\"/><path d=\"M6.38 18.7 4 21\"/><path d=\"M17.64 18.67 20 21\"/>","flask-conical":"<path d=\"M14 2v6a2 2 0 0 0 .245.96l5.51 10.08A2 2 0 0 1 18 22H6a2 2 0 0 1-1.755-2.96l5.51-10.08A2 2 0 0 0 10 8V2\"/><path d=\"M6.453 15h11.094\"/><path d=\"M8.5 2h7\"/>","save":"<path d=\"M15.2 3a2 2 0 0 1 1.4.6l3.8 3.8a2 2 0 0 1 .6 1.4V19a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2z\"/><path d=\"M17 21v-7a1 1 0 0 0-1-1H8a1 1 0 0 0-1 1v7\"/><path d=\"M7 3v4a1 1 0 0 0 1 1h7\"/>","maximize":"<path d=\"M8 3H5a2 2 0 0 0-2 2v3\"/><path d=\"M21 8V5a2 2 0 0 0-2-2h-3\"/><path d=\"M3 16v3a2 2 0 0 0 2 2h3\"/><path d=\"M16 21h3a2 2 0 0 0 2-2v-3\"/>","download":"<path d=\"M12 15V3\"/><path d=\"M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4\"/><path d=\"m7 10 5 5 5-5\"/>","upload":"<path d=\"M12 3v12\"/><path d=\"m17 8-5-5-5 5\"/><path d=\"M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4\"/>","calendar":"<path d=\"M8 2v3\"/><path d=\"M16 2v3\"/><rect x=\"3\" y=\"3\" width=\"18\" height=\"18\" rx=\"2\"/><path d=\"M3 9h18\"/>","chart-bar":"<path d=\"M3 3v16a2 2 0 0 0 2 2h16\"/><path d=\"M18 17V9\"/><path d=\"M13 17V5\"/><path d=\"M8 17v-3\"/>","check":"<path d=\"M20 6 9 17l-5-5\"/>","x":"<path d=\"M18 6 6 18\"/><path d=\"m6 6 12 12\"/>","sparkles":"<path d=\"M11.017 2.814a1 1 0 0 1 1.966 0l1.051 5.558a2 2 0 0 0 1.594 1.594l5.558 1.051a1 1 0 0 1 0 1.966l-5.558 1.051a2 2 0 0 0-1.594 1.594l-1.051 5.558a1 1 0 0 1-1.966 0l-1.051-5.558a2 2 0 0 0-1.594-1.594l-5.558-1.051a1 1 0 0 1 0-1.966l5.558-1.051a2 2 0 0 0 1.594-1.594z\"/><path d=\"M20 2v4\"/><path d=\"M22 4h-4\"/><circle cx=\"4\" cy=\"20\" r=\"2\"/>","star":"<path d=\"M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z\"/>","grip-vertical":"<circle cx=\"9\" cy=\"12\" r=\"1\"/><circle cx=\"9\" cy=\"5\" r=\"1\"/><circle cx=\"9\" cy=\"19\" r=\"1\"/><circle cx=\"15\" cy=\"12\" r=\"1\"/><circle cx=\"15\" cy=\"5\" r=\"1\"/><circle cx=\"15\" cy=\"19\" r=\"1\"/>","printer":"<path d=\"M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2\"/><path d=\"M6 9V3a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v6\"/><rect x=\"6\" y=\"14\" width=\"12\" height=\"8\" rx=\"1\"/>","sunrise":"<path d=\"M12 2v8\"/><path d=\"m4.93 10.93 1.41 1.41\"/><path d=\"M2 18h2\"/><path d=\"M20 18h2\"/><path d=\"m19.07 10.93-1.41 1.41\"/><path d=\"M22 22H2\"/><path d=\"m8 6 4-4 4 4\"/><path d=\"M16 18a4 4 0 0 0-8 0\"/>","sunset":"<path d=\"M12 10V2\"/><path d=\"m4.93 10.93 1.41 1.41\"/><path d=\"M2 18h2\"/><path d=\"M20 18h2\"/><path d=\"m19.07 10.93-1.41 1.41\"/><path d=\"M22 22H2\"/><path d=\"m16 6-4 4-4-4\"/><path d=\"M16 18a4 4 0 0 0-8 0\"/>","cloud-sun":"<path d=\"M12 2v2\"/><path d=\"m4.93 4.93 1.41 1.41\"/><path d=\"M20 12h2\"/><path d=\"m19.07 4.93-1.41 1.41\"/><path d=\"M15.947 12.65a4 4 0 0 0-5.925-4.128\"/><path d=\"M13 22H7a5 5 0 1 1 4.9-6H13a3 3 0 0 1 0 6Z\"/>","moon-star":"<path d=\"M18 5h4\"/><path d=\"M20 3v4\"/><path d=\"M20.985 12.486a9 9 0 1 1-9.473-9.472c.405-.022.617.46.402.803a6 6 0 0 0 8.268 8.268c.344-.215.825-.004.803.401\"/>"};
+const ICONS = {"zoom-in":"<circle cx=\"11\" cy=\"11\" r=\"8\"/><line x1=\"21\" x2=\"16.65\" y1=\"21\" y2=\"16.65\"/><line x1=\"11\" x2=\"11\" y1=\"8\" y2=\"14\"/><line x1=\"8\" x2=\"14\" y1=\"11\" y2=\"11\"/>","zoom-out":"<circle cx=\"11\" cy=\"11\" r=\"8\"/><line x1=\"21\" x2=\"16.65\" y1=\"21\" y2=\"16.65\"/><line x1=\"8\" x2=\"14\" y1=\"11\" y2=\"11\"/>","pencil":"<path d=\"M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z\"/><path d=\"m15 5 4 4\"/>","layout-grid":"<rect width=\"7\" height=\"7\" x=\"3\" y=\"3\" rx=\"1\"/><rect width=\"7\" height=\"7\" x=\"14\" y=\"3\" rx=\"1\"/><rect width=\"7\" height=\"7\" x=\"14\" y=\"14\" rx=\"1\"/><rect width=\"7\" height=\"7\" x=\"3\" y=\"14\" rx=\"1\"/>","calculator":"<rect width=\"16\" height=\"20\" x=\"4\" y=\"2\" rx=\"2\"/><line x1=\"8\" x2=\"16\" y1=\"6\" y2=\"6\"/><line x1=\"16\" x2=\"16\" y1=\"14\" y2=\"18\"/><path d=\"M16 10h.01\"/><path d=\"M12 10h.01\"/><path d=\"M8 10h.01\"/><path d=\"M12 14h.01\"/><path d=\"M8 14h.01\"/><path d=\"M12 18h.01\"/><path d=\"M8 18h.01\"/>","calendar-days":"<path d=\"M8 2v3\"/><path d=\"M16 2v3\"/><rect x=\"3\" y=\"3\" width=\"18\" height=\"18\" rx=\"2\"/><path d=\"M3 9h18\"/><path d=\"M8 13h.01\"/><path d=\"M12 13h.01\"/><path d=\"M16 13h.01\"/><path d=\"M8 17h.01\"/><path d=\"M12 17h.01\"/><path d=\"M16 17h.01\"/>","chevron-right":"<path d=\"m9 18 6-6-6-6\"/>","chevron-left":"<path d=\"m15 18-6-6 6-6\"/>","copy":"<rect width=\"14\" height=\"14\" x=\"8\" y=\"8\" rx=\"2\" ry=\"2\"/><path d=\"M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2\"/>","badge-check":"<path d=\"M3.85 8.62a4 4 0 0 1 4.78-4.77 4 4 0 0 1 6.74 0 4 4 0 0 1 4.78 4.78 4 4 0 0 1 0 6.74 4 4 0 0 1-4.77 4.78 4 4 0 0 1-6.75 0 4 4 0 0 1-4.78-4.77 4 4 0 0 1 0-6.76Z\"/><path d=\"m16 9-5.5 5.5L8 12\"/>","clock":"<circle cx=\"12\" cy=\"12\" r=\"10\"/><path d=\"M12 6v6l4 2\"/>","book-open":"<path d=\"M12 5v16\"/><path d=\"M20.001 19A2 2 0 0022 17V5a2 2 0 00-1.999-2L16 3.002A5 5 0 0012 5a5 5 0 00-4-2H4a2 2 0 00-2 2v12a2 2 0 001.999 2H8a5 5 0 014 2 5 5 0 014-2z\"/>","sliders-horizontal":"<path d=\"M10 5H3\"/><path d=\"M12 19H3\"/><path d=\"M14 3v4\"/><path d=\"M16 17v4\"/><path d=\"M21 12h-9\"/><path d=\"M21 19h-5\"/><path d=\"M21 5h-7\"/><path d=\"M8 10v4\"/><path d=\"M8 12H3\"/>","sun":"<circle cx=\"12\" cy=\"12\" r=\"4\"/><path d=\"M12 2v2\"/><path d=\"M12 20v2\"/><path d=\"m4.93 4.93 1.41 1.41\"/><path d=\"m17.66 17.66 1.41 1.41\"/><path d=\"M2 12h2\"/><path d=\"M20 12h2\"/><path d=\"m6.34 17.66-1.41 1.41\"/><path d=\"m19.07 4.93-1.41 1.41\"/>","moon":"<path d=\"M20.985 12.486a9 9 0 1 1-9.473-9.472c.405-.022.617.46.402.803a6 6 0 0 0 8.268 8.268c.344-.215.825-.004.803.401\"/>","circle-dot":"<circle cx=\"12\" cy=\"12\" r=\"1\"/><circle cx=\"12\" cy=\"12\" r=\"10\"/>","library":"<path d=\"m16 6 4 14\"/><path d=\"M12 6v14\"/><path d=\"M8 8v12\"/><path d=\"M4 4v16\"/>","search":"<path d=\"m21 21-4.34-4.34\"/><circle cx=\"11\" cy=\"11\" r=\"8\"/>","arrow-right":"<path d=\"M5 12h14\"/><path d=\"m12 5 7 7-7 7\"/>","undo-2":"<path d=\"M9 14 4 9l5-5\"/><path d=\"M4 9h10.5a5.5 5.5 0 0 1 5.5 5.5a5.5 5.5 0 0 1-5.5 5.5H11\"/>","rotate-ccw":"<path d=\"M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8\"/><path d=\"M3 3v5h5\"/>","refresh-cw":"<path d=\"M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8\"/><path d=\"M21 3v5h-5\"/><path d=\"M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16\"/><path d=\"M8 16H3v5\"/>","smartphone":"<rect width=\"14\" height=\"20\" x=\"5\" y=\"2\" rx=\"2\" ry=\"2\"/><path d=\"M12 18h.01\"/>","square":"<rect width=\"18\" height=\"18\" x=\"3\" y=\"3\" rx=\"2\"/>","flame":"<path d=\"M12 3q1 4 4 6.5t3 5.5a1 1 0 0 1-14 0 5 5 0 0 1 1-3 1 1 0 0 0 5 0c0-2-1.5-3-1.5-5q0-2 2.5-4\"/>","map-pin":"<path d=\"M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0\"/><circle cx=\"12\" cy=\"10\" r=\"3\"/>","bell":"<path d=\"M10.268 21a2 2 0 0 0 3.464 0\"/><path d=\"M3.262 15.326A1 1 0 0 0 4 17h16a1 1 0 0 0 .74-1.673C19.41 13.956 18 12.499 18 8A6 6 0 0 0 6 8c0 4.499-1.411 5.956-2.738 7.326\"/>","volume-2":"<path d=\"M11 4.702a.705.705 0 0 0-1.203-.498L6.413 7.587A1.4 1.4 0 0 1 5.416 8H3a1 1 0 0 0-1 1v6a1 1 0 0 0 1 1h2.416a1.4 1.4 0 0 1 .997.413l3.383 3.384A.705.705 0 0 0 11 19.298z\"/><path d=\"M16 9a5 5 0 0 1 0 6\"/><path d=\"M19.364 18.364a9 9 0 0 0 0-12.728\"/>","alarm-clock":"<circle cx=\"12\" cy=\"13\" r=\"8\"/><path d=\"M12 9v4l2 2\"/><path d=\"M5 3 2 6\"/><path d=\"m22 6-3-3\"/><path d=\"M6.38 18.7 4 21\"/><path d=\"M17.64 18.67 20 21\"/>","flask-conical":"<path d=\"M14 2v6a2 2 0 0 0 .245.96l5.51 10.08A2 2 0 0 1 18 22H6a2 2 0 0 1-1.755-2.96l5.51-10.08A2 2 0 0 0 10 8V2\"/><path d=\"M6.453 15h11.094\"/><path d=\"M8.5 2h7\"/>","save":"<path d=\"M15.2 3a2 2 0 0 1 1.4.6l3.8 3.8a2 2 0 0 1 .6 1.4V19a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2z\"/><path d=\"M17 21v-7a1 1 0 0 0-1-1H8a1 1 0 0 0-1 1v7\"/><path d=\"M7 3v4a1 1 0 0 0 1 1h7\"/>","maximize":"<path d=\"M8 3H5a2 2 0 0 0-2 2v3\"/><path d=\"M21 8V5a2 2 0 0 0-2-2h-3\"/><path d=\"M3 16v3a2 2 0 0 0 2 2h3\"/><path d=\"M16 21h3a2 2 0 0 0 2-2v-3\"/>","download":"<path d=\"M12 15V3\"/><path d=\"M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4\"/><path d=\"m7 10 5 5 5-5\"/>","upload":"<path d=\"M12 3v12\"/><path d=\"m17 8-5-5-5 5\"/><path d=\"M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4\"/>","calendar":"<path d=\"M8 2v3\"/><path d=\"M16 2v3\"/><rect x=\"3\" y=\"3\" width=\"18\" height=\"18\" rx=\"2\"/><path d=\"M3 9h18\"/>","chart-bar":"<path d=\"M3 3v16a2 2 0 0 0 2 2h16\"/><path d=\"M18 17V9\"/><path d=\"M13 17V5\"/><path d=\"M8 17v-3\"/>","check":"<path d=\"M20 6 9 17l-5-5\"/>","x":"<path d=\"M18 6 6 18\"/><path d=\"m6 6 12 12\"/>","sparkles":"<path d=\"M11.017 2.814a1 1 0 0 1 1.966 0l1.051 5.558a2 2 0 0 0 1.594 1.594l5.558 1.051a1 1 0 0 1 0 1.966l-5.558 1.051a2 2 0 0 0-1.594 1.594l-1.051 5.558a1 1 0 0 1-1.966 0l-1.051-5.558a2 2 0 0 0-1.594-1.594l-5.558-1.051a1 1 0 0 1 0-1.966l5.558-1.051a2 2 0 0 0 1.594-1.594z\"/><path d=\"M20 2v4\"/><path d=\"M22 4h-4\"/><circle cx=\"4\" cy=\"20\" r=\"2\"/>","star":"<path d=\"M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z\"/>","grip-vertical":"<circle cx=\"9\" cy=\"12\" r=\"1\"/><circle cx=\"9\" cy=\"5\" r=\"1\"/><circle cx=\"9\" cy=\"19\" r=\"1\"/><circle cx=\"15\" cy=\"12\" r=\"1\"/><circle cx=\"15\" cy=\"5\" r=\"1\"/><circle cx=\"15\" cy=\"19\" r=\"1\"/>","printer":"<path d=\"M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2\"/><path d=\"M6 9V3a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v6\"/><rect x=\"6\" y=\"14\" width=\"12\" height=\"8\" rx=\"1\"/>","sunrise":"<path d=\"M12 2v8\"/><path d=\"m4.93 10.93 1.41 1.41\"/><path d=\"M2 18h2\"/><path d=\"M20 18h2\"/><path d=\"m19.07 10.93-1.41 1.41\"/><path d=\"M22 22H2\"/><path d=\"m8 6 4-4 4 4\"/><path d=\"M16 18a4 4 0 0 0-8 0\"/>","sunset":"<path d=\"M12 10V2\"/><path d=\"m4.93 10.93 1.41 1.41\"/><path d=\"M2 18h2\"/><path d=\"M20 18h2\"/><path d=\"m19.07 10.93-1.41 1.41\"/><path d=\"M22 22H2\"/><path d=\"m16 6-4 4-4-4\"/><path d=\"M16 18a4 4 0 0 0-8 0\"/>","cloud-sun":"<path d=\"M12 2v2\"/><path d=\"m4.93 4.93 1.41 1.41\"/><path d=\"M20 12h2\"/><path d=\"m19.07 4.93-1.41 1.41\"/><path d=\"M15.947 12.65a4 4 0 0 0-5.925-4.128\"/><path d=\"M13 22H7a5 5 0 1 1 4.9-6H13a3 3 0 0 1 0 6Z\"/>","moon-star":"<path d=\"M18 5h4\"/><path d=\"M20 3v4\"/><path d=\"M20.985 12.486a9 9 0 1 1-9.473-9.472c.405-.022.617.46.402.803a6 6 0 0 0 8.268 8.268c.344-.215.825-.004.803.401\"/>"};
 
 const DAILY = [
     { k:'آية', t:'أَلَا بِذِكْرِ اللَّهِ تَطْمَئِنُّ الْقُلُوبُ', s:'سورة الرعد: 28' },
@@ -1711,6 +1714,10 @@ ar: {
     rdClose:'إغلاق', rdPrev:'السابق', rdNext:'التالي', rdDone:'تم',
     abBak:'آخر نسخة احتياطية',
     adhEmpty:'أخفيتَ كل أذكار هذه القائمة. يمكنك استعادتها من التخصيص.',
+    updCheck:'التحقق من التحديثات', updChecking:'جارٍ التحقق من التحديثات…', updFound:'يوجد إصدار جديد، جارٍ التحديث…', updLatest:'أنت تستخدم أحدث إصدار', updFail:'تعذّر التحقق، تأكد من اتصالك بالإنترنت',
+    instApp:'تثبيت التطبيق', instDone:'تم تثبيت التطبيق', instAlready:'التطبيق مثبّت بالفعل على هذا الجهاز', instAnd:'افتح قائمة المتصفح ⋮ ثم اختر «تثبيت التطبيق» أو «إضافة إلى الشاشة الرئيسية». يعمل التطبيق بعدها كتطبيق مستقل ودون اتصال.', instIos:'اضغط زر المشاركة في سفاري ثم اختر «إضافة إلى الشاشة الرئيسية».',
+    saveCopy:'حفظ نسخة من التطبيق', saveDone:'حُفظت نسخة من التطبيق (ملف يعمل دون اتصال)', saveFail:'تعذّر حفظ النسخة، تأكد من اتصالك بالإنترنت',
+    rdZoomIn:'تكبير الخط', rdZoomOut:'تصغير الخط',
     afterOpen:'فتح الأذكار', afterHide:'إخفاء',
     backupOn:'تذكير أسبوعي بالنسخة الاحتياطية', backupTitle:'مرّ أسبوع على آخر نسخة احتياطية', backupNow:'تصدير الآن', backupLater:'لاحقًا',
     readOpts:'خيارات القراءة', fontFace:'خط الأذكار', ffDefault:'الافتراضي', ffNaskh:'نسخ', ffThuluth:'ثلث / رقعة', fontNote:'يظهر حسب الخطوط المتاحة على جهازك',
@@ -1949,6 +1956,10 @@ en: {
     rdClose:'Close', rdPrev:'Previous', rdNext:'Next', rdDone:'Done',
     abBak:'Last backup',
     adhEmpty:'You hid every dhikr in this list. You can restore them from Customize.',
+    updCheck:'Check for updates', updChecking:'Checking for updates…', updFound:'A new version was found, updating…', updLatest:'You are on the latest version', updFail:'Could not check, please check your connection',
+    instApp:'Install the app', instDone:'The app was installed', instAlready:'The app is already installed on this device', instAnd:'Open the browser menu ⋮ and choose "Install app" or "Add to Home screen". It then runs as a standalone app, offline.', instIos:'Tap the Share button in Safari, then choose "Add to Home Screen".',
+    saveCopy:'Save a copy of the app', saveDone:'A copy of the app was saved (an offline file)', saveFail:'Could not save a copy, please check your connection',
+    rdZoomIn:'Larger text', rdZoomOut:'Smaller text',
     afterOpen:'Open adhkar', afterHide:'Hide',
     backupOn:'Weekly backup reminder', backupTitle:'It has been a week since your last backup', backupNow:'Export now', backupLater:'Later',
     readOpts:'Reading options', fontFace:'Adhkar font', ffDefault:'Default', ffNaskh:'Naskh', ffThuluth:'Thuluth / Ruqaa', fontNote:'Shown using the fonts available on your device',
@@ -2067,7 +2078,7 @@ const SCHEMA = 3;
         store.set('pt-schema', SCHEMA);
     } catch (e) {}
 })();
-const APP_VER = '2026.11.16-5';
+const APP_VER = '2026.11.17-1';
 function repairBar() {
     try {
         if (document.getElementById('fix-bar') || sessionStorage.getItem('pt-fixno')) return;
@@ -2097,12 +2108,13 @@ const HIDEABLE = ['times', 'adhkar', 'quran', 'sunan', 'tools'];
 const FIRST_RUN = (() => { try { return localStorage.getItem('pt-settings') === null; } catch (e) { return false; } })();
 const DEFAULTS = {
     cityId:'cairo', method:5, asr:1, hijriAdj:0, notify:false, sound:true, h24:false,
-    gps:null, theme:'dark', customThemes:[], draft:null, tab:'times', sec:'loc',
+    gps:null, theme:'sepia', customThemes:[], draft:null, tab:'times', sec:'loc',
     lang:'ar', preAlert:0, fullscreen:true, anim:true, pinPrayer:'', adhkarAuto:true, friRemind:true, tasbihPhrase:'ph_sub', tasbihTarget:33, fontScale:1, comfy:false, adhOrder:'n', quickAdh:true, autoNext:true, hideDone:false, vibTarget:'double', vibTap:true, keepAwake:false, adhkarRemind:false, sndPrayers:{ Fajr:'default', Dhuhr:'default', Asr:'default', Maghrib:'default', Isha:'default' }, weeklyGoal:0, monthGoal:0, wirdUnit:'page', wirdGoal:0, dndFri:false, dndFriFrom:'23:00', dndFriTo:'08:00', sndPrayer:'rise', sndAdhkar:'chime', sndWird:'soft', sndGoal:'triple', hiddenTabs:[], onboarded:false, oneHand:false, wirdRemind:false, wirdTime:'21:00', dnd:false, dndFrom:'23:00', dndTo:'05:00', dndPrayer:true, remindDelay:20, sleepDelay:60, afterDelay:5, afterCard:true, backupRemind:true, backupAt:0, backupSnooze:0, endAlert:0, logRemind:false, occRemind:false, qDark:false, qAwake:false, khRemind:false, khTime:'20:00', nightAuto:true, nawRemind:false, nawCard:true, hifz:0, fontFace:'default', remindSleep:false, remindWake:false, remindAfter:false, readDark:false,
     adhHide:{ morning:[], evening:[] }, adhAdd:{ morning:[], evening:[] },
     tune:{ Fajr:0, Sunrise:0, Dhuhr:0, Asr:0, Maghrib:0, Isha:0 }
 };
 let settings = Object.assign({}, DEFAULTS, store.get('pt-settings', {}));
+try { if (!store.get('pt-thmig', 0)) { store.set('pt-thmig', 1); if (settings.theme === 'dark') settings.theme = 'sepia'; } } catch (e) {}
 settings.tune = Object.assign({}, DEFAULTS.tune, settings.tune || {});
 settings.sndPrayers = Object.assign({}, DEFAULTS.sndPrayers, settings.sndPrayers || {});
 if (!Array.isArray(settings.customThemes)) settings.customThemes = [];
@@ -3928,7 +3940,7 @@ let swReg = null;
     } catch (e) {}
 })();
 /* ============ الأذكار + المواظبة ============ */
-let adhkarSet = null, adhkarAutoPart = null, curAdh = null;
+let instEvt = null, adhkarSet = null, adhkarAutoPart = null, curAdh = null;
 let adhState = store.get('pt-adhkar', {});
 let track = store.get('pt-track', {});          // { 'YYYY-MM-DD': { m:1, e:1, t:عدد } }
 function saveTrack() {
@@ -4160,6 +4172,17 @@ function openFontSheet() {
         [[0.9, 'fzS'], [1, 'fzM'], [1.2, 'fzL'], [1.4, 'fzXL']].forEach(([v, k]) => { const x = qBtn('ibtn btn-block' + (Math.abs(cur - v) < 0.05 ? ' on' : ''), Math.abs(cur - v) < 0.05 ? 'check' : null, t(k), () => { settings.fontScale = v; saveSettings(); applyFont(); closeSheet(); }); x.style.marginBottom = '.5rem'; b.appendChild(x); });
     });
 }
+function ayaNums(txt) {
+    const nrm = x => x.replace(/[\u064B-\u0652\u0670\u0640]/g, '').replace(/[أإآٱ]/g, 'ا').trim(), mk = n => ' (' + qNum(n) + ')';
+    const SUR = [['قل هو الله احد', 1, 3], ['قل اعوذ برب الفلق', 1, 4], ['قل اعوذ برب الناس', 1, 5]];
+    return txt.replace(/﴿([^﴾]*)﴾/g, (m, seg) => {
+        const n = nrm(seg), parts = seg.split('*'), sr = SUR.find(([p]) => n.startsWith(p));
+        if (sr && parts.length === sr[2] + 1) return '﴿' + parts.map((x, i) => x.trim() + mk(sr[1] + i)).join(' ') + '﴾';
+        if (parts.length === 1 && n.startsWith('الله لا اله الا هو الحي القيوم')) return '﴿' + seg.trim() + mk(255) + '﴾';
+        if (parts.length === 2 && n.startsWith('امن الرسول')) return '﴿' + parts.map((x, i) => x.trim() + mk(285 + i)).join(' ') + '﴾';
+        return m;
+    });
+}
 function buildDhikrList(box, list, rem, onChange, opts) {
     box.innerHTML = '';
     lastFinish = null; updateUndo();
@@ -4190,7 +4213,7 @@ function buildDhikrList(box, list, rem, onChange, opts) {
             body.appendChild(hd);
         }
         const txt = document.createElement('div');
-        if (settings.hifz > 0) hifzFill(txt, item.t); else txt.textContent = item.t;
+        { const shown = ayaNums(item.t); if (settings.hifz > 0) hifzFill(txt, shown); else txt.textContent = shown; }
         body.appendChild(txt);
         if (item.nk) { const nt = document.createElement('div'); nt.className = 'note'; nt.textContent = t(item.nk); body.appendChild(nt); }
         if (item.src) {
@@ -4391,31 +4414,37 @@ function openReader() {
     try { const sp = store.get('pt-rdpos', null); if (sp && sp.iso === state.dayIso && sp.set === adhkarSet) { const k = list.findIndex(x => String(x.id) === String(sp.id)); if (k >= 0 && rem[k] > 0) i = k; } } catch (e) {}
     const box = document.createElement('div'); box.className = 'rd ' + (adhkarSet === 'evening' ? 'rd-e' : 'rd-m'); box._close = () => close(); box.setAttribute('role', 'dialog'); box.setAttribute('aria-modal', 'true'); box.setAttribute('aria-label', t('adhRead'));
     const top = document.createElement('div'); top.className = 'rd-top';
-    const pos = document.createElement('b'); const cl = qBtn('ibtn', 'x', t('rdClose'), () => close()); top.append(pos, cl);
+    const pos = document.createElement('b'); const cl = qBtn('ibtn', 'x', t('rdClose'), () => close());
+    let zs = 1; try { zs = Math.min(1.8, Math.max(0.7, Number(store.get('pt-rdz', 1)) || 1)); } catch (e) {}
+    const zoom = d => { zs = Math.min(1.8, Math.max(0.7, Math.round((zs + d) * 10) / 10)); try { store.set('pt-rdz', zs); } catch (e) {} draw(); };
+    const zo = qBtn('ibtn rd-z', 'zoom-out', t('rdZoomOut'), () => zoom(-0.1)), zi = qBtn('ibtn rd-z', 'zoom-in', t('rdZoomIn'), () => zoom(0.1));
+    [zo, zi].forEach(z => { const sp = z.querySelector('span'); if (sp) sp.remove(); else [...z.childNodes].forEach(n => { if (n.nodeType === 3) n.remove(); }); });
+    const zg = document.createElement('div'); zg.className = 'rd-zg'; zg.append(zo, zi); top.append(pos, zg, cl);
     const mid = document.createElement('div'); mid.className = 'rd-mid';
     const hh = document.createElement('div'); hh.className = 'rd-h'; const tx = document.createElement('div'); tx.className = 'rd-t'; tx.dir = 'rtl'; tx.lang = 'ar';
     mid.append(hh, tx);
     const bot = document.createElement('div'); bot.className = 'rd-bot';
     const go = d => { i = Math.max(0, Math.min(list.length - 1, i + d)); draw(); };
-    const prev = qBtn('ibtn', en ? 'chevron-left' : 'chevron-right', t('rdPrev'), () => go(-1));
-    const next = qBtn('ibtn', en ? 'chevron-right' : 'chevron-left', t('rdNext'), () => go(1));
+    const prev = qBtn('ibtn', 'chevron-left', t('rdPrev'), () => go(-1));
+    const next = qBtn('ibtn', 'chevron-right', t('rdNext'), () => go(1));
     const cnt = qBtn('ibtn btn-accent rd-cnt', null, '', () => {
         if (rem[i] > 0) { rem[i]--; onChange(); tapVib(15); draw(); if (rem[i] === 0 && i < list.length - 1) setTimeout(() => { if (box.isConnected) go(1); }, fxOn() ? 380 : 120); }
     });
-    bot.append(prev, cnt, next);
+    if (en) bot.append(prev, cnt, next); else bot.append(next, cnt, prev);
     box.append(top, mid, bot); document.body.appendChild(box);
     function draw() {
         const it = list[i]; try { store.set('pt-rdpos', { iso: state.dayIso, set: adhkarSet, id: it.id }); } catch (e) {}
         pos.textContent = (i + 1) + ' / ' + list.length;
-        hh.textContent = it.h || ''; hh.hidden = !it.h; tx.textContent = it.t;
-        tx.style.fontSize = ''; { let f = 1; while (mid.scrollHeight > mid.clientHeight + 2 && f > 0.42) { f -= 0.07; tx.style.fontSize = 'calc(1.7rem * var(--dfs, 1) * ' + f.toFixed(2) + ')'; } }
+        hh.textContent = it.h || ''; hh.hidden = !it.h; tx.textContent = ayaNums(it.t);
+        tx.style.fontSize = 'calc(1.7rem * var(--dfs, 1) * ' + zs + ')'; { let f = zs; while (mid.scrollHeight > mid.clientHeight + 2 && f > 0.42) { f -= 0.07; tx.style.fontSize = 'calc(1.7rem * var(--dfs, 1) * ' + f.toFixed(2) + ')'; } }
+        zo.disabled = zs <= 0.7; zi.disabled = zs >= 1.8;
         cnt.textContent = rem[i] > 0 ? String(rem[i]) : t('rdDone'); cnt.setAttribute('aria-label', t('adhRead') + ' ' + (i + 1));
         prev.disabled = i === 0; next.disabled = i === list.length - 1; mid.scrollTop = 0;
     }
     let sx = null, sy = 0;
     box.addEventListener('touchstart', e => { const p = e.changedTouches[0]; sx = p.clientX; sy = p.clientY; }, { passive: true });
     box.addEventListener('touchend', e => { if (sx === null) return; const p = e.changedTouches[0], dx = p.clientX - sx, dy = p.clientY - sy; sx = null; if (Math.abs(dx) > 60 && Math.abs(dx) > Math.abs(dy) * 1.5) go((dx > 0) === !en ? 1 : -1); }, { passive: true });
-    const key = e => { if (e.key === 'Escape') close(); else if (e.key === 'ArrowLeft') go(en ? -1 : 1); else if (e.key === 'ArrowRight') go(en ? 1 : -1); };
+    const key = e => { if (e.key === 'Escape') close(); else if (e.key === 'ArrowLeft') go(-1); else if (e.key === 'ArrowRight') go(1); };
     document.addEventListener('keydown', key);
     function close() { document.removeEventListener('keydown', key); box.remove(); renderAdhkar(); try { const o = opener && opener.id ? $(opener.id) : null; if (o) o.focus({ preventScroll: true }); } catch (e) {} }
     draw(); try { cnt.focus(); } catch (e) {}
@@ -5445,14 +5474,15 @@ function firstVisibleTab(id) {
 }
 async function checkUpdate(force) {
     try {
-        if (!/^https?:$/.test(location.protocol)) return;
+        if (!/^https?:$/.test(location.protocol)) return 'fail';
         if (!force && Date.now() - Number(store.get('pt-vchk', 0)) < 30 * 60000) return;
         store.set('pt-vchk', Date.now());
         const r = await fetch(location.pathname, { cache: 'no-store' });
-        if (!r.ok) return;
+        if (!r.ok) return 'fail';
         const m = (await r.text()).match(/const APP_VER = '([^']+)'/);
+        if (force) return !m ? 'fail' : (m[1] !== APP_VER ? 'new' : 'same');
         if (m && m[1] !== APP_VER && $('upd-bar').hidden) { $('upd-t').textContent = t('updTitle'); $('upd-now').textContent = t('updNow'); $('upd-later').textContent = t('updLater'); $('upd-bar').hidden = false; }
-    } catch (e) {}
+    } catch (e) { return 'fail'; }
 }
 function problemReport() {
     const L = []; const add = (k, v) => L.push(k + ': ' + v);
@@ -6497,6 +6527,27 @@ function bindUI() {
     $('upd-now').addEventListener('click', () => { try { location.reload(); } catch (e) {} });
     $('upd-later').addEventListener('click', () => { $('upd-bar').hidden = true; });
     $('report-btn').addEventListener('click', copyReport);
+    $('upd-check').addEventListener('click', async () => {
+        const b = $('upd-check'); b.disabled = true; toast(t('updChecking'));
+        const r = await checkUpdate(true); b.disabled = false;
+        if (r === 'new') { toast(t('updFound')); setTimeout(() => { try { location.reload(); } catch (e) {} }, 700); }
+        else toast(t(r === 'same' ? 'updLatest' : 'updFail'));
+    });
+    window.addEventListener('beforeinstallprompt', e => { e.preventDefault(); instEvt = e; });
+    window.addEventListener('appinstalled', () => { instEvt = null; toast(t('instDone')); });
+    $('inst-btn').addEventListener('click', async () => {
+        let app = false; try { app = !!(window.matchMedia && matchMedia('(display-mode: standalone)').matches) || !!navigator.standalone; } catch (e) {}
+        if (app) { toast(t('instAlready')); return; }
+        if (instEvt) { try { instEvt.prompt(); await instEvt.userChoice; } catch (e) {} instEvt = null; return; }
+        openSheet(t('instApp'), b => { const p = document.createElement('p'); p.className = 'small'; p.style.lineHeight = '2'; p.textContent = /iphone|ipad|ipod/i.test(navigator.userAgent) ? t('instIos') : t('instAnd'); b.appendChild(p); });
+    });
+    $('save-btn').addEventListener('click', async () => {
+        try {
+            const r = await fetch(location.pathname, { cache: 'no-store' }); if (!r.ok) throw 0;
+            const blob = new Blob([await r.text()], { type: 'text/html' }), a = document.createElement('a');
+            a.href = URL.createObjectURL(blob); a.download = 'prayer-times-' + APP_VER + '.html'; document.body.appendChild(a); a.click(); a.remove(); setTimeout(() => URL.revokeObjectURL(a.href), 4000); toast(t('saveDone'));
+        } catch (e) { toast(t('saveFail')); }
+    });
     $('logrem-toggle').addEventListener('change', e => { settings.logRemind = e.target.checked; saveSettings(); });
     $('occrem-toggle').addEventListener('change', e => { settings.occRemind = e.target.checked; saveSettings(); });
     $('tool-imsak').addEventListener('click', openImsak);
@@ -6675,7 +6726,7 @@ syncControls();
 showSetList(); initMini(); initSwipe();
 try { const q = new URLSearchParams(location.search); if (q.get('quran') === '1') setTimeout(() => openQuran(), 900);
     if (q.get('tab') === 'adhkar') { settings.tab = 'adhkar'; const st = q.get('set'); if (['morning', 'evening', 'library', 'stats', 'tasbih'].includes(st)) adhkarSet = st; } } catch (e) {}
-showTab(firstVisibleTab(settings.tab || 'times'), true);
+showTab(firstVisibleTab('times'), true);
 clearInterval(timer);
 try { const rm0 = reduceMotion; if (navigator.connection && navigator.connection.saveData) reduceMotion = true;
     if (navigator.getBattery) navigator.getBattery().then(bt => { const f = () => { const low = !bt.charging && bt.level <= 0.2; reduceMotion = rm0 || low; document.documentElement.classList.toggle('lowpower', reduceMotion && !rm0); }; f(); bt.addEventListener('levelchange', f); bt.addEventListener('chargingchange', f); }).catch(() => {}); } catch (e) {}
@@ -6685,7 +6736,13 @@ renderWird();
 recalc();
 setTimeout(checkLocDrift, 4000);
 setTimeout(() => checkUpdate(false), 8000);
-document.addEventListener('visibilitychange', () => { if (!document.hidden) checkUpdate(false); });
+let hiddenAt = 0;
+document.addEventListener('visibilitychange', () => {
+    if (document.hidden) { hiddenAt = Date.now(); return; }
+    checkUpdate(false);
+    if (hiddenAt && Date.now() - hiddenAt > 60000 && settings.tab !== 'times' && !document.querySelector('.rd')) { try { closeSheet(); showTab(firstVisibleTab('times'), true); window.scrollTo(0, 0); } catch (e) {} }
+    hiddenAt = 0;
+});
 function maybeMigCard(force) {
     let https = false; try { https = location.protocol === 'https:'; } catch (e) {}
     if ((https || force) && !store.get('pt-migdone', 0) && !Object.keys(track).length) $('mig-card').hidden = false;
