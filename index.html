@@ -696,6 +696,15 @@ html.onehand .adh-head #abar { position:fixed; }
 .cu-h { margin:1rem 0 .3rem; font-weight:700; font-size:.95rem; }
 .adh-head { position:sticky; top:0; z-index:6; background:var(--surface); padding:.55rem 0; margin-top:-.55rem; }
 html.onehand .adh-head { position:static; }
+/* الشاشات العريضة: يتمدد الإطار ليستفيد من كل المساحة */
+@media (min-width:820px), (orientation:landscape) and (max-height:520px) and (min-width:560px) {
+  #app { max-width:none; padding-inline-end:clamp(1rem, 2.2vw, 3rem); }
+  #tab-quran, #tab-tools, #tab-sunan, #tab-adhkar, #tab-settings { max-width:none; }
+  #adhkar-list { column-count:2; column-gap:1rem; } #adhkar-list .dhikr { break-inside:avoid; }
+  .rd-t { font-size:calc(2.1rem * var(--dfs, 1)); } .rd-mid { max-width:70rem; width:100%; margin-inline:auto; }
+}
+@media (min-width:1300px) { #adhkar-list { column-count:3; } .tool-grid { grid-template-columns:repeat(4,1fr); } .set-list { grid-template-columns:1fr 1fr 1fr; } }
+@media (min-width:2000px) { #app { padding-inline-start:8rem; } }
 </style>
 <link rel="manifest" href="manifest.json">
 <link rel="apple-touch-icon" href="icon-192.png">
@@ -2081,7 +2090,7 @@ const SCHEMA = 3;
         store.set('pt-schema', SCHEMA);
     } catch (e) {}
 })();
-const APP_VER = '2026.11.17-3';
+const APP_VER = '2026.11.19-1';
 function repairBar() {
     try {
         if (document.getElementById('fix-bar') || sessionStorage.getItem('pt-fixno')) return;
