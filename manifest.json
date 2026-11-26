@@ -26,6 +26,17 @@
   ],
   "shortcuts": [
     {
+      "name": "الصلاة القادمة",
+      "url": "./?tab=times",
+      "icons": [
+        {
+          "src": "icon-192.png",
+          "sizes": "192x192",
+          "type": "image/png"
+        }
+      ]
+    },
+    {
       "name": "المصحف",
       "url": "./?quran=1",
       "icons": [
